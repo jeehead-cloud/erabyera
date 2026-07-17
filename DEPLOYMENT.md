@@ -1,134 +1,125 @@
-﻿# EraByEra вЂ” Deployment and Operations
+# EraByEra — Deployment and Operations
 
-**Status:** Not deployed; repository setup pending
-**Last updated:** 2026-07-10
+**Status:** Local application foundation; not deployed
+**Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
 
-> This document is the operational source of truth for running, building, and later deploying EraByEra.
-> Commands below marked вЂњexpectedвЂќ become authoritative only after the repository is created and verified.
+> This document is the operational source of truth for running, validating,
+> building, and later deploying EraByEra.
 
 ---
 
 ## 1. Current State
 
-No production, staging, CI/CD workflow, or configured hosting provider is claimed yet.
+EraByEra is a client-side React, TypeScript, and Vite application. F1 provides the application shell and routes, but no production, staging, CI/CD workflow, or hosting provider is configured.
 
-The planned application is fully client-side for the MVP, so deployment should eventually be static hosting of the Vite `dist/` directory.
+The production build is a static `dist/` directory. There is no server process, backend, database, migration, or runtime secret in F1.
 
 ---
 
-## 2. Expected Local Development Workflow
+## 2. Requirements and Installation
 
-After M0 creates the repository:
+Use a Node.js/npm version compatible with the versions locked in `package-lock.json`. From the repository root:
 
 ```powershell
 cd C:\Projects\erabyera
 npm install
-npm run dev
 ```
 
-Expected local URL is typically:
+For reproducible clean installations in CI or a fresh checkout, use:
 
-```text
-http://localhost:5173/
+```powershell
+npm ci
 ```
 
-The actual URL printed by Vite is authoritative.
+Do not reinstall dependencies merely because `node_modules` already exists; first confirm `package.json` and the lockfile changed or the installed tree is invalid.
 
 ---
 
-## 3. Expected Validation Commands
+## 3. Local Development
+
+Start Vite only when interactive local development is required:
+
+```powershell
+npm run dev
+```
+
+Use the local URL printed by Vite. It is commonly `http://localhost:5173/`, but the command output is authoritative. Stop the process when the development session ends.
+
+---
+
+## 4. Current Validation Commands
+
+These scripts exist and were verified on 2026-07-17:
 
 ```powershell
 npm run typecheck
 npm run lint
-npm run test
-npm run data:validate
 npm run build
-npm run preview
 ```
 
-The scripts must be confirmed in `package.json`. Until then, they are planned conventions, not guaranteed commands.
+The scripts perform:
+
+- `typecheck`: TypeScript project-reference checking without emitted application files;
+- `lint`: ESLint checks for the repository, excluding generated and design-reference directories;
+- `build`: TypeScript checking followed by a Vite production build into `dist/`.
+
+There is currently no `test`, `data:validate`, or `preview` script. Do not report those checks as run, and add them only when a milestone introduces real test, data-validation, or preview requirements.
+
+On Windows systems where PowerShell blocks `npm.ps1`, invoke the same scripts through `npm.cmd`, for example `npm.cmd run lint`.
 
 ---
 
-## 4. Static Deployment Model
+## 5. Client-Side Routing
 
-With no backend:
+F1 uses React Router's `createBrowserRouter` and defines `/map`, `/explore`, and `/sources` as client-side routes. `/` redirects to `/map`, and unknown client routes render the application not-found page.
 
-- build output: `dist/`;
-- no server process;
-- no database;
-- no migrations;
-- no runtime secrets expected for the MVP;
-- historical data ships as static assets;
-- any static hosting provider can potentially work.
+A static host must rewrite unresolved application paths to `/index.html`. Without this fallback, opening or refreshing `/map`, `/explore`, or `/sources` directly may produce a host-level 404 before the application loads.
 
-Candidate providers include Cloudflare Pages, Vercel, Netlify, and GitHub Pages. No provider has been selected.
-
-**Do not add provider-specific files without explicit owner instruction.**
+No provider-specific rewrite file is committed because no hosting provider has been selected. Add and document the provider's fallback only when deployment is authorized.
 
 ---
 
-## 5. Basemap and Asset Operations
+## 6. Static Deployment Model
 
-Before any public deployment:
+The expected deployment artifact is `dist/` from:
 
-- confirm the basemap license;
-- confirm whether tiles may be used directly from the provider;
-- record required attribution;
-- confirm request limits and production terms;
-- avoid depending on an undocumented free tile endpoint;
-- ensure all icons, flags, fonts, and historical datasets may legally be redistributed.
+```powershell
+npm run build
+```
 
-Attribution must be visible in the application where required.
+Any selected static host must:
 
----
+- serve the generated `dist/` contents;
+- use HTTPS;
+- provide the client-route fallback described above;
+- preserve static asset caching without caching `index.html` indefinitely;
+- require no private runtime token for the current F1 application.
 
-## 6. URL Routing
-
-The initial app is expected to use query parameters rather than server routes for map state, which simplifies static hosting.
-
-If client-side routes are added later, configure static-host fallback to `index.html` and document the provider-specific rule here.
+Candidate providers remain Cloudflare Pages, Vercel, Netlify, and GitHub Pages. No provider has been selected, and provider-specific configuration must not be added without owner instruction.
 
 ---
 
-## 7. Environment Variables
+## 7. Basemap, Data, and Asset Operations
 
-No environment variables are currently planned for the MVP.
+No map, historical data, external image, or external webfont ships in F1.
 
-If a tile provider requires a public browser token, document:
+Before later public deployment:
 
-- variable name;
-- whether it is safe to expose client-side;
-- local `.env` setup;
-- hosting configuration;
-- usage limits.
+- confirm the basemap and dataset licenses;
+- document required attribution and keep it visible in the product;
+- confirm tile-provider production terms and request limits;
+- avoid undocumented free tile endpoints;
+- confirm icons, fonts, flags, and historical assets may be redistributed.
 
-Never commit private tokens.
-
----
-
-## 8. Future Backend Trigger
-
-Revisit deployment architecture only if a real feature requires:
-
-- user accounts;
-- cloud bookmarks;
-- collaborative editing;
-- content moderation;
-- server-side search;
-- private datasets;
-- analytics requiring a server component.
-
-A backend introduction requires coordinated updates to `ARCHITECTURE.md`, this file, and relevant data rules.
+Never commit private tokens. If a future browser-safe public token is required, document its variable name, exposure model, local setup, hosting setup, and usage limits here.
 
 ---
 
-## 9. Repository and Git
+## 8. Repository and Git
 
-Planned context:
+Verified context:
 
 ```text
 Repository: erabyera
@@ -137,47 +128,28 @@ Main branch: main
 Local path: C:\Projects\erabyera
 ```
 
-Only commit and push when explicitly requested.
-
-Before committing:
-
-```powershell
-git status
-git diff --stat
-npm run build
-```
+Only commit or push when explicitly requested. Before a future commit, inspect the exact status and diff and run all scripts that exist for the milestone.
 
 ---
 
-## 10. Deployment Checklist
+## 9. Deployment Checklist
 
 Before the first public release:
 
-- production build passes;
-- preview build tested locally;
-- basemap and data licenses documented;
-- required attribution visible;
-- URL state survives refresh;
-- direct public URL opens correctly;
-- no private tokens or local paths shipped;
-- browser console has no production errors;
-- mobile layout is usable;
-- large data assets have acceptable load size;
-- `CURRENT_STATUS.md` contains the production URL and current limitations.
+- all configured validation passes;
+- the production build succeeds;
+- the host serves direct routes and refreshes through the `index.html` fallback;
+- browser navigation, console, responsive layout, and keyboard behavior are manually checked;
+- basemap and data licenses are documented when those assets exist;
+- required attribution is visible;
+- no private tokens, local paths, `node_modules`, or build intermediates are published as source;
+- `CURRENT_STATUS.md` records the production URL and current limitations.
 
 ---
 
-## 11. When to Update This Document
+## 10. When to Update This Document
 
-Update when:
-
-- repository remote is created;
-- actual local commands differ from the planned commands;
-- hosting provider is selected;
-- a production URL exists;
-- environment variables are introduced;
-- CI/CD is added;
-- a backend is introduced.
+Update this document when actual commands change, tests or data validation are introduced, a hosting provider or production URL is selected, environment variables or CI/CD are added, or the deployment architecture changes.
 
 ---
 

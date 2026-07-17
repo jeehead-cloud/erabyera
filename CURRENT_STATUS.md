@@ -1,232 +1,147 @@
-﻿# EraByEra вЂ” Current Status
+# EraByEra — Current Status
 
-**Status:** Pre-development planning
-**Last updated:** 2026-07-10
+**Status:** Foundation implementation — F1 complete
+**Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
 
-> This file records what is actually implemented today.
-> It must remain factual and must be reviewed after every Cursor iteration
-> (every user prompt that results in repository inspection, decisions, code,
-> data, configuration, documentation, or validation work). Update it whenever
-> the iteration produced repository-relevant information.
+> This file records what is actually implemented today. It must remain factual
+> and must be reviewed after every repository-relevant agent iteration.
 
 ---
 
 ## 1. Current Development Phase
 
-EraByEra currently exists as a product concept and documentation set. No application implementation, data pipeline, or deployment is claimed as complete in this document.
+EraByEra is a Git repository on `main` with a working React, TypeScript, and Vite application foundation. F1 — Application Shell and Routing is complete in the local working tree and has not yet been committed.
 
-Local working tree at `C:\Projects\erabyera` contains the six project documents. A GitHub remote exists at `https://github.com/jeehead-cloud/erabyera.git`. As of 2026-07-10 the local directory is not a git working tree (no `.git`), so branch and `git status` cannot be verified locally until the repository is cloned or initialized and linked to that remote.
+The application currently provides:
 
-The immediate goal is to establish a proper local git checkout and build the smallest vertical slice:
+- a shared EraByEra shell with Map, Explore, and Sources navigation;
+- `/map`, `/explore`, and `/sources` routes;
+- a root redirect from `/` to `/map`;
+- a useful shell-consistent not-found route;
+- route-level error recovery and an application-level render error boundary;
+- responsive parchment-and-ink styling informed by the checked-in design references;
+- keyboard-visible focus treatment and a visible, non-color-only active-route indicator;
+- intentional placeholders only—no map, timeline, historical domain, search, catalogs, or source records.
 
-```text
-physical map в†’ selected year в†’ a few historical places в†’ detail card в†’ source link
-```
+The interrupted F1 session left the application scaffold as untracked files. Recovery preserved that work, verified it file by file, and completed the missing documentation. No browser or development server was used during recovery.
 
 ---
 
-## 2. Milestone Status
+## 2. Foundation Milestone Status
 
-### M0 вЂ” Project foundation вЂ” Planned
-
-Scope:
-
-- create repository;
-- scaffold React + TypeScript + Vite;
-- install MapLibre integration, Zustand, Zod, and Vitest;
-- add the six project documents;
-- establish npm scripts;
-- create a basic responsive app shell;
-- verify production build.
+### F1 — Application Shell and Routing — Complete locally
 
 Implemented:
 
-- project concept documented;
-- initial product scope documented;
-- proposed architecture documented;
-- AI-agent operating rules documented;
-- GitHub remote identified: `https://github.com/jeehead-cloud/erabyera.git`;
-- local documentation set present at `C:\Projects\erabyera`.
+- React 19, TypeScript, and Vite application scaffold;
+- React Router with a shared nested layout;
+- `/map`, `/explore`, and `/sources` pages;
+- `/` redirect and wildcard not-found handling;
+- shared semantic header, navigation, and main content region;
+- accessible active-route and focus styling;
+- application and route error fallbacks;
+- responsive desktop/mobile base layout;
+- lightweight local design tokens and structured global CSS;
+- working `dev`, `typecheck`, `lint`, and `build` npm scripts.
 
-Not yet implemented:
+Validation on 2026-07-17:
 
-- local git checkout / `.git` linkage to the remote;
-- application files;
-- package configuration;
-- map rendering;
-- tests;
-- data files;
-- CI or deployment.
+- `npm run typecheck`: PASS;
+- `npm run lint`: PASS;
+- `npm run test`: NOT RUN — script not configured;
+- `npm run build`: PASS;
+- browser route/refresh/console checks: NOT RUN — intentionally avoided during crash recovery;
+- static review of routing, active navigation, responsive layout, and focus behavior: PASS.
 
-### M1 вЂ” Map shell вЂ” Planned
+### F2 — Historical Time Domain — Next
 
-Not started.
+Not started. The next milestone centralizes historical year formatting, BCE/CE transitions without displayed year zero, inclusive temporal ranges, date precision, and focused automated tests.
 
-Target outcome:
+### F3–F18 — Planned
 
-- physical basemap without modern political labels;
-- pan and zoom;
-- responsive layout;
-- visible attribution;
-- basic map-state handling.
-
-### M2 вЂ” Timeline and temporal filtering вЂ” Planned
-
-Not started.
-
-Target outcome:
-
-- selected year state;
-- historical year formatting;
-- direct year input and slider;
-- temporal filter utilities with tests;
-- URL persistence.
-
-### M3 вЂ” Places and detail cards вЂ” Planned
-
-Not started.
-
-Target outcome:
-
-- validated place data;
-- place visibility by selected year;
-- time-dependent names and ownership;
-- zoom-dependent importance;
-- detail panel with source links.
-
-### M4 вЂ” Polities and territories вЂ” Planned
-
-Not started.
-
-Target outcome:
-
-- polity metadata;
-- time-bounded GeoJSON territory features;
-- fill/boundary layers;
-- polity detail cards;
-- uncertainty indicator.
-
-### M5 вЂ” Events, battles, and journeys вЂ” Planned
-
-Not started.
-
-### M6 вЂ” Search and navigation вЂ” Planned
-
-Not started.
-
-### M7 вЂ” Data-quality tooling вЂ” Planned
-
-Not started.
-
-### M8 вЂ” Content expansion and polish вЂ” Planned
-
-Not started.
+Not started. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence. MapLibre, Zustand, Zod, historical data, the runtime data pipeline, and domain test infrastructure are intentionally absent until their milestones require them.
 
 ---
 
-## 3. Decisions Already Made
+## 3. Current Technical Decisions
 
-- EraByEra is a solo hobby project.
-- The MVP should be narrow in historical scope.
-- The application should start client-side and backend-free.
-- Data should be stored as versioned JSON / GeoJSON, even if authored in Google Sheets.
-- Historical records need sources and uncertainty metadata.
-- Modern borders and labels should not appear in the default basemap.
-- MapLibre is the proposed map foundation.
-- React + TypeScript + Vite is the proposed frontend stack.
-- GitHub repository remote is `https://github.com/jeehead-cloud/erabyera.git`.
-- `CURRENT_STATUS.md` must be reviewed after every Cursor iteration; recent minor history is retained for approximately three months; significant changes are retained permanently; agents classify significant changes themselves.
+- The implemented F1 stack is React + TypeScript + Vite + React Router.
+- npm is the package manager and `package-lock.json` is maintained alongside dependency changes.
+- Routing uses `createBrowserRouter`; static hosting must provide an `index.html` fallback for application routes.
+- The application is client-side and backend-free.
+- F1 styling uses plain CSS and a small local token layer; no component framework, CSS-in-JS system, external image, or externally loaded font is required.
+- The initial shell exposes only Map, Explore, and Sources. Future navigation stays hidden until functional.
+- MapLibre, Zustand, Zod, and Vitest remain future milestone dependencies and must not be installed preemptively.
+- Design materials under `design/` are read-only references rather than application source.
 
 ---
 
-## 4. Open Decisions
+## 4. Known Limitations and Risks
 
-These decisions must be made during M0/M1, not silently by an agent:
-
-- Exact first region and time period.
-- Basemap source and license.
-- Initial design language and UI language.
-- Whether historical content source files are JSON-first or generated from CSV.
-- Exact timeline min/max for the first slice.
-- Hosting provider.
-
----
-
-## 5. Known Risks
-
-- Scope can expand from one historical slice to вЂњall historyвЂќ too early.
-- Historical data research may consume more time than development.
-- Territory geometry can create false precision.
-- Basemap or dataset licensing may block public deployment.
-- Rendering logic may become entangled with content unless data boundaries are enforced early.
-- Local path is not yet a git working tree, so agents cannot rely on `git status` / branch checks until clone or init is completed.
+- Browser-only route refresh, Back/Forward behavior, rendered layout, and console state were not manually verified during recovery.
+- Direct URLs require a static-host rewrite/fallback to `index.html`; no hosting provider is configured.
+- No automated route tests are configured in F1. Routing behavior is currently covered by static review and successful compilation/build.
+- The Map, Explore, and Sources screens are intentional placeholders, not implemented product areas.
+- The working application files and this documentation update remain uncommitted.
+- Basemap source, license, attribution, and hosting provider remain open decisions for later milestones.
+- Scope can expand from one historical slice to “all history” too early.
+- Historical data and territory geometry can create false precision if uncertainty rules are not preserved.
 
 ---
 
-## 6. Nearest Next Steps
+## 5. Nearest Next Steps
 
-1. Clone or initialize git at `C:\Projects\erabyera`, link remote `https://github.com/jeehead-cloud/erabyera.git`, and confirm branch/working-tree state on `main`.
-2. Ensure the six root documents are committed in the repository.
-3. Scaffold the Vite/React/TypeScript application.
-4. Add MapLibre, Zustand, Zod, and Vitest.
-5. Choose and document the first historical slice.
-6. Implement the map shell with a legally usable physical basemap.
-7. Add a tiny validated dataset with 3вЂ“5 places and confirm year filtering.
+1. Owner manually checks `/`, `/map`, `/explore`, `/sources`, an unknown route, refresh, Back/Forward, keyboard focus, desktop/mobile layout, and the browser console.
+2. Review and commit F1 with the recommended message when ready.
+3. Begin F2 — Historical Time Domain.
+4. Add focused temporal tests as part of F2 rather than introducing a broad test setup in F1.
+5. Continue the approved sequence in `FOUNDATION_IMPLEMENTATION_PLAN.md` without adding map or data dependencies early.
 
 ---
 
-## 7. Maintenance Rule
+## 6. Maintenance Rule
 
-Review this document at the end of every Cursor iteration, before the completion summary.
+Review this document at the end of every repository-relevant iteration. Keep the current-state sections synchronized with reality, record ordinary work under Recent Changes, and preserve lasting decisions or completed milestones under Significant Changes.
 
-Update it when the iteration produced any repository-relevant information, including when:
-
-- a milestone starts or finishes;
-- a feature becomes actually usable;
-- a known issue is discovered or fixed;
-- the next 3вЂ“7 tasks change;
-- a proposed decision becomes a real repository decision;
-- documentation, configuration, validation, or project policy changes;
-- implementation is incomplete, validation fails, or an issue is found but not fixed.
-
-Also keep the factual sections synchronized with current reality (phase, milestones, implemented functionality, known issues, decisions, open decisions, next steps, validation/deployment status). Remove or correct statements that are no longer true.
-
-Record ordinary work under **Recent Changes вЂ” Rolling Three-Month History**. Record lasting decisions and milestones under **Significant Changes вЂ” Permanent History**. When uncertain, classify as significant if forgetting the change could cause a future agent to make a wrong architectural, product, historical-data, deployment, or roadmap decision.
-
-Do not claim validation, deployment, or implementation that was not actually performed.
-Do not add empty, repetitive, or purely conversational entries.
+Only report validation that actually ran. Do not treat planned scripts, deployment, or browser checks as complete.
 
 ---
 
-## Recent Changes вЂ” Rolling Three-Month History
+## Recent Changes — Rolling Three-Month History
 
-<!-- Newest first. Keep approximately three months.
-Remove older entries only after confirming they are not significant
-and that any still-current facts are represented elsewhere. -->
+<!-- Newest first. Keep approximately three months. -->
 
-### 2026-07-10 вЂ” Iteration-level CURRENT_STATUS maintenance introduced
+### 2026-07-17 — Recovered and completed F1 application foundation
 
-- Documented that agents must review and update `CURRENT_STATUS.md` after every Cursor iteration, not only after a meaningful feature block.
+- Recovered the untracked React/Vite application left by an interrupted agent session without discarding or recreating valid work.
+- Verified the scaffold, dependencies, router, shell, route placeholders, error states, responsive CSS, and design-token adaptation.
+- Confirmed typecheck, lint, and production build pass; no test script is configured.
+- Updated current-state, architecture, and deployment documentation. Browser validation was intentionally omitted to reduce crash risk.
+
+### 2026-07-10 — Iteration-level CURRENT_STATUS maintenance introduced
+
+- Required agents to review and update `CURRENT_STATUS.md` after every repository-relevant iteration.
 - Added rolling recent-change and permanent significant-change history sections.
-- Corrected the repository field to the verified remote and noted that the local path is not yet a git working tree.
 
 ---
 
-## Significant Changes вЂ” Permanent History
+## Significant Changes — Permanent History
 
-<!-- Newest first. Never delete entries because of age.
-Correct, consolidate, or mark entries as superseded without losing
-the historical decision and its rationale. -->
+<!-- Newest first. Never delete entries merely because of age. -->
 
-### 2026-07-10 вЂ” Mandatory post-iteration CURRENT_STATUS review
+### 2026-07-17 — F1 application shell and routing established
 
-- `CURRENT_STATUS.md` must now be reviewed after every Cursor prompt/iteration that touches repository state, decisions, code, data, configuration, documentation, or validation.
-- Recent minor history is retained for approximately three months; older non-significant entries may be removed only after confirming current facts live elsewhere.
-- Significant changes are retained permanently and may only be corrected, clarified, consolidated, or marked superseded.
-- AI agents must classify significant changes themselves using the вЂњwould forgetting this cause a wrong lasting decision?вЂќ test.
-- Why it matters: a new chat or agent can recover factual state, recent work, lasting decisions, and nearest next steps without relying on chat history.
+- EraByEra now has its first working application foundation: React, TypeScript, Vite, React Router, shared navigation, route placeholders, responsive styling, and safe error states.
+- The real F1 folder, routing, styling, and dependency decisions now supersede the earlier “no application exists” planning assumption.
+- Why it matters: later milestones can build on stable screen boundaries and routing without re-scaffolding the project or preemptively installing map and domain dependencies.
+
+### 2026-07-10 — Mandatory post-iteration CURRENT_STATUS review
+
+- `CURRENT_STATUS.md` must be reviewed after every iteration that changes or discovers repository state, decisions, code, data, configuration, documentation, or validation.
+- Recent minor history is retained for approximately three months; significant changes are retained permanently.
+- Why it matters: a new chat or agent can recover factual state without relying on chat history.
 
 ---
 

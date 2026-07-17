@@ -1,7 +1,7 @@
 ﻿# EraByEra вЂ” Architecture
 
-**Status:** Proposed baseline for initial implementation
-**Last updated:** 2026-07-10
+**Status:** F1 application foundation implemented; later architecture proposed
+**Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
 
@@ -22,21 +22,33 @@
 
 ---
 
-## 2. Proposed Tech Stack
+## 2. Technical Stack
 
-| Layer | Choice | Rationale |
+| Layer | Choice | Current status / rationale |
 |---|---|---|
-| Language | TypeScript | Shared types across UI, selectors, validation, and scripts |
-| Build tool | Vite | Simple client-side project and fast local iteration |
-| UI | React | Panels, timeline, search, cards, filters |
-| Map | MapLibre GL JS + `react-map-gl/maplibre` | Vector/raster layers, GeoJSON, smooth zoom, efficient rendering, no mandatory proprietary API |
-| State | Zustand | Small global UI state without Redux overhead |
-| Validation | Zod | Runtime validation of JSON/GeoJSON data |
-| Testing | Vitest | Date selectors, validation, URL parsing, transformation logic |
-| Styling | CSS Modules or plain structured CSS | Avoid adopting a heavy design system prematurely |
-| Data | JSON + GeoJSON in repository | Versioned, reviewable, no backend for MVP |
-| Package manager | npm | Standard and simple |
-| Backend | None for MVP | Static client application |
+| Language | TypeScript | Implemented in F1 with strict project references |
+| Build tool | Vite | Implemented in F1 for the client-side application |
+| UI | React | Implemented in F1 for the shell and route screens |
+| Routing | React Router | Implemented in F1 with a nested shared shell, root redirect, wildcard route, and route error fallback |
+| Styling | Plain structured CSS | Implemented in F1 with local tokens and global component/layout classes |
+| Package manager | npm | Implemented with a lockfile |
+| Map | MapLibre GL JS + `react-map-gl/maplibre` | Proposed for F5; not installed in F1 |
+| State | Zustand | Proposed when shared UI state requires it; not installed in F1 |
+| Validation | Zod | Proposed for F2/F3 domain contracts; not installed in F1 |
+| Testing | Vitest | Proposed for domain and routing tests; no test runner is configured in F1 |
+| Data | JSON + GeoJSON in repository | Proposed for later foundation milestones |
+| Backend | None for foundation | Static client application |
+
+### F1 application boundary
+
+The application entry point mounts `App`, which places the router inside an application-level render error boundary. The router owns the shared `AppShell`; child routes render through an `Outlet`. This gives later screens one stable layout boundary without introducing global state or domain abstractions early.
+
+F1 has two complementary recovery layers:
+
+- `AppErrorBoundary` catches unexpected React render failures and offers return-to-map and reload actions;
+- the router `errorElement` catches navigation or loader failures and offers a safe return to `/map`.
+
+Unknown URLs are normal product navigation states and render `NotFoundPage` inside the shared shell rather than using the exceptional error fallback.
 
 ### Why not a single image overlay with Leaflet
 
@@ -44,7 +56,44 @@ A static image overlay is acceptable for a prototype, but it becomes restrictive
 
 ---
 
-## 3. Proposed Repository Structure
+## 3. Repository Structure
+
+The implemented F1 structure is:
+
+```text
+erabyera/
+|-- index.html
+|-- package.json
+|-- package-lock.json
+|-- eslint.config.js
+|-- tsconfig.json
+|-- tsconfig.app.json
+|-- tsconfig.node.json
+|-- vite.config.ts
+|-- design/                 # read-only references
+`-- src/
+    |-- main.tsx
+    |-- vite-env.d.ts
+    |-- app/
+    |   |-- App.tsx
+    |   |-- AppErrorBoundary.tsx
+    |   `-- router.tsx
+    |-- components/AppShell/AppShell.tsx
+    |-- pages/
+    |   |-- MapPage.tsx
+    |   |-- ExplorePage.tsx
+    |   |-- SourcesPage.tsx
+    |   `-- NotFoundPage.tsx
+    `-- styles/
+        |-- tokens.css
+        `-- global.css
+```
+
+Domain, data, state, map, URL, public-data, and script folders do not exist yet. Add them only in the milestone that owns the corresponding behavior.
+
+### Later directional structure
+
+The following remains a direction for later milestones, not a claim about current files:
 
 ```text
 erabyera/
@@ -107,7 +156,7 @@ erabyera/
         в””в”Ђв”Ђ urlState.ts
 ```
 
-The actual repository is the source of truth once implementation begins.
+The actual repository remains the source of truth. Later milestones should adapt this direction to the implementation rather than recreating it blindly.
 
 ---
 
