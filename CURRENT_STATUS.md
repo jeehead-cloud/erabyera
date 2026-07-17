@@ -1,6 +1,6 @@
 # EraByEra — Current Status
 
-**Status:** Foundation implementation — F6 implemented; owner browser verification pending
+**Status:** Foundation implementation — F7 implemented; owner browser verification pending
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -12,9 +12,9 @@
 
 ## 1. Current Development Phase
 
-EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, and F5 at `78ef489`. F6 — URL-Synchronized Map State is implemented in the local working tree; owner external-browser verification remains pending.
+EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, and F6 at `89bb5ea`. F7 — Timeline Controls is implemented in the local working tree; owner external-browser verification remains pending.
 
-F6 centralizes validated query state for historical year, map viewport, future layer IDs, selected entity, and collection. It restores the F5 map from the URL, commits viewport changes on `moveend`, preserves meaningful history and unrelated parameters, and adds no timeline, historical layer, selection, or collection UI.
+F7 adds visible, responsive historical-time controls over the map: formatted selected year, unambiguous BCE/CE input, previous/next year, configurable step navigation, and a zero-free slider. Every committed change uses the F2 time domain and F6 URL updater without resetting the map or rendering historical content.
 
 ---
 
@@ -134,9 +134,36 @@ Validation on 2026-07-17:
 - `git diff --check`: PASS;
 - browser checks: NOT RUN — owner external-browser verification required.
 
-### F7–F18 — Planned
+### F7 — Timeline Controls — Implemented; owner verification pending
 
-Not started. F7 — Timeline Controls is next after owner browser verification confirms the F6 map/URL integration. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
+Implemented:
+
+- visible F2-formatted selected year with URL state as the only committed source of truth;
+- positive magnitude plus explicit BCE/CE direct input, Apply/Enter commit, Escape restoration, and announced validation errors;
+- previous/next year and previous/next selected-step actions using F2 zero-free movement;
+- local step sizes `1`, `5`, `10`, `25`, `50`, and `100` with no URL or local-storage expansion;
+- native slider covering 1000 BCE through 1000 CE through a zero-free ordinal mapping;
+- honest out-of-range behavior that retains valid direct years while clamping only the slider presentation;
+- replace-only F6 year updates that preserve viewport, layers, selection, collection, and unrelated parameters;
+- responsive bottom-map overlay with attribution clearance, touch-sized mobile controls, native keyboard operation, labels, focus states, live year output, and accessible range text;
+- 57 pure model tests without DOM or browser infrastructure.
+
+Automated and static acceptance criteria pass. Rendered layout, actual control interaction, viewport preservation, responsive usability, and console behavior remain pending owner verification in ordinary Chrome or Edge.
+
+Validation on 2026-07-17:
+
+- `npm run typecheck`: PASS;
+- `npm run lint`: PASS;
+- `npm run test`: PASS — 6 files, 284 tests;
+- `npm run data:validate`: PASS — 12 canonical synthetic records;
+- `npm run data:check`: PASS;
+- `npm run build`: PASS — MapLibre emits a non-blocking large-chunk warning;
+- `git diff --check`: PASS;
+- browser checks: NOT RUN — owner external-browser verification required.
+
+### F8–F18 — Planned
+
+Not started. F8 — Place Layer and Place Cards is next after owner browser verification confirms F7 timeline usability and URL/map preservation. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
 
 ---
 
@@ -164,6 +191,9 @@ Not started. F7 — Timeline Controls is next after owner browser verification c
 - URL defaults are year `-334`, the F5 viewport, `territories`/`places`/`events`, and no selected entity or collection.
 - Finite out-of-range viewport values clamp; malformed and non-finite values fall back safely. Coordinates serialize to six decimals and zoom to two.
 - Map movement and URL canonicalization replace history; explicit future navigation updates can push history.
+- Timeline year is URL-owned; only draft magnitude, era, and step size are local component state.
+- All timeline transitions reuse F2 zero-free movement, and every F7 year update uses F6 history replacement.
+- The foundation slider spans 1000 BCE–1000 CE; valid F2 years outside it remain selected and visible.
 - All entity temporal fields reuse `src/domain/time`; no second time model exists.
 - Zod and Vitest remain the only domain validation/testing dependencies.
 
@@ -176,7 +206,7 @@ Not started. F7 — Timeline Controls is next after owner browser verification c
 - Competing temporal interpretations cannot yet coexist in canonical fixture files because the current schema has no explicit variant/claim grouping.
 - Published-source enforcement checks coverage presence, not whether the referenced source exists or is editorially adequate.
 - Fixtures are synthetic structure examples, not publishable historical data.
-- No timeline, visible year control, historical-layer rendering, entity UI, collection UI, search, or runtime data loading exists yet.
+- No playback, historical-layer rendering, entity UI, collection UI, search, or runtime data loading exists yet.
 - Natural Earth 1:110m vectors are intentionally generalized and become coarse at close zoom; F5 caps zoom at 7.
 - Actual WebGL load, pan/zoom, responsive rendering, visual forbidden-layer review, and browser console checks remain pending owner verification.
 - Direct application URLs still require a static-host fallback; no hosting provider is configured.
@@ -185,9 +215,9 @@ Not started. F7 — Timeline Controls is next after owner browser verification c
 
 ## 5. Nearest Next Steps
 
-1. Complete the F5/F6 owner external-browser checks for rendering, viewport restoration, URL updates, refresh, and Back/Forward.
-2. Review and commit F6 when ready.
-3. Begin F7 — Timeline Controls only after browser verification confirms map/URL synchronization is stable.
+1. Complete the F5–F7 owner external-browser checks for map rendering, timeline interaction, URL updates, viewport preservation, responsive layout, and keyboard behavior.
+2. Review and commit F7 when ready.
+3. Begin F8 — Place Layer and Place Cards only after browser verification confirms timeline and map/URL synchronization are stable.
 4. Keep the synthetic F4 fixture isolated from visible map UI.
 
 ---
@@ -201,6 +231,11 @@ Only report validation that actually ran.
 ---
 
 ## Recent Changes — Rolling Three-Month History
+
+### 2026-07-17 — Implemented F7 historical timeline controls
+
+- Added visible selected-year display, BCE/CE direct input, one-year and stepped navigation, and a zero-free 1000 BCE–1000 CE slider over the map.
+- Routed all commits through F2 and F6, added responsive/accessibility behavior and 57 pure tests; owner external-browser verification remains pending.
 
 ### 2026-07-17 — Implemented F6 URL-synchronized map state
 
@@ -235,6 +270,12 @@ Only report validation that actually ran.
 ---
 
 ## Significant Changes — Permanent History
+
+### 2026-07-17 — First visible historical-time navigation established
+
+- EraByEra now exposes its central historical dimension through one URL-owned selected year and a zero-free BCE/CE control model.
+- Direct input remains broader than the bounded slider, and all manual navigation replaces history while preserving the map state.
+- Why it matters: future historical layers can react to one tested visible year contract without duplicating time, input, or navigation semantics.
 
 ### 2026-07-17 — Public map URL contract established
 

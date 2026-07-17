@@ -1,6 +1,6 @@
 ﻿# EraByEra вЂ” Architecture
 
-**Status:** F1–F6 application, domain, static-data, physical-map, and URL-state foundation implemented; later architecture proposed
+**Status:** F1–F7 application, domain, static-data, map, URL-state, and timeline foundation implemented; later architecture proposed
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -87,7 +87,9 @@ erabyera/
     |   |-- App.tsx
     |   |-- AppErrorBoundary.tsx
     |   `-- router.tsx
-    |-- components/AppShell/AppShell.tsx
+    |-- components/
+    |   |-- AppShell/AppShell.tsx
+    |   `-- Timeline/       # F7 controls, input, step selector, model, styles, and tests
     |-- domain/time/
     |   |-- datePrecision.ts
     |   |-- historicalYear.ts
@@ -391,7 +393,7 @@ Overlapping time-dependent records for the same field should be rejected by vali
 
 ### Testing
 
-Vitest runs as a Node-based unit-test environment with no browser or DOM dependency. `npm run test` executes once and exits; `npm run test:watch` is the optional local watch mode. F2 covers historical-time behavior, F3/F4 cover entity and complete-dataset contracts, and F5 adds pure configuration/style audits without mocking WebGL or rendering MapLibre in Node.
+Vitest runs as a Node-based unit-test environment with no browser or DOM dependency. `npm run test` executes once and exits; `npm run test:watch` is the optional local watch mode. F2 covers historical-time behavior, F3/F4 cover entity and complete-dataset contracts, F5 adds pure configuration/style audits, F6 tests URL state, and F7 tests timeline input, movement, slider, URL-preservation, and history policy without mocking WebGL or rendering React in Node.
 
 ---
 
@@ -451,6 +453,18 @@ The default state is year `-334`, the F5 viewport, active layers `territories`, 
 Parsing is strict: numeric tails, non-finite values, year zero, fractional or unsafe years, malformed IDs, and unknown selection types never reach MapLibre. Malformed numbers fall back to defaults. Finite out-of-range latitude, longitude, and zoom values clamp consistently. Latitude uses the Web Mercator practical limit `±85.051129`, longitude uses `±180`, and zoom reuses F5 limits. Coordinates serialize to at most six decimal places and zoom to at most two, with negative zero normalized.
 
 `useMapUrlState` parses React Router location state and replaces valid-but-noncanonical URLs once. Map movement commits use replace so dragging does not flood history; future explicit navigation actions default to push. React Router location changes, including browser Back/Forward, are the popstate adapter. Equivalent canonical state suppresses redundant navigation. Pure parse, normalize, serialize, canonicalize, comparison, and canonical-share URL helpers remain usable without React or browser globals.
+
+### Timeline state and controls
+
+F7 implements `src/components/Timeline` as a bottom map overlay. `MapUrlState.year` remains the only committed selected-year source of truth; `MapPage` passes it into the timeline and sends year-only updates through the F6 updater. Timeline changes use history replacement, preserving viewport, layers, entity, collection, and unrelated query parameters without remounting MapLibre.
+
+Local component state is limited to the direct-input draft and the selected step size. Direct input uses a positive integer magnitude plus an explicit `BCE`/`CE` selector. Enter or Apply validates through F2 before committing; Escape restores the URL-backed value. Empty, zero, negative, fractional, malformed, and unsafe magnitudes remain local errors and never modify URL state. Router Back/Forward changes replace the draft from the newly selected year.
+
+Step sizes are exactly `1`, `5`, `10`, `25`, `50`, and `100`, defaulting to `1` and remaining local without persistence or URL expansion. Previous/next-year and previous/next-step actions call F2 `shiftHistoricalYear`; no control uses raw signed-year arithmetic, so `1 BCE` and `1 CE` remain adjacent.
+
+The native range input covers `1000 BCE` through `1000 CE`. It uses a zero-free ordinal: BCE values retain their negative number, while CE year `n` maps to `n - 1`; ordinal `-1` is `1 BCE` and ordinal `0` is `1 CE`. Direct input still accepts every F2 safe nonzero integer. When selection lies outside the slider range, the selected URL year remains unchanged, the slider rests at the nearest endpoint, and explanatory text is shown.
+
+The overlay uses existing parchment, ink, and brass tokens, leaves a bottom attribution clearance, wraps controls below 900px, increases touch targets below 600px, and keeps the slider and all navigation available. Native inputs, selects, and buttons provide keyboard operation; labels, action names, live selected-year output, range value text, visible focus, and announced validation errors provide the accessibility contract. Rendered layout and interaction remain owner-browser checks.
 
 ---
 

@@ -163,6 +163,11 @@ The exact thresholds must be centralized and testable, not scattered across comp
 - Changing the selected year updates every active historical layer consistently.
 - The year shown in the UI and URL is the year used by selectors.
 - Direct year input and slider movement must share the same validation.
+- Direct entry uses a positive magnitude plus an explicit BCE or CE era; invalid drafts never replace the selected URL year.
+- Previous, next, and step navigation must use the zero-free historical-time domain so 1 BCE and 1 CE are adjacent.
+- Foundation step sizes are exactly 1, 5, 10, 25, 50, and 100 years; the preference is local and is not part of the public URL.
+- The foundation slider covers 1000 BCE through 1000 CE with zero-free ordinal mapping. Valid direct years outside that range remain selected while the slider rests at its nearest endpoint.
+- Timeline interaction replaces the current URL entry to avoid creating a history item for every year or slider movement.
 - Timeline playback is deferred until manual navigation is stable.
 - Large jumps in time must not animate through every intermediate year unless playback is explicitly active.
 
