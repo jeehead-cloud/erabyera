@@ -1,6 +1,6 @@
 ﻿# EraByEra вЂ” Architecture
 
-**Status:** F1 application foundation and F2 historical time domain implemented; later architecture proposed
+**Status:** F1–F3 application and domain foundation implemented; later architecture proposed
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -34,8 +34,8 @@
 | Package manager | npm | Implemented with a lockfile |
 | Map | MapLibre GL JS + `react-map-gl/maplibre` | Proposed for F5; not installed in F1 |
 | State | Zustand | Proposed when shared UI state requires it; not installed in F1 |
-| Validation | Zod | Implemented in F2 for historical-time runtime schemas; expands only with milestone-owned domain contracts |
-| Testing | Vitest | Implemented in F2 for non-browser TypeScript unit tests |
+| Validation | Zod | Implemented for F2 time schemas and F3 strict entity contracts |
+| Testing | Vitest | Implemented for non-browser TypeScript domain tests |
 | Data | JSON + GeoJSON in repository | Proposed for later foundation milestones |
 | Backend | None for foundation | Static client application |
 
@@ -58,7 +58,7 @@ A static image overlay is acceptable for a prototype, but it becomes restrictive
 
 ## 3. Repository Structure
 
-The implemented F1/F2 structure is:
+The implemented F1–F3 structure is:
 
 ```text
 erabyera/
@@ -86,6 +86,20 @@ erabyera/
     |   |-- temporalRange.ts
     |   |-- index.ts
     |   `-- time.test.ts
+    |-- domain/entities/
+    |   |-- common.ts
+    |   |-- source.ts
+    |   |-- uncertainty.ts
+    |   |-- place.ts
+    |   |-- polity.ts
+    |   |-- person.ts
+    |   |-- event.ts
+    |   |-- journey.ts
+    |   |-- collection.ts
+    |   |-- validation.ts
+    |   |-- fixtures.ts
+    |   |-- index.ts
+    |   `-- entities.test.ts
     |-- pages/
     |   |-- MapPage.tsx
     |   |-- ExplorePage.tsx
@@ -96,7 +110,7 @@ erabyera/
         `-- global.css
 ```
 
-Entity-domain, data, state, map, URL, public-data, and script folders do not exist yet. Add them only in the milestone that owns the corresponding behavior.
+Source-data, generated-data, state, map, URL, public-data, and script folders do not exist yet. Add them only in the milestone that owns the corresponding behavior.
 
 ### Later directional structure
 
@@ -168,6 +182,47 @@ The actual repository remains the source of truth. Later milestones should adapt
 ---
 
 ## 4. Core Domain Model
+
+### F3 canonical entity contracts
+
+The canonical F3 API is exported by `src/domain/entities/index.ts`. Each source-data object uses an explicit strict Zod schema: unknown fields are rejected so misspellings cannot silently disappear. Shared metadata is intentionally limited to stable ID, default name, editorial status, and optional summary; specialized fields remain on their entity schemas.
+
+Entity IDs use lowercase ASCII letters, digits, and single hyphens:
+
+```text
+sample-place
+alexander-iii
+```
+
+IDs are language-neutral, URL-safe, contain no whitespace or path separators, and do not require type prefixes or UUIDs. Schema metadata uses literal `schemaVersion: 1`; dataset versions use a lowercase dataset name plus semantic version, such as `sample-0.1.0`. Migration execution and runtime manifests remain F4 work.
+
+Canonical editorial statuses are `draft`, `reviewed`, `published`, and `deprecated`. A shared refinement requires every published entity record to contain at least one SourceReference. Sources themselves are bibliographic records and do not self-reference. Full reference-existence and source-quality checks require the complete F4 dataset.
+
+Uncertainty is categorical:
+
+- confidence: `high`, `medium`, `low`, `disputed`, `unknown`;
+- location accuracy: `exact`, `approximate`, `settlement-area`, `regional`, `disputed`, `unknown`;
+- territory control: `core`, `direct`, `claimed`, `tributary`, `dependent`, `sphere-of-influence`, `disputed`, `approximate`.
+
+Coordinates are strict `[longitude, latitude]` tuples bounded to `[-180, 180]` and `[-90, 90]`. No map or GeoJSON dependency is required in F3.
+
+Distinct contracts exist for:
+
+- Source and SourceReference;
+- Place plus name, ownership, and 1–5 importance periods;
+- Polity plus capital/ruler periods and separate TerritoryPeriod metadata;
+- Person plus bounded person-place relationships and 1–5 importance;
+- ordinary Event and specialized Battle within the HistoricalEvent union;
+- Journey/Campaign plus unique sequential route stages;
+- ContentCollection with grouped links, bounded viewport, coverage metadata, dataset version, and in-range recommended start year.
+
+All temporal fields import the F2 time schemas. F3 does not define a second year, range, or precision model.
+
+Pure helpers support missing-reference discovery and inclusive temporal-overlap detection over caller-selected period arrays. Overlap is not rejected universally because competing historical interpretations may legitimately coexist. Synthetic fixtures exercise every major contract without creating canonical history.
+
+### Earlier conceptual examples
+
+The examples below describe the original direction. Where names or optional fields differ, the strict schemas exported from `src/domain/entities` are authoritative.
 
 ### Shared temporal range
 
@@ -323,7 +378,7 @@ Overlapping time-dependent records for the same field should be rejected by vali
 
 ### Testing
 
-Vitest runs as a Node-based unit-test environment with no browser or DOM dependency. `npm run test` executes once and exits; `npm run test:watch` is the optional local watch mode. F2 tests cover validation, formatting, BCE/CE transitions, zero-free stepping, date precision, inclusive activity/intersection, unknown-end policy, and nearest-year behavior.
+Vitest runs as a Node-based unit-test environment with no browser or DOM dependency. `npm run test` executes once and exits; `npm run test:watch` is the optional local watch mode. F2 covers historical-time behavior. F3 adds schema/helper coverage for IDs, coordinates, publication rules, uncertainty enums, distinct entity contracts, battle specialization, route ordering, collection bounds, strictness, overlap, and missing references.
 
 ---
 
