@@ -1,6 +1,6 @@
 # EraByEra — Current Status
 
-**Status:** Foundation implementation — F5 implemented; owner browser verification pending
+**Status:** Foundation implementation — F6 implemented; owner browser verification pending
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -12,9 +12,9 @@
 
 ## 1. Current Development Phase
 
-EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, and F4 at `2fe64a7`. F5 — Physical MapLibre Shell is implemented in the local working tree; owner external-browser verification remains pending.
+EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, and F5 at `78ef489`. F6 — URL-Synchronized Map State is implemented in the local working tree; owner external-browser verification remains pending.
 
-F5 replaces the `/map` placeholder with a real MapLibre map using local public-domain Natural Earth physical vectors. It adds pan/zoom, restrained controls, visible attribution, loading and retry states, responsive sizing, and structural style audits without rendering historical or synthetic F4 data.
+F6 centralizes validated query state for historical year, map viewport, future layer IDs, selected entity, and collection. It restores the F5 map from the URL, commits viewport changes on `moveend`, preserves meaningful history and unrelated parameters, and adds no timeline, historical layer, selection, or collection UI.
 
 ---
 
@@ -107,9 +107,36 @@ Validation on 2026-07-17:
 - `git diff --check`: PASS;
 - browser checks: NOT RUN — owner external-browser verification required.
 
-### F6–F18 — Planned
+### F6 — URL-Synchronized Map State — Implemented; owner verification pending
 
-Not started. F6 — URL-Synchronized Map State is next after owner browser verification of F5. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
+Implemented:
+
+- one typed `MapUrlState` and centralized defaults using F2 historical years and the F5 viewport;
+- strict parsing, safe normalization, deterministic serialization, canonicalization, and canonical-share URL helpers;
+- Web Mercator-safe latitude and F5 zoom clamping, finite-number rejection, negative-zero normalization, and controlled coordinate precision;
+- stable future layer identifiers with absent-versus-empty semantics and canonical ordering;
+- typed `type:id` entity references and collection IDs validated with the F3 entity-ID schema without runtime resolution;
+- preservation and deterministic ordering of unrelated query parameters;
+- React Router integration with replace-on-canonicalization, replace-on-map-movement, push-capable explicit updates, and Back/Forward restoration by location state;
+- controlled F5 map synchronization that writes only on `moveend` and suppresses equivalent updates;
+- 50 pure F6 tests without a DOM or MapLibre renderer.
+
+Automated and static acceptance criteria pass. URL/map behavior remains pending owner verification in an ordinary external browser under the requested no-browser constraint.
+
+Validation on 2026-07-17:
+
+- `npm run typecheck`: PASS;
+- `npm run lint`: PASS;
+- `npm run test`: PASS — 5 files, 227 tests;
+- `npm run data:validate`: PASS — 12 canonical synthetic records;
+- `npm run data:check`: PASS;
+- `npm run build`: PASS — MapLibre emits a non-blocking large-chunk warning;
+- `git diff --check`: PASS;
+- browser checks: NOT RUN — owner external-browser verification required.
+
+### F7–F18 — Planned
+
+Not started. F7 — Timeline Controls is next after owner browser verification confirms the F6 map/URL integration. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
 
 ---
 
@@ -133,7 +160,10 @@ Not started. F6 — URL-Synchronized Map State is next after owner browser verif
 - Place name, ownership, importance, and polity-capital overlaps are rejected until competing interpretations receive an explicit schema representation.
 - The physical basemap is a local MapLibre style using only public-domain Natural Earth 1:110m land, coastline, lake, and river vectors.
 - F5 uses no external tile provider, provider account, token, glyphs, sprites, modern political boundaries, or settlement/transport labels.
-- Map camera state remains local and uncontrolled in F5; F6 owns URL synchronization.
+- The URL is the reproducible source of map-navigation state; the map keeps a local controlled camera for responsive interaction and commits only on `moveend`.
+- URL defaults are year `-334`, the F5 viewport, `territories`/`places`/`events`, and no selected entity or collection.
+- Finite out-of-range viewport values clamp; malformed and non-finite values fall back safely. Coordinates serialize to six decimals and zoom to two.
+- Map movement and URL canonicalization replace history; explicit future navigation updates can push history.
 - All entity temporal fields reuse `src/domain/time`; no second time model exists.
 - Zod and Vitest remain the only domain validation/testing dependencies.
 
@@ -146,7 +176,7 @@ Not started. F6 — URL-Synchronized Map State is next after owner browser verif
 - Competing temporal interpretations cannot yet coexist in canonical fixture files because the current schema has no explicit variant/claim grouping.
 - Published-source enforcement checks coverage presence, not whether the referenced source exists or is editorially adequate.
 - Fixtures are synthetic structure examples, not publishable historical data.
-- No timeline, URL year/map state, entity UI, search, or runtime data loading exists yet.
+- No timeline, visible year control, historical-layer rendering, entity UI, collection UI, search, or runtime data loading exists yet.
 - Natural Earth 1:110m vectors are intentionally generalized and become coarse at close zoom; F5 caps zoom at 7.
 - Actual WebGL load, pan/zoom, responsive rendering, visual forbidden-layer review, and browser console checks remain pending owner verification.
 - Direct application URLs still require a static-host fallback; no hosting provider is configured.
@@ -155,9 +185,9 @@ Not started. F6 — URL-Synchronized Map State is next after owner browser verif
 
 ## 5. Nearest Next Steps
 
-1. Complete the documented F5 owner external-browser checklist.
-2. Review and commit F5 when ready.
-3. Begin F6 — URL-Synchronized Map State only after browser verification confirms the shell is stable.
+1. Complete the F5/F6 owner external-browser checks for rendering, viewport restoration, URL updates, refresh, and Back/Forward.
+2. Review and commit F6 when ready.
+3. Begin F7 — Timeline Controls only after browser verification confirms map/URL synchronization is stable.
 4. Keep the synthetic F4 fixture isolated from visible map UI.
 
 ---
@@ -171,6 +201,11 @@ Only report validation that actually ran.
 ---
 
 ## Recent Changes — Rolling Three-Month History
+
+### 2026-07-17 — Implemented F6 URL-synchronized map state
+
+- Added centralized, validated, canonical URL state and React Router synchronization for year, viewport, future layers, selected entity, and collection.
+- Connected the F5 camera at `moveend`, preserved unrelated parameters and meaningful history, and added 50 pure tests; owner external-browser verification remains pending.
 
 ### 2026-07-17 — Implemented F5 physical MapLibre shell
 
@@ -200,6 +235,12 @@ Only report validation that actually ran.
 ---
 
 ## Significant Changes — Permanent History
+
+### 2026-07-17 — Public map URL contract established
+
+- Map navigation now has one typed, canonical query contract that reuses F2 year rules, F3 IDs, and F5 viewport limits.
+- Canonical URLs preserve unrelated parameters, restore through React Router history, and separate future references from runtime-data resolution.
+- Why it matters: timeline, layer, selection, collection, and sharing milestones can extend one reproducible state boundary instead of inventing incompatible navigation state.
 
 ### 2026-07-17 — Self-contained physical basemap selected
 

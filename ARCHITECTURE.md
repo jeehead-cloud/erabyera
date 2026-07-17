@@ -1,6 +1,6 @@
 ﻿# EraByEra вЂ” Architecture
 
-**Status:** F1–F5 application, domain, static-data, and physical-map foundation implemented; later architecture proposed
+**Status:** F1–F6 application, domain, static-data, physical-map, and URL-state foundation implemented; later architecture proposed
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -33,7 +33,7 @@
 | Styling | Plain structured CSS | Implemented in F1 with local tokens and global component/layout classes |
 | Package manager | npm | Implemented with a lockfile |
 | Map | MapLibre GL JS 5.24 + `react-map-gl/maplibre` 8.1 | Implemented in F5 with a local Natural Earth physical style |
-| State | Zustand | Proposed when shared UI state requires it; not installed in F1 |
+| State | URL + local React state | Implemented in F6 for reproducible map navigation; Zustand remains deferred |
 | Validation | Zod | Implemented for time, entities, source wrappers, runtime data, and GeoJSON |
 | Testing | Vitest | Implemented for domain and repository data-pipeline tests |
 | Data | JSON + GeoJSON in repository | Canonical source and geometry plus committed deterministic runtime output implemented in F4 |
@@ -111,7 +111,8 @@ erabyera/
     |   `-- entities.test.ts
     |-- domain/geometry/    # browser-safe GeoJSON Zod contracts
     |-- data/               # browser-safe runtime schema and immutable loader
-    |-- map/                # F5 style, viewport, lifecycle states, and tests
+    |-- map/                # F5 style and lifecycle plus F6 controlled viewport integration
+    |-- url/                # F6 URL schemas, pure state contract, router hook, and tests
     |-- pages/
     |   |-- MapPage.tsx
     |   |-- ExplorePage.tsx
@@ -122,7 +123,7 @@ erabyera/
         `-- global.css
 ```
 
-State, map, and URL folders remain future work. Canonical source data is never imported directly by application code; the app-facing boundary is `src/data` and generated runtime JSON.
+Historical-layer rendering and shared non-URL UI state remain future work. Canonical source data is never imported directly by application code; the app-facing boundary is `src/data` and generated runtime JSON.
 
 ### Later directional structure
 
@@ -412,9 +413,9 @@ F5 implements a repository-managed MapLibre Style Specification in `src/map/base
 
 The style provides ocean background, land/lake fills, river lines, and coastline lines. Its automated structural audit rejects known political, settlement, transport, and label categories. `docs/BASEMAP.md` records primary-source provenance, exact asset hashes, public-domain terms, visible attribution, production considerations, and the remaining owner visual audit.
 
-The initial uncontrolled viewport is centralized at longitude `28`, latitude `37`, zoom `3.5`, bearing `0`, and pitch `0`. Zoom is bounded from `1.5` to `7` because the generalized 1:110m vectors are not close-detail data. F6 owns controlled camera and URL synchronization.
+The initial viewport is centralized at longitude `28`, latitude `37`, zoom `3.5`, bearing `0`, and pitch `0`. Zoom is bounded from `1.5` to `7` because the generalized 1:110m vectors are not close-detail data. F6 reuses these values as URL defaults and controls longitude, latitude, and zoom without duplicating the map limits.
 
-`MapView` uses the official React wrapper lifecycle, allowing mount cleanup under React Strict Mode. It owns only local loading/error/retry state, renders standard map interactions plus a navigation control, and unmounts/recreates the map for a single user-triggered retry. Map resource errors remain inside the map route; the application error boundary remains the fallback for unexpected React failures.
+`MapView` uses the official React wrapper lifecycle, allowing mount cleanup under React Strict Mode. It owns local loading/error/retry state and a responsive local camera value. `onMove` updates only that local camera; `onMoveEnd` commits longitude, latitude, and zoom to the URL with history replacement. Router-originated state changes update the controlled camera only when values differ at serialized precision, so Back/Forward can restore the view without map/URL feedback loops. A retry still unmounts and recreates only the map. Map resource errors remain inside the map route; the application error boundary remains the fallback for unexpected React failures.
 
 MapLibre’s official CSS is imported exactly once from `src/main.tsx`. The shell uses a bounded viewport grid, a scroll-capable main region, and an explicit full-height map chain so the canvas cannot collapse at desktop or mobile widths.
 
@@ -437,13 +438,19 @@ Loaded validated datasets should be treated as immutable during normal app usage
 
 ### URL state
 
-At minimum:
+F6 implements the authoritative map-navigation contract in `src/url`:
 
 ```text
-?year=-323&lat=32.5&lng=30.2&zoom=4.7&layers=places,territories,battles
+?year=-323&lat=32.5&lng=30.2&zoom=4.7&layers=territories,places,events&entity=event:sample-event&collection=sample-collection
 ```
 
-URL parsing and serialization belong in one module and require tests.
+`MapUrlState` contains the F2 `HistoricalYear`, latitude, longitude, zoom, stable historical layer IDs, an optional typed selected-entity reference, and an optional collection ID. Supported historical layer IDs have canonical order `territories`, `places`, `people`, `events`, `journeys`; the physical basemap is never a toggle layer. Supported selected types are `place`, `polity`, `person`, `event`, and `journey`, encoded as `type:id`. Entity and collection IDs reuse the F3 entity-ID schema but are not resolved against runtime data in F6.
+
+The default state is year `-334`, the F5 viewport, active layers `territories`, `places`, and `events`, with no selection or collection. Default-valued known parameters are omitted. An absent `layers` parameter selects the default set, while `layers=` explicitly selects none. Known parameters serialize in the order `year`, `lat`, `lng`, `zoom`, `layers`, `entity`, `collection`; unrelated parameters are preserved and sorted after known parameters.
+
+Parsing is strict: numeric tails, non-finite values, year zero, fractional or unsafe years, malformed IDs, and unknown selection types never reach MapLibre. Malformed numbers fall back to defaults. Finite out-of-range latitude, longitude, and zoom values clamp consistently. Latitude uses the Web Mercator practical limit `±85.051129`, longitude uses `±180`, and zoom reuses F5 limits. Coordinates serialize to at most six decimal places and zoom to at most two, with negative zero normalized.
+
+`useMapUrlState` parses React Router location state and replaces valid-but-noncanonical URLs once. Map movement commits use replace so dragging does not flood history; future explicit navigation actions default to push. React Router location changes, including browser Back/Forward, are the popstate adapter. Equivalent canonical state suppresses redundant navigation. Pure parse, normalize, serialize, canonicalize, comparison, and canonical-share URL helpers remain usable without React or browser globals.
 
 ---
 

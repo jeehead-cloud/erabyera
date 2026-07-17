@@ -173,7 +173,10 @@ The exact thresholds must be centralized and testable, not scattered across comp
 - Search may return entities outside the currently selected year.
 - Choosing a search result moves to a relevant year and location.
 - When several relevant years exist, use a clearly documented default such as the first active year or ask the user through the UI later.
-- Shared URLs should restore at least selected year, map center, zoom, active layers, and selected entity when practical.
+- The URL is the reproducible source of selected year, map center, zoom, active layers, selected entity, and active collection.
+- Map dragging and zooming replace the current history entry only when interaction ends; explicit committed navigation may push a new entry so Back and Forward remain meaningful.
+- Unknown query parameters are preserved when map state is canonicalized or updated.
+- Shared URLs restore typed state without implying that an entity or collection has been loaded or verified to exist.
 
 ---
 
