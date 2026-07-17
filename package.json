@@ -15,8 +15,10 @@
     "data:check": "tsx scripts/data/check-data.ts"
   },
   "dependencies": {
+    "maplibre-gl": "^5.24.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "react-map-gl": "^8.1.1",
     "react-router-dom": "^7.18.1",
     "zod": "^4.4.3"
   },

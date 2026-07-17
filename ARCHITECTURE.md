@@ -1,6 +1,6 @@
 ﻿# EraByEra вЂ” Architecture
 
-**Status:** F1–F4 application, domain, and static-data foundation implemented; later architecture proposed
+**Status:** F1–F5 application, domain, static-data, and physical-map foundation implemented; later architecture proposed
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -32,7 +32,7 @@
 | Routing | React Router | Implemented in F1 with a nested shared shell, root redirect, wildcard route, and route error fallback |
 | Styling | Plain structured CSS | Implemented in F1 with local tokens and global component/layout classes |
 | Package manager | npm | Implemented with a lockfile |
-| Map | MapLibre GL JS + `react-map-gl/maplibre` | Proposed for F5; not installed in F1 |
+| Map | MapLibre GL JS 5.24 + `react-map-gl/maplibre` 8.1 | Implemented in F5 with a local Natural Earth physical style |
 | State | Zustand | Proposed when shared UI state requires it; not installed in F1 |
 | Validation | Zod | Implemented for time, entities, source wrappers, runtime data, and GeoJSON |
 | Testing | Vitest | Implemented for domain and repository data-pipeline tests |
@@ -76,6 +76,8 @@ erabyera/
 |   |-- geometry/           # canonical territory and journey GeoJSON
 |   `-- generated/          # committed, deterministic runtime output; never hand-edit
 |-- scripts/data/           # Node-only load, validation, build, check, and tests
+|-- public/map-data/        # local Natural Earth physical GeoJSON
+|-- docs/BASEMAP.md         # basemap provenance, license, audit, and operations
 |-- vite.config.ts
 |-- design/                 # read-only references
 `-- src/
@@ -109,6 +111,7 @@ erabyera/
     |   `-- entities.test.ts
     |-- domain/geometry/    # browser-safe GeoJSON Zod contracts
     |-- data/               # browser-safe runtime schema and immutable loader
+    |-- map/                # F5 style, viewport, lifecycle states, and tests
     |-- pages/
     |   |-- MapPage.tsx
     |   |-- ExplorePage.tsx
@@ -387,7 +390,7 @@ Overlapping time-dependent records for the same field should be rejected by vali
 
 ### Testing
 
-Vitest runs as a Node-based unit-test environment with no browser or DOM dependency. `npm run test` executes once and exits; `npm run test:watch` is the optional local watch mode. F2 covers historical-time behavior. F3 adds schema/helper coverage for IDs, coordinates, publication rules, uncertainty enums, distinct entity contracts, battle specialization, route ordering, collection bounds, strictness, overlap, and missing references.
+Vitest runs as a Node-based unit-test environment with no browser or DOM dependency. `npm run test` executes once and exits; `npm run test:watch` is the optional local watch mode. F2 covers historical-time behavior, F3/F4 cover entity and complete-dataset contracts, and F5 adds pure configuration/style audits without mocking WebGL or rendering MapLibre in Node.
 
 ---
 
@@ -405,13 +408,15 @@ React controls the map and panels, but high-volume features should not be render
 
 ### Basemap
 
-The basemap must avoid modern borders and labels. Initial options:
+F5 implements a repository-managed MapLibre Style Specification in `src/map/basemap.ts`. It references four same-origin Natural Earth 1:110m physical GeoJSON files: land, coastline, lakes, and rivers/lake centerlines. No cultural dataset, symbol layer, glyphs, sprites, administrative boundary, populated-place source, remote tile URL, provider account, or token is used.
 
-1. a custom MapLibre style using only physical layers;
-2. self-hosted or properly licensed physical raster/vector tiles;
-3. Natural Earth-derived static vector layers.
+The style provides ocean background, land/lake fills, river lines, and coastline lines. Its automated structural audit rejects known political, settlement, transport, and label categories. `docs/BASEMAP.md` records primary-source provenance, exact asset hashes, public-domain terms, visible attribution, production considerations, and the remaining owner visual audit.
 
-The final choice must be recorded with license and attribution requirements before public deployment.
+The initial uncontrolled viewport is centralized at longitude `28`, latitude `37`, zoom `3.5`, bearing `0`, and pitch `0`. Zoom is bounded from `1.5` to `7` because the generalized 1:110m vectors are not close-detail data. F6 owns controlled camera and URL synchronization.
+
+`MapView` uses the official React wrapper lifecycle, allowing mount cleanup under React Strict Mode. It owns only local loading/error/retry state, renders standard map interactions plus a navigation control, and unmounts/recreates the map for a single user-triggered retry. Map resource errors remain inside the map route; the application error boundary remains the fallback for unexpected React failures.
+
+MapLibre’s official CSS is imported exactly once from `src/main.tsx`. The shell uses a bounded viewport grid, a scroll-capable main region, and an explicit full-height map chain so the canvas cannot collapse at desktop or mobile widths.
 
 ---
 

@@ -1,6 +1,6 @@
 # EraByEra — Deployment and Operations
 
-**Status:** Local application and historical-time foundation; not deployed
+**Status:** Local application, data pipeline, and physical map foundation; not deployed
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -14,7 +14,7 @@
 
 EraByEra is a client-side React, TypeScript, and Vite application with a repository-managed static data pipeline. No production, staging, CI/CD workflow, or hosting provider is configured.
 
-The production build is a static `dist/` directory. There is no server process, backend, database, migration, or runtime secret in F1.
+The production build is a static `dist/` directory. There is no server process, backend, database, migration, or runtime secret.
 
 ---
 
@@ -109,17 +109,19 @@ Candidate providers remain Cloudflare Pages, Vercel, Netlify, and GitHub Pages. 
 
 ## 7. Basemap, Data, and Asset Operations
 
-No map, historical data, external image, or external webfont ships in F1.
+F5 ships MapLibre GL JS and four local Natural Earth 1:110m physical GeoJSON files. The application makes no runtime tile-provider request and requires no basemap token, account, environment variable, quota, or rate-limit handling. Natural Earth declares its data public domain; visible attribution still reads “Made with Natural Earth.” Exact provenance, hashes, license links, style exclusions, and limitations are recorded in `docs/BASEMAP.md`.
 
-Before later public deployment:
+Static hosting must serve `/map-data/*.geojson` with JSON-compatible content types and should cache the version-controlled files. MapLibre creates a Web Worker and uses WebGL; a future Content Security Policy must follow the official MapLibre requirements, including appropriate `worker-src`/`child-src` blob allowances unless the separate CSP bundle and worker are configured.
 
-- confirm the basemap and dataset licenses;
-- document required attribution and keep it visible in the product;
-- confirm tile-provider production terms and request limits;
-- avoid undocumented free tile endpoints;
-- confirm icons, fonts, flags, and historical assets may be redistributed.
+Before public release, verify in an ordinary browser that:
 
-Never commit private tokens. If a future browser-safe public token is required, document its variable name, exposure model, local setup, hosting setup, and usage limits here.
+- all four same-origin GeoJSON requests succeed;
+- WebGL initializes without console errors;
+- MapLibre and Natural Earth attribution remain visible at desktop and mobile widths;
+- no modern political boundary or settlement label is visible;
+- the future host’s bandwidth and caching are appropriate for the roughly 353 KB uncompressed physical dataset.
+
+Never commit private tokens. Any future provider or higher-resolution dataset must be separately reviewed for license, attribution, client-token exposure, production terms, request quotas, caching, and redistribution rights before replacing or extending this local style.
 
 ---
 

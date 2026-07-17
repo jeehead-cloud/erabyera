@@ -64,8 +64,16 @@ p {
 .app-shell {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
+  height: 100vh;
   min-height: 100vh;
   background: var(--surface-paper);
+}
+
+@supports (height: 100dvh) {
+  .app-shell {
+    height: 100dvh;
+    min-height: 100dvh;
+  }
 }
 
 .app-header {
@@ -158,52 +166,70 @@ p {
 
 .app-main {
   min-height: 0;
+  overflow: auto;
 }
 
 .map-page {
-  min-height: calc(100vh - 4.05rem);
+  height: 100%;
+  min-height: 0;
   padding: clamp(var(--space-3), 2vw, var(--space-6));
   background: var(--ink-900);
 }
 
-.map-canvas-placeholder {
+.map-view {
   position: relative;
-  display: grid;
-  place-items: center;
-  min-height: calc(100vh - 4.05rem - clamp(1.5rem, 4vw, 3rem));
+  width: 100%;
+  height: 100%;
+  min-height: 24rem;
   overflow: hidden;
-  background: var(--surface-field-raised);
+  background: #8fa8ad;
   border: 1px solid var(--border-field);
   border-radius: var(--radius-lg);
 }
 
-.map-canvas-placeholder::before,
-.map-canvas-placeholder::after {
+.map-view--failed {
+  display: grid;
+  place-items: center;
+  background: var(--surface-field-raised);
+}
+
+.map-loading-state {
   position: absolute;
-  background: rgba(228, 195, 120, 0.1);
-  content: '';
+  z-index: 2;
+  top: var(--space-3);
+  left: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.25rem;
+  padding: var(--space-2) var(--space-3);
+  color: var(--text-on-field);
+  background: var(--surface-field);
+  border: 1px solid var(--border-field);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
   pointer-events: none;
 }
 
-.map-canvas-placeholder::before {
-  inset: 0 50%;
-  width: 1px;
+.map-loading-state__indicator {
+  width: 0.65rem;
+  height: 0.65rem;
+  background: var(--brass-300);
+  border: 2px solid var(--brass-700);
+  border-radius: 50%;
+  animation: map-loading-pulse 1s ease-in-out infinite alternate;
 }
 
-.map-canvas-placeholder::after {
-  inset: 50% 0;
-  height: 1px;
+@keyframes map-loading-pulse {
+  from {
+    opacity: 0.45;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.map-canvas-placeholder__frame {
-  position: absolute;
-  inset: clamp(var(--space-4), 4vw, var(--space-10));
-  border: 1px solid rgba(228, 195, 120, 0.09);
-}
-
-.map-canvas-placeholder__content {
-  position: relative;
-  z-index: 1;
+.map-error-state {
   width: min(36rem, calc(100% - 2rem));
   padding: clamp(var(--space-6), 5vw, var(--space-10));
   text-align: center;
@@ -212,22 +238,51 @@ p {
   border-radius: var(--radius-md);
 }
 
-.map-canvas-placeholder h1 {
+.map-error-state h2 {
   color: var(--text-on-field);
 }
 
-.map-canvas-placeholder p {
+.map-error-state p {
   max-width: 31rem;
   margin-inline: auto;
   color: var(--text-on-field-muted);
 }
 
-.map-canvas-placeholder__note {
-  display: inline-block;
-  padding-top: var(--space-4);
-  color: rgba(245, 234, 210, 0.52);
-  border-top: 1px solid var(--border-field);
-  font: 500 var(--text-xs) / 1.5 var(--font-mono);
+.maplibregl-map {
+  font-family: var(--font-ui);
+}
+
+.maplibregl-ctrl-group {
+  overflow: hidden;
+  border: 1px solid var(--border-paper-strong);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-paper-sm);
+}
+
+.maplibregl-ctrl-group button {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--surface-paper);
+}
+
+.maplibregl-ctrl-attrib {
+  color: var(--text-ink-muted);
+  background: rgba(251, 246, 234, 0.94);
+}
+
+.maplibregl-ctrl-attrib a {
+  color: var(--ink-700);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .eyebrow {
@@ -417,13 +472,22 @@ p {
     padding-inline: var(--space-2);
   }
 
-  .map-page,
   .content-page {
     min-height: calc(100vh - 7.05rem);
   }
 
-  .map-canvas-placeholder {
-    min-height: calc(100vh - 7.05rem - 1.5rem);
+  .map-page {
+    padding: var(--space-2);
+  }
+
+  .map-view {
+    min-height: 20rem;
+    border-radius: var(--radius-md);
+  }
+
+  .maplibregl-ctrl-attrib {
+    max-width: calc(100vw - 1rem);
+    font-size: 0.625rem;
   }
 
   .planned-list {
@@ -455,5 +519,9 @@ p {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .map-loading-state__indicator {
+    animation: none;
   }
 }

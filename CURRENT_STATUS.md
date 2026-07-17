@@ -1,6 +1,6 @@
 # EraByEra — Current Status
 
-**Status:** Foundation implementation — F4 complete locally
+**Status:** Foundation implementation — F5 implemented; owner browser verification pending
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -12,9 +12,9 @@
 
 ## 1. Current Development Phase
 
-EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, and F3 at `1a9fa5d`. F4 — Source Data and Runtime Build Pipeline is complete in the local working tree and has not been committed.
+EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, and F4 at `2fe64a7`. F5 — Physical MapLibre Shell is implemented in the local working tree; owner external-browser verification remains pending.
 
-F4 adds canonical repository JSON/GeoJSON, complete graph validation, deterministic published-only runtime generation, committed manifests/indexes, and a browser-safe immutable loader. All content remains obvious synthetic fixture data. The visible application remains unchanged; no real historical content, map integration, or backend was added.
+F5 replaces the `/map` placeholder with a real MapLibre map using local public-domain Natural Earth physical vectors. It adds pan/zoom, restrained controls, visible attribution, loading and retry states, responsive sizing, and structural style audits without rendering historical or synthetic F4 data.
 
 ---
 
@@ -54,7 +54,7 @@ Validation on 2026-07-17:
 - `git diff --check`: PASS;
 - browser checks: NOT RUN — F3 is domain-only and does not alter visible UI behavior.
 
-### F4 — Source Data and Runtime Build Pipeline — Complete locally
+### F4 — Source Data and Runtime Build Pipeline — Complete and committed
 
 Implemented:
 
@@ -79,9 +79,37 @@ Validation on 2026-07-17:
 - `git diff --check`: PASS;
 - browser checks: NOT RUN — F4 changes data/tooling boundaries and no visible UI behavior.
 
-### F5–F18 — Planned
+### F5 — Physical MapLibre Shell — Implemented; owner verification pending
 
-Not started. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
+Implemented:
+
+- `maplibre-gl` 5.24.0 and `react-map-gl` 8.1.1 through the MapLibre-only entry point;
+- repository-managed physical style and local Natural Earth land, coastline, lake, and river GeoJSON;
+- Eastern Mediterranean initial viewport at longitude 28, latitude 37, zoom 3.5;
+- standard map interaction and restrained navigation controls without geolocation;
+- visible MapLibre and Natural Earth attribution;
+- non-blocking loading feedback and recoverable map-specific retry state;
+- responsive full-height map integration under the existing application shell;
+- six pure F5 tests covering viewport, attribution, local sources, physical-only layers, forbidden categories, and remote/style exclusions;
+- basemap license, provenance, exact asset hashes, production terms, and manual verification documentation.
+
+Automated and static acceptance criteria pass. F5 is not marked fully browser-verified because the requested no-browser constraint leaves actual WebGL rendering, interaction, visual layer inspection, responsiveness, and console checks to the owner in ordinary Chrome or Edge.
+
+Validation on 2026-07-17:
+
+- `npm run typecheck`: PASS;
+- `npm run lint`: PASS;
+- `npm run test`: PASS — 4 files, 177 tests;
+- F5 structural style audit: PASS — 6 tests;
+- `npm run data:validate`: PASS — 12 canonical synthetic records;
+- `npm run data:check`: PASS;
+- `npm run build`: PASS — MapLibre emits a non-blocking large-chunk warning;
+- `git diff --check`: PASS;
+- browser checks: NOT RUN — owner external-browser verification required.
+
+### F6–F18 — Planned
+
+Not started. F6 — URL-Synchronized Map State is next after owner browser verification of F5. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
 
 ---
 
@@ -103,6 +131,9 @@ Not started. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
 - Validation covers every editorial state, while public runtime output includes only `published` records and referenced geometry.
 - Generated output is deterministic, has no timestamps, and is fingerprinted with SHA-256.
 - Place name, ownership, importance, and polity-capital overlaps are rejected until competing interpretations receive an explicit schema representation.
+- The physical basemap is a local MapLibre style using only public-domain Natural Earth 1:110m land, coastline, lake, and river vectors.
+- F5 uses no external tile provider, provider account, token, glyphs, sprites, modern political boundaries, or settlement/transport labels.
+- Map camera state remains local and uncontrolled in F5; F6 owns URL synchronization.
 - All entity temporal fields reuse `src/domain/time`; no second time model exists.
 - Zod and Vitest remain the only domain validation/testing dependencies.
 
@@ -115,17 +146,19 @@ Not started. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
 - Competing temporal interpretations cannot yet coexist in canonical fixture files because the current schema has no explicit variant/claim grouping.
 - Published-source enforcement checks coverage presence, not whether the referenced source exists or is editorially adequate.
 - Fixtures are synthetic structure examples, not publishable historical data.
-- No timeline, URL year state, map state, entity UI, search, or runtime data loading exists yet.
+- No timeline, URL year/map state, entity UI, search, or runtime data loading exists yet.
+- Natural Earth 1:110m vectors are intentionally generalized and become coarse at close zoom; F5 caps zoom at 7.
+- Actual WebGL load, pan/zoom, responsive rendering, visual forbidden-layer review, and browser console checks remain pending owner verification.
 - Direct application URLs still require a static-host fallback; no hosting provider is configured.
 
 ---
 
 ## 5. Nearest Next Steps
 
-1. Review and commit F4 when ready.
-2. Begin F5 using the generated runtime boundary rather than canonical authoring files.
-3. Select and license a physical basemap before public map integration.
-4. Keep the synthetic fixture isolated from future reviewed historical datasets.
+1. Complete the documented F5 owner external-browser checklist.
+2. Review and commit F5 when ready.
+3. Begin F6 — URL-Synchronized Map State only after browser verification confirms the shell is stable.
+4. Keep the synthetic F4 fixture isolated from visible map UI.
 
 ---
 
@@ -138,6 +171,11 @@ Only report validation that actually ran.
 ---
 
 ## Recent Changes — Rolling Three-Month History
+
+### 2026-07-17 — Implemented F5 physical MapLibre shell
+
+- Replaced the map placeholder with a responsive MapLibre map, local Natural Earth physical vectors, standard navigation, visible attribution, and recoverable loading/error behavior.
+- Added pure style/configuration audits and complete basemap licensing and operational documentation; owner external-browser verification remains pending.
 
 ### 2026-07-17 — Implemented F4 static data pipeline
 
@@ -162,6 +200,12 @@ Only report validation that actually ran.
 ---
 
 ## Significant Changes — Permanent History
+
+### 2026-07-17 — Self-contained physical basemap selected
+
+- EraByEra now owns a token-free MapLibre style backed by repository-hosted public-domain Natural Earth physical vectors rather than an external demo or commercial tile service.
+- Modern political boundaries, settlement/transport labels, cultural sources, glyphs, and sprites are excluded by construction and audited structurally.
+- Why it matters: later historical layers have a stable, legally documented, backend-free physical canvas without provider quotas or accidental modern political context.
 
 ### 2026-07-17 — Canonical-to-runtime data boundary established
 
