@@ -1,6 +1,6 @@
 # EraByEra — Current Status
 
-**Status:** Foundation implementation — F7 implemented; owner browser verification pending
+**Status:** Foundation implementation — F8 implemented; owner browser verification pending
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -12,9 +12,9 @@
 
 ## 1. Current Development Phase
 
-EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, and F6 at `89bb5ea`. F7 — Timeline Controls is implemented in the local working tree; owner external-browser verification remains pending.
+EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, and F7 at `5c8d61e`. F8 — Place Layer and Place Cards is implemented in the local working tree; owner external-browser verification remains pending.
 
-F7 adds visible, responsive historical-time controls over the map: formatted selected year, unambiguous BCE/CE input, previous/next year, configurable step navigation, and a zero-free slider. Every committed change uses the F2 time domain and F6 URL updater without resetting the map or rendering historical content.
+F8 establishes the first complete historical-entity flow using clearly synthetic data: generated runtime loading, selected-year place presentation, zoom-aware native MapLibre layers, typed URL selection, selected highlight, compact details, inactive-period navigation, and visible source references.
 
 ---
 
@@ -161,9 +161,39 @@ Validation on 2026-07-17:
 - `git diff --check`: PASS;
 - browser checks: NOT RUN — owner external-browser verification required.
 
-### F8–F18 — Planned
+### F8 — Place Layer and Place Cards — Implemented; owner verification pending
 
-Not started. F8 — Place Layer and Place Cards is next after owner browser verification confirms F7 timeline usability and URL/map preservation. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
+Implemented:
+
+- bundled generated-runtime loading through the F4 schema/version/deep-freeze boundary with loading, atomic error, retry, and no-active-place states;
+- three clearly synthetic published place fixtures proving default activity, period names, low-zoom hiding, and inactive selection;
+- pure F2-based activity, name, ownership, importance, nearest-year, presentation, and source-aggregation selectors;
+- centralized importance thresholds from zoom 1.5 through 5.5 and null no-importance visibility;
+- compact deterministic GeoJSON with stable IDs and no full records or source objects;
+- one local MapLibre place source, five native importance circle layers, and a selected highlight layer without glyphs or remote data;
+- click/pointer interaction, push-history typed place selection, empty-map place clearing, and refresh/Back-compatible URL restoration;
+- selected-place override across inactivity, zoom, and disabled `places` layer state;
+- compact responsive details with period-aware facts, uncertainty, source references, unresolved/missing-location handling, and inactive-year actions;
+- reusable F2 historical-range formatting;
+- 94 new F8/time tests, bringing the suite to 378 tests in 9 files.
+
+Automated and static acceptance criteria pass. Runtime loading in the actual browser, marker rendering, interaction, responsive panel behavior, and browser console checks remain pending owner verification.
+
+Validation on 2026-07-17:
+
+- `npm run typecheck`: PASS;
+- `npm run lint`: PASS;
+- `npm run test`: PASS — 9 files, 378 tests;
+- `npm run data:validate`: PASS — 14 canonical synthetic records;
+- `npm run data:build` twice: PASS — deterministic output;
+- `npm run data:check`: PASS;
+- `npm run build`: PASS — MapLibre emits a non-blocking large-chunk warning;
+- `git diff --check`: PASS;
+- browser checks: NOT RUN — owner external-browser verification required.
+
+### F9–F18 — Planned
+
+Not started. F9 — Polities and Territory Layers is next after owner browser verification confirms the F8 place flow. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
 
 ---
 
@@ -194,6 +224,10 @@ Not started. F8 — Place Layer and Place Cards is next after owner browser veri
 - Timeline year is URL-owned; only draft magnitude, era, and step size are local component state.
 - All timeline transitions reuse F2 zero-free movement, and every F7 year update uses F6 history replacement.
 - The foundation slider spans 1000 BCE–1000 CE; valid F2 years outside it remain selected and visible.
+- Browser UI consumes only validated, immutable generated runtime data; editable source files remain pipeline-only.
+- Place activity/name/ownership/importance presentation is F2-derived, and normal visibility requires active existence plus active importance.
+- Place importance 5–1 maps to minimum zoom 1.5, 2.5, 3.5, 4.5, and 5.5; explicit selection overrides zoom, inactivity, and layer-disabled state.
+- Place selection uses typed F6 references and push history; map and timeline movement retain their replace policies.
 - All entity temporal fields reuse `src/domain/time`; no second time model exists.
 - Zod and Vitest remain the only domain validation/testing dependencies.
 
@@ -202,11 +236,11 @@ Not started. F8 — Place Layer and Place Cards is next after owner browser veri
 ## 4. Known Limitations and Risks
 
 - F4 has only synthetic fixtures; real historical content still requires reviewed sources, licensing, and attribution.
-- The runtime loader exists but is not yet connected to screens or map layers.
+- Runtime loading is currently bundled and aggregate; a validation failure disables all historical runtime presentation rather than partially loading records.
 - Competing temporal interpretations cannot yet coexist in canonical fixture files because the current schema has no explicit variant/claim grouping.
 - Published-source enforcement checks coverage presence, not whether the referenced source exists or is editorially adequate.
 - Fixtures are synthetic structure examples, not publishable historical data.
-- No playback, historical-layer rendering, entity UI, collection UI, search, or runtime data loading exists yet.
+- Only places are rendered; no playback, territories, people, events, journeys, collection UI, search, or full entity pages exist yet.
 - Natural Earth 1:110m vectors are intentionally generalized and become coarse at close zoom; F5 caps zoom at 7.
 - Actual WebGL load, pan/zoom, responsive rendering, visual forbidden-layer review, and browser console checks remain pending owner verification.
 - Direct application URLs still require a static-host fallback; no hosting provider is configured.
@@ -215,9 +249,9 @@ Not started. F8 — Place Layer and Place Cards is next after owner browser veri
 
 ## 5. Nearest Next Steps
 
-1. Complete the F5–F7 owner external-browser checks for map rendering, timeline interaction, URL updates, viewport preservation, responsive layout, and keyboard behavior.
-2. Review and commit F7 when ready.
-3. Begin F8 — Place Layer and Place Cards only after browser verification confirms timeline and map/URL synchronization are stable.
+1. Complete the F5–F8 owner external-browser checks for map/timeline rendering, runtime loading, place visibility, selection, cards, URL restoration, and responsive layout.
+2. Review and commit F8 when ready.
+3. Begin F9 — Polities and Territory Layers only after browser verification confirms the first place flow is stable.
 4. Keep the synthetic F4 fixture isolated from visible map UI.
 
 ---
@@ -231,6 +265,11 @@ Only report validation that actually ran.
 ---
 
 ## Recent Changes — Rolling Three-Month History
+
+### 2026-07-17 — Implemented F8 place layer and compact place cards
+
+- Connected validated generated runtime data to selected-year place selectors, native MapLibre layers, typed URL selection, and responsive detail/source presentation.
+- Expanded the synthetic fixture minimally to three published places and added 94 loader, selector, visibility, GeoJSON, selection, source, layer, and formatting tests; owner browser verification remains pending.
 
 ### 2026-07-17 — Implemented F7 historical timeline controls
 
@@ -270,6 +309,12 @@ Only report validation that actually ran.
 ---
 
 ## Significant Changes — Permanent History
+
+### 2026-07-17 — First complete historical-entity flow established
+
+- EraByEra now carries a place from deterministic generated data through immutable browser validation, temporal presentation, native map rendering, URL selection, evidence display, and restoration.
+- Selection overrides normal visibility without changing year or viewport, while inactive state, uncertainty, missing coordinates, and unresolved evidence remain explicit.
+- Why it matters: later entity layers can follow a proven data-to-map-to-card boundary without hardcoding history into React or bypassing source evidence.
 
 ### 2026-07-17 — First visible historical-time navigation established
 

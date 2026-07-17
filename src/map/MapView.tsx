@@ -2,8 +2,10 @@ import { useCallback, useEffect, useState } from 'react'
 import Map, {
   NavigationControl,
   type ErrorEvent,
+  type MapLayerMouseEvent,
   type ViewStateChangeEvent,
 } from 'react-map-gl/maplibre'
+import type { PlaceFeatureCollection } from '../domain/places'
 import {
   MAP_MOVEMENT_HISTORY_MODE,
   areMapUrlViewportsEquivalent,
@@ -18,12 +20,19 @@ import {
 } from './basemap'
 import { MapErrorState } from './MapErrorState'
 import { MapLoadingState } from './MapLoadingState'
+import {
+  PLACE_INTERACTIVE_LAYER_IDS,
+  PlaceLayer,
+} from './layers'
 
 type MapLoadState = 'loading' | 'ready' | 'failed'
 
 interface MapViewProps {
   urlState: MapUrlState
   updateUrlState: UpdateMapUrlState
+  placeFeatures?: PlaceFeatureCollection
+  onSelectPlace?: (placeId: string) => void
+  onClearPlaceSelection?: () => void
 }
 
 interface LocalViewport {
@@ -34,9 +43,16 @@ interface LocalViewport {
   pitch: number
 }
 
-export function MapView({ urlState, updateUrlState }: MapViewProps) {
+export function MapView({
+  urlState,
+  updateUrlState,
+  placeFeatures,
+  onSelectPlace,
+  onClearPlaceSelection,
+}: MapViewProps) {
   const [loadState, setLoadState] = useState<MapLoadState>('loading')
   const [mapAttempt, setMapAttempt] = useState(0)
+  const [placePointer, setPlacePointer] = useState(false)
   const [viewport, setViewport] = useState<LocalViewport>({
     latitude: urlState.latitude,
     longitude: urlState.longitude,
@@ -89,6 +105,16 @@ export function MapView({ urlState, updateUrlState }: MapViewProps) {
     [updateUrlState, urlState],
   )
 
+  const handleMapClick = useCallback((event: MapLayerMouseEvent) => {
+    const placeId = event.features?.[0]?.properties?.placeId
+    if (typeof placeId === 'string') onSelectPlace?.(placeId)
+    else onClearPlaceSelection?.()
+  }, [onClearPlaceSelection, onSelectPlace])
+
+  const handlePointerMove = useCallback((event: MapLayerMouseEvent) => {
+    setPlacePointer(event.features !== undefined && event.features.length > 0)
+  }, [])
+
   if (loadState === 'failed') {
     return (
       <div className="map-view map-view--failed">
@@ -102,6 +128,8 @@ export function MapView({ urlState, updateUrlState }: MapViewProps) {
       <Map
         key={mapAttempt}
         {...viewport}
+        cursor={placePointer ? 'pointer' : 'grab'}
+        interactiveLayerIds={placeFeatures === undefined ? [] : PLACE_INTERACTIVE_LAYER_IDS}
         mapStyle={PHYSICAL_BASEMAP_STYLE}
         minZoom={MAP_ZOOM_LIMITS.minZoom}
         maxZoom={MAP_ZOOM_LIMITS.maxZoom}
@@ -114,10 +142,14 @@ export function MapView({ urlState, updateUrlState }: MapViewProps) {
         onError={handleError}
         onMove={handleMove}
         onMoveEnd={handleMoveEnd}
+        onClick={handleMapClick}
+        onMouseMove={handlePointerMove}
+        onMouseLeave={() => setPlacePointer(false)}
         renderWorldCopies={false}
         style={{ width: '100%', height: '100%' }}
       >
         <NavigationControl position="top-right" showCompass visualizePitch={false} />
+        {placeFeatures === undefined ? null : <PlaceLayer data={placeFeatures} />}
       </Map>
       {loadState === 'loading' ? <MapLoadingState /> : null}
     </div>

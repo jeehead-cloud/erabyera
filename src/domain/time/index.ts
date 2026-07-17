@@ -2,6 +2,7 @@ export { DATE_PRECISIONS, type DatePrecision } from './datePrecision'
 export {
   compareHistoricalYears,
   formatHistoricalYear,
+  formatHistoricalYearRange,
   isHistoricalYear,
   nextHistoricalYear,
   parseHistoricalYear,

@@ -1,6 +1,6 @@
 ﻿# EraByEra вЂ” Architecture
 
-**Status:** F1–F7 application, domain, static-data, map, URL-state, and timeline foundation implemented; later architecture proposed
+**Status:** F1–F8 application, domain, static-data, map, URL-state, timeline, and first historical-entity flow implemented; later architecture proposed
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -89,7 +89,8 @@ erabyera/
     |   `-- router.tsx
     |-- components/
     |   |-- AppShell/AppShell.tsx
-    |   `-- Timeline/       # F7 controls, input, step selector, model, styles, and tests
+    |   |-- Timeline/       # F7 controls, input, step selector, model, styles, and tests
+    |   `-- PlaceDetails/   # F8 compact card and historical-data status UI
     |-- domain/time/
     |   |-- datePrecision.ts
     |   |-- historicalYear.ts
@@ -112,8 +113,9 @@ erabyera/
     |   |-- index.ts
     |   `-- entities.test.ts
     |-- domain/geometry/    # browser-safe GeoJSON Zod contracts
-    |-- data/               # browser-safe runtime schema and immutable loader
-    |-- map/                # F5 style and lifecycle plus F6 controlled viewport integration
+    |-- domain/places/      # F8 selectors, presentation, GeoJSON, selection, and tests
+    |-- data/               # runtime schema, bundled generated-data loader, hook, and tests
+    |-- map/                # basemap/camera plus F8 native historical place layers
     |-- url/                # F6 URL schemas, pure state contract, router hook, and tests
     |-- pages/
     |   |-- MapPage.tsx
@@ -465,6 +467,22 @@ Step sizes are exactly `1`, `5`, `10`, `25`, `50`, and `100`, defaulting to `1` 
 The native range input covers `1000 BCE` through `1000 CE`. It uses a zero-free ordinal: BCE values retain their negative number, while CE year `n` maps to `n - 1`; ordinal `-1` is `1 BCE` and ordinal `0` is `1 CE`. Direct input still accepts every F2 safe nonzero integer. When selection lies outside the slider range, the selected URL year remains unchanged, the slider rests at the nearest endpoint, and explanatory text is shown.
 
 The overlay uses existing parchment, ink, and brass tokens, leaves a bottom attribution clearance, wraps controls below 900px, increases touch targets below 600px, and keeps the slider and all navigation available. Native inputs, selects, and buttons provide keyboard operation; labels, action names, live selected-year output, range value text, visible focus, and announced validation errors provide the accessibility contract. Rendered layout and interaction remain owner-browser checks.
+
+### F8 place data and presentation flow
+
+F8 imports the committed `data/generated/runtime.json` and generated manifest through `src/data/loadRuntimeData.ts`. The existing F4 Zod loader validates schema version and complete aggregate shape, verifies the runtime dataset version against the manifest, and deep-freezes the result. `useRuntimeData` loads once for the map route and exposes loading, ready, atomic error, and explicit retry states. Because the generated artifact is aggregate and bundled, F8 does not invent partial-record recovery; a validation failure disables historical layers while leaving the physical basemap usable.
+
+`src/domain/places` is a pure boundary from immutable canonical runtime records to compact presentation models. Activity, names, ownership, and importance all use F2 `isActiveAtYear` with inclusive closed ranges and the approved non-open-ended default for unknown ends. Exactly one active period is accepted; overlaps fail safely instead of choosing arbitrarily. Missing active importance produces `null` and therefore no normal marker. Owner names resolve only from runtime polities.
+
+Place importance maps to minimum zoom centrally: importance 5 → 1.5, 4 → 2.5, 3 → 3.5, 2 → 4.5, and 1 → 5.5. Generated point features retain `[longitude, latitude]`, stable IDs, display name, importance, activity, selection, and location accuracy only. Full records and source objects never enter GeoJSON. Features are deterministically ordered; missing coordinates produce no marker.
+
+`PlaceLayer` uses one local MapLibre GeoJSON source, five native circle layers with matching minimum zooms, and one selected circle layer above them. Normal layers include only active places with active importance when the `places` URL layer is enabled. An explicit selected place overrides activity, zoom, and layer-toggle visibility, so refresh restoration remains visible without automatic map fitting. Selection is distinguished by size and outline; location uncertainty also changes outline width. Text labels are deferred because the physical style intentionally has no glyph service.
+
+Map clicks on rendered place layers push the F6 `entity=place:<id>` selection; empty-map clicks clear only a place selection and also push. Map movement remains replace-based. Non-place typed selections remain untouched. Selected-year changes rebuild presentation and GeoJSON without remounting MapLibre, while viewport changes preserve year and selection.
+
+The compact `PlaceDetailsCard` shows the selected-year name, default name when different, type, activity, existence range, owner, importance, coordinates/location accuracy, summary, uncertainty, and up to two primary references plus total count. Source aggregation prioritizes active name, ownership, and importance references before entity-level references, deduplicates identical references, preserves distinct locators, and excludes inactive-period evidence. Unresolved IDs and sources are reported without fabricated labels.
+
+Inactive selected places retain their card and marker and offer first-known and, when distinct and knowable, nearest-active-year actions. Missing-coordinate records retain a card without moving the map. Desktop cards sit below map controls and above the timeline; mobile uses a scrollable compact lower panel above the timeline. Historical-data status sits below the basemap loading notice, and all overlays leave attribution clearance. Pure Node tests cover loader compatibility, selectors, visibility, GeoJSON, URL selection, inactive navigation, sources, and layer configuration; rendered interaction remains an owner-browser check.
 
 ---
 

@@ -6,7 +6,7 @@
       "id": "synthetic-alpha-polity",
       "defaultName": "Synthetic Alpha Polity",
       "polityType": "kingdom",
-      "existence": { "yearFrom": -10, "yearTo": 10 },
+      "existence": { "yearFrom": -500, "yearTo": 10 },
       "color": "#336699",
       "capitals": [{ "placeId": "synthetic-alpha-place", "period": { "yearFrom": -10, "yearTo": 10 }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }] }],
       "rulers": [{ "personId": "synthetic-alpha-person", "period": { "yearFrom": -10, "yearTo": 10 }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }] }],

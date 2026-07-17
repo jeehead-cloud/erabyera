@@ -101,6 +101,14 @@
       "type": "territories"
     },
     {
+      "id": "synthetic-beta-place",
+      "name": "Synthetic Beta Outpost",
+      "relatedIds": [],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "places"
+    },
+    {
       "id": "synthetic-beta-polity",
       "name": "Synthetic Beta Polity",
       "relatedIds": [],
@@ -115,6 +123,14 @@
       "sourceCount": 0,
       "status": "published",
       "type": "sources"
+    },
+    {
+      "id": "synthetic-gamma-place",
+      "name": "Synthetic Gamma Haven",
+      "relatedIds": [],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "places"
     }
   ],
   "schemaVersion": 1

@@ -4,6 +4,7 @@ import {
   compareHistoricalYears,
   datePrecisionSchema,
   formatHistoricalYear,
+  formatHistoricalYearRange,
   historicalYearSchema,
   intersectsHistoricalYearRange,
   isActiveAtYear,
@@ -43,6 +44,14 @@ describe('historical year validation and formatting', () => {
     expect(compareHistoricalYears(-1, 1)).toBe(-1)
     expect(compareHistoricalYears(1, -1)).toBe(1)
     expect(compareHistoricalYears(1, 1)).toBe(0)
+  })
+
+  it.each([
+    [{ yearFrom: -500, yearTo: -400 }, '500 BCE–400 BCE'],
+    [{ yearFrom: -1, yearTo: 1 }, '1 BCE–1 CE'],
+    [{ yearFrom: -334, yearTo: null }, 'From 334 BCE; end unknown'],
+  ])('formats historical range $expected', (range, expected) => {
+    expect(formatHistoricalYearRange(range)).toBe(expected)
   })
 })
 

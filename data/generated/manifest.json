@@ -7,7 +7,7 @@
     "events": 2,
     "journeys": 1,
     "people": 1,
-    "places": 1,
+    "places": 3,
     "polities": 2,
     "sources": 1,
     "territories": 1
@@ -22,7 +22,7 @@
   ],
   "fingerprint": {
     "algorithm": "sha256",
-    "value": "7b515d861efecc9c6a52aeb5525ed7638d52ebd6bb085e784f4f4410fa0b6d09"
+    "value": "18e3325617690669b65851698822b74a4f2777ae1754ee3680248221fc67833d"
   },
   "geometryCounts": {
     "journeys": 1,

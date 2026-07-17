@@ -1,6 +1,8 @@
 import {
   historicalYearSchema,
+  temporalRangeSchema,
   type HistoricalYear,
+  type TemporalRange,
 } from './schemas'
 
 type HistoricalYearComparison = -1 | 0 | 1
@@ -18,6 +20,15 @@ export function formatHistoricalYear(year: number): string {
   const era = parsedYear < 0 ? 'BCE' : 'CE'
 
   return `${Math.abs(parsedYear)} ${era}`
+}
+
+export function formatHistoricalYearRange(range: TemporalRange): string {
+  const parsedRange = temporalRangeSchema.parse(range)
+  const start = formatHistoricalYear(parsedRange.yearFrom)
+
+  return parsedRange.yearTo === null
+    ? `From ${start}; end unknown`
+    : `${start}–${formatHistoricalYear(parsedRange.yearTo)}`
 }
 
 export function compareHistoricalYears(

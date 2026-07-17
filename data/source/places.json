@@ -5,14 +5,47 @@
     {
       "id": "synthetic-alpha-place",
       "defaultName": "Synthetic Alpha Place",
+      "summary": "A deliberately synthetic city used only to verify selected-year place presentation.",
       "placeType": "city",
-      "coordinates": [10, 10],
-      "existence": { "yearFrom": -10, "yearTo": 10, "datePrecision": "range" },
-      "names": [{ "name": "Synthetic Alpha Place", "period": { "yearFrom": -10, "yearTo": 10 }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic names" }] }],
-      "ownership": [{ "polityId": "synthetic-alpha-polity", "period": { "yearFrom": -10, "yearTo": 10 }, "controlType": "direct", "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic ownership" }] }],
-      "importance": [{ "period": { "yearFrom": -10, "yearTo": 10 }, "importance": 3, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic importance" }] }],
+      "coordinates": [28, 37],
+      "existence": { "yearFrom": -500, "yearTo": 10, "datePrecision": "range" },
+      "names": [
+        { "name": "Synthetic Alpha Old Name", "period": { "yearFrom": -500, "yearTo": -400 }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic early name" }] },
+        { "name": "Synthetic Alpha Place", "period": { "yearFrom": -399, "yearTo": 10 }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic later name" }] }
+      ],
+      "ownership": [{ "polityId": "synthetic-alpha-polity", "period": { "yearFrom": -500, "yearTo": 10 }, "controlType": "direct", "uncertainty": { "confidence": "high", "note": "Synthetic ownership only." }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic ownership" }] }],
+      "importance": [{ "period": { "yearFrom": -500, "yearTo": 10 }, "importance": 5, "reason": "High visibility fixture", "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic importance" }] }],
+      "uncertainty": { "confidence": "high", "locationAccuracy": "exact", "note": "Coordinates are synthetic and make no historical claim." },
       "editorialStatus": "published",
       "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic place" }]
+    },
+    {
+      "id": "synthetic-beta-place",
+      "defaultName": "Synthetic Beta Outpost",
+      "summary": "A low-importance synthetic settlement used to verify zoom-dependent visibility.",
+      "placeType": "settlement",
+      "coordinates": [30, 35],
+      "existence": { "yearFrom": -400, "yearTo": -250 },
+      "names": [{ "name": "Synthetic Beta Outpost", "period": { "yearFrom": -400, "yearTo": -250 }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic beta name" }] }],
+      "ownership": [],
+      "importance": [{ "period": { "yearFrom": -400, "yearTo": -250 }, "importance": 1, "reason": "Low visibility fixture", "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic beta importance" }] }],
+      "uncertainty": { "confidence": "medium", "locationAccuracy": "approximate", "note": "Approximation is part of the synthetic test case." },
+      "editorialStatus": "published",
+      "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic beta place" }]
+    },
+    {
+      "id": "synthetic-gamma-place",
+      "defaultName": "Synthetic Gamma Haven",
+      "summary": "A synthetic port used to verify selection outside its active period.",
+      "placeType": "port",
+      "coordinates": [26, 39],
+      "existence": { "yearFrom": -100, "yearTo": 100 },
+      "names": [],
+      "ownership": [],
+      "importance": [{ "period": { "yearFrom": -100, "yearTo": 100 }, "importance": 2, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic gamma importance" }] }],
+      "uncertainty": { "confidence": "low", "locationAccuracy": "regional", "note": "The regional location is deliberately synthetic." },
+      "editorialStatus": "published",
+      "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic gamma place" }]
     },
     {
       "id": "synthetic-draft-place",

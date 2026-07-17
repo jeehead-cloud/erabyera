@@ -108,6 +108,9 @@ Do not convert вЂњcirca 500 BCEвЂќ into an apparently exact date without r
 - A place may exist before or after it is politically important.
 - A place may have uncertain coordinates or represent an archaeological area rather than a precise point; the data model must retain that distinction.
 - The displayed name should match the selected year when a period-specific name exists; otherwise use the default name.
+- Place activity, displayed name, owner, and importance use the same selected year and centralized inclusive F2 semantics.
+- Compact place evidence prioritizes active name, ownership, and importance references, then entity-level references; identical references are deduplicated while locator distinctions remain.
+- Sources from inactive unrelated periods must not be presented as evidence for the selected-year state.
 
 ---
 
@@ -147,10 +150,10 @@ The map must avoid showing every object at every zoom level.
 
 Initial rules:
 
-- highly important places remain visible at lower zoom;
-- less important places appear as the user zooms in;
+- place importance 5, 4, 3, 2, and 1 becomes visible from zoom 1.5, 2.5, 3.5, 4.5, and 5.5 respectively;
+- a place without active importance is not normally visible;
 - active important people may increase a place's score;
-- selected or searched entities remain visible regardless of normal threshold;
+- an explicitly selected place remains visible regardless of activity, zoom threshold, or the `places` layer toggle;
 - hidden by zoom does not mean historically inactive;
 - layer toggles control categories independently.
 

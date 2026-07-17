@@ -302,24 +302,25 @@
   "places": [
     {
       "coordinates": [
-        10,
-        10
+        28,
+        37
       ],
       "defaultName": "Synthetic Alpha Place",
       "editorialStatus": "published",
       "existence": {
         "datePrecision": "range",
-        "yearFrom": -10,
+        "yearFrom": -500,
         "yearTo": 10
       },
       "id": "synthetic-alpha-place",
       "importance": [
         {
-          "importance": 3,
+          "importance": 5,
           "period": {
-            "yearFrom": -10,
+            "yearFrom": -500,
             "yearTo": 10
           },
+          "reason": "High visibility fixture",
           "sourceRefs": [
             {
               "locator": "Synthetic importance",
@@ -330,14 +331,27 @@
       ],
       "names": [
         {
+          "name": "Synthetic Alpha Old Name",
+          "period": {
+            "yearFrom": -500,
+            "yearTo": -400
+          },
+          "sourceRefs": [
+            {
+              "locator": "Synthetic early name",
+              "sourceId": "synthetic-fixture-source"
+            }
+          ]
+        },
+        {
           "name": "Synthetic Alpha Place",
           "period": {
-            "yearFrom": -10,
+            "yearFrom": -399,
             "yearTo": 10
           },
           "sourceRefs": [
             {
-              "locator": "Synthetic names",
+              "locator": "Synthetic later name",
               "sourceId": "synthetic-fixture-source"
             }
           ]
@@ -347,7 +361,7 @@
         {
           "controlType": "direct",
           "period": {
-            "yearFrom": -10,
+            "yearFrom": -500,
             "yearTo": 10
           },
           "polityId": "synthetic-alpha-polity",
@@ -356,7 +370,11 @@
               "locator": "Synthetic ownership",
               "sourceId": "synthetic-fixture-source"
             }
-          ]
+          ],
+          "uncertainty": {
+            "confidence": "high",
+            "note": "Synthetic ownership only."
+          }
         }
       ],
       "placeType": "city",
@@ -365,7 +383,114 @@
           "locator": "Synthetic place",
           "sourceId": "synthetic-fixture-source"
         }
-      ]
+      ],
+      "summary": "A deliberately synthetic city used only to verify selected-year place presentation.",
+      "uncertainty": {
+        "confidence": "high",
+        "locationAccuracy": "exact",
+        "note": "Coordinates are synthetic and make no historical claim."
+      }
+    },
+    {
+      "coordinates": [
+        30,
+        35
+      ],
+      "defaultName": "Synthetic Beta Outpost",
+      "editorialStatus": "published",
+      "existence": {
+        "yearFrom": -400,
+        "yearTo": -250
+      },
+      "id": "synthetic-beta-place",
+      "importance": [
+        {
+          "importance": 1,
+          "period": {
+            "yearFrom": -400,
+            "yearTo": -250
+          },
+          "reason": "Low visibility fixture",
+          "sourceRefs": [
+            {
+              "locator": "Synthetic beta importance",
+              "sourceId": "synthetic-fixture-source"
+            }
+          ]
+        }
+      ],
+      "names": [
+        {
+          "name": "Synthetic Beta Outpost",
+          "period": {
+            "yearFrom": -400,
+            "yearTo": -250
+          },
+          "sourceRefs": [
+            {
+              "locator": "Synthetic beta name",
+              "sourceId": "synthetic-fixture-source"
+            }
+          ]
+        }
+      ],
+      "ownership": [],
+      "placeType": "settlement",
+      "sourceRefs": [
+        {
+          "locator": "Synthetic beta place",
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "summary": "A low-importance synthetic settlement used to verify zoom-dependent visibility.",
+      "uncertainty": {
+        "confidence": "medium",
+        "locationAccuracy": "approximate",
+        "note": "Approximation is part of the synthetic test case."
+      }
+    },
+    {
+      "coordinates": [
+        26,
+        39
+      ],
+      "defaultName": "Synthetic Gamma Haven",
+      "editorialStatus": "published",
+      "existence": {
+        "yearFrom": -100,
+        "yearTo": 100
+      },
+      "id": "synthetic-gamma-place",
+      "importance": [
+        {
+          "importance": 2,
+          "period": {
+            "yearFrom": -100,
+            "yearTo": 100
+          },
+          "sourceRefs": [
+            {
+              "locator": "Synthetic gamma importance",
+              "sourceId": "synthetic-fixture-source"
+            }
+          ]
+        }
+      ],
+      "names": [],
+      "ownership": [],
+      "placeType": "port",
+      "sourceRefs": [
+        {
+          "locator": "Synthetic gamma place",
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "summary": "A synthetic port used to verify selection outside its active period.",
+      "uncertainty": {
+        "confidence": "low",
+        "locationAccuracy": "regional",
+        "note": "The regional location is deliberately synthetic."
+      }
     }
   ],
   "polities": [
@@ -388,7 +513,7 @@
       "defaultName": "Synthetic Alpha Polity",
       "editorialStatus": "published",
       "existence": {
-        "yearFrom": -10,
+        "yearFrom": -500,
         "yearTo": 10
       },
       "id": "synthetic-alpha-polity",

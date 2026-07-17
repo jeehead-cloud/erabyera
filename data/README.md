@@ -14,4 +14,8 @@ Validation parses every strict F3 entity schema, verifies version agreement, glo
 
 The public runtime includes only `published` records and geometry referenced by them. Generation sorts entity records, stable set-like ID arrays, source references, index entries, and object keys while preserving temporal record arrays and journey-stage order. It emits no timestamps. The manifest includes deterministic counts and a SHA-256 fingerprint, so two builds from identical source produce byte-identical files.
 
+The F8 place-flow fixture contains exactly three published `synthetic-*` places. They deliberately cover a default-year active place with a changing name, a low-importance zoom-threshold place, and a place that is inactive at the default year. Their names, summaries, coordinates, periods, ownership, importance, and source are test-only inventions and are not reviewed historical content.
+
 `data:check` performs a read-only in-memory rebuild and fails when committed generated output is missing, extra, or stale. Schema changes require a coordinated source-data update or explicit migration; do not silently coerce old data.
+
+The browser consumes the committed generated runtime artifact through `src/data`; application components never import editable `data/source` records.
