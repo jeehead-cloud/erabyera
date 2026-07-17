@@ -1,0 +1,11 @@
+{
+  "type": "FeatureCollection",
+  "schemaVersion": 1,
+  "datasetVersion": "foundation-fixture-0.1.0",
+  "features": [{
+    "type": "Feature",
+    "id": "synthetic-alpha-territory-feature",
+    "properties": { "territoryPeriodId": "synthetic-alpha-territory-period" },
+    "geometry": { "type": "Polygon", "coordinates": [[[9, 9], [12, 9], [12, 12], [9, 12], [9, 9]]] }
+  }]
+}

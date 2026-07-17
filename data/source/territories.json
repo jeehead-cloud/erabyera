@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "datasetVersion": "foundation-fixture-0.1.0",
+  "records": [{
+    "id": "synthetic-alpha-territory-period",
+    "polityId": "synthetic-alpha-polity",
+    "period": { "yearFrom": -10, "yearTo": 10 },
+    "controlCategory": "approximate",
+    "geometryFeatureId": "synthetic-alpha-territory-feature",
+    "uncertainty": { "confidence": "low", "note": "The geometry is deliberately synthetic." },
+    "editorialStatus": "published",
+    "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+  }]
+}

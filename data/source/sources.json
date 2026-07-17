@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "datasetVersion": "foundation-fixture-0.1.0",
+  "records": [
+    {
+      "id": "synthetic-fixture-source",
+      "title": "Synthetic pipeline fixture source",
+      "sourceType": "reference",
+      "organization": "EraByEra Fixture Laboratory",
+      "url": "https://example.com/erabyera-synthetic-fixture",
+      "license": "Synthetic test data; no historical claim",
+      "editorialStatus": "published"
+    },
+    {
+      "id": "draft-fixture-source",
+      "title": "Draft-only synthetic fixture source",
+      "sourceType": "other",
+      "editorialStatus": "draft"
+    }
+  ]
+}

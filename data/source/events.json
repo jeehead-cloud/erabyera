@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "datasetVersion": "foundation-fixture-0.1.0",
+  "records": [
+    {
+      "id": "synthetic-alpha-event", "defaultName": "Synthetic Alpha Event", "type": "political",
+      "period": { "yearFrom": -2, "yearTo": -1 }, "participantPolityIds": ["synthetic-alpha-polity"],
+      "participantPersonIds": ["synthetic-alpha-person"], "relatedPlaceIds": ["synthetic-alpha-place"],
+      "locationAccuracy": "unknown", "editorialStatus": "published", "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+    },
+    {
+      "id": "synthetic-alpha-battle", "defaultName": "Synthetic Alpha Battle", "type": "battle",
+      "period": { "yearFrom": -1, "yearTo": -1 }, "coordinates": [11, 11], "locationAccuracy": "approximate",
+      "participantPolityIds": ["synthetic-alpha-polity", "synthetic-beta-polity"], "participantPersonIds": ["synthetic-alpha-person"],
+      "relatedPlaceIds": ["synthetic-alpha-place"],
+      "battle": { "sides": [
+        { "id": "synthetic-alpha-side", "label": "Synthetic Alpha Side", "polityIds": ["synthetic-alpha-polity"], "personIds": ["synthetic-alpha-person"], "commanderIds": ["synthetic-alpha-person"] },
+        { "id": "synthetic-beta-side", "label": "Synthetic Beta Side", "polityIds": ["synthetic-beta-polity"], "personIds": [], "commanderIds": [] }
+      ], "result": "Synthetic fixture result", "relatedJourneyId": "synthetic-alpha-journey", "disputedNotes": [] },
+      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+    }
+  ]
+}

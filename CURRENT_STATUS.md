@@ -1,6 +1,6 @@
 # EraByEra — Current Status
 
-**Status:** Foundation implementation — F3 complete locally
+**Status:** Foundation implementation — F4 complete locally
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -12,9 +12,9 @@
 
 ## 1. Current Development Phase
 
-EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, and F2 — Historical Time Domain is committed at `44867c5`. F3 — Domain Schemas and Validation Foundation is complete in the local working tree and has not yet been committed.
+EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, and F3 at `1a9fa5d`. F4 — Source Data and Runtime Build Pipeline is complete in the local working tree and has not been committed.
 
-F3 adds UI-independent, runtime-validated contracts for historical entities. The visible application remains the unchanged F1 shell; no real historical content, data pipeline, map integration, or backend was added.
+F4 adds canonical repository JSON/GeoJSON, complete graph validation, deterministic published-only runtime generation, committed manifests/indexes, and a browser-safe immutable loader. All content remains obvious synthetic fixture data. The visible application remains unchanged; no real historical content, map integration, or backend was added.
 
 ---
 
@@ -28,7 +28,7 @@ React, TypeScript, Vite, React Router, shared shell, route placeholders, error h
 
 Committed at `44867c5`: zero-free BCE/CE years, inclusive temporal ranges, explicit unknown-end semantics, date precision, Zod schemas, and focused tests.
 
-### F3 — Domain Schemas and Validation Foundation — Complete locally
+### F3 — Domain Schemas and Validation Foundation — Complete and committed
 
 Implemented:
 
@@ -54,9 +54,30 @@ Validation on 2026-07-17:
 - `git diff --check`: PASS;
 - browser checks: NOT RUN — F3 is domain-only and does not alter visible UI behavior.
 
-### F4 — Source Data and Runtime Build Pipeline — Next
+### F4 — Source Data and Runtime Build Pipeline — Complete locally
 
-Not started. F4 will introduce repository source-data folders, cross-record reference validation, deterministic runtime generation, manifests, and real data-validation commands. F3 intentionally provides contracts and pure helpers only.
+Implemented:
+
+- explicit versioned wrappers in `data/source/` and bounded territory/journey GeoJSON in `data/geometry/`;
+- synthetic-only canonical fixtures with globally unique top-level IDs;
+- aggregate strict-schema, dataset-version, cross-reference, overlap, and geometry validation;
+- deterministic published-only `runtime.json`, reference `index.json`, and manifest with counts and SHA-256 fingerprint;
+- read-only stale-output checking and byte-stable generation without timestamps;
+- browser-safe runtime validation and deep-frozen loading in `src/data`;
+- `data:validate`, `data:build`, and `data:check` commands using Node-only TypeScript scripts;
+- 50 focused pipeline tests, bringing the suite to 171 passing tests in 3 files.
+
+Validation on 2026-07-17:
+
+- `npm run data:validate`: PASS — 12 canonical synthetic records;
+- `npm run data:build` twice with hash comparison: PASS — byte-identical output;
+- `npm run data:check`: PASS;
+- `npm run typecheck`: PASS;
+- `npm run lint`: PASS;
+- `npm run test`: PASS — 3 files, 171 tests;
+- `npm run build`: PASS;
+- `git diff --check`: PASS;
+- browser checks: NOT RUN — F4 changes data/tooling boundaries and no visible UI behavior.
 
 ### F5–F18 — Planned
 
@@ -77,7 +98,11 @@ Not started. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
 - Battle is a specialized member of the HistoricalEvent union and requires structured sides and result details.
 - Journey stages must appear in a unique sequential order beginning at 1.
 - Content collections use grouped entity IDs and require their recommended start year inside a closed collection range.
-- Cross-dataset reference existence, full GeoJSON validation, runtime generation, manifests, and migration execution remain F4 concerns.
+- Top-level entity IDs are globally unique across types so reference-index and future untyped-selection keys are unambiguous.
+- Canonical source and geometry are editable; committed generated files are derived and never hand-edited.
+- Validation covers every editorial state, while public runtime output includes only `published` records and referenced geometry.
+- Generated output is deterministic, has no timestamps, and is fingerprinted with SHA-256.
+- Place name, ownership, importance, and polity-capital overlaps are rejected until competing interpretations receive an explicit schema representation.
 - All entity temporal fields reuse `src/domain/time`; no second time model exists.
 - Zod and Vitest remain the only domain validation/testing dependencies.
 
@@ -85,9 +110,9 @@ Not started. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
 
 ## 4. Known Limitations and Risks
 
-- F3 validates reference ID shape but cannot prove referenced records exist; F4 must validate complete datasets.
-- Geometry is represented by feature IDs or small coordinate tuples. Full GeoJSON files and geometry validation are deferred.
-- Temporal-overlap detection is an explicit helper rather than a universal schema rejection because competing historical interpretations may legitimately overlap.
+- F4 has only synthetic fixtures; real historical content still requires reviewed sources, licensing, and attribution.
+- The runtime loader exists but is not yet connected to screens or map layers.
+- Competing temporal interpretations cannot yet coexist in canonical fixture files because the current schema has no explicit variant/claim grouping.
 - Published-source enforcement checks coverage presence, not whether the referenced source exists or is editorially adequate.
 - Fixtures are synthetic structure examples, not publishable historical data.
 - No timeline, URL year state, map state, entity UI, search, or runtime data loading exists yet.
@@ -97,11 +122,10 @@ Not started. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
 
 ## 5. Nearest Next Steps
 
-1. Review and commit F3 when ready.
-2. Begin F4 — Source Data and Runtime Build Pipeline.
-3. Add source-data, geometry, and generated-data boundaries without moving canonical content into React code.
-4. Validate cross-record references and published-source coverage across complete datasets.
-5. Add deterministic schema/dataset-versioned runtime generation and a real `data:validate` command.
+1. Review and commit F4 when ready.
+2. Begin F5 using the generated runtime boundary rather than canonical authoring files.
+3. Select and license a physical basemap before public map integration.
+4. Keep the synthetic fixture isolated from future reviewed historical datasets.
 
 ---
 
@@ -114,6 +138,11 @@ Only report validation that actually ran.
 ---
 
 ## Recent Changes — Rolling Three-Month History
+
+### 2026-07-17 — Implemented F4 static data pipeline
+
+- Added versioned synthetic canonical JSON/GeoJSON, aggregate validation, deterministic committed runtime artifacts, a reference index/manifest, and browser-safe immutable loading.
+- Added 50 pipeline tests plus operational commands and synchronized architecture, product-rule, deployment, and current-state documentation.
 
 ### 2026-07-17 — Implemented F3 validated entity contracts
 
@@ -133,6 +162,12 @@ Only report validation that actually ran.
 ---
 
 ## Significant Changes — Permanent History
+
+### 2026-07-17 — Canonical-to-runtime data boundary established
+
+- Canonical authoring data now lives in versioned `data/source` and `data/geometry` files; application consumers use deterministic published-only output through `src/data`.
+- Complete-dataset validation now enforces globally unique IDs, reference integrity, explicit overlap policy, and matching GeoJSON before generation.
+- Why it matters: future UI/map work has one reproducible, reviewable, backend-free data contract and cannot accidentally publish drafts or import Node-only pipeline code.
 
 ### 2026-07-17 — Stable historical-entity schema contract established
 

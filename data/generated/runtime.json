@@ -1,0 +1,469 @@
+{
+  "collections": [
+    {
+      "coverage": {
+        "detailedRegions": [
+          "Synthetic Alpha Region"
+        ],
+        "note": "No historical coverage is claimed.",
+        "partialRegions": [],
+        "timeRange": {
+          "yearFrom": -10,
+          "yearTo": 10
+        }
+      },
+      "coverageStatus": "partial",
+      "datasetVersion": "foundation-fixture-0.1.0",
+      "defaultName": "Synthetic Alpha Collection",
+      "description": "Synthetic collection used only to verify pipeline links.",
+      "editorialStatus": "published",
+      "id": "synthetic-alpha-collection",
+      "linkedEntities": {
+        "eventIds": [
+          "synthetic-alpha-battle",
+          "synthetic-alpha-event"
+        ],
+        "journeyIds": [
+          "synthetic-alpha-journey"
+        ],
+        "personIds": [
+          "synthetic-alpha-person"
+        ],
+        "placeIds": [
+          "synthetic-alpha-place"
+        ],
+        "polityIds": [
+          "synthetic-alpha-polity",
+          "synthetic-beta-polity"
+        ]
+      },
+      "recommendedStartYear": -1,
+      "recommendedViewport": {
+        "latitude": 10,
+        "longitude": 10,
+        "zoom": 4
+      },
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "timeRange": {
+        "yearFrom": -10,
+        "yearTo": 10
+      }
+    }
+  ],
+  "datasetName": "Synthetic Foundation Fixture Dataset",
+  "datasetVersion": "foundation-fixture-0.1.0",
+  "editorialPolicy": "published-only",
+  "events": [
+    {
+      "battle": {
+        "disputedNotes": [],
+        "relatedJourneyId": "synthetic-alpha-journey",
+        "result": "Synthetic fixture result",
+        "sides": [
+          {
+            "commanderIds": [
+              "synthetic-alpha-person"
+            ],
+            "id": "synthetic-alpha-side",
+            "label": "Synthetic Alpha Side",
+            "personIds": [
+              "synthetic-alpha-person"
+            ],
+            "polityIds": [
+              "synthetic-alpha-polity"
+            ]
+          },
+          {
+            "commanderIds": [],
+            "id": "synthetic-beta-side",
+            "label": "Synthetic Beta Side",
+            "personIds": [],
+            "polityIds": [
+              "synthetic-beta-polity"
+            ]
+          }
+        ]
+      },
+      "coordinates": [
+        11,
+        11
+      ],
+      "defaultName": "Synthetic Alpha Battle",
+      "editorialStatus": "published",
+      "id": "synthetic-alpha-battle",
+      "locationAccuracy": "approximate",
+      "participantPersonIds": [
+        "synthetic-alpha-person"
+      ],
+      "participantPolityIds": [
+        "synthetic-alpha-polity",
+        "synthetic-beta-polity"
+      ],
+      "period": {
+        "yearFrom": -1,
+        "yearTo": -1
+      },
+      "relatedPlaceIds": [
+        "synthetic-alpha-place"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "type": "battle"
+    },
+    {
+      "defaultName": "Synthetic Alpha Event",
+      "editorialStatus": "published",
+      "id": "synthetic-alpha-event",
+      "locationAccuracy": "unknown",
+      "participantPersonIds": [
+        "synthetic-alpha-person"
+      ],
+      "participantPolityIds": [
+        "synthetic-alpha-polity"
+      ],
+      "period": {
+        "yearFrom": -2,
+        "yearTo": -1
+      },
+      "relatedPlaceIds": [
+        "synthetic-alpha-place"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "type": "political"
+    }
+  ],
+  "geometry": {
+    "journeys": {
+      "datasetVersion": "foundation-fixture-0.1.0",
+      "features": [
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                10,
+                10
+              ],
+              [
+                11,
+                11
+              ]
+            ],
+            "type": "LineString"
+          },
+          "id": "synthetic-alpha-journey-feature",
+          "properties": {
+            "journeyId": "synthetic-alpha-journey"
+          },
+          "type": "Feature"
+        }
+      ],
+      "schemaVersion": 1,
+      "type": "FeatureCollection"
+    },
+    "territories": {
+      "datasetVersion": "foundation-fixture-0.1.0",
+      "features": [
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  9,
+                  9
+                ],
+                [
+                  12,
+                  9
+                ],
+                [
+                  12,
+                  12
+                ],
+                [
+                  9,
+                  12
+                ],
+                [
+                  9,
+                  9
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "synthetic-alpha-territory-feature",
+          "properties": {
+            "territoryPeriodId": "synthetic-alpha-territory-period"
+          },
+          "type": "Feature"
+        }
+      ],
+      "schemaVersion": 1,
+      "type": "FeatureCollection"
+    }
+  },
+  "journeys": [
+    {
+      "defaultName": "Synthetic Alpha Journey",
+      "directionKnown": true,
+      "editorialStatus": "published",
+      "geometryFeatureId": "synthetic-alpha-journey-feature",
+      "id": "synthetic-alpha-journey",
+      "journeyType": "campaign",
+      "participantPersonIds": [
+        "synthetic-alpha-person"
+      ],
+      "participantPolityIds": [
+        "synthetic-alpha-polity"
+      ],
+      "period": {
+        "yearFrom": -2,
+        "yearTo": -1
+      },
+      "routeCertainty": "schematic",
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "stages": [
+        {
+          "order": 1,
+          "placeId": "synthetic-alpha-place",
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source"
+            }
+          ],
+          "year": -2
+        },
+        {
+          "eventId": "synthetic-alpha-event",
+          "order": 2,
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source"
+            }
+          ],
+          "year": -1
+        }
+      ]
+    }
+  ],
+  "people": [
+    {
+      "associatedPolityIds": [
+        "synthetic-alpha-polity"
+      ],
+      "defaultName": "Synthetic Alpha Person",
+      "editorialStatus": "published",
+      "id": "synthetic-alpha-person",
+      "importance": 3,
+      "life": {
+        "yearFrom": -10,
+        "yearTo": 10
+      },
+      "places": [
+        {
+          "period": {
+            "yearFrom": -10,
+            "yearTo": -10
+          },
+          "placeId": "synthetic-alpha-place",
+          "relationType": "birth",
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source"
+            }
+          ]
+        }
+      ],
+      "roles": [
+        "synthetic ruler"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source"
+        }
+      ]
+    }
+  ],
+  "places": [
+    {
+      "coordinates": [
+        10,
+        10
+      ],
+      "defaultName": "Synthetic Alpha Place",
+      "editorialStatus": "published",
+      "existence": {
+        "datePrecision": "range",
+        "yearFrom": -10,
+        "yearTo": 10
+      },
+      "id": "synthetic-alpha-place",
+      "importance": [
+        {
+          "importance": 3,
+          "period": {
+            "yearFrom": -10,
+            "yearTo": 10
+          },
+          "sourceRefs": [
+            {
+              "locator": "Synthetic importance",
+              "sourceId": "synthetic-fixture-source"
+            }
+          ]
+        }
+      ],
+      "names": [
+        {
+          "name": "Synthetic Alpha Place",
+          "period": {
+            "yearFrom": -10,
+            "yearTo": 10
+          },
+          "sourceRefs": [
+            {
+              "locator": "Synthetic names",
+              "sourceId": "synthetic-fixture-source"
+            }
+          ]
+        }
+      ],
+      "ownership": [
+        {
+          "controlType": "direct",
+          "period": {
+            "yearFrom": -10,
+            "yearTo": 10
+          },
+          "polityId": "synthetic-alpha-polity",
+          "sourceRefs": [
+            {
+              "locator": "Synthetic ownership",
+              "sourceId": "synthetic-fixture-source"
+            }
+          ]
+        }
+      ],
+      "placeType": "city",
+      "sourceRefs": [
+        {
+          "locator": "Synthetic place",
+          "sourceId": "synthetic-fixture-source"
+        }
+      ]
+    }
+  ],
+  "polities": [
+    {
+      "capitals": [
+        {
+          "period": {
+            "yearFrom": -10,
+            "yearTo": 10
+          },
+          "placeId": "synthetic-alpha-place",
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source"
+            }
+          ]
+        }
+      ],
+      "color": "#336699",
+      "defaultName": "Synthetic Alpha Polity",
+      "editorialStatus": "published",
+      "existence": {
+        "yearFrom": -10,
+        "yearTo": 10
+      },
+      "id": "synthetic-alpha-polity",
+      "polityType": "kingdom",
+      "rulers": [
+        {
+          "period": {
+            "yearFrom": -10,
+            "yearTo": 10
+          },
+          "personId": "synthetic-alpha-person",
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source"
+            }
+          ]
+        }
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source"
+        }
+      ]
+    },
+    {
+      "capitals": [],
+      "color": "#993366",
+      "defaultName": "Synthetic Beta Polity",
+      "editorialStatus": "published",
+      "existence": {
+        "yearFrom": -10,
+        "yearTo": 10
+      },
+      "id": "synthetic-beta-polity",
+      "polityType": "city-state",
+      "rulers": [],
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "editorialStatus": "published",
+      "id": "synthetic-fixture-source",
+      "license": "Synthetic test data; no historical claim",
+      "organization": "EraByEra Fixture Laboratory",
+      "sourceType": "reference",
+      "title": "Synthetic pipeline fixture source",
+      "url": "https://example.com/erabyera-synthetic-fixture"
+    }
+  ],
+  "territories": [
+    {
+      "controlCategory": "approximate",
+      "editorialStatus": "published",
+      "geometryFeatureId": "synthetic-alpha-territory-feature",
+      "id": "synthetic-alpha-territory-period",
+      "period": {
+        "yearFrom": -10,
+        "yearTo": 10
+      },
+      "polityId": "synthetic-alpha-polity",
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "uncertainty": {
+        "confidence": "low",
+        "note": "The geometry is deliberately synthetic."
+      }
+    }
+  ]
+}

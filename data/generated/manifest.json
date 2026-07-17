@@ -1,0 +1,33 @@
+{
+  "compatibility": {
+    "minimumRuntimeSchemaVersion": 1
+  },
+  "counts": {
+    "collections": 1,
+    "events": 2,
+    "journeys": 1,
+    "people": 1,
+    "places": 1,
+    "polities": 2,
+    "sources": 1,
+    "territories": 1
+  },
+  "datasetName": "Synthetic Foundation Fixture Dataset",
+  "datasetVersion": "foundation-fixture-0.1.0",
+  "editorialPolicy": "published-only",
+  "files": [
+    "index.json",
+    "manifest.json",
+    "runtime.json"
+  ],
+  "fingerprint": {
+    "algorithm": "sha256",
+    "value": "7b515d861efecc9c6a52aeb5525ed7638d52ebd6bb085e784f4f4410fa0b6d09"
+  },
+  "geometryCounts": {
+    "journeys": 1,
+    "territories": 1
+  },
+  "schemaVersion": 1,
+  "timestampPolicy": "none"
+}

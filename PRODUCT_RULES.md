@@ -182,6 +182,7 @@ The exact thresholds must be centralized and testable, not scattered across comp
 - Runtime app code must not contain canonical historical content.
 - Data changes should be reviewable separately from UI changes.
 - IDs are stable and must not be changed merely to improve display names.
+- Top-level entity IDs are globally unique across entity types so untyped selections and reference indexes remain unambiguous.
 - Deleting a referenced entity requires validation and explicit cleanup.
 - Schema migrations for repository data must include a transformation plan or a coordinated data update.
 

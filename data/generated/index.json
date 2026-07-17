@@ -1,0 +1,121 @@
+{
+  "datasetVersion": "foundation-fixture-0.1.0",
+  "records": [
+    {
+      "id": "synthetic-alpha-battle",
+      "name": "Synthetic Alpha Battle",
+      "relatedIds": [
+        "synthetic-alpha-journey",
+        "synthetic-alpha-person",
+        "synthetic-alpha-place",
+        "synthetic-alpha-polity",
+        "synthetic-beta-polity"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "events"
+    },
+    {
+      "id": "synthetic-alpha-collection",
+      "name": "Synthetic Alpha Collection",
+      "relatedIds": [
+        "synthetic-alpha-battle",
+        "synthetic-alpha-event",
+        "synthetic-alpha-journey",
+        "synthetic-alpha-person",
+        "synthetic-alpha-place",
+        "synthetic-alpha-polity",
+        "synthetic-beta-polity"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "collections"
+    },
+    {
+      "id": "synthetic-alpha-event",
+      "name": "Synthetic Alpha Event",
+      "relatedIds": [
+        "synthetic-alpha-person",
+        "synthetic-alpha-place",
+        "synthetic-alpha-polity"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "events"
+    },
+    {
+      "geometryFeatureId": "synthetic-alpha-journey-feature",
+      "id": "synthetic-alpha-journey",
+      "name": "Synthetic Alpha Journey",
+      "relatedIds": [
+        "synthetic-alpha-event",
+        "synthetic-alpha-person",
+        "synthetic-alpha-place",
+        "synthetic-alpha-polity"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "journeys"
+    },
+    {
+      "id": "synthetic-alpha-person",
+      "name": "Synthetic Alpha Person",
+      "relatedIds": [
+        "synthetic-alpha-place",
+        "synthetic-alpha-polity"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "people"
+    },
+    {
+      "id": "synthetic-alpha-place",
+      "name": "Synthetic Alpha Place",
+      "relatedIds": [
+        "synthetic-alpha-polity"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "places"
+    },
+    {
+      "id": "synthetic-alpha-polity",
+      "name": "Synthetic Alpha Polity",
+      "relatedIds": [
+        "synthetic-alpha-person",
+        "synthetic-alpha-place"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "polities"
+    },
+    {
+      "geometryFeatureId": "synthetic-alpha-territory-feature",
+      "id": "synthetic-alpha-territory-period",
+      "name": "synthetic-alpha-territory-period",
+      "relatedIds": [
+        "synthetic-alpha-polity"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "territories"
+    },
+    {
+      "id": "synthetic-beta-polity",
+      "name": "Synthetic Beta Polity",
+      "relatedIds": [],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "polities"
+    },
+    {
+      "id": "synthetic-fixture-source",
+      "name": "Synthetic pipeline fixture source",
+      "relatedIds": [],
+      "sourceCount": 0,
+      "status": "published",
+      "type": "sources"
+    }
+  ],
+  "schemaVersion": 1
+}

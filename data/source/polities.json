@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "datasetVersion": "foundation-fixture-0.1.0",
+  "records": [
+    {
+      "id": "synthetic-alpha-polity",
+      "defaultName": "Synthetic Alpha Polity",
+      "polityType": "kingdom",
+      "existence": { "yearFrom": -10, "yearTo": 10 },
+      "color": "#336699",
+      "capitals": [{ "placeId": "synthetic-alpha-place", "period": { "yearFrom": -10, "yearTo": 10 }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }] }],
+      "rulers": [{ "personId": "synthetic-alpha-person", "period": { "yearFrom": -10, "yearTo": 10 }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }] }],
+      "editorialStatus": "published",
+      "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+    },
+    {
+      "id": "synthetic-beta-polity",
+      "defaultName": "Synthetic Beta Polity",
+      "polityType": "city-state",
+      "existence": { "yearFrom": -10, "yearTo": 10 },
+      "color": "#993366", "capitals": [], "rulers": [],
+      "editorialStatus": "published",
+      "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+    }
+  ]
+}

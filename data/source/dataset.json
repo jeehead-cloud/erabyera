@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "datasetVersion": "foundation-fixture-0.1.0",
+  "name": "Synthetic Foundation Fixture Dataset",
+  "description": "Obvious synthetic records used only to exercise the EraByEra data pipeline.",
+  "fixturePolicy": "synthetic-only",
+  "files": {
+    "sources": "sources.json",
+    "places": "places.json",
+    "polities": "polities.json",
+    "territories": "territories.json",
+    "people": "people.json",
+    "events": "events.json",
+    "journeys": "journeys.json",
+    "collections": "collections.json",
+    "territoryGeometry": "territories.geojson",
+    "journeyGeometry": "journeys.geojson"
+  }
+}

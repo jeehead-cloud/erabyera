@@ -1,6 +1,6 @@
 ﻿# EraByEra вЂ” Architecture
 
-**Status:** F1–F3 application and domain foundation implemented; later architecture proposed
+**Status:** F1–F4 application, domain, and static-data foundation implemented; later architecture proposed
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -34,9 +34,10 @@
 | Package manager | npm | Implemented with a lockfile |
 | Map | MapLibre GL JS + `react-map-gl/maplibre` | Proposed for F5; not installed in F1 |
 | State | Zustand | Proposed when shared UI state requires it; not installed in F1 |
-| Validation | Zod | Implemented for F2 time schemas and F3 strict entity contracts |
-| Testing | Vitest | Implemented for non-browser TypeScript domain tests |
-| Data | JSON + GeoJSON in repository | Proposed for later foundation milestones |
+| Validation | Zod | Implemented for time, entities, source wrappers, runtime data, and GeoJSON |
+| Testing | Vitest | Implemented for domain and repository data-pipeline tests |
+| Data | JSON + GeoJSON in repository | Canonical source and geometry plus committed deterministic runtime output implemented in F4 |
+| Script runner | tsx | Node-only TypeScript data commands implemented in F4 |
 | Backend | None for foundation | Static client application |
 
 ### F1 application boundary
@@ -58,7 +59,7 @@ A static image overlay is acceptable for a prototype, but it becomes restrictive
 
 ## 3. Repository Structure
 
-The implemented F1–F3 structure is:
+The implemented F1–F4 structure additionally includes:
 
 ```text
 erabyera/
@@ -69,6 +70,12 @@ erabyera/
 |-- tsconfig.json
 |-- tsconfig.app.json
 |-- tsconfig.node.json
+|-- tsconfig.scripts.json
+|-- data/
+|   |-- source/             # canonical strict JSON records and dataset descriptor
+|   |-- geometry/           # canonical territory and journey GeoJSON
+|   `-- generated/          # committed, deterministic runtime output; never hand-edit
+|-- scripts/data/           # Node-only load, validation, build, check, and tests
 |-- vite.config.ts
 |-- design/                 # read-only references
 `-- src/
@@ -100,6 +107,8 @@ erabyera/
     |   |-- fixtures.ts
     |   |-- index.ts
     |   `-- entities.test.ts
+    |-- domain/geometry/    # browser-safe GeoJSON Zod contracts
+    |-- data/               # browser-safe runtime schema and immutable loader
     |-- pages/
     |   |-- MapPage.tsx
     |   |-- ExplorePage.tsx
@@ -110,7 +119,7 @@ erabyera/
         `-- global.css
 ```
 
-Source-data, generated-data, state, map, URL, public-data, and script folders do not exist yet. Add them only in the milestone that owns the corresponding behavior.
+State, map, and URL folders remain future work. Canonical source data is never imported directly by application code; the app-facing boundary is `src/data` and generated runtime JSON.
 
 ### Later directional structure
 
@@ -451,31 +460,36 @@ Zoom thresholds should be deterministic and centralized. The exact formula belon
 
 ## 9. Data Pipeline
 
-1. Edit source data in reviewed CSV/Google Sheets or JSON.
-2. Export into repository source files.
-3. Run `npm run data:validate`.
-4. Transform source data into optimized runtime JSON/GeoJSON if needed.
-5. Commit both schema changes and data changes together.
+1. Edit versioned canonical wrappers in `data/source/` and GeoJSON in `data/geometry/`.
+2. Run `npm run data:validate` to parse strict F3 schemas and validate the complete graph.
+3. Run `npm run data:build` to create byte-stable `data/generated/runtime.json`, `index.json`, and `manifest.json`.
+4. Run `npm run data:check` to compare an in-memory rebuild with committed output without writing files.
+5. Commit canonical and generated data together after review.
 
-The application must not depend on a live Google Sheet in production.
+All wrappers carry schema version `1` and one matching dataset version. Entity IDs are unique across all top-level types. Public runtime output contains published records only; validation still covers every editorial state. Generation sorts set-like values and records while preserving temporal arrays and journey-stage sequence, emits no timestamp, and fingerprints runtime/index bytes with SHA-256. The browser-safe loader validates the aggregate runtime shape and deep-freezes it. Node filesystem and crypto imports remain confined to `scripts/data`.
+
+Schema evolution requires an explicit coordinated data update or migration. The pipeline rejects version mismatches and unknown fields rather than silently coercing old files. The application must not depend on a live spreadsheet in production.
 
 ---
 
 ## 10. Validation Rules
 
-The validation script should eventually check:
+The F4 validation pipeline checks:
 
-- unique IDs;
-- valid referenced IDs;
+- globally unique entity IDs;
+- source, place, polity, person, event, battle, journey, collection, territory, and geometry references;
 - valid coordinate ranges;
 - `yearFrom <= yearTo`;
 - required sources;
 - non-empty names;
 - valid GeoJSON geometry;
 - no forbidden overlapping ownership/name/importance periods;
-- territory features reference existing polities;
-- journey metadata matches GeoJSON features;
-- source records contain required attribution fields.
+- polygon/multipolygon ring closure and minimum size;
+- line/multiline minimum size;
+- unique geometry feature IDs and bidirectional metadata/feature links;
+- matching schema and dataset versions across every file.
+
+Place name, ownership, importance, and polity-capital overlaps are rejected. Competing interpretations require a future explicit schema variant rather than ambiguous overlapping records.
 
 ---
 

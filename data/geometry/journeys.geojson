@@ -1,0 +1,11 @@
+{
+  "type": "FeatureCollection",
+  "schemaVersion": 1,
+  "datasetVersion": "foundation-fixture-0.1.0",
+  "features": [{
+    "type": "Feature",
+    "id": "synthetic-alpha-journey-feature",
+    "properties": { "journeyId": "synthetic-alpha-journey" },
+    "geometry": { "type": "LineString", "coordinates": [[10, 10], [11, 11]] }
+  }]
+}

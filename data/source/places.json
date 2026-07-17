@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "datasetVersion": "foundation-fixture-0.1.0",
+  "records": [
+    {
+      "id": "synthetic-alpha-place",
+      "defaultName": "Synthetic Alpha Place",
+      "placeType": "city",
+      "coordinates": [10, 10],
+      "existence": { "yearFrom": -10, "yearTo": 10, "datePrecision": "range" },
+      "names": [{ "name": "Synthetic Alpha Place", "period": { "yearFrom": -10, "yearTo": 10 }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic names" }] }],
+      "ownership": [{ "polityId": "synthetic-alpha-polity", "period": { "yearFrom": -10, "yearTo": 10 }, "controlType": "direct", "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic ownership" }] }],
+      "importance": [{ "period": { "yearFrom": -10, "yearTo": 10 }, "importance": 3, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic importance" }] }],
+      "editorialStatus": "published",
+      "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic place" }]
+    },
+    {
+      "id": "synthetic-draft-place",
+      "defaultName": "Synthetic Draft Place",
+      "placeType": "settlement",
+      "existence": { "yearFrom": -5, "yearTo": 5 },
+      "names": [], "ownership": [], "importance": [],
+      "editorialStatus": "draft", "sourceRefs": []
+    }
+  ]
+}

@@ -12,7 +12,7 @@
 
 ## 1. Current State
 
-EraByEra is a client-side React, TypeScript, and Vite application. F1 provides the application shell and routes, but no production, staging, CI/CD workflow, or hosting provider is configured.
+EraByEra is a client-side React, TypeScript, and Vite application with a repository-managed static data pipeline. No production, staging, CI/CD workflow, or hosting provider is configured.
 
 The production build is a static `dist/` directory. There is no server process, backend, database, migration, or runtime secret in F1.
 
@@ -58,6 +58,8 @@ npm run typecheck
 npm run lint
 npm run test
 npm run build
+npm run data:validate
+npm run data:check
 ```
 
 The scripts perform:
@@ -66,8 +68,10 @@ The scripts perform:
 - `lint`: ESLint checks for the repository, excluding generated and design-reference directories;
 - `test`: non-interactive Vitest unit tests in a Node environment;
 - `build`: TypeScript checking followed by a Vite production build into `dist/`.
+- `data:validate`: read-only strict validation of canonical JSON, references, overlap policy, and GeoJSON;
+- `data:check`: read-only deterministic comparison of canonical inputs with committed runtime output.
 
-An optional `npm run test:watch` script runs Vitest in watch mode for local development. There is currently no `data:validate` or `preview` script. Do not report those checks as run, and add them only when a milestone introduces real data-validation or preview requirements.
+`npm run data:build` intentionally writes the three files in `data/generated/`; use it after canonical source or geometry changes, then rerun `data:check`. Generated files are committed and must never be hand-edited. An optional `npm run test:watch` script runs Vitest in watch mode. There is no `preview` script.
 
 On Windows systems where PowerShell blocks `npm.ps1`, invoke the same scripts through `npm.cmd`, for example `npm.cmd run lint`.
 
