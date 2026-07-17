@@ -1,6 +1,6 @@
 # EraByEra — Current Status
 
-**Status:** Foundation implementation — F9 implemented; owner browser verification pending
+**Status:** Foundation implementation — F10 implemented; owner browser verification pending
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -12,9 +12,9 @@
 
 ## 1. Current Development Phase
 
-EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, F7 at `5c8d61e`, and F8 at `3c06c6c`. F9 — Polities and Territory Layers is implemented in the local working tree; owner external-browser verification remains pending.
+EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, F7 at `5c8d61e`, F8 at `3c06c6c`, and F9 at `a07559f`. F10 — Events and Battle Model is implemented in the local working tree; owner external-browser verification remains pending.
 
-F9 establishes the first time-changing area layer using clearly synthetic data: selected-year polity and territory presentation, uncertainty-aware native MapLibre fills and boundaries, typed URL selection, overlap preservation, compact polity details, missing-geometry behavior, and visible source references. F8 place behavior remains integrated above territories.
+F10 establishes the third complete historical-entity flow using clearly synthetic data: selected-year generic events and specialized battles, exact/uncertain/unknown location behavior, native MapLibre point layers, typed URL selection, related-entity resolution, compact event/battle details, and visible evidence. F8 places and F9 territories remain integrated with explicit interaction priority.
 
 ---
 
@@ -217,9 +217,35 @@ Validation on 2026-07-17:
 - `git diff --check`: PASS;
 - browser checks: NOT RUN — owner external-browser verification required.
 
-### F10–F18 — Planned
+### F10 — Events and Battle Model — Implemented; owner verification pending
 
-Not started. F10 — Events and Battle Model is next after owner verification confirms the F9 territory/polity flow. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
+Implemented:
+
+- pure F2-based event activity, location-integrity, relation, evidence, nearest-year, generic presentation, and specialized battle selectors;
+- three published synthetic events proving an exact mapped political event, an approximate mapped two-side battle, and an inactive-by-default unknown-location event selectable through URL;
+- battle side polity/person/commander resolution, structured result/outcomes, disputed note, and related synthetic campaign presentation without invented force or loss values;
+- deterministic compact point GeoJSON, one native MapLibre event source, ordinary/uncertain/battle layers, and a non-color-only selected highlight between territories and places;
+- typed push-history event selection, disabled-layer and inactive mapped overrides, unknown-location card-only behavior, and centralized place → event → territory click priority;
+- compact accessible responsive event card with specialized battle sections, location honesty, relations, sources, unresolved state, and inactive-year actions;
+- 86 new event, layer, and pipeline tests, bringing the suite to 533 tests in 13 files.
+
+Automated and static acceptance criteria pass. Actual WebGL marker rendering, click behavior, cards, responsive layout, refresh/Back behavior, and browser console checks remain pending owner verification in ordinary Chrome or Edge.
+
+Validation on 2026-07-17:
+
+- `npm run typecheck`: PASS;
+- `npm run lint`: PASS;
+- `npm run test`: PASS — 13 files, 533 tests;
+- `npm run data:validate`: PASS — 18 canonical synthetic records;
+- `npm run data:build` twice with hash comparison: PASS — three byte-identical artifacts;
+- `npm run data:check`: PASS;
+- `npm run build`: PASS — MapLibre emits the known non-blocking large-chunk warning;
+- `git diff --check`: PASS;
+- browser checks: NOT RUN — owner external-browser verification required.
+
+### F11–F18 — Planned
+
+Not started. F11 — People and Active-Place Representation is next after owner verification confirms the F10 event/battle flow. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
 
 ---
 
@@ -259,6 +285,11 @@ Not started. F10 — Events and Battle Model is next after owner verification co
 - Normal territory rendering obeys the `territories` URL layer. An explicitly selected polity keeps only its active mapped geometry visible as an override when that layer is disabled.
 - Places render above territory fills and receive explicit click priority. Territory control groups use fill opacity plus solid/dashed boundaries, and selection adds a wide light outline.
 - Polity evidence prioritizes active territory, capital, and ruler references before entity references; inactive period evidence is excluded.
+- Event activity and selected-year visibility reuse F2. Normal mapped markers require an active event and enabled `events` layer; explicit mapped selection overrides inactivity and the layer toggle with distinct styling.
+- Unknown-location events never produce a point, remain URL-selectable, and retain a card without moving the viewport. Invalid accuracy/coordinate combinations fail presentation derivation safely.
+- Battle remains the F3 HistoricalEvent specialization; its side order is authored, participant lists are deduplicated deterministically, and unresolved relation names remain explicit null fallbacks.
+- Event evidence consists only of references directly attached to the event/battle record. Participant entities' general evidence is not promoted into event claims.
+- Historical render order is territory → event → place and interaction priority is place → event → territory.
 - All entity temporal fields reuse `src/domain/time`; no second time model exists.
 - Zod and Vitest remain the only domain validation/testing dependencies.
 
@@ -271,7 +302,8 @@ Not started. F10 — Events and Battle Model is next after owner verification co
 - Competing temporal interpretations cannot yet coexist in canonical fixture files because the current schema has no explicit variant/claim grouping.
 - Published-source enforcement checks coverage presence, not whether the referenced source exists or is editorially adequate.
 - Fixtures are synthetic structure examples, not publishable historical data.
-- Only places and territories are rendered; no playback, people, events, journeys, collection UI, search, or full entity pages exist yet.
+- Places, territories, and events are rendered; no playback, people layer, journey routes, collection UI, search, or full entity pages exist yet.
+- F10 uses representative point markers only. It does not add regional polygons, clustering, overlap cycling, or automatic map fitting.
 - Overlapping claims render separately, but F9 offers no click cycling when multiple polygons occupy the same point.
 - Natural Earth 1:110m vectors are intentionally generalized and become coarse at close zoom; F5 caps zoom at 7.
 - Actual WebGL load, pan/zoom, responsive rendering, visual forbidden-layer review, and browser console checks remain pending owner verification.
@@ -281,9 +313,9 @@ Not started. F10 — Events and Battle Model is next after owner verification co
 
 ## 5. Nearest Next Steps
 
-1. Complete the F5–F9 owner external-browser checks for map/timeline rendering, place and territory visibility, selection, cards, URL restoration, and responsive layout.
-2. Review and commit F9 when ready.
-3. Begin F10 — Events and Battle Model only after browser verification confirms the territory/polity flow is stable.
+1. Complete the F5–F10 owner external-browser checks for map/timeline rendering, historical-layer visibility, click priority, cards, URL restoration, and responsive layout.
+2. Review and commit F10 when ready.
+3. Begin F11 — People and Active-Place Representation only after browser verification confirms the event/battle flow is stable.
 4. Keep all current historical-layer fixtures unmistakably synthetic.
 
 ---
@@ -297,6 +329,11 @@ Only report validation that actually ran.
 ---
 
 ## Recent Changes — Rolling Three-Month History
+
+### 2026-07-17 — Implemented F10 event and battle presentation
+
+- Connected generated generic events and specialized battles to selected-year selectors, native exact/uncertain MapLibre markers, typed URL selection, relation resolution, and compact sourced cards.
+- Expanded only synthetic fixtures to prove exact, approximate, unknown-location, inactive, two-side battle, commander, disputed-note, and related-campaign behavior; added 86 tests, with owner browser verification pending.
 
 ### 2026-07-17 — Implemented F9 polity and historical territory flow
 
@@ -346,6 +383,12 @@ Only report validation that actually ran.
 ---
 
 ## Significant Changes — Permanent History
+
+### 2026-07-17 — Specialized historical-event presentation established
+
+- EraByEra now carries one HistoricalEvent union through shared activity, location, selection, evidence, and card behavior while allowing Battle to add structured sides, commanders, outcomes, result, dispute, and campaign context.
+- Unknown locations remain inspectable without fabricated coordinates, and uncertain representative points remain visually and textually distinct.
+- Why it matters: future event subtypes can specialize trusted structured data without fragmenting the common event architecture or manufacturing map precision.
 
 ### 2026-07-17 — First time-changing historical area layer established
 

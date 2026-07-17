@@ -498,6 +498,20 @@ Territory clicks push `entity=polity:<id>` through F6 while preserving year, vie
 
 Polity evidence priority is active territories, active capitals, active rulers, then polity-level references. Exact duplicate references are removed, locator-distinct references remain, and inactive period evidence is excluded. Pure Node tests cover activity, relations, presentation, evidence, Polygon/MultiPolygon output, overlap preservation, layer activation/ordering/style groups, URL selection, and missing geometry; MapLibre rendering itself remains an owner-browser check.
 
+### F10 event and battle data and presentation flow
+
+F10 consumes `events`, related records, and sources from the existing immutable `useRuntimeData` result. No event component imports canonical source files, pipeline modules, or Node APIs. The F4 generated runtime union remains authoritative: Battle is parsed and retained as a specialized HistoricalEvent rather than loaded through a second path.
+
+`src/domain/events` derives inclusive F2 activity, explicit location availability, generic or battle presentation, related polity/person/place/journey labels, nearest active years, compact evidence, and deterministic point GeoJSON. Missing coordinates remain `null`, never `[0,0]`; non-unknown accuracy without coordinates and unknown accuracy with coordinates fail presentation derivation safely. Related place names use the nearest event-period year so an inactive selection does not present a name from an unrelated map year.
+
+Battle presentation extends the common event model with authored side order, deduplicated side polity/person/commander relations, outcomes, required result, optional related journey, optional forces/losses only when modeled, and disputed notes. Unresolved references retain IDs with null display names rather than fabricated copy. Event-level references are the authoritative evidence path because the current battle detail/side schemas have no separate source fields; participant entities' general sources are deliberately excluded.
+
+`EventLayer` owns one local GeoJSON source and native circle layers for exact ordinary events, uncertain ordinary points, battles, and selected events. Uncertain points use increased radius, reduced opacity, and thicker outline; approximate battles also receive a thicker ring. Selected events use a larger five-pixel outline and lower opacity when inactive. No icons, text, glyphs, sprites, remote event assets, DOM markers, or importance system are introduced.
+
+Historical component order is physical basemap → territories → events → places. Interactive IDs and click handling use place → event → territory priority, so precise place points win over colocated event points and events win over polygons. Normal event features require the URL-owned F7 year, enabled `events` layer, active period, and coordinates. Explicit mapped selection overrides inactivity and the layer toggle; unknown-location selection retains only its card. No selection changes year or viewport automatically.
+
+Event clicks push `entity=event:<id>` through F6 while preserving viewport, year, layers, collection, and unrelated parameters. Empty-map clearing owns place, polity, and event selections only. The compact event card shares the established contextual position but remains entity-specific; Battle adds structured sections rather than using a schema-driven universal renderer. Pure Node tests cover activity, all event types, location integrity, battle specialization, relations, evidence, GeoJSON, layer/order configuration, selection, and temporal actions; rendered behavior remains an owner-browser check.
+
 ---
 
 ## 8. Importance and Visibility

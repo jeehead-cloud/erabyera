@@ -1,15 +1,28 @@
 {
   "schemaVersion": 1,
   "datasetVersion": "foundation-fixture-0.1.0",
-  "records": [{
-    "id": "synthetic-alpha-person",
-    "defaultName": "Synthetic Alpha Person",
-    "life": { "yearFrom": -10, "yearTo": 10 },
-    "roles": ["synthetic ruler"],
-    "places": [{ "placeId": "synthetic-alpha-place", "period": { "yearFrom": -10, "yearTo": -10 }, "relationType": "birth", "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }] }],
-    "associatedPolityIds": ["synthetic-alpha-polity"],
-    "importance": 3,
-    "editorialStatus": "published",
-    "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
-  }]
+  "records": [
+    {
+      "id": "synthetic-alpha-person",
+      "defaultName": "Synthetic Alpha Person",
+      "life": { "yearFrom": -500, "yearTo": 10 },
+      "roles": ["synthetic ruler", "synthetic commander"],
+      "places": [{ "placeId": "synthetic-alpha-place", "period": { "yearFrom": -500, "yearTo": -500 }, "relationType": "birth", "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }] }],
+      "associatedPolityIds": ["synthetic-alpha-polity"],
+      "importance": 3,
+      "editorialStatus": "published",
+      "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+    },
+    {
+      "id": "synthetic-beta-person",
+      "defaultName": "Synthetic Beta Person",
+      "life": { "yearFrom": -400, "yearTo": 10 },
+      "roles": ["synthetic commander"],
+      "places": [{ "placeId": "synthetic-beta-place", "period": { "yearFrom": -350, "yearTo": -300 }, "relationType": "campaign", "eventId": "synthetic-alpha-battle", "journeyId": "synthetic-alpha-journey", "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }] }],
+      "associatedPolityIds": ["synthetic-beta-polity"],
+      "importance": 2,
+      "editorialStatus": "published",
+      "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+    }
+  ]
 }

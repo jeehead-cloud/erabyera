@@ -7,6 +7,7 @@ import Map, {
 } from 'react-map-gl/maplibre'
 import type { PlaceFeatureCollection } from '../domain/places'
 import type { TerritoryFeatureCollection } from '../domain/polities'
+import type { EventFeatureCollection } from '../domain/events'
 import {
   MAP_MOVEMENT_HISTORY_MODE,
   areMapUrlViewportsEquivalent,
@@ -22,10 +23,10 @@ import {
 import { MapErrorState } from './MapErrorState'
 import { MapLoadingState } from './MapLoadingState'
 import {
-  PLACE_INTERACTIVE_LAYER_IDS,
   PlaceLayer,
-  TERRITORY_INTERACTIVE_LAYER_IDS,
+  EventLayer,
   TerritoryLayer,
+  getHistoricalInteractiveLayerIds,
 } from './layers'
 
 type MapLoadState = 'loading' | 'ready' | 'failed'
@@ -35,7 +36,9 @@ interface MapViewProps {
   updateUrlState: UpdateMapUrlState
   placeFeatures?: PlaceFeatureCollection
   territoryFeatures?: TerritoryFeatureCollection
+  eventFeatures?: EventFeatureCollection
   onSelectPlace?: (placeId: string) => void
+  onSelectEvent?: (eventId: string) => void
   onSelectPolity?: (polityId: string) => void
   onClearOwnedSelection?: () => void
 }
@@ -53,7 +56,9 @@ export function MapView({
   updateUrlState,
   placeFeatures,
   territoryFeatures,
+  eventFeatures,
   onSelectPlace,
+  onSelectEvent,
   onSelectPolity,
   onClearOwnedSelection,
 }: MapViewProps) {
@@ -118,10 +123,15 @@ export function MapView({
       onSelectPlace?.(placeId)
       return
     }
+    const eventId = event.features?.find((feature) => typeof feature.properties?.eventId === 'string')?.properties?.eventId
+    if (typeof eventId === 'string') {
+      onSelectEvent?.(eventId)
+      return
+    }
     const polityId = event.features?.find((feature) => typeof feature.properties?.polityId === 'string')?.properties?.polityId
     if (typeof polityId === 'string') onSelectPolity?.(polityId)
     else onClearOwnedSelection?.()
-  }, [onClearOwnedSelection, onSelectPlace, onSelectPolity])
+  }, [onClearOwnedSelection, onSelectEvent, onSelectPlace, onSelectPolity])
 
   const handlePointerMove = useCallback((event: MapLayerMouseEvent) => {
     setEntityPointer(event.features !== undefined && event.features.length > 0)
@@ -141,10 +151,11 @@ export function MapView({
         key={mapAttempt}
         {...viewport}
         cursor={entityPointer ? 'pointer' : 'grab'}
-        interactiveLayerIds={[
-          ...(placeFeatures === undefined ? [] : PLACE_INTERACTIVE_LAYER_IDS),
-          ...(territoryFeatures === undefined ? [] : TERRITORY_INTERACTIVE_LAYER_IDS),
-        ]}
+        interactiveLayerIds={getHistoricalInteractiveLayerIds({
+          places: placeFeatures !== undefined,
+          events: eventFeatures !== undefined,
+          territories: territoryFeatures !== undefined,
+        })}
         mapStyle={PHYSICAL_BASEMAP_STYLE}
         minZoom={MAP_ZOOM_LIMITS.minZoom}
         maxZoom={MAP_ZOOM_LIMITS.maxZoom}
@@ -165,6 +176,7 @@ export function MapView({
       >
         <NavigationControl position="top-right" showCompass visualizePitch={false} />
         {territoryFeatures === undefined ? null : <TerritoryLayer data={territoryFeatures} />}
+        {eventFeatures === undefined ? null : <EventLayer data={eventFeatures} />}
         {placeFeatures === undefined ? null : <PlaceLayer data={placeFeatures} />}
       </Map>
       {loadState === 'loading' ? <MapLoadingState /> : null}

@@ -4,20 +4,34 @@
   "records": [
     {
       "id": "synthetic-alpha-event", "defaultName": "Synthetic Alpha Event", "type": "political",
-      "period": { "yearFrom": -2, "yearTo": -1 }, "participantPolityIds": ["synthetic-alpha-polity"],
+      "summary": "A deliberately synthetic exact-location event used only to verify event presentation.",
+      "period": { "yearFrom": -334, "yearTo": -334 }, "coordinates": [28, 37],
+      "participantPolityIds": ["synthetic-alpha-polity"],
       "participantPersonIds": ["synthetic-alpha-person"], "relatedPlaceIds": ["synthetic-alpha-place"],
-      "locationAccuracy": "unknown", "editorialStatus": "published", "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+      "locationAccuracy": "exact", "uncertainty": { "confidence": "high", "note": "The event and coordinates are synthetic." },
+      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic exact event" }]
     },
     {
       "id": "synthetic-alpha-battle", "defaultName": "Synthetic Alpha Battle", "type": "battle",
-      "period": { "yearFrom": -1, "yearTo": -1 }, "coordinates": [11, 11], "locationAccuracy": "approximate",
-      "participantPolityIds": ["synthetic-alpha-polity", "synthetic-beta-polity"], "participantPersonIds": ["synthetic-alpha-person"],
-      "relatedPlaceIds": ["synthetic-alpha-place"],
+      "summary": "A deliberately synthetic battle used only to verify structured battle presentation.",
+      "period": { "yearFrom": -334, "yearTo": -334 }, "coordinates": [30.5, 36.5], "locationAccuracy": "approximate",
+      "participantPolityIds": ["synthetic-alpha-polity", "synthetic-beta-polity"], "participantPersonIds": ["synthetic-alpha-person", "synthetic-beta-person"],
+      "relatedPlaceIds": ["synthetic-beta-place"],
       "battle": { "sides": [
-        { "id": "synthetic-alpha-side", "label": "Synthetic Alpha Side", "polityIds": ["synthetic-alpha-polity"], "personIds": ["synthetic-alpha-person"], "commanderIds": ["synthetic-alpha-person"] },
-        { "id": "synthetic-beta-side", "label": "Synthetic Beta Side", "polityIds": ["synthetic-beta-polity"], "personIds": [], "commanderIds": [] }
-      ], "result": "Synthetic fixture result", "relatedJourneyId": "synthetic-alpha-journey", "disputedNotes": [] },
-      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+        { "id": "synthetic-alpha-side", "label": "Synthetic Alpha Side", "polityIds": ["synthetic-alpha-polity"], "personIds": ["synthetic-alpha-person"], "commanderIds": ["synthetic-alpha-person"], "outcome": "Synthetic favorable outcome" },
+        { "id": "synthetic-beta-side", "label": "Synthetic Beta Side", "polityIds": ["synthetic-beta-polity"], "personIds": ["synthetic-beta-person"], "commanderIds": ["synthetic-beta-person"], "outcome": "Synthetic unfavorable outcome" }
+      ], "result": "Synthetic fixture result", "relatedJourneyId": "synthetic-alpha-journey", "disputedNotes": ["A deliberately synthetic disputed interpretation."] },
+      "uncertainty": { "confidence": "low", "note": "The approximate battle location is synthetic." },
+      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic battle" }]
+    },
+    {
+      "id": "synthetic-unknown-event", "defaultName": "Synthetic Unknown-Location Event", "type": "cultural",
+      "summary": "A deliberately synthetic event with no reviewed map location.",
+      "period": { "yearFrom": -250, "yearTo": -250 }, "locationAccuracy": "unknown",
+      "participantPolityIds": ["synthetic-beta-polity"], "participantPersonIds": ["synthetic-beta-person"],
+      "relatedPlaceIds": ["synthetic-beta-place"],
+      "uncertainty": { "confidence": "unknown", "note": "No synthetic coordinate is supplied by design." },
+      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic unknown-location event" }]
     }
   ]
 }

@@ -2,6 +2,7 @@ import { useCallback, useMemo } from 'react'
 import { HistoricalDataStatus, PlaceDetailsCard } from '../components/PlaceDetails'
 import { Timeline, TIMELINE_HISTORY_MODE } from '../components/Timeline'
 import { PolityDetailsCard } from '../components/PolityDetails'
+import { EventDetailsCard } from '../components/EventDetails'
 import { useRuntimeData } from '../data'
 import {
   PLACE_SELECTION_HISTORY_MODE,
@@ -20,12 +21,20 @@ import {
 } from '../domain/polities'
 import { MapView } from '../map'
 import { useMapUrlState } from '../url'
+import {
+  EVENT_SELECTION_HISTORY_MODE,
+  buildEventFeatureCollection,
+  buildEventPresentations,
+  createEventSelection,
+  selectedEventId,
+} from '../domain/events'
 
 export function MapPage() {
   const [mapUrlState, updateMapUrlState] = useMapUrlState()
   const runtimeData = useRuntimeData()
   const selectedPlace = selectedPlaceId(mapUrlState.selectedEntity)
   const selectedPolity = selectedPolityId(mapUrlState.selectedEntity)
+  const selectedEvent = selectedEventId(mapUrlState.selectedEntity)
   const placeResult = useMemo(() => {
     if (runtimeData.status !== 'ready') return null
     try {
@@ -82,6 +91,35 @@ export function MapPage() {
   const activeTerritoryCount = polityResult?.presentations.reduce((count, polity) => count + polity.territories.length, 0) ?? 0
   const hasEmptyPlacesState = placeResult?.error === null && placesLayerActive && activePlaceCount === 0
   const hasEmptyTerritoriesState = polityResult?.error === null && territoriesLayerActive && activeTerritoryCount === 0
+  const eventResult = useMemo(() => {
+    if (runtimeData.status !== 'ready') return null
+    try {
+      return { presentations: buildEventPresentations(runtimeData.data, mapUrlState.year), error: null }
+    } catch (error) {
+      console.error('Historical event presentation failed safely.', error)
+      return { presentations: [], error: 'Historical events could not be prepared for this selected year.' }
+    }
+  }, [mapUrlState.year, runtimeData])
+  const eventsLayerActive = mapUrlState.activeLayers.includes('events')
+  const eventFeatures = useMemo(() =>
+    eventResult === null || eventResult.error !== null
+      ? undefined
+      : buildEventFeatureCollection(eventResult.presentations, eventsLayerActive, selectedEvent),
+  [eventResult, eventsLayerActive, selectedEvent])
+  const selectedEventPresentation = eventResult?.presentations.find((event) => event.id === selectedEvent) ?? null
+  const unresolvedEventId = runtimeData.status === 'ready' && selectedEvent !== null && eventResult?.error === null && selectedEventPresentation === null ? selectedEvent : null
+  const activeMappedEventCount = eventResult?.presentations.filter((event) => event.active && event.locationAvailable).length ?? 0
+  const activeUnmappedEventCount = eventResult?.presentations.filter((event) => event.active && !event.locationAvailable).length ?? 0
+  const hasEmptyEventsState = eventResult?.error === null && eventsLayerActive && activeMappedEventCount === 0
+  const emptyStateMessages = [
+    hasEmptyPlacesState ? 'No mapped places are active.' : null,
+    hasEmptyTerritoriesState ? 'No mapped territories are active.' : null,
+    hasEmptyEventsState
+      ? activeUnmappedEventCount > 0
+        ? 'Active events exist, but none has a reviewed map location.'
+        : 'No mapped events are active.'
+      : null,
+  ].filter((message): message is string => message !== null)
   const handleYearChange = useCallback(
     (year: HistoricalYear) => {
       updateMapUrlState({ year }, { history: TIMELINE_HISTORY_MODE })
@@ -100,14 +138,20 @@ export function MapPage() {
       { history: POLITY_SELECTION_HISTORY_MODE },
     )
   }, [updateMapUrlState])
+  const handleSelectEvent = useCallback((eventId: string) => {
+    updateMapUrlState(
+      { selectedEntity: createEventSelection(eventId) },
+      { history: EVENT_SELECTION_HISTORY_MODE },
+    )
+  }, [updateMapUrlState])
   const handleClearOwnedSelection = useCallback(() => {
-    if (selectedPlace !== null || selectedPolity !== null) {
+    if (selectedPlace !== null || selectedPolity !== null || selectedEvent !== null) {
       updateMapUrlState(
         { selectedEntity: null },
         { history: POLITY_SELECTION_HISTORY_MODE },
       )
     }
-  }, [selectedPlace, selectedPolity, updateMapUrlState])
+  }, [selectedEvent, selectedPlace, selectedPolity, updateMapUrlState])
 
   return (
     <section className="map-page" aria-labelledby="map-heading">
@@ -117,7 +161,9 @@ export function MapPage() {
         updateUrlState={updateMapUrlState}
         placeFeatures={placeFeatures}
         territoryFeatures={territoryFeatures}
+        eventFeatures={eventFeatures}
         onSelectPlace={handleSelectPlace}
+        onSelectEvent={handleSelectEvent}
         onSelectPolity={handleSelectPolity}
         onClearOwnedSelection={handleClearOwnedSelection}
       />
@@ -125,18 +171,15 @@ export function MapPage() {
       {runtimeData.status === 'error' ? (
         <HistoricalDataStatus status="error" message={runtimeData.message} onRetry={runtimeData.retry} />
       ) : null}
-      {hasEmptyPlacesState && hasEmptyTerritoriesState ? (
-        <HistoricalDataStatus status="empty" message="No mapped places or territories are active in this selected year. This does not imply that no historical entities existed." />
-      ) : hasEmptyPlacesState ? (
-        <HistoricalDataStatus status="empty" />
-      ) : hasEmptyTerritoriesState ? (
-        <HistoricalDataStatus status="empty" message="No mapped territories are active in this selected year. This does not imply that no polities existed." />
-      ) : null}
+      {emptyStateMessages.length === 0 ? null : <HistoricalDataStatus status="empty" message={`${emptyStateMessages.join(' ')} This does not imply that no historical entities existed.`} />}
       {placeResult === null || placeResult.error === null ? null : (
         <HistoricalDataStatus status="error" message={placeResult.error} onRetry={runtimeData.retry} />
       )}
       {polityResult === null || polityResult.error === null ? null : (
         <HistoricalDataStatus status="error" message={polityResult.error} onRetry={runtimeData.retry} />
+      )}
+      {eventResult === null || eventResult.error === null ? null : (
+        <HistoricalDataStatus status="error" message={eventResult.error} onRetry={runtimeData.retry} />
       )}
       <PlaceDetailsCard
         place={selectedPlacePresentation}
@@ -148,6 +191,13 @@ export function MapPage() {
       <PolityDetailsCard
         polity={selectedPolityPresentation}
         unresolvedPolityId={unresolvedPolityId}
+        selectedYear={mapUrlState.year}
+        onClose={handleClearOwnedSelection}
+        onGoToYear={handleYearChange}
+      />
+      <EventDetailsCard
+        event={selectedEventPresentation}
+        unresolvedEventId={unresolvedEventId}
         selectedYear={mapUrlState.year}
         onClose={handleClearOwnedSelection}
         onGoToYear={handleYearChange}

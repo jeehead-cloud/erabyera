@@ -137,6 +137,12 @@ Do not convert вЂњcirca 500 BCEвЂќ into an apparently exact date without r
 - A battle's participants may include polities and people.
 - Long events use a period; single-year events may use the same start and end year.
 - Events with unknown or disputed locations must be marked accordingly rather than assigned a plausible coordinate.
+- Normal mapped events require an active period, reviewed coordinates, and the enabled `events` layer.
+- An explicitly selected mapped event remains visible when inactive or when `events` is disabled, using visibly inactive/selected styling without changing the year.
+- An unknown-location event remains URL-selectable and inspectable but never receives a marker, inferred coordinate, or automatic viewport change.
+- Approximate, regional, disputed, and otherwise uncertain representative points must use non-color-only uncertainty styling and explicit card language.
+- Event evidence uses references attached directly to the event/battle record; general participant sources are not event evidence.
+- Battles extend the common event contract with structured sides and required result rather than forming a parallel entity architecture.
 
 ---
 
@@ -162,7 +168,7 @@ Initial rules:
 - an explicitly selected place remains visible regardless of activity, zoom threshold, or the `places` layer toggle;
 - hidden by zoom does not mean historically inactive;
 - layer toggles control categories independently.
-- place features are rendered above territory fills and receive click priority when both occupy the same point;
+- historical render order is territory, then event, then place; click priority is place, then event, then territory;
 
 The exact thresholds must be centralized and testable, not scattered across components.
 

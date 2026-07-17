@@ -4,10 +4,10 @@
   "records": [{
     "id": "synthetic-alpha-collection", "defaultName": "Synthetic Alpha Collection",
     "description": "Synthetic collection used only to verify pipeline links.",
-    "timeRange": { "yearFrom": -10, "yearTo": 10 }, "recommendedStartYear": -1,
-    "recommendedViewport": { "longitude": 10, "latitude": 10, "zoom": 4 },
-    "coverage": { "detailedRegions": ["Synthetic Alpha Region"], "partialRegions": [], "timeRange": { "yearFrom": -10, "yearTo": 10 }, "note": "No historical coverage is claimed." },
-    "linkedEntities": { "placeIds": ["synthetic-alpha-place"], "polityIds": ["synthetic-alpha-polity", "synthetic-beta-polity"], "personIds": ["synthetic-alpha-person"], "eventIds": ["synthetic-alpha-battle", "synthetic-alpha-event"], "journeyIds": ["synthetic-alpha-journey"] },
+    "timeRange": { "yearFrom": -500, "yearTo": 10 }, "recommendedStartYear": -334,
+    "recommendedViewport": { "longitude": 28, "latitude": 37, "zoom": 4 },
+    "coverage": { "detailedRegions": ["Synthetic Alpha Region"], "partialRegions": [], "timeRange": { "yearFrom": -500, "yearTo": 10 }, "note": "No historical coverage is claimed." },
+    "linkedEntities": { "placeIds": ["synthetic-alpha-place", "synthetic-beta-place"], "polityIds": ["synthetic-alpha-polity", "synthetic-beta-polity"], "personIds": ["synthetic-alpha-person", "synthetic-beta-person"], "eventIds": ["synthetic-alpha-battle", "synthetic-alpha-event", "synthetic-unknown-event"], "journeyIds": ["synthetic-alpha-journey"] },
     "coverageStatus": "partial", "datasetVersion": "foundation-fixture-0.1.0",
     "editorialStatus": "published", "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
   }]

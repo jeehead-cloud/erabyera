@@ -7,8 +7,9 @@
       "relatedIds": [
         "synthetic-alpha-journey",
         "synthetic-alpha-person",
-        "synthetic-alpha-place",
         "synthetic-alpha-polity",
+        "synthetic-beta-person",
+        "synthetic-beta-place",
         "synthetic-beta-polity"
       ],
       "sourceCount": 1,
@@ -25,7 +26,10 @@
         "synthetic-alpha-person",
         "synthetic-alpha-place",
         "synthetic-alpha-polity",
-        "synthetic-beta-polity"
+        "synthetic-beta-person",
+        "synthetic-beta-place",
+        "synthetic-beta-polity",
+        "synthetic-unknown-event"
       ],
       "sourceCount": 1,
       "status": "published",
@@ -48,10 +52,12 @@
       "id": "synthetic-alpha-journey",
       "name": "Synthetic Alpha Journey",
       "relatedIds": [
+        "synthetic-alpha-battle",
         "synthetic-alpha-event",
         "synthetic-alpha-person",
-        "synthetic-alpha-place",
-        "synthetic-alpha-polity"
+        "synthetic-alpha-polity",
+        "synthetic-beta-person",
+        "synthetic-beta-polity"
       ],
       "sourceCount": 1,
       "status": "published",
@@ -112,6 +118,19 @@
       "type": "territories"
     },
     {
+      "id": "synthetic-beta-person",
+      "name": "Synthetic Beta Person",
+      "relatedIds": [
+        "synthetic-alpha-battle",
+        "synthetic-alpha-journey",
+        "synthetic-beta-place",
+        "synthetic-beta-polity"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "people"
+    },
+    {
       "id": "synthetic-beta-place",
       "name": "Synthetic Beta Outpost",
       "relatedIds": [],
@@ -153,6 +172,18 @@
       "sourceCount": 1,
       "status": "published",
       "type": "places"
+    },
+    {
+      "id": "synthetic-unknown-event",
+      "name": "Synthetic Unknown-Location Event",
+      "relatedIds": [
+        "synthetic-beta-person",
+        "synthetic-beta-place",
+        "synthetic-beta-polity"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "events"
     }
   ],
   "schemaVersion": 1

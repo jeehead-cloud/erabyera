@@ -6,6 +6,6 @@
     "type": "Feature",
     "id": "synthetic-alpha-journey-feature",
     "properties": { "journeyId": "synthetic-alpha-journey" },
-    "geometry": { "type": "LineString", "coordinates": [[10, 10], [11, 11]] }
+    "geometry": { "type": "LineString", "coordinates": [[28, 37], [30.5, 36.5]] }
   }]
 }

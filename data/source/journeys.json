@@ -3,11 +3,11 @@
   "datasetVersion": "foundation-fixture-0.1.0",
   "records": [{
     "id": "synthetic-alpha-journey", "defaultName": "Synthetic Alpha Journey", "journeyType": "campaign",
-    "period": { "yearFrom": -2, "yearTo": -1 }, "participantPersonIds": ["synthetic-alpha-person"],
-    "participantPolityIds": ["synthetic-alpha-polity"],
+    "period": { "yearFrom": -350, "yearTo": -300 }, "participantPersonIds": ["synthetic-alpha-person", "synthetic-beta-person"],
+    "participantPolityIds": ["synthetic-alpha-polity", "synthetic-beta-polity"],
     "stages": [
-      { "order": 1, "placeId": "synthetic-alpha-place", "year": -2, "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }] },
-      { "order": 2, "eventId": "synthetic-alpha-event", "year": -1, "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }] }
+      { "order": 1, "eventId": "synthetic-alpha-event", "year": -334, "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }] },
+      { "order": 2, "eventId": "synthetic-alpha-battle", "year": -334, "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }] }
     ],
     "geometryFeatureId": "synthetic-alpha-journey-feature", "directionKnown": true, "routeCertainty": "schematic",
     "editorialStatus": "published", "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
