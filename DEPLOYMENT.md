@@ -1,6 +1,6 @@
 # EraByEra — Deployment and Operations
 
-**Status:** Local application foundation; not deployed
+**Status:** Local application and historical-time foundation; not deployed
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -56,6 +56,7 @@ These scripts exist and were verified on 2026-07-17:
 ```powershell
 npm run typecheck
 npm run lint
+npm run test
 npm run build
 ```
 
@@ -63,9 +64,10 @@ The scripts perform:
 
 - `typecheck`: TypeScript project-reference checking without emitted application files;
 - `lint`: ESLint checks for the repository, excluding generated and design-reference directories;
+- `test`: non-interactive Vitest unit tests in a Node environment;
 - `build`: TypeScript checking followed by a Vite production build into `dist/`.
 
-There is currently no `test`, `data:validate`, or `preview` script. Do not report those checks as run, and add them only when a milestone introduces real test, data-validation, or preview requirements.
+An optional `npm run test:watch` script runs Vitest in watch mode for local development. There is currently no `data:validate` or `preview` script. Do not report those checks as run, and add them only when a milestone introduces real data-validation or preview requirements.
 
 On Windows systems where PowerShell blocks `npm.ps1`, invoke the same scripts through `npm.cmd`, for example `npm.cmd run lint`.
 

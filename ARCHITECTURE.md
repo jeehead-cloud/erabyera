@@ -1,6 +1,6 @@
 ﻿# EraByEra вЂ” Architecture
 
-**Status:** F1 application foundation implemented; later architecture proposed
+**Status:** F1 application foundation and F2 historical time domain implemented; later architecture proposed
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -34,8 +34,8 @@
 | Package manager | npm | Implemented with a lockfile |
 | Map | MapLibre GL JS + `react-map-gl/maplibre` | Proposed for F5; not installed in F1 |
 | State | Zustand | Proposed when shared UI state requires it; not installed in F1 |
-| Validation | Zod | Proposed for F2/F3 domain contracts; not installed in F1 |
-| Testing | Vitest | Proposed for domain and routing tests; no test runner is configured in F1 |
+| Validation | Zod | Implemented in F2 for historical-time runtime schemas; expands only with milestone-owned domain contracts |
+| Testing | Vitest | Implemented in F2 for non-browser TypeScript unit tests |
 | Data | JSON + GeoJSON in repository | Proposed for later foundation milestones |
 | Backend | None for foundation | Static client application |
 
@@ -58,7 +58,7 @@ A static image overlay is acceptable for a prototype, but it becomes restrictive
 
 ## 3. Repository Structure
 
-The implemented F1 structure is:
+The implemented F1/F2 structure is:
 
 ```text
 erabyera/
@@ -79,6 +79,13 @@ erabyera/
     |   |-- AppErrorBoundary.tsx
     |   `-- router.tsx
     |-- components/AppShell/AppShell.tsx
+    |-- domain/time/
+    |   |-- datePrecision.ts
+    |   |-- historicalYear.ts
+    |   |-- schemas.ts
+    |   |-- temporalRange.ts
+    |   |-- index.ts
+    |   `-- time.test.ts
     |-- pages/
     |   |-- MapPage.tsx
     |   |-- ExplorePage.tsx
@@ -89,7 +96,7 @@ erabyera/
         `-- global.css
 ```
 
-Domain, data, state, map, URL, public-data, and script folders do not exist yet. Add them only in the milestone that owns the corresponding behavior.
+Entity-domain, data, state, map, URL, public-data, and script folders do not exist yet. Add them only in the milestone that owns the corresponding behavior.
 
 ### Later directional structure
 
@@ -168,11 +175,20 @@ The actual repository remains the source of truth. Later milestones should adapt
 interface TemporalRange {
   yearFrom: number
   yearTo: number | null
-  datePrecision?: 'exact' | 'year' | 'decade' | 'century' | 'approximate' | 'unknown'
+  datePrecision?:
+    | 'exact'
+    | 'year'
+    | 'approximate'
+    | 'decade'
+    | 'century'
+    | 'range'
+    | 'before'
+    | 'after'
+    | 'unknown'
 }
 ```
 
-Negative years represent BCE. There is no year zero in conventional BCE/CE display, but internal numeric handling must be defined consistently in `time.ts`.
+Negative years represent BCE, positive years represent CE, and zero is invalid. F2 implements and validates this contract in `src/domain/time`.
 
 ### Source reference
 
@@ -267,23 +283,47 @@ interface JourneyProperties {
 
 ## 5. Temporal Semantics
 
-All temporal filtering must go through shared utilities.
+All temporal filtering must go through the public API exported by `src/domain/time/index.ts`.
 
 ```ts
-isActiveAtYear(range, year)
-intersectsYearRange(range, from, to)
+historicalYearSchema
+datePrecisionSchema
+temporalRangeSchema
 formatHistoricalYear(year)
+nextHistoricalYear(year)
+previousHistoricalYear(year)
+shiftHistoricalYear(year, steps)
+isActiveAtYear(range, year)
+intersectsHistoricalYearRange(range, from, to)
+nearestYearInTemporalRange(range, year)
 ```
 
-Default rule:
+### Historical years
+
+- historical years must be JavaScript safe integers;
+- BCE years are negative and CE years are positive;
+- zero is rejected at runtime;
+- `-1` and `1` are adjacent historical years;
+- shifting converts through a zero-free ordinal so no movement utility can return zero;
+- no product-specific minimum or maximum year is imposed beyond the technical safe-integer requirement.
+
+### Temporal ranges
+
+Closed ranges use inclusive boundaries:
 
 ```text
 yearFrom <= selectedYear <= yearTo
 ```
 
-`yearTo: null` means unknown or continuing only when the relevant schema explicitly allows it. It must not automatically mean the present day for all entities.
+`yearTo: null` means unknown or unsupplied. By default such a range is not considered active and does not intersect a query. A caller may pass `treatUnknownEndAsOpenEnded: true` only when its own domain contract explicitly permits that interpretation.
+
+For nearest-year selection, a closed range clamps to its inclusive start or end. An unknown-ended range returns its known start for requests at or before that start, returns the requested later year only under explicit open-ended semantics, and otherwise returns `null` rather than inventing an end.
 
 Overlapping time-dependent records for the same field should be rejected by validation unless the schema explicitly permits competing interpretations.
+
+### Testing
+
+Vitest runs as a Node-based unit-test environment with no browser or DOM dependency. `npm run test` executes once and exits; `npm run test:watch` is the optional local watch mode. F2 tests cover validation, formatting, BCE/CE transitions, zero-free stepping, date precision, inclusive activity/intersection, unknown-end policy, and nearest-year behavior.
 
 ---
 
