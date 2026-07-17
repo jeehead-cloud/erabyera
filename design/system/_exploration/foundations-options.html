@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="design_doc_mode" content="canvas">
+<meta charset="UTF-8">
+<style>
+  body{margin:0;background:#e5e5e5;font-family:sans-serif;}
+  .frame{position:absolute;border-radius:4px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.25);}
+  .label{position:absolute;font:600 13px/1 -apple-system,sans-serif;color:#333;letter-spacing:.02em;text-transform:uppercase;}
+</style>
+</head>
+<body>
+
+<div class="label" style="left:40px; top:16px;">A — Tactical HUD (graphite + amber/cyan)</div>
+<div class="frame" style="left:40px; top:44px; width:820px; height:560px; background:#14171a;">
+  <div style="padding:32px; color:#e8e6e1; font-family:'IBM Plex Sans',sans-serif;">
+    <div style="font:700 28px/1 'IBM Plex Sans'; letter-spacing:.02em; margin-bottom:4px;">ATLAS</div>
+    <div style="font:500 13px/1 'IBM Plex Mono'; color:#8a9199; letter-spacing:.08em; margin-bottom:28px;">STRATEGY &amp; SIMULATION SYSTEMS</div>
+
+    <div style="display:flex; gap:10px; margin-bottom:24px;">
+      <div style="width:64px;height:64px;border-radius:6px;background:#1c2024;border:1px solid #2a2f34;"></div>
+      <div style="width:64px;height:64px;border-radius:6px;background:#22262b;border:1px solid #2a2f34;"></div>
+      <div style="width:64px;height:64px;border-radius:6px;background:#2a2f34;border:1px solid #343a40;"></div>
+      <div style="width:64px;height:64px;border-radius:6px;background:#c98a2c;"></div>
+      <div style="width:64px;height:64px;border-radius:6px;background:#3fb6a8;"></div>
+      <div style="width:64px;height:64px;border-radius:6px;background:#c9564a;"></div>
+    </div>
+
+    <div style="font:600 11px/1 'IBM Plex Mono'; color:#6b7280; letter-spacing:.1em; margin-bottom:10px;">SURFACES</div>
+    <div style="display:flex; gap:10px; margin-bottom:24px;">
+      <div style="flex:1; height:80px; background:#1c2024; border:1px solid #2a2f34; border-radius:6px; padding:12px; font:500 12px 'IBM Plex Mono'; color:#9aa1a8;">panel bg</div>
+      <div style="flex:1; height:80px; background:#101317; border:1px solid #2a2f34; border-radius:6px; padding:12px; font:500 12px 'IBM Plex Mono'; color:#9aa1a8;">canvas bg</div>
+      <div style="flex:1; height:80px; background:#1c2024; border:1px solid #c98a2c; border-radius:6px; padding:12px; font:500 12px 'IBM Plex Mono'; color:#c98a2c;">selected</div>
+    </div>
+
+    <div style="display:flex; gap:12px; align-items:center;">
+      <div style="background:#c98a2c; color:#14171a; font:600 13px 'IBM Plex Sans'; padding:10px 18px; border-radius:5px;">Deploy Unit</div>
+      <div style="background:transparent; border:1px solid #3a4149; color:#c9cdd1; font:600 13px 'IBM Plex Sans'; padding:10px 18px; border-radius:5px;">Cancel</div>
+      <div style="color:#6b7280; font:500 12px 'IBM Plex Mono'; letter-spacing:.05em;">TURN 14 · 03:41</div>
+    </div>
+  </div>
+</div>
+
+<div class="label" style="left:900px; top:16px;">B — Cartographer (warm umber + gold, serif display)</div>
+<div class="frame" style="left:900px; top:44px; width:820px; height:560px; background:#1d1712;">
+  <div style="padding:32px; color:#ece3d2;">
+    <div style="font:700 30px/1 'Source Serif 4', Georgia, serif; letter-spacing:.01em; margin-bottom:4px;">Atlas</div>
+    <div style="font:500 13px/1 'IBM Plex Sans',sans-serif; color:#a8987c; letter-spacing:.06em; margin-bottom:28px;">Strategy &amp; Simulation Systems</div>
+
+    <div style="display:flex; gap:10px; margin-bottom:24px;">
+      <div style="width:64px;height:64px;border-radius:6px;background:#2a2119;border:1px solid #3d3225;"></div>
+      <div style="width:64px;height:64px;border-radius:6px;background:#332a1f;border:1px solid #3d3225;"></div>
+      <div style="width:64px;height:64px;border-radius:6px;background:#3d3225;border:1px solid #4a3d2c;"></div>
+      <div style="width:64px;height:64px;border-radius:6px;background:#c99a3f;"></div>
+      <div style="width:64px;height:64px;border-radius:6px;background:#8a9a6b;"></div>
+      <div style="width:64px;height:64px;border-radius:6px;background:#a85d42;"></div>
+    </div>
+
+    <div style="font:600 11px/1 'IBM Plex Sans',sans-serif; color:#8a7960; letter-spacing:.1em; margin-bottom:10px;">SURFACES</div>
+    <div style="display:flex; gap:10px; margin-bottom:24px;">
+      <div style="flex:1; height:80px; background:#2a2119; border:1px solid #3d3225; border-radius:6px; padding:12px; font:500 12px 'IBM Plex Sans',sans-serif; color:#b3a58c;">panel bg</div>
+      <div style="flex:1; height:80px; background:#181310; border:1px solid #3d3225; border-radius:6px; padding:12px; font:500 12px 'IBM Plex Sans',sans-serif; color:#b3a58c;">canvas bg</div>
+      <div style="flex:1; height:80px; background:#2a2119; border:1px solid #c99a3f; border-radius:6px; padding:12px; font:500 12px 'IBM Plex Sans',sans-serif; color:#c99a3f;">selected</div>
+    </div>
+
+    <div style="display:flex; gap:12px; align-items:center;">
+      <div style="background:#c99a3f; color:#1d1712; font:600 13px 'IBM Plex Sans',sans-serif; padding:10px 18px; border-radius:4px;">Deploy Unit</div>
+      <div style="background:transparent; border:1px solid #4a3d2c; color:#d8cdb8; font:600 13px 'IBM Plex Sans',sans-serif; padding:10px 18px; border-radius:4px;">Cancel</div>
+      <div style="color:#8a7960; font:500 12px 'IBM Plex Sans',sans-serif; letter-spacing:.05em;">Turn 14 · 03:41</div>
+    </div>
+  </div>
+</div>
+
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+</body>
+</html>

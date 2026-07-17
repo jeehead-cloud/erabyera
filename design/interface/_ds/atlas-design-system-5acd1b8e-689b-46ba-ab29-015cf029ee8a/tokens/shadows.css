@@ -1,0 +1,17 @@
+:root {
+  /* paper elevation — soft, warm, low-contrast (like paper lifted off a table) */
+  --shadow-paper-sm: 0 1px 2px rgba(74, 59, 46, 0.10), 0 1px 1px rgba(74, 59, 46, 0.06);
+  --shadow-paper-md: 0 4px 10px rgba(74, 59, 46, 0.14), 0 1px 3px rgba(74, 59, 46, 0.08);
+  --shadow-paper-lg: 0 12px 28px rgba(74, 59, 46, 0.18), 0 3px 8px rgba(74, 59, 46, 0.10);
+
+  /* field / HUD elevation — darker, tighter, sits above the map */
+  --shadow-field-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-field-md: 0 6px 18px rgba(0, 0, 0, 0.45);
+  --shadow-field-lg: 0 16px 40px rgba(0, 0, 0, 0.55);
+
+  /* inset bevels — brass-edged panels feel carved/engraved rather than flat */
+  --inset-field-bevel: inset 0 1px 0 rgba(228, 195, 120, 0.18), inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+  --inset-paper-bevel: inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 0 rgba(74, 59, 46, 0.08);
+
+  --focus-ring: 0 0 0 3px rgba(212, 169, 74, 0.45);
+}

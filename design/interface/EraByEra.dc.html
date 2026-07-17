@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/atlas-design-system-5acd1b8e-689b-46ba-ab29-015cf029ee8a/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/atlas-design-system-5acd1b8e-689b-46ba-ab29-015cf029ee8a/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/atlas-design-system-5acd1b8e-689b-46ba-ab29-015cf029ee8a/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/atlas-design-system-5acd1b8e-689b-46ba-ab29-015cf029ee8a/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/atlas-design-system-5acd1b8e-689b-46ba-ab29-015cf029ee8a/tokens/shadows.css">
+  <link rel="stylesheet" href="_ds/atlas-design-system-5acd1b8e-689b-46ba-ab29-015cf029ee8a/styles.css">
+  <script src="_ds/atlas-design-system-5acd1b8e-689b-46ba-ab29-015cf029ee8a/_ds_bundle.js"></script>
+  <style>
+    html, body { margin: 0; height: 100%; background: var(--ink-900); overflow: hidden; font-family: var(--font-ui); }
+    * { box-sizing: border-box; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-thumb { background: var(--border-paper-strong); border-radius: 4px; }
+    @keyframes ebe-fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes ebe-pulse { 0%,100% { opacity: .5; } 50% { opacity: 1; } }
+    input[type=range].ebe-slider { -webkit-appearance: none; appearance: none; background: transparent; }
+    input[type=range].ebe-slider::-webkit-slider-runnable-track { height: 4px; background: var(--border-paper); border-radius: 2px; }
+    input[type=range].ebe-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 15px; height: 15px; border-radius: 50%; background: var(--accent-primary); border: 2px solid var(--surface-paper); margin-top: -5.5px; box-shadow: 0 1px 3px rgba(0,0,0,.3); cursor: pointer; }
+  </style>
+</helmet>
+<div style="width:100%;height:100vh;display:flex;align-items:center;justify-content:center;background:var(--ink-900);font-family:var(--font-ui);overflow:hidden;">
+  <div style="{{ frameOuterStyle }}">
+
+    <div style="position:absolute;top:58px;right:10px;z-index:900;display:flex;gap:2px;background:var(--surface-field);backdrop-filter:blur(8px);border:1px solid var(--border-field);border-radius:var(--radius-md);padding:2px;box-shadow:var(--shadow-field-md);">
+      <button onClick="{{ setDesktop }}" style="{{ deviceBtnDesktopStyle }}">Desktop</button>
+      <button onClick="{{ setMobile }}" style="{{ deviceBtnMobileStyle }}">Mobile</button>
+    </div>
+
+    <nav style="height:52px;flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 var(--space-4);background:var(--surface-paper);border-bottom:1px solid var(--border-paper);position:relative;z-index:200;">
+      <div style="display:flex;align-items:center;gap:var(--space-6);min-width:0;">
+        <div style="font-family:var(--font-display);font-size:{{ wordmarkSize }};letter-spacing:var(--tracking-wider);color:var(--text-ink);white-space:nowrap;">ERA <span style="color:var(--accent-primary);">BY</span> ERA</div>
+        <sc-if value="{{ isDesktop }}">
+          <div style="display:flex;align-items:center;gap:2px;">
+            <button onClick="{{ goMap }}" style="{{ navMapStyle }}">Map</button>
+            <button onClick="{{ goExplore }}" style="{{ navExploreStyle }}">Explore</button>
+            <button onClick="{{ goSources }}" style="{{ navSourcesStyle }}">Sources</button>
+          </div>
+        </sc-if>
+      </div>
+      <div style="display:flex;align-items:center;gap:var(--space-2);position:relative;">
+        <sc-if value="{{ isDesktop }}">
+          <button onClick="{{ openSearch }}" style="display:flex;align-items:center;gap:var(--space-2);height:32px;padding:0 var(--space-3);background:var(--surface-paper-sunken);border:1px solid var(--border-paper);border-radius:var(--radius-md);color:var(--text-ink-muted);font-size:var(--text-sm);cursor:pointer;" style-hover="background:var(--parchment-200);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+            <span>Search history…</span>
+            <span style="margin-left:var(--space-3);font-family:var(--font-mono);font-size:11px;color:var(--text-ink-faint);border:1px solid var(--border-paper);border-radius:4px;padding:0 5px;">/</span>
+          </button>
+        </sc-if>
+        <sc-if value="{{ isMobile }}">
+          <button onClick="{{ openSearch }}" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);color:var(--text-ink);cursor:pointer;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+          </button>
+        </sc-if>
+        <div style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--text-ink);background:var(--surface-paper-sunken);border:1px solid var(--border-paper);border-radius:var(--radius-sm);padding:5px 9px;white-space:nowrap;">{{ yearLabel }}</div>
+        <sc-if value="{{ isDesktop }}">
+          <button onClick="{{ shareAction }}" style="display:flex;align-items:center;gap:6px;height:32px;padding:0 var(--space-3);background:var(--accent-primary);border:1px solid var(--brass-600);border-radius:var(--radius-md);color:var(--text-on-accent);font-size:var(--text-sm);font-weight:var(--weight-medium);cursor:pointer;" style-hover="background:var(--accent-primary-hover);">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"></path></svg>
+            <span>Share</span>
+          </button>
+        </sc-if>
+        <button onClick="{{ toggleMenu }}" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);color:var(--text-ink);cursor:pointer;" style-hover="background:var(--parchment-200);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1.3"></circle><circle cx="12" cy="12" r="1.3"></circle><circle cx="12" cy="19" r="1.3"></circle></svg>
+        </button>
+        <sc-if value="{{ menuOpen }}">
+          <div style="position:absolute;top:40px;right:0;background:var(--surface-paper);border:1px solid var(--border-paper);border-radius:var(--radius-md);box-shadow:var(--shadow-paper-lg);padding:4px;width:200px;z-index:700;animation:ebe-fade-in 120ms ease;">
+            <div style="padding:8px 10px;font-size:var(--text-sm);color:var(--text-ink);border-radius:var(--radius-sm);cursor:pointer;" style-hover="background:var(--parchment-100);">Component Library</div>
+            <div style="padding:8px 10px;font-size:var(--text-sm);color:var(--text-ink);border-radius:var(--radius-sm);cursor:pointer;" style-hover="background:var(--parchment-100);">Collections</div>
+            <div style="padding:8px 10px;font-size:var(--text-sm);color:var(--text-ink);border-radius:var(--radius-sm);cursor:pointer;" style-hover="background:var(--parchment-100);">About EraByEra</div>
+            <div style="padding:8px 10px;font-size:var(--text-sm);color:var(--text-ink);border-radius:var(--radius-sm);cursor:pointer;" style-hover="background:var(--parchment-100);">Data &amp; Coverage</div>
+          </div>
+        </sc-if>
+      </div>
+    </nav>
+
+    <sc-if value="{{ isMobile }}">
+      <div style="display:flex;gap:2px;padding:6px var(--space-2);background:var(--surface-paper);border-bottom:1px solid var(--border-paper);">
+        <button onClick="{{ goMap }}" style="{{ navMapStyleM }}">Map</button>
+        <button onClick="{{ goExplore }}" style="{{ navExploreStyleM }}">Explore</button>
+        <button onClick="{{ goSources }}" style="{{ navSourcesStyleM }}">Sources</button>
+      </div>
+    </sc-if>
+
+    <div style="flex:1;min-height:0;position:relative;display:flex;">
+
+      <!-- ===================== MAP PAGE ===================== -->
+      <sc-if value="{{ isPageMap }}">
+        <div style="position:absolute;inset:0;display:flex;">
+
+          <!-- map canvas -->
+          <div style="flex:1;min-width:0;position:relative;background:var(--ink-800);overflow:hidden;">
+            <svg viewBox="0 0 1000 620" style="{{ mapSvgStyle }}" preserveAspectRatio="xMidYMid slice">
+              <rect x="0" y="0" width="1000" height="620" fill="var(--ink-900)"></rect>
+              <sc-if value="{{ showGraticule }}">
+                <g stroke="rgba(245,234,210,0.05)" stroke-width="1">
+                  <line x1="0" y1="100" x2="1000" y2="100"></line>
+                  <line x1="0" y1="200" x2="1000" y2="200"></line>
+                  <line x1="0" y1="300" x2="1000" y2="300"></line>
+                  <line x1="0" y1="400" x2="1000" y2="400"></line>
+                  <line x1="0" y1="500" x2="1000" y2="500"></line>
+                  <line x1="150" y1="0" x2="150" y2="620"></line>
+                  <line x1="350" y1="0" x2="350" y2="620"></line>
+                  <line x1="550" y1="0" x2="550" y2="620"></line>
+                  <line x1="750" y1="0" x2="750" y2="620"></line>
+                  <line x1="950" y1="0" x2="950" y2="620"></line>
+                </g>
+              </sc-if>
+
+              <g transform="{{ mapPanZoom }}">
+                <!-- schematic landmasses (neutral physical geography) -->
+                <polygon points="30,70 180,50 260,90 340,140 420,165 400,195 320,220 260,300 300,380 200,430 90,400 30,300 50,180" fill="var(--parchment-200)" opacity="0.9"></polygon>
+                <polygon points="460,170 440,200 520,230 560,210 650,180 820,60 950,90 970,220 900,380 700,470 540,430 480,340 470,250" fill="var(--parchment-200)" opacity="0.9"></polygon>
+                <circle cx="410" cy="255" r="7" fill="var(--parchment-200)" opacity="0.8"></circle>
+
+                <!-- territory fills -->
+                <sc-for list="{{ mapPolities }}" as="p" hint-placeholder-count="2">
+                  <polygon points="{{ p.points }}" fill="{{ p.fill }}" stroke="{{ p.stroke }}" stroke-width="{{ p.strokeWidth }}" stroke-dasharray="{{ p.dash }}" style="cursor:pointer;transition:stroke-width 120ms ease;" onClick="{{ p.onClick }}"></polygon>
+                </sc-for>
+
+                <!-- campaign route -->
+                <sc-if value="{{ layers.journeys }}">
+                  <sc-for list="{{ mapJourneys }}" as="j" hint-placeholder-count="1">
+                    <polyline points="{{ j.points }}" fill="none" stroke="{{ j.stroke }}" stroke-width="{{ j.strokeWidth }}" stroke-dasharray="6,5" style="cursor:pointer;" onClick="{{ j.onClick }}"></polyline>
+                    <polygon points="{{ j.arrowPoints }}" fill="{{ j.stroke }}"></polygon>
+                  </sc-for>
+                </sc-if>
+
+                <!-- places -->
+<sc-if value="{{ layers.places }}">
+                  <sc-for list="{{ mapPlaces }}" as="pl" hint-placeholder-count="6">
+                    <g onClick="{{ pl.onClick }}" style="cursor:pointer;">
+                      <sc-if value="{{ pl.major }}">
+                        <foreignObject x="{{ pl.boxX }}" y="{{ pl.boxY }}" width="{{ pl.boxSize }}" height="{{ pl.boxSize }}" style="overflow:visible;">
+                          <div xmlns="http://www.w3.org/1999/xhtml" style="{{ pl.majorBoxStyle }}">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--brass-700)" stroke-width="1.8"><path d="M4 21V9l8-5 8 5v12"></path><path d="M9 21v-6h6v6"></path><path d="M4 9l8 5 8-5"></path></svg>
+                          </div>
+                        </foreignObject>
+                      </sc-if>
+                      <sc-if value="{{ !pl.major }}">
+                        <circle cx="{{ pl.x }}" cy="{{ pl.y }}" r="{{ pl.r }}" fill="var(--surface-paper)" stroke="{{ pl.stroke }}" stroke-width="{{ pl.strokeWidth }}" stroke-dasharray="{{ pl.dash }}"></circle>
+                      </sc-if>
+                      <foreignObject x="{{ pl.labelX }}" y="{{ pl.labelY }}" width="{{ pl.labelW }}" height="18" style="overflow:visible;">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="{{ pl.labelStyle }}">{{ pl.name }}</div>
+                      </foreignObject>
+                    </g>
+                  </sc-for>
+                </sc-if>
+
+                <!-- events / battles -->
+                <sc-if value="{{ layers.events }}">
+                  <sc-for list="{{ mapEvents }}" as="ev" hint-placeholder-count="2">
+                    <g onClick="{{ ev.onClick }}" style="cursor:pointer;">
+                      <circle cx="{{ ev.x }}" cy="{{ ev.y }}" r="{{ ev.r }}" fill="var(--status-danger)" opacity="{{ ev.opacity }}" stroke="var(--parchment-50)" stroke-width="{{ ev.strokeWidth }}"></circle>
+                      <path d="{{ ev.crossPath }}" stroke="var(--parchment-50)" stroke-width="1.6" fill="none"></path>
+                      <foreignObject x="{{ ev.labelX }}" y="{{ ev.labelY }}" width="{{ ev.labelW }}" height="18" style="overflow:visible;">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="{{ ev.labelStyle }}">{{ ev.name }}</div>
+                      </foreignObject>
+                    </g>
+                  </sc-for>
+                </sc-if>
+
+                <!-- people -->
+<sc-if value="{{ layers.people }}">
+                  <sc-for list="{{ mapPeople }}" as="pe" hint-placeholder-count="2">
+                    <g onClick="{{ pe.onClick }}" style="cursor:pointer;">
+                      <sc-if value="{{ pe.major }}">
+                        <foreignObject x="{{ pe.boxX }}" y="{{ pe.boxY }}" width="{{ pe.boxSize }}" height="{{ pe.boxSize }}" style="overflow:visible;">
+                          <div xmlns="http://www.w3.org/1999/xhtml" style="{{ pe.majorBoxStyle }}">{{ pe.initials }}</div>
+                        </foreignObject>
+                      </sc-if>
+                      <sc-if value="{{ !pe.major }}">
+                        <rect x="{{ pe.rx }}" y="{{ pe.ry }}" width="14" height="14" rx="3" fill="var(--accent-primary)" opacity="{{ pe.opacity }}" stroke="var(--parchment-50)" stroke-width="{{ pe.strokeWidth }}" transform="{{ pe.rot }}"></rect>
+                      </sc-if>
+                      <foreignObject x="{{ pe.labelX }}" y="{{ pe.labelY }}" width="{{ pe.labelW }}" height="18" style="overflow:visible;">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="{{ pe.labelStyle }}">{{ pe.name }}</div>
+                      </foreignObject>
+                    </g>
+                  </sc-for>
+                </sc-if>
+              </g>
+            </svg>
+
+            <div style="position:absolute;left:{{ attribLeft }};bottom:8px;font-size:10px;color:var(--text-on-field-faint);font-family:var(--font-ui);">Schematic basemap — physical geography simplified for illustration. Not for navigation.</div>
+
+            <!-- zoom & view controls -->
+            <div style="position:absolute;{{ zoomControlsPos }};display:flex;flex-direction:column;gap:1px;background:var(--surface-field);backdrop-filter:blur(8px);border:1px solid var(--border-field);border-radius:var(--radius-md);box-shadow:var(--shadow-field-md);overflow:hidden;">
+              <button onClick="{{ zoomIn }}" style="{{ fieldIconBtnStyle }}" title="Zoom in">+</button>
+              <button onClick="{{ zoomOut }}" style="{{ fieldIconBtnStyleBorder }}" title="Zoom out">–</button>
+              <button onClick="{{ resetView }}" style="{{ fieldIconBtnStyleBorder }}" title="Reset view">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>
+              </button>
+            </div>
+
+            <!-- layers & appearance controls -->
+            <div style="position:absolute;{{ layerControlsPos }};display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+              <div style="display:flex;gap:1px;background:var(--surface-field);backdrop-filter:blur(8px);border:1px solid var(--border-field);border-radius:var(--radius-md);box-shadow:var(--shadow-field-md);overflow:hidden;">
+                <button onClick="{{ toggleLayersPanel }}" style="{{ layersBtnStyle }}" title="Layers">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                </button>
+                <button onClick="{{ toggleGraticule }}" style="{{ appearanceBtnStyle }}" title="Map appearance">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20"></path></svg>
+                </button>
+                <button onClick="{{ toggleCoverageInfo }}" style="{{ coverageBtnStyle }}" title="Data coverage">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
+                </button>
+              </div>
+
+              <sc-if value="{{ layersPanelOpen }}">
+                <div style="width:216px;background:var(--surface-field);backdrop-filter:blur(8px);border:1px solid var(--border-field);border-radius:var(--radius-lg);box-shadow:var(--shadow-field-lg),var(--inset-field-bevel);padding:var(--space-3);animation:ebe-fade-in 140ms ease;">
+                  <div style="font-size:11px;letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--text-on-field-muted);margin-bottom:var(--space-2);">Layers</div>
+                  <div style="display:flex;flex-direction:column;gap:2px;">
+                    <button onClick="{{ toggleLayerTerritories }}" style="{{ layerRowStyleTerritories }}"><span>Territories</span>{{ layerCheckTerritories }}</button>
+                    <button onClick="{{ toggleLayerPlaces }}" style="{{ layerRowStylePlaces }}"><span>Places</span>{{ layerCheckPlaces }}</button>
+                    <button onClick="{{ toggleLayerPeople }}" style="{{ layerRowStylePeople }}"><span>People</span>{{ layerCheckPeople }}</button>
+                    <button onClick="{{ toggleLayerEvents }}" style="{{ layerRowStyleEvents }}"><span>Events &amp; Battles</span>{{ layerCheckEvents }}</button>
+                    <button onClick="{{ toggleLayerJourneys }}" style="{{ layerRowStyleJourneys }}"><span>Journeys &amp; Campaigns</span>{{ layerCheckJourneys }}</button>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ coverageInfoOpen }}">
+                <div style="width:236px;background:var(--surface-field);backdrop-filter:blur(8px);border:1px solid var(--border-field);border-radius:var(--radius-lg);box-shadow:var(--shadow-field-lg),var(--inset-field-bevel);padding:var(--space-3);animation:ebe-fade-in 140ms ease;color:var(--text-on-field);font-size:12px;line-height:var(--leading-snug);">
+                  <div style="font-weight:600;margin-bottom:4px;color:var(--parchment-50);">Data coverage</div>
+                  <div style="color:var(--text-on-field-muted);">This region has dense narrative coverage for 334 BCE. Territory extents and minor settlements elsewhere are sparse or reconstructed. Coverage improves as more sources are added.</div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+
+          <!-- right context panel (desktop) -->
+          <sc-if value="{{ isDesktop }}">
+            <aside style="width:340px;flex:0 0 auto;background:var(--surface-paper);border-left:1px solid var(--border-paper);overflow-y:auto;position:relative;z-index:100;">
+              <div style="padding:var(--space-4);display:flex;flex-direction:column;gap:var(--space-4);">
+
+  <!-- YEAR OVERVIEW (no selection) -->
+  <sc-if value="{{ showOverview }}">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--accent-primary-soft);color:var(--brass-600);border:1px solid var(--brass-300);border-radius:var(--radius-pill);padding:3px 10px;font-size:11px;font-weight:600;letter-spacing:var(--tracking-wide);">Alexander's World</span>
+    </div>
+    <div>
+      <div style="font-family:var(--font-display);font-size:32px;color:var(--text-ink);line-height:1;">{{ yearLabel }}</div>
+      <div style="font-size:var(--text-sm);color:var(--text-ink-muted);margin-top:6px;line-height:var(--leading-snug);">Alexander has crossed the Hellespont into Asia. The opening campaign against the Achaemenid Empire is underway in western Anatolia.</div>
+    </div>
+
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:8px;">Active Polities</div>
+      <sc-for list="{{ overviewPolities }}" as="p" hint-placeholder-count="2">
+        <button onClick="{{ p.onClick }}" style="width:100%;display:flex;align-items:center;gap:8px;text-align:left;background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);padding:8px 10px;margin-bottom:4px;cursor:pointer;" style-hover="background:var(--parchment-100);">
+          <span style="width:9px;height:9px;border-radius:2px;background:{{ p.color }};flex:0 0 auto;"></span>
+          <span style="flex:1;min-width:0;">
+            <div style="font-size:var(--text-sm);font-weight:600;color:var(--text-ink);">{{ p.name }}</div>
+            <div style="font-size:11px;color:var(--text-ink-faint);">{{ p.ruler }}</div>
+          </span>
+        </button>
+      </sc-for>
+    </div>
+
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:8px;">Notable Places</div>
+      <sc-for list="{{ overviewPlaces }}" as="pl" hint-placeholder-count="3">
+        <button onClick="{{ pl.onClick }}" style="width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid var(--border-paper);padding:7px 2px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;" style-hover="background:var(--parchment-100);">
+          <span style="font-size:var(--text-sm);color:var(--text-ink);">{{ pl.name }}</span>
+          <span style="font-size:11px;color:var(--text-ink-faint);">{{ pl.subtype }}</span>
+        </button>
+      </sc-for>
+    </div>
+
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:8px;">Key Events</div>
+      <sc-for list="{{ overviewEvents }}" as="ev" hint-placeholder-count="1">
+        <button onClick="{{ ev.onClick }}" style="width:100%;text-align:left;background:var(--status-danger-soft);border:1px solid rgba(166,69,48,0.3);border-radius:var(--radius-md);padding:9px 10px;cursor:pointer;">
+          <div style="font-size:var(--text-sm);font-weight:600;color:var(--text-ink);">{{ ev.name }}</div>
+          <div style="font-size:11px;color:var(--text-ink-muted);margin-top:2px;">{{ ev.date }} · {{ ev.subtype }}</div>
+        </button>
+      </sc-for>
+    </div>
+
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:8px;">Current Campaign</div>
+      <sc-for list="{{ overviewJourneys }}" as="j" hint-placeholder-count="1">
+        <button onClick="{{ j.onClick }}" style="width:100%;text-align:left;background:transparent;border:1px dashed var(--brass-400);border-radius:var(--radius-md);padding:9px 10px;cursor:pointer;">
+          <div style="font-size:var(--text-sm);font-weight:600;color:var(--text-ink);">{{ j.name }}</div>
+          <div style="font-size:11px;color:var(--text-ink-muted);margin-top:2px;">{{ j.period }}</div>
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="border-top:1px solid var(--border-paper);padding-top:var(--space-3);">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+        <span style="width:7px;height:7px;border-radius:50%;background:var(--status-info);"></span>
+        <span style="font-size:12px;font-weight:600;color:var(--text-ink);">Coverage: dense (narrative core)</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-ink-muted);line-height:var(--leading-snug);">This dataset is incomplete outside the featured region and period. Territories, minor settlements and personal itineraries elsewhere are sparse or unreconstructed.</div>
+    </div>
+  </sc-if>
+
+  <!-- EVENT / BATTLE CARD -->
+  <sc-if value="{{ showEventCard }}">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--status-danger-soft);color:var(--brick-600);border:1px solid rgba(166,69,48,0.35);border-radius:var(--radius-sm);padding:3px 8px;font-size:11px;font-weight:700;letter-spacing:var(--tracking-wide);text-transform:uppercase;">Battle</span>
+      <button onClick="{{ clearSelection }}" style="background:transparent;border:none;color:var(--text-ink-faint);cursor:pointer;font-size:16px;line-height:1;padding:2px;">✕</button>
+    </div>
+    <div style="font-family:var(--font-display);font-size:24px;color:var(--text-ink);line-height:1.15;">{{ evName }}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      <span style="font-family:var(--font-mono);font-size:12px;background:var(--surface-paper-sunken);border:1px solid var(--border-paper);border-radius:var(--radius-sm);padding:3px 8px;color:var(--text-ink);">{{ evDate }}</span>
+      <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;background:var(--status-warning-soft);color:var(--amber-600);border:1px solid rgba(192,132,39,.35);border-radius:var(--radius-sm);padding:3px 8px;">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="2,2"><circle cx="12" cy="12" r="9"></circle></svg>
+        Location approximate
+      </span>
+    </div>
+    <div style="font-size:var(--text-sm);color:var(--text-ink-muted);line-height:var(--leading-snug);">{{ evSummary }}</div>
+
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:var(--text-sm);">
+      <div style="display:flex;gap:10px;"><span style="width:96px;flex:0 0 auto;color:var(--text-ink-faint);font-size:12px;">Belligerents</span><span style="color:var(--text-ink);">{{ evSides }}</span></div>
+      <div style="display:flex;gap:10px;"><span style="width:96px;flex:0 0 auto;color:var(--text-ink-faint);font-size:12px;">Commanders</span><span style="color:var(--text-ink);">{{ evCommanders }}</span></div>
+      <div style="display:flex;gap:10px;"><span style="width:96px;flex:0 0 auto;color:var(--text-ink-faint);font-size:12px;">Result</span><span style="color:var(--text-ink);">{{ evResult }}</span></div>
+    </div>
+
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:6px;">Related</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <sc-for list="{{ evRelated }}" as="r" hint-placeholder-count="4">
+          <button onClick="{{ r.onClick }}" style="background:var(--parchment-100);border:1px solid var(--border-paper);border-radius:var(--radius-pill);padding:4px 10px;font-size:12px;color:var(--text-ink);cursor:pointer;" style-hover="background:var(--accent-primary-soft);border-color:var(--brass-400);">{{ r.name }}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="background:var(--status-warning-soft);border:1px solid rgba(192,132,39,.35);border-radius:var(--radius-md);padding:10px;font-size:12px;color:var(--amber-600);line-height:var(--leading-snug);display:flex;gap:8px;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 auto;margin-top:1px;"><path d="M12 9v4M12 17h.01M10.3 3.9L2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg>
+      <span>{{ evUncertaintyNote }}</span>
+    </div>
+
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:6px;">Sources ({{ evSourceCount }})</div>
+      <sc-for list="{{ evSourcesPreview }}" as="src" hint-placeholder-count="2">
+        <div style="font-size:12px;color:var(--text-ink-muted);border-left:2px solid var(--border-paper);padding-left:8px;margin-bottom:6px;line-height:var(--leading-snug);"><span style="color:var(--text-ink);font-weight:600;">{{ src.author }}</span>, <em>{{ src.title }}</em></div>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:4px;">
+      <button onClick="{{ evViewFull }}" style="flex:1;background:var(--accent-primary);border:1px solid var(--brass-600);border-radius:var(--radius-md);color:var(--text-on-accent);font-size:var(--text-sm);font-weight:600;padding:10px;cursor:pointer;" style-hover="background:var(--accent-primary-hover);">View full page</button>
+      <button onClick="{{ clearSelection }}" style="background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);color:var(--text-ink);font-size:var(--text-sm);padding:10px 14px;cursor:pointer;" style-hover="background:var(--parchment-100);">Overview</button>
+    </div>
+  </sc-if>
+
+  <!-- PERSON CARD — ACTIVE -->
+  <sc-if value="{{ showPersonActive }}">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--accent-primary-soft);color:var(--brass-600);border:1px solid var(--brass-300);border-radius:var(--radius-sm);padding:3px 8px;font-size:11px;font-weight:700;letter-spacing:var(--tracking-wide);text-transform:uppercase;">Person</span>
+      <button onClick="{{ clearSelection }}" style="background:transparent;border:none;color:var(--text-ink-faint);cursor:pointer;font-size:16px;line-height:1;padding:2px;">✕</button>
+    </div>
+    <div>
+      <div style="font-family:var(--font-display);font-size:24px;color:var(--text-ink);line-height:1.15;">{{ peName }}</div>
+      <div style="font-size:12px;color:var(--text-ink-faint);">{{ peAlt }}</div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      <span style="font-family:var(--font-mono);font-size:12px;background:var(--surface-paper-sunken);border:1px solid var(--border-paper);border-radius:var(--radius-sm);padding:3px 8px;color:var(--text-ink);">{{ peLife }}</span>
+      <span style="font-size:12px;color:var(--text-ink-muted);align-self:center;">{{ peRole }}</span>
+    </div>
+    <div style="font-size:var(--text-sm);color:var(--text-ink-muted);line-height:var(--leading-snug);">{{ peSummary }}</div>
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:6px;">Related</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <sc-for list="{{ peRelated }}" as="r" hint-placeholder-count="3">
+          <button onClick="{{ r.onClick }}" style="background:var(--parchment-100);border:1px solid var(--border-paper);border-radius:var(--radius-pill);padding:4px 10px;font-size:12px;color:var(--text-ink);cursor:pointer;" style-hover="background:var(--accent-primary-soft);border-color:var(--brass-400);">{{ r.name }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px;">
+      <button onClick="{{ peViewFull }}" style="flex:1;background:var(--accent-primary);border:1px solid var(--brass-600);border-radius:var(--radius-md);color:var(--text-on-accent);font-size:var(--text-sm);font-weight:600;padding:10px;cursor:pointer;" style-hover="background:var(--accent-primary-hover);">View full page</button>
+      <button onClick="{{ clearSelection }}" style="background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);color:var(--text-ink);font-size:var(--text-sm);padding:10px 14px;cursor:pointer;" style-hover="background:var(--parchment-100);">Overview</button>
+    </div>
+  </sc-if>
+
+  <!-- PERSON CARD — INACTIVE (outside selected period) -->
+  <sc-if value="{{ showPersonInactive }}">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--accent-primary-soft);color:var(--brass-600);border:1px solid var(--brass-300);border-radius:var(--radius-sm);padding:3px 8px;font-size:11px;font-weight:700;letter-spacing:var(--tracking-wide);text-transform:uppercase;">Person</span>
+      <button onClick="{{ clearSelection }}" style="background:transparent;border:none;color:var(--text-ink-faint);cursor:pointer;font-size:16px;line-height:1;padding:2px;">✕</button>
+    </div>
+    <div style="font-family:var(--font-display);font-size:24px;color:var(--text-ink);line-height:1.15;">{{ peName }}</div>
+    <span style="display:inline-flex;align-self:flex-start;align-items:center;gap:5px;background:var(--status-warning-soft);color:var(--amber-600);border:1px solid rgba(192,132,39,.35);border-radius:var(--radius-sm);padding:3px 8px;font-size:11px;font-weight:600;">Not active in {{ yearLabel }}</span>
+    <div style="background:var(--surface-paper-sunken);border:1px solid var(--border-paper);border-radius:var(--radius-md);padding:12px;font-size:var(--text-sm);color:var(--text-ink-muted);line-height:var(--leading-snug);">
+      {{ peName }} is not recorded as active in {{ yearLabel }}. Known active period: <strong style="color:var(--text-ink);">{{ peLife }}</strong>. This entity may still appear through search results or relations to entities active in this year.
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <button onClick="{{ peGoFirst }}" style="text-align:left;background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);padding:9px 12px;font-size:var(--text-sm);color:var(--text-ink);cursor:pointer;" style-hover="background:var(--parchment-100);">Go to first known year ({{ peFirstYearLabel }})</button>
+      <button onClick="{{ peGoNearest }}" style="text-align:left;background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);padding:9px 12px;font-size:var(--text-sm);color:var(--text-ink);cursor:pointer;" style-hover="background:var(--parchment-100);">Go to nearest active period</button>
+      <button onClick="{{ peViewFull }}" style="text-align:left;background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);padding:9px 12px;font-size:var(--text-sm);color:var(--text-ink);cursor:pointer;" style-hover="background:var(--parchment-100);">View full history</button>
+      <button onClick="{{ clearSelection }}" style="text-align:left;background:var(--accent-primary);border:1px solid var(--brass-600);border-radius:var(--radius-md);padding:9px 12px;font-size:var(--text-sm);font-weight:600;color:var(--text-on-accent);cursor:pointer;" style-hover="background:var(--accent-primary-hover);">Keep current year</button>
+    </div>
+  </sc-if>
+
+  <!-- POLITY CARD -->
+  <sc-if value="{{ showPolityCard }}">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--parchment-100);color:var(--text-ink-muted);border:1px solid var(--border-paper);border-radius:var(--radius-sm);padding:3px 8px;font-size:11px;font-weight:700;letter-spacing:var(--tracking-wide);text-transform:uppercase;">Polity</span>
+      <button onClick="{{ clearSelection }}" style="background:transparent;border:none;color:var(--text-ink-faint);cursor:pointer;font-size:16px;line-height:1;padding:2px;">✕</button>
+    </div>
+    <div style="font-family:var(--font-display);font-size:24px;color:var(--text-ink);line-height:1.15;">{{ poName }}</div>
+    <div style="font-size:12px;color:var(--text-ink-faint);">{{ poPeriod }}</div>
+    <div style="font-size:var(--text-sm);color:var(--text-ink-muted);line-height:var(--leading-snug);">{{ poSummary }}</div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:var(--text-sm);">
+      <div style="display:flex;gap:10px;"><span style="width:70px;flex:0 0 auto;color:var(--text-ink-faint);font-size:12px;">Ruler</span><span style="color:var(--text-ink);">{{ poRuler }}</span></div>
+      <div style="display:flex;gap:10px;"><span style="width:70px;flex:0 0 auto;color:var(--text-ink-faint);font-size:12px;">Capital</span><span style="color:var(--text-ink);">{{ poCapital }}</span></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px;">
+      <button onClick="{{ clearSelection }}" style="flex:1;background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);color:var(--text-ink);font-size:var(--text-sm);padding:10px;cursor:pointer;" style-hover="background:var(--parchment-100);">Return to overview</button>
+    </div>
+  </sc-if>
+
+  <!-- PLACE CARD -->
+  <sc-if value="{{ showPlaceCard }}">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--parchment-100);color:var(--text-ink-muted);border:1px solid var(--border-paper);border-radius:var(--radius-sm);padding:3px 8px;font-size:11px;font-weight:700;letter-spacing:var(--tracking-wide);text-transform:uppercase;">Place</span>
+      <button onClick="{{ clearSelection }}" style="background:transparent;border:none;color:var(--text-ink-faint);cursor:pointer;font-size:16px;line-height:1;padding:2px;">✕</button>
+    </div>
+    <div>
+      <div style="font-family:var(--font-display);font-size:24px;color:var(--text-ink);line-height:1.15;">{{ plName }}</div>
+      <div style="font-size:12px;color:var(--text-ink-faint);">{{ plAlt }}</div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      <span style="font-size:12px;background:var(--surface-paper-sunken);border:1px solid var(--border-paper);border-radius:var(--radius-sm);padding:3px 8px;color:var(--text-ink);">{{ plSubtype }}</span>
+      <span style="{{ plUncertaintyBadgeStyle }}">{{ plUncertaintyLabel }}</span>
+    </div>
+    <div style="font-size:var(--text-sm);color:var(--text-ink-muted);line-height:var(--leading-snug);">{{ plSummary }}</div>
+    <div style="font-size:12px;color:var(--text-ink-faint);">Sources: {{ plSourceCount }}</div>
+    <div style="display:flex;gap:8px;margin-top:4px;">
+      <button onClick="{{ clearSelection }}" style="flex:1;background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);color:var(--text-ink);font-size:var(--text-sm);padding:10px;cursor:pointer;" style-hover="background:var(--parchment-100);">Return to overview</button>
+    </div>
+  </sc-if>
+
+  <!-- JOURNEY CARD -->
+  <sc-if value="{{ showJourneyCard }}">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--parchment-100);color:var(--text-ink-muted);border:1px solid var(--border-paper);border-radius:var(--radius-sm);padding:3px 8px;font-size:11px;font-weight:700;letter-spacing:var(--tracking-wide);text-transform:uppercase;">Journey</span>
+      <button onClick="{{ clearSelection }}" style="background:transparent;border:none;color:var(--text-ink-faint);cursor:pointer;font-size:16px;line-height:1;padding:2px;">✕</button>
+    </div>
+    <div style="font-family:var(--font-display);font-size:22px;color:var(--text-ink);line-height:1.2;">{{ joName }}</div>
+    <div style="font-size:12px;color:var(--text-ink-faint);">{{ joPeriod }}</div>
+    <div style="font-size:var(--text-sm);color:var(--text-ink-muted);line-height:var(--leading-snug);">{{ joSummary }}</div>
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:6px;">Route</div>
+      <div style="font-size:var(--text-sm);color:var(--text-ink);">{{ joRoute }}</div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px;">
+      <button onClick="{{ clearSelection }}" style="flex:1;background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);color:var(--text-ink);font-size:var(--text-sm);padding:10px;cursor:pointer;" style-hover="background:var(--parchment-100);">Return to overview</button>
+    </div>
+  </sc-if>
+</div>
+
+            </aside>
+          </sc-if>
+        </div>
+
+        <!-- mobile bottom sheet -->
+        <sc-if value="{{ isMobile }}">
+          <div style="{{ sheetStyle }}">
+            <div onClick="{{ cycleSheet }}" style="display:flex;justify-content:center;padding:8px 0 6px;cursor:pointer;">
+              <div style="width:36px;height:4px;border-radius:2px;background:var(--border-paper-strong);"></div>
+            </div>
+            <div style="overflow-y:auto;flex:1;">
+              <div style="padding:var(--space-4);display:flex;flex-direction:column;gap:var(--space-4);">
+
+  <!-- YEAR OVERVIEW (no selection) -->
+  <sc-if value="{{ showOverview }}">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--accent-primary-soft);color:var(--brass-600);border:1px solid var(--brass-300);border-radius:var(--radius-pill);padding:3px 10px;font-size:11px;font-weight:600;letter-spacing:var(--tracking-wide);">Alexander's World</span>
+    </div>
+    <div>
+      <div style="font-family:var(--font-display);font-size:32px;color:var(--text-ink);line-height:1;">{{ yearLabel }}</div>
+      <div style="font-size:var(--text-sm);color:var(--text-ink-muted);margin-top:6px;line-height:var(--leading-snug);">Alexander has crossed the Hellespont into Asia. The opening campaign against the Achaemenid Empire is underway in western Anatolia.</div>
+    </div>
+
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:8px;">Active Polities</div>
+      <sc-for list="{{ overviewPolities }}" as="p" hint-placeholder-count="2">
+        <button onClick="{{ p.onClick }}" style="width:100%;display:flex;align-items:center;gap:8px;text-align:left;background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);padding:8px 10px;margin-bottom:4px;cursor:pointer;" style-hover="background:var(--parchment-100);">
+          <span style="width:9px;height:9px;border-radius:2px;background:{{ p.color }};flex:0 0 auto;"></span>
+          <span style="flex:1;min-width:0;">
+            <div style="font-size:var(--text-sm);font-weight:600;color:var(--text-ink);">{{ p.name }}</div>
+            <div style="font-size:11px;color:var(--text-ink-faint);">{{ p.ruler }}</div>
+          </span>
+        </button>
+      </sc-for>
+    </div>
+
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:8px;">Notable Places</div>
+      <sc-for list="{{ overviewPlaces }}" as="pl" hint-placeholder-count="3">
+        <button onClick="{{ pl.onClick }}" style="width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid var(--border-paper);padding:7px 2px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;" style-hover="background:var(--parchment-100);">
+          <span style="font-size:var(--text-sm);color:var(--text-ink);">{{ pl.name }}</span>
+          <span style="font-size:11px;color:var(--text-ink-faint);">{{ pl.subtype }}</span>
+        </button>
+      </sc-for>
+    </div>
+
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:8px;">Key Events</div>
+      <sc-for list="{{ overviewEvents }}" as="ev" hint-placeholder-count="1">
+        <button onClick="{{ ev.onClick }}" style="width:100%;text-align:left;background:var(--status-danger-soft);border:1px solid rgba(166,69,48,0.3);border-radius:var(--radius-md);padding:9px 10px;cursor:pointer;">
+          <div style="font-size:var(--text-sm);font-weight:600;color:var(--text-ink);">{{ ev.name }}</div>
+          <div style="font-size:11px;color:var(--text-ink-muted);margin-top:2px;">{{ ev.date }} · {{ ev.subtype }}</div>
+        </button>
+      </sc-for>
+    </div>
+
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:8px;">Current Campaign</div>
+      <sc-for list="{{ overviewJourneys }}" as="j" hint-placeholder-count="1">
+        <button onClick="{{ j.onClick }}" style="width:100%;text-align:left;background:transparent;border:1px dashed var(--brass-400);border-radius:var(--radius-md);padding:9px 10px;cursor:pointer;">
+          <div style="font-size:var(--text-sm);font-weight:600;color:var(--text-ink);">{{ j.name }}</div>
+          <div style="font-size:11px;color:var(--text-ink-muted);margin-top:2px;">{{ j.period }}</div>
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="border-top:1px solid var(--border-paper);padding-top:var(--space-3);">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+        <span style="width:7px;height:7px;border-radius:50%;background:var(--status-info);"></span>
+        <span style="font-size:12px;font-weight:600;color:var(--text-ink);">Coverage: dense (narrative core)</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-ink-muted);line-height:var(--leading-snug);">This dataset is incomplete outside the featured region and period. Territories, minor settlements and personal itineraries elsewhere are sparse or unreconstructed.</div>
+    </div>
+  </sc-if>
+
+  <!-- EVENT / BATTLE CARD -->
+  <sc-if value="{{ showEventCard }}">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--status-danger-soft);color:var(--brick-600);border:1px solid rgba(166,69,48,0.35);border-radius:var(--radius-sm);padding:3px 8px;font-size:11px;font-weight:700;letter-spacing:var(--tracking-wide);text-transform:uppercase;">Battle</span>
+      <button onClick="{{ clearSelection }}" style="background:transparent;border:none;color:var(--text-ink-faint);cursor:pointer;font-size:16px;line-height:1;padding:2px;">✕</button>
+    </div>
+    <div style="font-family:var(--font-display);font-size:24px;color:var(--text-ink);line-height:1.15;">{{ evName }}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      <span style="font-family:var(--font-mono);font-size:12px;background:var(--surface-paper-sunken);border:1px solid var(--border-paper);border-radius:var(--radius-sm);padding:3px 8px;color:var(--text-ink);">{{ evDate }}</span>
+      <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;background:var(--status-warning-soft);color:var(--amber-600);border:1px solid rgba(192,132,39,.35);border-radius:var(--radius-sm);padding:3px 8px;">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="2,2"><circle cx="12" cy="12" r="9"></circle></svg>
+        Location approximate
+      </span>
+    </div>
+    <div style="font-size:var(--text-sm);color:var(--text-ink-muted);line-height:var(--leading-snug);">{{ evSummary }}</div>
+
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:var(--text-sm);">
+      <div style="display:flex;gap:10px;"><span style="width:96px;flex:0 0 auto;color:var(--text-ink-faint);font-size:12px;">Belligerents</span><span style="color:var(--text-ink);">{{ evSides }}</span></div>
+      <div style="display:flex;gap:10px;"><span style="width:96px;flex:0 0 auto;color:var(--text-ink-faint);font-size:12px;">Commanders</span><span style="color:var(--text-ink);">{{ evCommanders }}</span></div>
+      <div style="display:flex;gap:10px;"><span style="width:96px;flex:0 0 auto;color:var(--text-ink-faint);font-size:12px;">Result</span><span style="color:var(--text-ink);">{{ evResult }}</span></div>
+    </div>
+
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:6px;">Related</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <sc-for list="{{ evRelated }}" as="r" hint-placeholder-count="4">
+          <button onClick="{{ r.onClick }}" style="background:var(--parchment-100);border:1px solid var(--border-paper);border-radius:var(--radius-pill);padding:4px 10px;font-size:12px;color:var(--text-ink);cursor:pointer;" style-hover="background:var(--accent-primary-soft);border-color:var(--brass-400);">{{ r.name }}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="background:var(--status-warning-soft);border:1px solid rgba(192,132,39,.35);border-radius:var(--radius-md);padding:10px;font-size:12px;color:var(--amber-600);line-height:var(--leading-snug);display:flex;gap:8px;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 auto;margin-top:1px;"><path d="M12 9v4M12 17h.01M10.3 3.9L2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg>
+      <span>{{ evUncertaintyNote }}</span>
+    </div>
+
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:6px;">Sources ({{ evSourceCount }})</div>
+      <sc-for list="{{ evSourcesPreview }}" as="src" hint-placeholder-count="2">
+        <div style="font-size:12px;color:var(--text-ink-muted);border-left:2px solid var(--border-paper);padding-left:8px;margin-bottom:6px;line-height:var(--leading-snug);"><span style="color:var(--text-ink);font-weight:600;">{{ src.author }}</span>, <em>{{ src.title }}</em></div>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:4px;">
+      <button onClick="{{ evViewFull }}" style="flex:1;background:var(--accent-primary);border:1px solid var(--brass-600);border-radius:var(--radius-md);color:var(--text-on-accent);font-size:var(--text-sm);font-weight:600;padding:10px;cursor:pointer;" style-hover="background:var(--accent-primary-hover);">View full page</button>
+      <button onClick="{{ clearSelection }}" style="background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);color:var(--text-ink);font-size:var(--text-sm);padding:10px 14px;cursor:pointer;" style-hover="background:var(--parchment-100);">Overview</button>
+    </div>
+  </sc-if>
+
+  <!-- PERSON CARD — ACTIVE -->
+  <sc-if value="{{ showPersonActive }}">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--accent-primary-soft);color:var(--brass-600);border:1px solid var(--brass-300);border-radius:var(--radius-sm);padding:3px 8px;font-size:11px;font-weight:700;letter-spacing:var(--tracking-wide);text-transform:uppercase;">Person</span>
+      <button onClick="{{ clearSelection }}" style="background:transparent;border:none;color:var(--text-ink-faint);cursor:pointer;font-size:16px;line-height:1;padding:2px;">✕</button>
+    </div>
+    <div>
+      <div style="font-family:var(--font-display);font-size:24px;color:var(--text-ink);line-height:1.15;">{{ peName }}</div>
+      <div style="font-size:12px;color:var(--text-ink-faint);">{{ peAlt }}</div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      <span style="font-family:var(--font-mono);font-size:12px;background:var(--surface-paper-sunken);border:1px solid var(--border-paper);border-radius:var(--radius-sm);padding:3px 8px;color:var(--text-ink);">{{ peLife }}</span>
+      <span style="font-size:12px;color:var(--text-ink-muted);align-self:center;">{{ peRole }}</span>
+    </div>
+    <div style="font-size:var(--text-sm);color:var(--text-ink-muted);line-height:var(--leading-snug);">{{ peSummary }}</div>
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:6px;">Related</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <sc-for list="{{ peRelated }}" as="r" hint-placeholder-count="3">
+          <button onClick="{{ r.onClick }}" style="background:var(--parchment-100);border:1px solid var(--border-paper);border-radius:var(--radius-pill);padding:4px 10px;font-size:12px;color:var(--text-ink);cursor:pointer;" style-hover="background:var(--accent-primary-soft);border-color:var(--brass-400);">{{ r.name }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px;">
+      <button onClick="{{ peViewFull }}" style="flex:1;background:var(--accent-primary);border:1px solid var(--brass-600);border-radius:var(--radius-md);color:var(--text-on-accent);font-size:var(--text-sm);font-weight:600;padding:10px;cursor:pointer;" style-hover="background:var(--accent-primary-hover);">View full page</button>
+      <button onClick="{{ clearSelection }}" style="background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);color:var(--text-ink);font-size:var(--text-sm);padding:10px 14px;cursor:pointer;" style-hover="background:var(--parchment-100);">Overview</button>
+    </div>
+  </sc-if>
+
+  <!-- PERSON CARD — INACTIVE (outside selected period) -->
+  <sc-if value="{{ showPersonInactive }}">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--accent-primary-soft);color:var(--brass-600);border:1px solid var(--brass-300);border-radius:var(--radius-sm);padding:3px 8px;font-size:11px;font-weight:700;letter-spacing:var(--tracking-wide);text-transform:uppercase;">Person</span>
+      <button onClick="{{ clearSelection }}" style="background:transparent;border:none;color:var(--text-ink-faint);cursor:pointer;font-size:16px;line-height:1;padding:2px;">✕</button>
+    </div>
+    <div style="font-family:var(--font-display);font-size:24px;color:var(--text-ink);line-height:1.15;">{{ peName }}</div>
+    <span style="display:inline-flex;align-self:flex-start;align-items:center;gap:5px;background:var(--status-warning-soft);color:var(--amber-600);border:1px solid rgba(192,132,39,.35);border-radius:var(--radius-sm);padding:3px 8px;font-size:11px;font-weight:600;">Not active in {{ yearLabel }}</span>
+    <div style="background:var(--surface-paper-sunken);border:1px solid var(--border-paper);border-radius:var(--radius-md);padding:12px;font-size:var(--text-sm);color:var(--text-ink-muted);line-height:var(--leading-snug);">
+      {{ peName }} is not recorded as active in {{ yearLabel }}. Known active period: <strong style="color:var(--text-ink);">{{ peLife }}</strong>. This entity may still appear through search results or relations to entities active in this year.
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <button onClick="{{ peGoFirst }}" style="text-align:left;background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);padding:9px 12px;font-size:var(--text-sm);color:var(--text-ink);cursor:pointer;" style-hover="background:var(--parchment-100);">Go to first known year ({{ peFirstYearLabel }})</button>
+      <button onClick="{{ peGoNearest }}" style="text-align:left;background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);padding:9px 12px;font-size:var(--text-sm);color:var(--text-ink);cursor:pointer;" style-hover="background:var(--parchment-100);">Go to nearest active period</button>
+      <button onClick="{{ peViewFull }}" style="text-align:left;background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);padding:9px 12px;font-size:var(--text-sm);color:var(--text-ink);cursor:pointer;" style-hover="background:var(--parchment-100);">View full history</button>
+      <button onClick="{{ clearSelection }}" style="text-align:left;background:var(--accent-primary);border:1px solid var(--brass-600);border-radius:var(--radius-md);padding:9px 12px;font-size:var(--text-sm);font-weight:600;color:var(--text-on-accent);cursor:pointer;" style-hover="background:var(--accent-primary-hover);">Keep current year</button>
+    </div>
+  </sc-if>
+
+  <!-- POLITY CARD -->
+  <sc-if value="{{ showPolityCard }}">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--parchment-100);color:var(--text-ink-muted);border:1px solid var(--border-paper);border-radius:var(--radius-sm);padding:3px 8px;font-size:11px;font-weight:700;letter-spacing:var(--tracking-wide);text-transform:uppercase;">Polity</span>
+      <button onClick="{{ clearSelection }}" style="background:transparent;border:none;color:var(--text-ink-faint);cursor:pointer;font-size:16px;line-height:1;padding:2px;">✕</button>
+    </div>
+    <div style="font-family:var(--font-display);font-size:24px;color:var(--text-ink);line-height:1.15;">{{ poName }}</div>
+    <div style="font-size:12px;color:var(--text-ink-faint);">{{ poPeriod }}</div>
+    <div style="font-size:var(--text-sm);color:var(--text-ink-muted);line-height:var(--leading-snug);">{{ poSummary }}</div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:var(--text-sm);">
+      <div style="display:flex;gap:10px;"><span style="width:70px;flex:0 0 auto;color:var(--text-ink-faint);font-size:12px;">Ruler</span><span style="color:var(--text-ink);">{{ poRuler }}</span></div>
+      <div style="display:flex;gap:10px;"><span style="width:70px;flex:0 0 auto;color:var(--text-ink-faint);font-size:12px;">Capital</span><span style="color:var(--text-ink);">{{ poCapital }}</span></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px;">
+      <button onClick="{{ clearSelection }}" style="flex:1;background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);color:var(--text-ink);font-size:var(--text-sm);padding:10px;cursor:pointer;" style-hover="background:var(--parchment-100);">Return to overview</button>
+    </div>
+  </sc-if>
+
+  <!-- PLACE CARD -->
+  <sc-if value="{{ showPlaceCard }}">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--parchment-100);color:var(--text-ink-muted);border:1px solid var(--border-paper);border-radius:var(--radius-sm);padding:3px 8px;font-size:11px;font-weight:700;letter-spacing:var(--tracking-wide);text-transform:uppercase;">Place</span>
+      <button onClick="{{ clearSelection }}" style="background:transparent;border:none;color:var(--text-ink-faint);cursor:pointer;font-size:16px;line-height:1;padding:2px;">✕</button>
+    </div>
+    <div>
+      <div style="font-family:var(--font-display);font-size:24px;color:var(--text-ink);line-height:1.15;">{{ plName }}</div>
+      <div style="font-size:12px;color:var(--text-ink-faint);">{{ plAlt }}</div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      <span style="font-size:12px;background:var(--surface-paper-sunken);border:1px solid var(--border-paper);border-radius:var(--radius-sm);padding:3px 8px;color:var(--text-ink);">{{ plSubtype }}</span>
+      <span style="{{ plUncertaintyBadgeStyle }}">{{ plUncertaintyLabel }}</span>
+    </div>
+    <div style="font-size:var(--text-sm);color:var(--text-ink-muted);line-height:var(--leading-snug);">{{ plSummary }}</div>
+    <div style="font-size:12px;color:var(--text-ink-faint);">Sources: {{ plSourceCount }}</div>
+    <div style="display:flex;gap:8px;margin-top:4px;">
+      <button onClick="{{ clearSelection }}" style="flex:1;background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);color:var(--text-ink);font-size:var(--text-sm);padding:10px;cursor:pointer;" style-hover="background:var(--parchment-100);">Return to overview</button>
+    </div>
+  </sc-if>
+
+  <!-- JOURNEY CARD -->
+  <sc-if value="{{ showJourneyCard }}">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+      <span style="display:inline-flex;align-items:center;gap:5px;background:var(--parchment-100);color:var(--text-ink-muted);border:1px solid var(--border-paper);border-radius:var(--radius-sm);padding:3px 8px;font-size:11px;font-weight:700;letter-spacing:var(--tracking-wide);text-transform:uppercase;">Journey</span>
+      <button onClick="{{ clearSelection }}" style="background:transparent;border:none;color:var(--text-ink-faint);cursor:pointer;font-size:16px;line-height:1;padding:2px;">✕</button>
+    </div>
+    <div style="font-family:var(--font-display);font-size:22px;color:var(--text-ink);line-height:1.2;">{{ joName }}</div>
+    <div style="font-size:12px;color:var(--text-ink-faint);">{{ joPeriod }}</div>
+    <div style="font-size:var(--text-sm);color:var(--text-ink-muted);line-height:var(--leading-snug);">{{ joSummary }}</div>
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:6px;">Route</div>
+      <div style="font-size:var(--text-sm);color:var(--text-ink);">{{ joRoute }}</div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px;">
+      <button onClick="{{ clearSelection }}" style="flex:1;background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);color:var(--text-ink);font-size:var(--text-sm);padding:10px;cursor:pointer;" style-hover="background:var(--parchment-100);">Return to overview</button>
+    </div>
+  </sc-if>
+</div>
+
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- bottom timeline -->
+        <sc-if value="{{ isDesktop }}">
+          <div style="position:absolute;left:0;right:340px;bottom:0;height:76px;background:var(--surface-field);backdrop-filter:blur(8px);border-top:1px solid var(--border-field);display:flex;align-items:center;gap:var(--space-3);padding:0 var(--space-4);z-index:150;">
+            <button onClick="{{ stepPrev }}" style="{{ timelineArrowStyle }}">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"></path></svg>
+            </button>
+            <div style="flex:0 0 auto;display:flex;flex-direction:column;align-items:center;min-width:88px;">
+              <input value="{{ yearInputValue }}" onChange="{{ onYearInputChange }}" onBlur="{{ onYearInputBlur }}" onKeyDown="{{ onYearInputKeyDown }}" style="width:88px;text-align:center;background:transparent;border:none;color:var(--parchment-50);font-family:var(--font-mono);font-size:19px;font-weight:600;outline:none;"></input>
+              <div style="font-size:9px;letter-spacing:var(--tracking-wide);color:var(--text-on-field-faint);text-transform:uppercase;">Selected year</div>
+            </div>
+            <button onClick="{{ stepNext }}" style="{{ timelineArrowStyle }}">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"></path></svg>
+            </button>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:0 0 auto;">
+              <div style="font-size:9px;letter-spacing:var(--tracking-wide);color:var(--text-on-field-faint);text-transform:uppercase;">Step</div>
+              <div style="display:flex;gap:1px;background:var(--surface-field-sunken);border:1px solid var(--border-field);border-radius:var(--radius-sm);overflow:hidden;">
+                <button onClick="{{ setStep1 }}" style="{{ stepBtnStyle1 }}">1</button>
+                <button onClick="{{ setStep5 }}" style="{{ stepBtnStyle5 }}">5</button>
+                <button onClick="{{ setStep10 }}" style="{{ stepBtnStyle10 }}">10</button>
+                <button onClick="{{ setStep25 }}" style="{{ stepBtnStyle25 }}">25</button>
+                <button onClick="{{ setStep50 }}" style="{{ stepBtnStyle50 }}">50</button>
+                <button onClick="{{ setStep100 }}" style="{{ stepBtnStyle100 }}">100</button>
+              </div>
+            </div>
+            <div style="flex:1;min-width:0;position:relative;display:flex;flex-direction:column;gap:2px;">
+              <div style="position:relative;height:6px;">
+                <div style="position:absolute;left:{{ coverageBarLeft }};width:{{ coverageBarWidth }};height:6px;top:0;background:var(--accent-primary-soft);border-radius:3px;"></div>
+                <input type="range" class="ebe-slider" min="{{ yearMin }}" max="{{ yearMax }}" step="1" value="{{ year }}" onChange="{{ onYearSlide }}" style="position:absolute;inset:0;width:100%;"></input>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:10px;font-family:var(--font-mono);color:var(--text-on-field-faint);white-space:nowrap;">
+                <span>{{ yearMinLabel }}</span>
+                <span>{{ yearMaxLabel }}</span>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isMobile }}">
+          <div style="position:absolute;left:0;right:0;bottom:{{ mobileTimelineBottom }};height:58px;background:var(--surface-field);backdrop-filter:blur(8px);border-top:1px solid var(--border-field);display:flex;align-items:center;gap:var(--space-2);padding:0 var(--space-3);z-index:250;">
+            <button onClick="{{ stepPrev }}" style="{{ timelineArrowStyleSm }}">‹</button>
+            <div style="font-family:var(--font-mono);font-size:15px;font-weight:600;color:var(--parchment-50);min-width:76px;text-align:center;">{{ yearLabel }}</div>
+            <button onClick="{{ stepNext }}" style="{{ timelineArrowStyleSm }}">›</button>
+            <input type="range" class="ebe-slider" min="{{ yearMin }}" max="{{ yearMax }}" step="1" value="{{ year }}" onChange="{{ onYearSlide }}" style="flex:1;"></input>
+          </div>
+        </sc-if>
+      </sc-if>
+
+      <!-- ===================== EXPLORE PAGE ===================== -->
+      <sc-if value="{{ isPageExplore }}">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:{{ exploreFlexDir }};overflow:hidden;">
+
+          <sc-if value="{{ isDesktop }}">
+            <nav style="width:184px;flex:0 0 auto;border-right:1px solid var(--border-paper);padding:var(--space-4) var(--space-2);display:flex;flex-direction:column;gap:2px;">
+              <sc-for list="{{ exploreCats }}" as="c" hint-placeholder-count="5">
+                <button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</button>
+              </sc-for>
+            </nav>
+          </sc-if>
+          <sc-if value="{{ isMobile }}">
+            <nav style="display:flex;gap:6px;padding:var(--space-3);border-bottom:1px solid var(--border-paper);overflow-x:auto;">
+              <sc-for list="{{ exploreCats }}" as="c" hint-placeholder-count="5">
+                <button onClick="{{ c.onClick }}" style="{{ c.pillStyle }}">{{ c.label }}</button>
+              </sc-for>
+            </nav>
+          </sc-if>
+
+          <div style="flex:1;min-width:0;overflow-y:auto;padding:var(--space-5) var(--space-6);">
+            <div style="font-family:var(--font-display);font-size:28px;color:var(--text-ink);margin-bottom:var(--space-4);">Explore</div>
+
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:var(--space-4);">
+              <div style="position:relative;flex:1;min-width:180px;">
+                <input placeholder="Search {{ exploreCategoryLabel }}…" value="{{ exploreQuery }}" onChange="{{ onExploreQueryChange }}" style="width:100%;height:36px;padding:0 12px;border:1px solid var(--border-paper);border-radius:var(--radius-md);background:var(--surface-paper-sunken);font-size:var(--text-sm);color:var(--text-ink);outline:none;"></input>
+              </div>
+              <div style="display:flex;border:1px solid var(--border-paper);border-radius:var(--radius-md);overflow:hidden;">
+                <button onClick="{{ setPeriodCurrent }}" style="{{ periodCurrentStyle }}">Current year ({{ yearLabel }})</button>
+                <button onClick="{{ setPeriodAll }}" style="{{ periodAllStyle }}">All periods</button>
+              </div>
+              <select value="{{ exploreType }}" onChange="{{ onExploreTypeChange }}" style="height:36px;border:1px solid var(--border-paper);border-radius:var(--radius-md);background:var(--surface-paper);font-size:var(--text-sm);color:var(--text-ink);padding:0 8px;">
+                <sc-for list="{{ exploreTypeOptions }}" as="o" hint-placeholder-count="3">
+                  <option value="{{ o.value }}">{{ o.label }}</option>
+                </sc-for>
+              </select>
+              <select value="{{ exploreRegion }}" onChange="{{ onExploreRegionChange }}" style="height:36px;border:1px solid var(--border-paper);border-radius:var(--radius-md);background:var(--surface-paper);font-size:var(--text-sm);color:var(--text-ink);padding:0 8px;">
+                <sc-for list="{{ exploreRegionOptions }}" as="o" hint-placeholder-count="3">
+                  <option value="{{ o.value }}">{{ o.label }}</option>
+                </sc-for>
+              </select>
+              <select value="{{ exploreSort }}" onChange="{{ onExploreSortChange }}" style="height:36px;border:1px solid var(--border-paper);border-radius:var(--radius-md);background:var(--surface-paper);font-size:var(--text-sm);color:var(--text-ink);padding:0 8px;">
+                <option value="name">Sort: Name</option>
+                <option value="period">Sort: Period</option>
+              </select>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-3);">
+              <div style="font-size:12px;color:var(--text-ink-faint);">{{ exploreResultCount }}</div>
+              <button onClick="{{ clearExploreFilters }}" style="background:transparent;border:none;color:var(--brass-600);font-size:12px;cursor:pointer;text-decoration:underline;">Clear filters</button>
+            </div>
+
+            <sc-if value="{{ exploreLoading }}">
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div style="height:78px;border-radius:var(--radius-md);background:var(--parchment-100);animation:ebe-pulse 1s ease-in-out infinite;"></div>
+                <div style="height:78px;border-radius:var(--radius-md);background:var(--parchment-100);animation:ebe-pulse 1s ease-in-out infinite .1s;"></div>
+                <div style="height:78px;border-radius:var(--radius-md);background:var(--parchment-100);animation:ebe-pulse 1s ease-in-out infinite .2s;"></div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ exploreEmpty }}">
+              <div style="text-align:center;padding:var(--space-16) var(--space-4);color:var(--text-ink-muted);border:1px dashed var(--border-paper);border-radius:var(--radius-lg);">
+                <div style="font-family:var(--font-display);font-size:var(--text-lg);color:var(--text-ink);margin-bottom:6px;">Nothing matches these filters</div>
+                <div style="font-size:var(--text-sm);margin-bottom:var(--space-4);">Coverage for this combination is currently empty or unreconstructed.</div>
+                <button onClick="{{ clearExploreFilters }}" style="background:var(--accent-primary);border:1px solid var(--brass-600);border-radius:var(--radius-md);color:var(--text-on-accent);font-size:var(--text-sm);font-weight:600;padding:8px 16px;cursor:pointer;">Clear filters</button>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ !exploreLoading }}">
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <sc-for list="{{ exploreResults }}" as="it" hint-placeholder-count="4">
+                  <div style="background:var(--surface-paper);border:1px solid var(--border-paper);border-radius:var(--radius-lg);padding:var(--space-4);display:flex;justify-content:space-between;gap:var(--space-4);align-items:flex-start;">
+                    <div style="min-width:0;flex:1;">
+                      <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;">
+                        <span style="font-family:var(--font-display);font-size:18px;color:var(--text-ink);">{{ it.name }}</span>
+                        <sc-if value="{{ it.altName }}"><span style="font-size:12px;color:var(--text-ink-faint);">{{ it.altName }}</span></sc-if>
+                        <span style="{{ it.uncertaintyStyle }}">{{ it.uncertaintyLabel }}</span>
+                      </div>
+                      <div style="font-size:12px;color:var(--text-ink-faint);margin-top:3px;">{{ it.facet }} · {{ it.period }} <sc-if value="{{ it.polityName }}">· {{ it.polityName }}</sc-if></div>
+                      <div style="font-size:var(--text-sm);color:var(--text-ink-muted);margin-top:6px;line-height:var(--leading-snug);">{{ it.summary }}</div>
+                      <div style="font-size:11px;color:var(--text-ink-faint);margin-top:6px;">Sources: {{ it.sourceCount }}</div>
+                    </div>
+                    <button onClick="{{ it.onClick }}" style="flex:0 0 auto;background:var(--accent-primary-soft);border:1px solid var(--brass-300);border-radius:var(--radius-md);color:var(--brass-600);font-size:12px;font-weight:600;padding:7px 12px;cursor:pointer;white-space:nowrap;" style-hover="background:var(--accent-primary);color:var(--text-on-accent);">View on map</button>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===================== SOURCES PAGE ===================== -->
+      <sc-if value="{{ isPageSources }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:var(--space-5) var(--space-6);">
+
+          <sc-if value="{{ !selectedSourceId }}">
+            <div style="font-family:var(--font-display);font-size:28px;color:var(--text-ink);margin-bottom:var(--space-4);">Sources</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:var(--space-4);">
+              <input placeholder="Search sources, authors…" value="{{ sourcesQuery }}" onChange="{{ onSourcesQueryChange }}" style="flex:1;min-width:200px;height:36px;padding:0 12px;border:1px solid var(--border-paper);border-radius:var(--radius-md);background:var(--surface-paper-sunken);font-size:var(--text-sm);color:var(--text-ink);outline:none;"></input>
+              <select value="{{ sourcesType }}" onChange="{{ onSourcesTypeChange }}" style="height:36px;border:1px solid var(--border-paper);border-radius:var(--radius-md);background:var(--surface-paper);font-size:var(--text-sm);color:var(--text-ink);padding:0 8px;">
+                <sc-for list="{{ sourcesTypeOptions }}" as="o" hint-placeholder-count="2">
+                  <option value="{{ o.value }}">{{ o.label }}</option>
+                </sc-for>
+              </select>
+            </div>
+            <div style="font-size:12px;color:var(--text-ink-faint);margin-bottom:var(--space-3);">{{ sourcesResultCount }}</div>
+            <div style="display:flex;flex-direction:column;gap:10px;max-width:760px;">
+              <sc-for list="{{ sourcesResults }}" as="src" hint-placeholder-count="3">
+                <button onClick="{{ src.onClick }}" style="text-align:left;background:var(--surface-paper);border:1px solid var(--border-paper);border-radius:var(--radius-lg);padding:var(--space-4);cursor:pointer;" style-hover="border-color:var(--brass-400);">
+                  <div style="font-family:var(--font-display);font-size:17px;color:var(--text-ink);">{{ src.title }}</div>
+                  <div style="font-size:12px;color:var(--text-ink-muted);margin-top:3px;">{{ src.author }} · {{ src.type }}</div>
+                  <div style="font-size:12px;color:var(--text-ink-faint);margin-top:6px;">{{ src.period }} · Linked to {{ src.linkedCount }} entities</div>
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ selectedSourceId }}">
+            <button onClick="{{ clearSourceSelection }}" style="background:transparent;border:none;color:var(--brass-600);font-size:var(--text-sm);cursor:pointer;margin-bottom:var(--space-3);display:flex;align-items:center;gap:4px;">‹ Back to Sources</button>
+            <div style="max-width:640px;">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:6px;">{{ selSource.type }}</div>
+              <div style="font-family:var(--font-display);font-size:28px;color:var(--text-ink);line-height:1.2;">{{ selSource.title }}</div>
+              <div style="font-size:var(--text-sm);color:var(--text-ink-muted);margin-top:6px;">{{ selSource.author }} · {{ selSource.period }}</div>
+
+              <div style="display:flex;flex-direction:column;gap:8px;margin-top:var(--space-5);font-size:var(--text-sm);">
+                <div style="display:flex;gap:12px;"><span style="width:120px;flex:0 0 auto;color:var(--text-ink-faint);font-size:12px;">Publisher</span><span style="color:var(--text-ink);">{{ selSource.publisher }}</span></div>
+                <div style="display:flex;gap:12px;"><span style="width:120px;flex:0 0 auto;color:var(--text-ink-faint);font-size:12px;">Edition / year</span><span style="color:var(--text-ink);">{{ selSource.pubYear }}</span></div>
+                <div style="display:flex;gap:12px;"><span style="width:120px;flex:0 0 auto;color:var(--text-ink-faint);font-size:12px;">Locator</span><span style="color:var(--text-ink);">{{ selSource.locator }}</span></div>
+                <div style="display:flex;gap:12px;"><span style="width:120px;flex:0 0 auto;color:var(--text-ink-faint);font-size:12px;">License</span><span style="color:var(--text-ink);">{{ selSource.license }}</span></div>
+                <div style="display:flex;gap:12px;"><span style="width:120px;flex:0 0 auto;color:var(--text-ink-faint);font-size:12px;">External link</span><a href="{{ selSource.link }}" style="color:var(--brass-600);">View source ↗</a></div>
+              </div>
+
+              <div style="background:var(--surface-paper-sunken);border:1px solid var(--border-paper);border-radius:var(--radius-md);padding:12px;margin-top:var(--space-4);font-size:12px;color:var(--text-ink-muted);line-height:var(--leading-snug);">
+                <strong style="color:var(--text-ink);">Editorial note.</strong> {{ selSource.note }}
+              </div>
+
+              <div style="margin-top:var(--space-5);">
+                <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:8px;">Bibliographic reference</div>
+                <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-ink);background:var(--surface-paper-sunken);border:1px solid var(--border-paper);border-radius:var(--radius-md);padding:10px;line-height:var(--leading-snug);">{{ selSource.citation }}</div>
+              </div>
+
+              <div style="margin-top:var(--space-5);">
+                <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:8px;">Linked entities</div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                  <sc-for list="{{ selSourceLinked }}" as="l" hint-placeholder-count="3">
+                    <button onClick="{{ l.onClick }}" style="background:var(--parchment-100);border:1px solid var(--border-paper);border-radius:var(--radius-pill);padding:5px 12px;font-size:12px;color:var(--text-ink);cursor:pointer;" style-hover="background:var(--accent-primary-soft);border-color:var(--brass-400);">{{ l.name }}</button>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- ===================== ENTITY PAGE ===================== -->
+      <sc-if value="{{ isPageEntity }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;">
+          <div style="max-width:820px;margin:0 auto;padding:var(--space-6) var(--space-6) var(--space-16);">
+
+            <!-- header -->
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--space-4);align-items:flex-start;border-bottom:1px solid var(--border-paper);padding-bottom:var(--space-5);margin-bottom:var(--space-5);">
+              <div style="min-width:0;">
+                <span style="display:inline-flex;background:var(--accent-primary-soft);color:var(--brass-600);border:1px solid var(--brass-300);border-radius:var(--radius-sm);padding:3px 8px;font-size:11px;font-weight:700;letter-spacing:var(--tracking-wide);text-transform:uppercase;">{{ entType }}</span>
+                <div style="font-family:var(--font-display);font-size:40px;color:var(--text-ink);line-height:1.1;margin-top:10px;">{{ entName }}</div>
+                <div style="font-size:var(--text-md);color:var(--text-ink-faint);margin-top:2px;">{{ entAlt }}</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:var(--space-3);">
+                  <span style="font-family:var(--font-mono);font-size:12px;background:var(--surface-paper-sunken);border:1px solid var(--border-paper);border-radius:var(--radius-sm);padding:3px 9px;color:var(--text-ink);">{{ entDateRange }}</span>
+                  <span style="font-size:12px;color:var(--text-ink-muted);align-self:center;">{{ entRole }}</span>
+                  <span style="{{ entConfidenceStyle }}">{{ entConfidenceLabel }}</span>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;flex:0 0 auto;">
+                <button onClick="{{ entViewOnMap }}" style="background:var(--accent-primary);border:1px solid var(--brass-600);border-radius:var(--radius-md);color:var(--text-on-accent);font-size:var(--text-sm);font-weight:600;padding:9px 16px;cursor:pointer;white-space:nowrap;" style-hover="background:var(--accent-primary-hover);">View on map</button>
+                <button onClick="{{ shareAction }}" style="background:transparent;border:1px solid var(--border-paper);border-radius:var(--radius-md);color:var(--text-ink);font-size:var(--text-sm);padding:9px 14px;cursor:pointer;" style-hover="background:var(--parchment-100);">Share</button>
+              </div>
+            </div>
+
+            <!-- summary -->
+            <div style="font-size:var(--text-md);color:var(--text-ink);line-height:var(--leading-relaxed);max-width:660px;margin-bottom:var(--space-6);">{{ entSummary }}</div>
+
+            <!-- map preview -->
+            <div style="border:1px solid var(--border-paper);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:var(--space-6);">
+              <div style="height:220px;background:var(--ink-900);position:relative;">
+                <svg viewBox="0 0 1000 620" style="width:100%;height:100%;display:block;" preserveAspectRatio="xMidYMid slice">
+                  <rect width="1000" height="620" fill="var(--ink-900)"></rect>
+                  <polygon points="30,70 180,50 260,90 340,140 420,165 400,195 320,220 260,300 300,380 200,430 90,400 30,300 50,180" fill="var(--parchment-200)" opacity="0.5"></polygon>
+                  <polygon points="460,170 440,200 520,230 560,210 650,180 820,60 950,90 970,220 900,380 700,470 540,430 480,340 470,250" fill="var(--parchment-200)" opacity="0.5"></polygon>
+                  <circle cx="{{ entMapX }}" cy="{{ entMapY }}" r="10" fill="var(--status-danger)" stroke="var(--parchment-50)" stroke-width="2"></circle>
+                </svg>
+                <div style="position:absolute;left:12px;bottom:10px;font-family:var(--font-mono);font-size:12px;color:var(--parchment-50);background:rgba(0,0,0,.4);padding:3px 8px;border-radius:4px;">{{ entMapYearLabel }}</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--surface-paper);">
+                <span style="font-size:12px;color:var(--text-ink-faint);">Schematic preview — Eastern Mediterranean &amp; western Anatolia</span>
+                <button onClick="{{ entViewOnMap }}" style="background:transparent;border:none;color:var(--brass-600);font-size:12px;font-weight:600;cursor:pointer;">View full map ↗</button>
+              </div>
+            </div>
+
+            <!-- chronology -->
+            <div style="margin-bottom:var(--space-6);">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:12px;">Chronology</div>
+              <div style="display:flex;flex-direction:column;">
+                <sc-for list="{{ entChronology }}" as="c" hint-placeholder-count="4">
+                  <div style="display:flex;gap:16px;">
+                    <div style="width:96px;flex:0 0 auto;font-family:var(--font-mono);font-size:12px;color:var(--brass-600);padding-top:2px;">{{ c.year }}</div>
+                    <div style="flex:0 0 auto;display:flex;flex-direction:column;align-items:center;">
+                      <div style="width:9px;height:9px;border-radius:50%;background:var(--accent-primary);margin-top:5px;"></div>
+                      <div style="{{ c.lineStyle }}"></div>
+                    </div>
+                    <div style="padding-bottom:18px;font-size:var(--text-sm);color:var(--text-ink);">{{ c.label }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <!-- key facts -->
+            <div style="margin-bottom:var(--space-6);">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:10px;">Key Facts</div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">
+                <sc-for list="{{ entKeyFacts }}" as="f" hint-placeholder-count="4">
+                  <div style="border:1px solid var(--border-paper);border-radius:var(--radius-md);padding:10px 12px;">
+                    <div style="font-size:11px;color:var(--text-ink-faint);text-transform:uppercase;letter-spacing:var(--tracking-wide);">{{ f.label }}</div>
+                    <div style="font-size:var(--text-sm);color:var(--text-ink);margin-top:3px;">{{ f.value }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <!-- related entities -->
+            <div style="margin-bottom:var(--space-6);">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:10px;">Related</div>
+              <sc-for list="{{ entRelatedGroups }}" as="g" hint-placeholder-count="3">
+                <div style="margin-bottom:10px;">
+                  <div style="font-size:12px;color:var(--text-ink-faint);margin-bottom:6px;">{{ g.label }}</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                    <sc-for list="{{ g.items }}" as="r" hint-placeholder-count="2">
+                      <button onClick="{{ r.onClick }}" style="background:var(--parchment-100);border:1px solid var(--border-paper);border-radius:var(--radius-pill);padding:5px 12px;font-size:12px;color:var(--text-ink);cursor:pointer;" style-hover="background:var(--accent-primary-soft);border-color:var(--brass-400);">{{ r.name }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+
+            <!-- sources -->
+            <div style="margin-bottom:var(--space-6);">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:10px;">Sources</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <sc-for list="{{ entSources }}" as="src" hint-placeholder-count="2">
+                  <div style="border-left:2px solid var(--border-paper);padding-left:10px;">
+                    <div style="font-size:var(--text-sm);color:var(--text-ink);"><strong>{{ src.author }}</strong>, <em>{{ src.title }}</em></div>
+                    <div style="font-size:11px;color:var(--text-ink-faint);margin-top:2px;">{{ src.type }} · {{ src.locator }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <!-- uncertainty -->
+            <div style="background:var(--status-warning-soft);border:1px solid rgba(192,132,39,.35);border-radius:var(--radius-md);padding:14px;font-size:var(--text-sm);color:var(--amber-600);line-height:var(--leading-snug);display:flex;gap:10px;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 auto;margin-top:2px;"><path d="M12 9v4M12 17h.01M10.3 3.9L2.5 17a2 2 0 0 0 1.7 3h15.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg>
+              <div><strong>Historical uncertainty.</strong> {{ entUncertaintyNote }}</div>
+            </div>
+
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===================== SEARCH OVERLAY ===================== -->
+      <sc-if value="{{ searchOpen }}">
+        <div style="{{ searchScrimStyle }}" onClick="{{ closeSearch }}">
+          <div style="{{ searchPanelStyle }}" onClick="{{ stopProp }}">
+            <div style="display:flex;align-items:center;gap:10px;padding:var(--space-4);border-bottom:1px solid var(--border-paper);">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-ink-faint);flex:0 0 auto;"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+              <input autoFocus="{{ true }}" placeholder="Search places, people, events, polities…" value="{{ searchQuery }}" onChange="{{ onSearchChange }}" onKeyDown="{{ onSearchKeyDown }}" style="flex:1;border:none;outline:none;background:transparent;font-size:var(--text-md);color:var(--text-ink);font-family:var(--font-ui);"></input>
+              <button onClick="{{ closeSearch }}" style="background:var(--parchment-100);border:1px solid var(--border-paper);border-radius:var(--radius-sm);color:var(--text-ink-muted);font-size:11px;padding:4px 8px;cursor:pointer;">Esc</button>
+            </div>
+            <div style="flex:1;overflow-y:auto;padding:var(--space-3) var(--space-4) var(--space-5);">
+
+              <sc-if value="{{ searchShowRecent }}">
+                <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin:var(--space-2) 0 8px;">Recent &amp; suggested</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                  <sc-for list="{{ recentSearches }}" as="r" hint-placeholder-count="3">
+                    <button onClick="{{ r.onClick }}" style="background:var(--parchment-100);border:1px solid var(--border-paper);border-radius:var(--radius-pill);padding:6px 14px;font-size:var(--text-sm);color:var(--text-ink);cursor:pointer;" style-hover="background:var(--accent-primary-soft);border-color:var(--brass-400);">{{ r.name }}</button>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ searchLoading }}">
+                <div style="display:flex;flex-direction:column;gap:10px;padding-top:var(--space-3);">
+                  <div style="height:52px;border-radius:var(--radius-md);background:var(--parchment-100);animation:ebe-pulse 1s ease-in-out infinite;"></div>
+                  <div style="height:52px;border-radius:var(--radius-md);background:var(--parchment-100);animation:ebe-pulse 1s ease-in-out infinite .1s;"></div>
+                  <div style="height:52px;border-radius:var(--radius-md);background:var(--parchment-100);animation:ebe-pulse 1s ease-in-out infinite .2s;"></div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ searchNoResults }}">
+                <div style="text-align:center;padding:var(--space-12) var(--space-4);color:var(--text-ink-muted);">
+                  <div style="font-family:var(--font-display);font-size:var(--text-lg);color:var(--text-ink);margin-bottom:6px;">No matches for "{{ searchQuery }}"</div>
+                  <div style="font-size:var(--text-sm);line-height:var(--leading-snug);">Try a historical name, alias, or transliteration. Coverage is currently concentrated on Alexander's World, 360–300 BCE.</div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ searchHasResults }}">
+                <sc-for list="{{ groupedResults }}" as="grp" hint-placeholder-count="2">
+                  <div style="margin-bottom:var(--space-4);">
+                    <div style="font-size:11px;text-transform:uppercase;letter-spacing:var(--tracking-wider);color:var(--text-ink-faint);margin-bottom:6px;">{{ grp.kind }}</div>
+                    <sc-for list="{{ grp.items }}" as="it" hint-placeholder-count="1">
+                      <button onClick="{{ it.onClick }}" style="{{ it.rowStyle }}">
+                        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;">
+                          <span style="font-size:var(--text-sm);font-weight:600;color:var(--text-ink);">{{ it.name }}</span>
+                          <span style="font-size:11px;font-family:var(--font-mono);color:var(--text-ink-faint);flex:0 0 auto;">{{ it.period }}</span>
+                        </div>
+                        <div style="font-size:12px;color:var(--text-ink-muted);margin-top:2px;">{{ it.context }}</div>
+                        <sc-if value="{{ it.willChangeYear }}">
+                          <div style="font-size:11px;color:var(--brass-600);margin-top:4px;display:flex;align-items:center;gap:4px;">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"></path><circle cx="12" cy="12" r="9"></circle></svg>
+                            Selecting will change the year to {{ it.targetYearLabel }}
+                          </div>
+                        </sc-if>
+                      </button>
+                    </sc-for>
+                  </div>
+                </sc-for>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const YEAR_MIN = -360, YEAR_MAX = -300, YEAR_DEFAULT = -334;
+
+const DATA = {
+  polities: [
+    { id: 'macedon', name: 'Kingdom of Macedon', kind: 'polity', period: 'c. 800–168 BCE (shown: 334 BCE)', capitalId: 'pella', color: 'var(--moss-500)', fill: 'rgba(92,122,74,0.24)', uncertainty: 'exact', summary: "Alexander III has recently crossed into Asia to open his campaign against the Achaemenid Empire.", sourceCount: 8,
+      points: '30,70 180,50 260,90 340,140 420,165 400,195 320,220 260,300 300,380 200,430 90,400 30,300 50,180' },
+    { id: 'achaemenid', name: 'Achaemenid Empire', kind: 'polity', period: 'c. 550–330 BCE (shown: 334 BCE)', ruler: 'Darius III', capitalId: 'sardis', color: 'var(--brick-500)', fill: 'rgba(166,69,48,0.20)', uncertainty: 'approximate', summary: "The western satrapies face the opening stage of Alexander's invasion.", sourceCount: 7,
+      points: '460,170 440,200 520,230 560,210 650,180 820,60 950,90 970,220 900,380 700,470 540,430 480,340 470,250' },
+  ],
+  places: [
+    { id: 'pella', name: 'Pella', altName: '', kind: 'place', subtype: 'Capital city', period: 'Capital of Macedon, c. 5th century – 168 BCE', polityId: 'macedon', x: 110, y: 150, uncertainty: 'exact', summary: 'Royal capital of the Kingdom of Macedon under Philip II and Alexander III.', sourceCount: 5, major: true },
+    { id: 'sestos', name: 'Sestos', altName: '', kind: 'place', subtype: 'Settlement, crossing point', period: 'Active 5th–1st century BCE', polityId: 'macedon', x: 400, y: 175, uncertainty: 'approximate', summary: 'European shore of the Hellespont; traditional crossing point into Asia.', sourceCount: 3 },
+    { id: 'abydos', name: 'Abydos', altName: '', kind: 'place', subtype: 'Settlement, crossing point', period: 'Active 7th century BCE – Roman period', polityId: 'achaemenid', x: 445, y: 185, uncertainty: 'approximate', summary: 'Asian shore of the Hellespont, opposite Sestos.', sourceCount: 3 },
+    { id: 'troy', name: 'Troy', altName: 'Ilium', kind: 'place', subtype: 'Settlement', period: 'Long occupation; visited 334 BCE', polityId: 'achaemenid', x: 490, y: 210, uncertainty: 'exact', summary: "Visited by Alexander shortly after the crossing; associated with the Homeric tradition.", sourceCount: 6 },
+    { id: 'dascylium', name: 'Dascylium', altName: '', kind: 'place', subtype: 'Satrapal seat', period: 'Achaemenid satrapal capital, Hellespontine Phrygia', polityId: 'achaemenid', x: 580, y: 195, uncertainty: 'exact', summary: 'Seat of the satrap of Hellespontine Phrygia.', sourceCount: 2 },
+    { id: 'sardis', name: 'Sardis', altName: '', kind: 'place', subtype: 'Satrapal capital', period: 'Achaemenid satrapal capital, Lydia', polityId: 'achaemenid', x: 680, y: 290, uncertainty: 'exact', summary: "Major regional capital of the Achaemenid west; surrendered to Alexander shortly after Granicus.", sourceCount: 5, major: true },
+    { id: 'granicus_river', name: 'Granicus River', altName: 'Modern: Kocabaş Çayı', kind: 'place', subtype: 'River, battle site', period: 'Site of the 334 BCE battle', polityId: 'achaemenid', x: 470, y: 232, uncertainty: 'disputed', summary: 'Exact crossing point and battle site are disputed among modern historians.', sourceCount: 4 },
+  ],
+  people: [
+    { id: 'alexander', name: 'Alexander III', altName: 'Alexander the Great', kind: 'person', role: 'King of Macedon', life: [-356, -323], born: '356 BCE, Pella', died: '323 BCE, Babylon', polityId: 'macedon', x: 470, y: 220, uncertainty: 'exact', summary: "King of Macedon from 336 BCE. Crossed into Asia in 334 BCE to begin his campaign against the Achaemenid Empire.", sourceCount: 14, major: true },
+    { id: 'memnon', name: 'Memnon of Rhodes', altName: '', kind: 'person', role: 'Commander in Achaemenid service', life: [-380, -333], born: 'c. 380 BCE, Rhodes', died: '333 BCE', polityId: 'achaemenid', x: 575, y: 205, uncertainty: 'approximate', summary: "Greek commander in Persian service who reportedly urged caution against Alexander's advance.", sourceCount: 5 },
+  ],
+  events: [
+    { id: 'granicus', name: 'Battle of the Granicus', kind: 'event', subtype: 'Battle', date: '334 BCE', x: 470, y: 232, locationAccuracy: 'approximate', locationId: 'granicus_river', summary: "The first major battle of Alexander's campaign in Asia, fought shortly after his crossing of the Hellespont.", sides: ['Kingdom of Macedon and allied Greek forces', 'Achaemenid regional forces'], commanders: ['Alexander III', "Achaemenid satrapal commanders; Memnon of Rhodes"], result: "Macedonian victory. Opened western Anatolia to Alexander's advance.", campaignId: 'crossing', relatedPolities: ['macedon', 'achaemenid'], relatedPeople: ['alexander', 'memnon'], relatedPlaces: ['granicus_river', 'dascylium'], sourceCount: 6, uncertainty: 'disputed', uncertaintyNote: 'Troop numbers and the precise crossing point are disputed among modern historians; figures are omitted rather than estimated.' },
+  ],
+  journeys: [
+    { id: 'crossing', name: "Alexander's Crossing into Asia", kind: 'journey', period: '334 BCE', summary: "Alexander's march from Macedon to the Hellespont and into western Anatolia, culminating at the Granicus.", route: ['pella', 'sestos', 'abydos', 'troy', 'granicus_river'], relatedPeople: ['alexander'], relatedEvents: ['granicus'], sourceCount: 6, uncertainty: 'approximate' },
+  ],
+  sources: [
+    { id: 'arrian', title: 'Anabasis of Alexander', author: 'Arrian', type: 'Primary — ancient historiography', period: 'Composed 2nd century CE; recounts 4th century BCE events', publisher: 'Publisher reference placeholder', pubYear: 'Edition/translation year placeholder', link: '#', license: 'Ancient text; translation licensing varies by edition — placeholder', linked: ['alexander', 'granicus', 'crossing'], locator: 'Book I — section reference placeholder', note: 'Editorial note placeholder — verify translation and edition before citing.' },
+    { id: 'diodorus', title: 'Bibliotheca Historica, Book XVII', author: 'Diodorus Siculus', type: 'Primary — ancient historiography', period: 'Composed 1st century BCE', publisher: 'Publisher reference placeholder', pubYear: 'Edition/translation year placeholder', link: '#', license: 'Ancient text; translation licensing varies by edition — placeholder', linked: ['alexander', 'granicus'], locator: 'Book XVII — section reference placeholder', note: 'Editorial note placeholder.' },
+    { id: 'plutarch', title: 'Life of Alexander', author: 'Plutarch', type: 'Primary — ancient biography', period: 'Composed c. early 2nd century CE', publisher: 'Publisher reference placeholder', pubYear: 'Edition/translation year placeholder', link: '#', license: 'Ancient text; translation licensing varies by edition — placeholder', linked: ['alexander'], locator: 'Chapters — section reference placeholder', note: 'Editorial note placeholder — biographical framing; cross-reference with historiographical sources.' },
+  ],
+};
+
+function byId(id) {
+  return DATA.polities.find(e => e.id === id) || DATA.places.find(e => e.id === id) || DATA.people.find(e => e.id === id) || DATA.events.find(e => e.id === id) || DATA.journeys.find(e => e.id === id) || null;
+}
+function yearLabelOf(y) { return y < 0 ? `${Math.abs(y).toLocaleString()} BCE` : `${y.toLocaleString()} CE`; }
+function uncertaintyMeta(u) {
+  switch (u) {
+    case 'exact': return { label: 'Exact', color: 'var(--status-success)', dash: '0' };
+    case 'approximate': return { label: 'Approximate reconstruction', color: 'var(--status-warning)', dash: '5,4' };
+    case 'disputed': return { label: 'Location disputed', color: 'var(--status-danger)', dash: '2,3' };
+    case 'regional': return { label: 'Regional extent (uncertain)', color: 'var(--status-info)', dash: '5,4' };
+    default: return { label: 'Unknown', color: 'var(--ink-500)', dash: '2,4' };
+  }
+}
+
+class Component extends DCLogic {
+  state = {
+    page: 'map', device: 'desktop',
+    year: YEAR_DEFAULT, yearInputValue: yearLabelOf(YEAR_DEFAULT), step: 1,
+    selectedId: null, sheet: 'mid',
+    zoom: 1, pan: { x: 0, y: 0 }, showGraticule: false,
+    searchOpen: false, searchQuery: '', searchLoading: false, searchHighlight: 0,
+    layersPanelOpen: false, coverageInfoOpen: false, menuOpen: false,
+    layers: { territories: true, places: true, people: true, events: true, journeys: true },
+    exploreCategory: 'places', exploreQuery: '', exploreType: 'all', exploreRegion: 'all', explorePeriodMode: 'current', exploreSort: 'name', exploreLoading: false,
+    sourcesQuery: '', sourcesType: 'all', selectedSourceId: null,
+    entityPageId: 'alexander',
+  };
+
+  componentDidMount() {
+    this._searchTimer = null;
+  }
+
+  // ---------- generic ----------
+  setDesktop = () => this.setState({ device: 'desktop' });
+  setMobile = () => this.setState({ device: 'mobile' });
+  goMap = () => this.setState({ page: 'map', searchOpen: false, menuOpen: false });
+  goExplore = () => this.setState({ page: 'explore', searchOpen: false, menuOpen: false });
+  goSources = () => this.setState({ page: 'sources', searchOpen: false, menuOpen: false, selectedSourceId: null });
+  toggleMenu = () => this.setState(s => ({ menuOpen: !s.menuOpen }));
+  shareAction = () => this.setState(s => ({ menuOpen: false }));
+
+  // ---------- year / timeline ----------
+  clampYear(y) { return Math.max(YEAR_MIN, Math.min(YEAR_MAX, y)); }
+  setYear = (y) => { const cy = this.clampYear(y); this.setState({ year: cy, yearInputValue: yearLabelOf(cy) }); };
+  stepPrev = () => this.setYear(this.state.year - this.state.step);
+  stepNext = () => this.setYear(this.state.year + this.state.step);
+  onYearSlide = (e) => this.setYear(parseInt(e.target.value, 10));
+  onYearInputChange = (e) => this.setState({ yearInputValue: e.target.value });
+  onYearInputKeyDown = (e) => { if (e.key === 'Enter') e.target.blur(); };
+  onYearInputBlur = () => {
+    const raw = this.state.yearInputValue.trim().toUpperCase();
+    const m = raw.match(/(-?\d+)\s*(BCE|CE)?/);
+    let y = YEAR_DEFAULT;
+    if (m) { y = parseInt(m[1], 10); if (m[2] === 'BCE' || (!m[2] && raw.includes('BCE'))) y = -Math.abs(y); if (!m[2] && !raw.includes('CE')) y = -Math.abs(y); }
+    this.setYear(y);
+  };
+  setStep = (n) => this.setState({ step: n });
+  setStep1 = () => this.setStep(1); setStep5 = () => this.setStep(5); setStep10 = () => this.setStep(10);
+  setStep25 = () => this.setStep(25); setStep50 = () => this.setStep(50); setStep100 = () => this.setStep(100);
+
+  // ---------- map view ----------
+  zoomIn = () => this.setState(s => ({ zoom: Math.min(2.4, +(s.zoom + 0.25).toFixed(2)) }));
+  zoomOut = () => this.setState(s => ({ zoom: Math.max(0.6, +(s.zoom - 0.25).toFixed(2)) }));
+  resetView = () => this.setState({ zoom: 1, pan: { x: 0, y: 0 } });
+  toggleGraticule = () => this.setState(s => ({ showGraticule: !s.showGraticule, coverageInfoOpen: false }));
+  toggleLayersPanel = () => this.setState(s => ({ layersPanelOpen: !s.layersPanelOpen, coverageInfoOpen: false }));
+  toggleCoverageInfo = () => this.setState(s => ({ coverageInfoOpen: !s.coverageInfoOpen, layersPanelOpen: false }));
+  toggleLayerTerritories = () => this.setState(s => ({ layers: { ...s.layers, territories: !s.layers.territories } }));
+  toggleLayerPlaces = () => this.setState(s => ({ layers: { ...s.layers, places: !s.layers.places } }));
+  toggleLayerPeople = () => this.setState(s => ({ layers: { ...s.layers, people: !s.layers.people } }));
+  toggleLayerEvents = () => this.setState(s => ({ layers: { ...s.layers, events: !s.layers.events } }));
+  toggleLayerJourneys = () => this.setState(s => ({ layers: { ...s.layers, journeys: !s.layers.journeys } }));
+
+  // ---------- selection ----------
+  selectEntity = (id) => this.setState({ selectedId: id, sheet: 'mid' });
+  clearSelection = () => this.setState({ selectedId: null });
+  viewOnMap = (id) => {
+    const ent = byId(id);
+    let year = this.state.year;
+    if (ent && ent.kind === 'person') year = this.clampYear(Math.max(ent.life[0], Math.min(ent.life[1], year)));
+    this.setState({ page: 'map', selectedId: id, year, yearInputValue: yearLabelOf(year), searchOpen: false });
+  };
+  viewFullPage = (id) => this.setState({ page: 'entity', entityPageId: id });
+  goFirstKnownYear = (id) => { const ent = byId(id); if (ent && ent.life) this.setYear(ent.life[0]); };
+  goNearestActive = (id) => { const ent = byId(id); if (ent && ent.life) this.setYear(this.clampYear(Math.max(ent.life[0], Math.min(ent.life[1], this.state.year)))); };
+  keepCurrentYear = () => {};
+  cycleSheet = () => this.setState(s => ({ sheet: s.sheet === 'collapsed' ? 'mid' : s.sheet === 'mid' ? 'expanded' : 'collapsed' }));
+
+  // ---------- search ----------
+  openSearch = () => this.setState({ searchOpen: true, searchQuery: '', searchHighlight: 0, menuOpen: false });
+  closeSearch = () => this.setState({ searchOpen: false });
+  onSearchChange = (e) => {
+    const q = e.target.value;
+    this.setState({ searchQuery: q, searchHighlight: 0 });
+    clearTimeout(this._searchTimer);
+    if (q.trim()) {
+      this.setState({ searchLoading: true });
+      this._searchTimer = setTimeout(() => this.setState({ searchLoading: false }), 380);
+    } else {
+      this.setState({ searchLoading: false });
+    }
+  };
+  searchResultsFlat() {
+    const q = this.state.searchQuery.trim().toLowerCase();
+    if (!q) return [];
+    const all = [
+      ...DATA.events.map(e => ({ ...e, groupLabel: 'Events' })),
+      ...DATA.places.map(e => ({ ...e, groupLabel: 'Places' })),
+      ...DATA.people.map(e => ({ ...e, groupLabel: 'People' })),
+      ...DATA.polities.map(e => ({ ...e, groupLabel: 'Polities' })),
+      ...DATA.journeys.map(e => ({ ...e, groupLabel: 'Journeys' })),
+    ];
+    return all.filter(e => (e.name + ' ' + (e.altName || '')).toLowerCase().includes(q));
+  }
+  onSearchKeyDown = (e) => {
+    const flat = this.searchResultsFlat();
+    if (e.key === 'ArrowDown') { e.preventDefault(); this.setState(s => ({ searchHighlight: Math.min(flat.length - 1, s.searchHighlight + 1) })); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); this.setState(s => ({ searchHighlight: Math.max(0, s.searchHighlight - 1) })); }
+    else if (e.key === 'Enter') { const item = flat[this.state.searchHighlight]; if (item) this.viewOnMap(item.id); }
+    else if (e.key === 'Escape') { this.closeSearch(); }
+  };
+  pickRecent = (name) => { this.setState({ searchQuery: name, searchHighlight: 0, searchLoading: true }); clearTimeout(this._searchTimer); this._searchTimer = setTimeout(() => this.setState({ searchLoading: false }), 380); };
+
+  // ---------- explore ----------
+  setExploreCategory = (cat) => {
+    this.setState({ exploreCategory: cat, exploreLoading: true, exploreType: 'all', exploreRegion: 'all' });
+    clearTimeout(this._exploreTimer);
+    this._exploreTimer = setTimeout(() => this.setState({ exploreLoading: false }), 350);
+  };
+  goCatPlaces = () => this.setExploreCategory('place');
+  goCatPolities = () => this.setExploreCategory('polity');
+  goCatPeople = () => this.setExploreCategory('person');
+  goCatEvents = () => this.setExploreCategory('event');
+  goCatJourneys = () => this.setExploreCategory('journey');
+  onExploreQueryChange = (e) => this.setState({ exploreQuery: e.target.value });
+  onExploreTypeChange = (e) => this.setState({ exploreType: e.target.value });
+  onExploreRegionChange = (e) => this.setState({ exploreRegion: e.target.value });
+  onExploreSortChange = (e) => this.setState({ exploreSort: e.target.value });
+  setPeriodCurrent = () => this.setState({ explorePeriodMode: 'current' });
+  setPeriodAll = () => this.setState({ explorePeriodMode: 'all' });
+  clearExploreFilters = () => this.setState({ exploreQuery: '', exploreType: 'all', exploreRegion: 'all', explorePeriodMode: 'current', exploreSort: 'name' });
+
+  // ---------- sources ----------
+  onSourcesQueryChange = (e) => this.setState({ sourcesQuery: e.target.value });
+  onSourcesTypeChange = (e) => this.setState({ sourcesType: e.target.value });
+  selectSource = (id) => this.setState({ selectedSourceId: id });
+  clearSourceSelection = () => this.setState({ selectedSourceId: null });
+
+  renderVals() {
+    const s = this.state;
+    const isMobile = s.device === 'mobile';
+    const isDesktop = !isMobile;
+    const year = s.year;
+    const yearLabel = yearLabelOf(year);
+    const selected = s.selectedId ? byId(s.selectedId) : null;
+    const macedonRuler = year <= -336 ? 'Philip II (Alexander III from 336 BCE)' : 'Alexander III';
+    const isPersonActive = (p) => year >= p.life[0] && year <= p.life[1];
+
+    const relatedChip = (id) => { const e = byId(id); return e ? { name: e.name, onClick: () => this.selectEntity(id) } : null; };
+
+    let ctx = {
+      showOverview: !selected,
+      showEventCard: !!selected && selected.kind === 'event',
+      showPersonActive: !!selected && selected.kind === 'person' && isPersonActive(selected),
+      showPersonInactive: !!selected && selected.kind === 'person' && !isPersonActive(selected),
+      showPolityCard: !!selected && selected.kind === 'polity',
+      showPlaceCard: !!selected && selected.kind === 'place',
+      showJourneyCard: !!selected && selected.kind === 'journey',
+    };
+
+    if (ctx.showOverview) {
+      ctx.overviewPolities = DATA.polities.map(p => ({ name: p.name, color: p.color, ruler: p.id === 'macedon' ? macedonRuler : 'Darius III', onClick: () => this.selectEntity(p.id) }));
+      ctx.overviewPlaces = ['troy', 'sardis', 'granicus_river'].map(id => byId(id)).map(p => ({ name: p.name, subtype: p.subtype, onClick: () => this.selectEntity(p.id) }));
+      ctx.overviewEvents = DATA.events.map(ev => ({ name: ev.name, date: ev.date, subtype: ev.subtype, onClick: () => this.selectEntity(ev.id) }));
+      ctx.overviewJourneys = DATA.journeys.map(j => ({ name: j.name, period: j.period, onClick: () => this.selectEntity(j.id) }));
+    }
+
+    if (ctx.showEventCard) {
+      const ev = selected;
+      ctx.evName = ev.name; ctx.evDate = ev.date; ctx.evSummary = ev.summary;
+      ctx.evSides = ev.sides.join(' vs. ');
+      ctx.evCommanders = ev.commanders.join('; ');
+      ctx.evResult = ev.result;
+      ctx.evUncertaintyNote = ev.uncertaintyNote;
+      ctx.evSourceCount = ev.sourceCount;
+      ctx.evRelated = [...ev.relatedPolities, ...ev.relatedPeople, ...ev.relatedPlaces].map(relatedChip).filter(Boolean);
+      ctx.evSourcesPreview = DATA.sources.filter(src => src.linked.includes(ev.id)).slice(0, 2);
+      ctx.evViewFull = () => this.viewFullPage(ev.id);
+    }
+
+    if (ctx.showPersonActive || ctx.showPersonInactive) {
+      const pe = selected;
+      ctx.peName = pe.name; ctx.peAlt = pe.altName; ctx.peRole = pe.role; ctx.peSummary = pe.summary;
+      ctx.peLife = `${yearLabelOf(pe.life[0])} – ${yearLabelOf(pe.life[1])}`;
+      ctx.peViewFull = () => this.viewFullPage(pe.id);
+      if (ctx.showPersonActive) {
+        const relatedIds = new Set();
+        DATA.events.filter(e => e.relatedPeople.includes(pe.id)).forEach(e => relatedIds.add(e.id));
+        if (pe.polityId) relatedIds.add(pe.polityId);
+        ctx.peRelated = [...relatedIds].map(relatedChip).filter(Boolean);
+      }
+      if (ctx.showPersonInactive) {
+        ctx.peFirstYearLabel = yearLabelOf(pe.life[0]);
+        ctx.peGoFirst = () => this.goFirstKnownYear(pe.id);
+        ctx.peGoNearest = () => this.goNearestActive(pe.id);
+      }
+    }
+
+    if (ctx.showPolityCard) {
+      const po = selected;
+      ctx.poName = po.name; ctx.poPeriod = po.period; ctx.poSummary = po.summary;
+      ctx.poRuler = po.id === 'macedon' ? macedonRuler : (po.ruler || 'Unattested in this dataset');
+      const cap = byId(po.capitalId); ctx.poCapital = cap ? cap.name : '—';
+    }
+
+    if (ctx.showPlaceCard) {
+      const pl = selected; const um = uncertaintyMeta(pl.uncertainty);
+      ctx.plName = pl.name; ctx.plAlt = pl.altName; ctx.plSubtype = pl.subtype; ctx.plSummary = pl.summary; ctx.plSourceCount = pl.sourceCount;
+      ctx.plUncertaintyLabel = um.label;
+      ctx.plUncertaintyBadgeStyle = { fontSize: '12px', border: `1px solid ${um.color}`, color: um.color, borderRadius: 'var(--radius-sm)', padding: '3px 8px', background: 'transparent' };
+    }
+
+    if (ctx.showJourneyCard) {
+      const jo = selected;
+      ctx.joName = jo.name; ctx.joPeriod = jo.period; ctx.joSummary = jo.summary;
+      ctx.joRoute = jo.route.map(id => byId(id).name).join('  →  ');
+    }
+
+    // ---- search overlay ----
+    const q = s.searchQuery.trim();
+    const flat = this.searchResultsFlat();
+    const groupsOrder = ['Events', 'Places', 'People', 'Polities', 'Journeys'];
+    const groupedResults = groupsOrder.map(kind => ({ kind, items: flat.filter(f => f.groupLabel === kind) })).filter(g => g.items.length);
+    let flatIdx = -1;
+    groupedResults.forEach(g => g.items.forEach(it => {
+      flatIdx++;
+      const isHighlighted = flatIdx === s.searchHighlight;
+      it.rowStyle = { display: 'block', width: '100%', textAlign: 'left', background: isHighlighted ? 'var(--accent-primary-soft)' : 'transparent', border: isHighlighted ? '1px solid var(--brass-400)' : '1px solid transparent', borderRadius: 'var(--radius-md)', padding: '9px 10px', cursor: 'pointer', marginBottom: '2px' };
+      it.period = it.period || it.date || it.life ? (it.life ? `${yearLabelOf(it.life[0])}–${yearLabelOf(it.life[1])}` : (it.date || it.period)) : '';
+      it.context = it.summary ? it.summary.slice(0, 90) + (it.summary.length > 90 ? '…' : '') : '';
+      let targetYear = year;
+      if (it.kind === 'person') targetYear = this.clampYear(Math.max(it.life[0], Math.min(it.life[1], year)));
+      else if (it.date) targetYear = -334;
+      else if (it.period && it.period.includes('334')) targetYear = -334;
+      it.willChangeYear = targetYear !== year;
+      it.targetYearLabel = yearLabelOf(targetYear);
+      it.onClick = () => this.viewOnMap(it.id);
+    }));
+
+    // ---------------- Explore ----------------
+    const catMeta = {
+      place: { label: 'Places', data: DATA.places },
+      polity: { label: 'Polities', data: DATA.polities },
+      person: { label: 'People', data: DATA.people },
+      event: { label: 'Events', data: DATA.events },
+      journey: { label: 'Journeys', data: DATA.journeys },
+    };
+    const regionOf = (item) => {
+      if (item.kind === 'journey') return 'Multiple regions';
+      const pid = item.polityId || item.capitalId && item.id;
+      if (item.kind === 'polity') return item.id === 'macedon' ? 'Balkans' : 'Western Anatolia';
+      if (item.polityId) return item.polityId === 'macedon' ? 'Balkans' : 'Western Anatolia';
+      if (item.kind === 'event') return 'Western Anatolia';
+      return 'Multiple regions';
+    };
+    const facetOf = (item) => {
+      if (item.kind === 'place') return item.subtype;
+      if (item.kind === 'person') return item.role;
+      if (item.kind === 'event') return item.subtype;
+      if (item.kind === 'polity') return 'Sovereign polity';
+      return 'Campaign';
+    };
+    const activePeriodOf = (item) => item.kind === 'person' ? isPersonActive(item) : true;
+
+    const curCat = catMeta[s.exploreCategory] || catMeta.place;
+    const exploreCats = Object.keys(catMeta).map(key => {
+      const active = key === s.exploreCategory;
+      return {
+        label: catMeta[key].label, onClick: () => this.setExploreCategory(key),
+        style: { textAlign: 'left', border: 'none', background: active ? 'var(--accent-primary-soft)' : 'transparent', color: active ? 'var(--text-ink)' : 'var(--text-ink-muted)', fontWeight: active ? 600 : 500, fontSize: 'var(--text-sm)', padding: '9px 12px', borderRadius: 'var(--radius-md)', cursor: 'pointer' },
+        pillStyle: { flex: '0 0 auto', border: 'none', background: active ? 'var(--accent-primary-soft)' : 'var(--parchment-100)', color: active ? 'var(--text-ink)' : 'var(--text-ink-muted)', fontWeight: active ? 600 : 500, fontSize: 'var(--text-sm)', padding: '7px 14px', borderRadius: 'var(--radius-pill)', cursor: 'pointer', whiteSpace: 'nowrap' },
+      };
+    });
+
+    const facetSet = [...new Set(curCat.data.map(facetOf))];
+    const exploreTypeOptions = [{ value: 'all', label: 'All types' }, ...facetSet.map(f => ({ value: f, label: f }))];
+    const regionSet = [...new Set(curCat.data.map(regionOf))];
+    const exploreRegionOptions = [{ value: 'all', label: 'All regions' }, ...regionSet.map(r => ({ value: r, label: r }))];
+
+    let exploreList = curCat.data.filter(item => {
+      if (s.exploreQuery.trim() && !item.name.toLowerCase().includes(s.exploreQuery.trim().toLowerCase())) return false;
+      if (s.exploreType !== 'all' && facetOf(item) !== s.exploreType) return false;
+      if (s.exploreRegion !== 'all' && regionOf(item) !== s.exploreRegion) return false;
+      if (s.explorePeriodMode === 'current' && !activePeriodOf(item)) return false;
+      return true;
+    });
+    exploreList = exploreList.slice().sort((a, b) => s.exploreSort === 'name' ? a.name.localeCompare(b.name) : (a.period || a.date || '').localeCompare(b.period || b.date || ''));
+
+    const exploreResults = exploreList.map(item => {
+      const um = uncertaintyMeta(item.uncertainty || 'exact');
+      const pol = item.polityId ? byId(item.polityId) : null;
+      return {
+        name: item.name, altName: item.altName || '', facet: facetOf(item),
+        period: item.period || item.date || (item.life ? `${yearLabelOf(item.life[0])}–${yearLabelOf(item.life[1])}` : ''),
+        polityName: pol ? pol.name : '', summary: item.summary, sourceCount: item.sourceCount,
+        uncertaintyLabel: um.label, uncertaintyStyle: { fontSize: '10px', border: `1px solid ${um.color}`, color: um.color, borderRadius: 'var(--radius-sm)', padding: '1px 6px', whiteSpace: 'nowrap' },
+        onClick: () => this.viewOnMap(item.id),
+      };
+    });
+
+    const exploreVals = {
+      exploreFlexDir: isMobile ? 'column' : 'row',
+      exploreCats, exploreCategoryLabel: curCat.label.toLowerCase(),
+      exploreQuery: s.exploreQuery, onExploreQueryChange: this.onExploreQueryChange,
+      periodCurrentStyle: { border: 'none', background: s.explorePeriodMode === 'current' ? 'var(--accent-primary)' : 'var(--surface-paper)', color: s.explorePeriodMode === 'current' ? 'var(--text-on-accent)' : 'var(--text-ink-muted)', fontSize: 'var(--text-sm)', padding: '0 12px', height: '36px', cursor: 'pointer', fontWeight: s.explorePeriodMode === 'current' ? 600 : 400 },
+      periodAllStyle: { border: 'none', borderLeft: '1px solid var(--border-paper)', background: s.explorePeriodMode === 'all' ? 'var(--accent-primary)' : 'var(--surface-paper)', color: s.explorePeriodMode === 'all' ? 'var(--text-on-accent)' : 'var(--text-ink-muted)', fontSize: 'var(--text-sm)', padding: '0 12px', height: '36px', cursor: 'pointer', fontWeight: s.explorePeriodMode === 'all' ? 600 : 400 },
+      setPeriodCurrent: this.setPeriodCurrent, setPeriodAll: this.setPeriodAll,
+      exploreType: s.exploreType, onExploreTypeChange: this.onExploreTypeChange, exploreTypeOptions,
+      exploreRegion: s.exploreRegion, onExploreRegionChange: this.onExploreRegionChange, exploreRegionOptions,
+      exploreSort: s.exploreSort, onExploreSortChange: this.onExploreSortChange,
+      exploreResultCount: `${exploreResults.length} result${exploreResults.length === 1 ? '' : 's'}`,
+      exploreLoading: s.exploreLoading, exploreEmpty: !s.exploreLoading && exploreResults.length === 0, exploreResults,
+      clearExploreFilters: this.clearExploreFilters,
+    };
+
+    // ---------------- Sources ----------------
+    const sourcesTypeOptions = [{ value: 'all', label: 'All types' }, ...[...new Set(DATA.sources.map(s2 => s2.type))].map(t => ({ value: t, label: t }))];
+    let sourcesResults = DATA.sources.filter(src => {
+      if (s.sourcesQuery.trim() && !(src.title + ' ' + src.author).toLowerCase().includes(s.sourcesQuery.trim().toLowerCase())) return false;
+      if (s.sourcesType !== 'all' && src.type !== s.sourcesType) return false;
+      return true;
+    }).map(src => ({ ...src, linkedCount: src.linked.length, onClick: () => this.selectSource(src.id) }));
+
+    const selSourceRaw = s.selectedSourceId ? DATA.sources.find(x => x.id === s.selectedSourceId) : null;
+    const selSource = selSourceRaw ? { ...selSourceRaw, citation: `${selSourceRaw.author}. ${selSourceRaw.title}. ${selSourceRaw.pubYear}.` } : null;
+    const selSourceLinked = selSourceRaw ? selSourceRaw.linked.map(id => { const e = byId(id); return e ? { name: e.name, onClick: () => this.viewOnMap(id) } : null; }).filter(Boolean) : [];
+
+    const sourcesVals = {
+      sourcesQuery: s.sourcesQuery, onSourcesQueryChange: this.onSourcesQueryChange,
+      sourcesType: s.sourcesType, onSourcesTypeChange: this.onSourcesTypeChange, sourcesTypeOptions,
+      sourcesResultCount: `${sourcesResults.length} source${sourcesResults.length === 1 ? '' : 's'}`,
+      sourcesResults, selectedSourceId: s.selectedSourceId, selSource, selSourceLinked, clearSourceSelection: this.clearSourceSelection,
+    };
+
+    // ---------------- Entity full page ----------------
+    const entRaw = byId(s.entityPageId) || DATA.people[0];
+    const isPersonEnt = entRaw.kind === 'person';
+    const um2 = uncertaintyMeta(entRaw.uncertainty || 'approximate');
+    const entVals = {
+      entType: isPersonEnt ? 'Person' : 'Battle',
+      entName: entRaw.name, entAlt: entRaw.altName || '',
+      entDateRange: isPersonEnt ? `${yearLabelOf(entRaw.life[0])} – ${yearLabelOf(entRaw.life[1])}` : entRaw.date,
+      entRole: isPersonEnt ? entRaw.role : (entRaw.commanders || []).join('; '),
+      entConfidenceLabel: um2.label,
+      entConfidenceStyle: { fontSize: '11px', border: `1px solid ${um2.color}`, color: um2.color, borderRadius: 'var(--radius-sm)', padding: '3px 8px' },
+      entViewOnMap: () => this.viewOnMap(entRaw.id),
+      entSummary: entRaw.summary,
+      entMapX: isPersonEnt ? entRaw.x : entRaw.x, entMapY: isPersonEnt ? entRaw.y : entRaw.y,
+      entMapYearLabel: isPersonEnt ? '334 BCE' : entRaw.date,
+      entChronology: isPersonEnt ? [
+        { year: '356 BCE', label: `Born in Pella, ${DATA.polities[0].name}.`, lineStyle: { width: '1px', flex: 1, background: 'var(--border-paper)' } },
+        { year: '336 BCE', label: 'Becomes King of Macedon.', lineStyle: { width: '1px', flex: 1, background: 'var(--border-paper)' } },
+        { year: '334 BCE', label: 'Crosses the Hellespont into Asia; Battle of the Granicus.', lineStyle: { width: '1px', flex: 1, background: 'var(--border-paper)' } },
+        { year: '323 BCE', label: 'Dies in Babylon.', lineStyle: { width: '0', flex: 1, background: 'transparent' } },
+      ] : [
+        { year: '334 BCE', label: 'Alexander crosses the Hellespont into Asia.', lineStyle: { width: '1px', flex: 1, background: 'var(--border-paper)' } },
+        { year: '334 BCE', label: 'Battle of the Granicus fought; Macedonian victory.', lineStyle: { width: '1px', flex: 1, background: 'var(--border-paper)' } },
+        { year: '334 BCE', label: 'Sardis surrenders shortly after.', lineStyle: { width: '0', flex: 1, background: 'transparent' } },
+      ],
+      entKeyFacts: isPersonEnt ? [
+        { label: 'Polity', value: 'Kingdom of Macedon' }, { label: 'Titles / Roles', value: 'King of Macedon; Hegemon of the Hellenic League' },
+        { label: 'Active locations', value: 'Pella, Sestos, Abydos, Troy, Granicus' }, { label: 'Related campaign', value: "Alexander's Crossing into Asia" },
+      ] : [
+        { label: 'Location', value: 'Granicus River, Hellespontine Phrygia' }, { label: 'Campaign', value: "Alexander's Crossing into Asia" },
+        { label: 'Belligerents', value: entRaw.sides.join(' / ') }, { label: 'Result', value: entRaw.result },
+      ],
+      entRelatedGroups: isPersonEnt ? [
+        { label: 'Polities', items: [relatedChip('macedon'), relatedChip('achaemenid')].filter(Boolean) },
+        { label: 'Places', items: ['pella', 'troy', 'granicus_river'].map(relatedChip).filter(Boolean) },
+        { label: 'People', items: [relatedChip('memnon')].filter(Boolean) },
+        { label: 'Battles & Events', items: [relatedChip('granicus')].filter(Boolean) },
+        { label: 'Journeys', items: [relatedChip('crossing')].filter(Boolean) },
+      ] : [
+        { label: 'Polities', items: entRaw.relatedPolities.map(relatedChip).filter(Boolean) },
+        { label: 'People', items: entRaw.relatedPeople.map(relatedChip).filter(Boolean) },
+        { label: 'Places', items: entRaw.relatedPlaces.map(relatedChip).filter(Boolean) },
+        { label: 'Journeys', items: [relatedChip(entRaw.campaignId)].filter(Boolean) },
+      ],
+      entSources: DATA.sources.filter(src => src.linked.includes(entRaw.id)),
+      entUncertaintyNote: isPersonEnt
+        ? 'Exact birth date and several biographical details are debated among ancient and modern sources; this page follows the most widely cited chronology.'
+        : entRaw.uncertaintyNote,
+    };
+
+    const searchVals = {
+      searchScrimStyle: { position: 'absolute', inset: 0, background: 'var(--surface-scrim)', zIndex: 800, display: 'flex', alignItems: isMobile ? 'stretch' : 'flex-start', justifyContent: 'center', paddingTop: isMobile ? '0' : '64px' },
+      searchPanelStyle: isMobile
+        ? { width: '100%', height: '100%', background: 'var(--surface-paper)', display: 'flex', flexDirection: 'column' }
+        : { width: '560px', maxWidth: '90%', maxHeight: '72vh', background: 'var(--surface-paper)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-paper-lg)', border: '1px solid var(--border-paper)', display: 'flex', flexDirection: 'column', overflow: 'hidden' },
+      stopProp: (e) => e.stopPropagation(),
+      searchQuery: s.searchQuery, onSearchChange: this.onSearchChange, onSearchKeyDown: this.onSearchKeyDown, closeSearch: this.closeSearch,
+      searchShowRecent: !q,
+      recentSearches: [
+        { name: 'Alexander III', onClick: () => this.pickRecent('Alexander III') },
+        { name: 'Granicus', onClick: () => this.pickRecent('Granicus') },
+        { name: 'Achaemenid Empire', onClick: () => this.pickRecent('Achaemenid Empire') },
+        { name: 'Issus', onClick: () => this.pickRecent('Issus') },
+      ],
+      searchLoading: s.searchLoading,
+      searchNoResults: !!q && !s.searchLoading && groupedResults.length === 0,
+      searchHasResults: !!q && !s.searchLoading && groupedResults.length > 0,
+      groupedResults,
+    };
+
+
+    // ---- frame ----
+    const frameOuterStyle = isMobile
+      ? { width: '390px', height: '844px', background: 'var(--surface-paper)', position: 'relative', overflow: 'hidden', boxShadow: '0 30px 70px rgba(0,0,0,.55), 0 0 0 8px #0b0906, 0 0 0 9px #3a2f22', borderRadius: '40px', display: 'flex', flexDirection: 'column' }
+      : { width: '100%', height: '100%', background: 'var(--surface-paper)', position: 'relative', overflow: 'hidden', boxShadow: 'none', borderRadius: '0px', display: 'flex', flexDirection: 'column' };
+
+    const deviceBtnBase = { border: 'none', background: 'transparent', color: 'var(--text-on-field-muted)', fontSize: '11px', fontFamily: 'var(--font-ui)', padding: '5px 10px', borderRadius: '6px', cursor: 'pointer' };
+    const deviceBtnActive = { ...deviceBtnBase, background: 'var(--accent-primary)', color: 'var(--text-on-accent)', fontWeight: 600 };
+
+    // ---- nav item styles ----
+    const navBase = { border: 'none', background: 'transparent', fontFamily: 'var(--font-ui)', fontSize: 'var(--text-sm)', fontWeight: 500, padding: '7px 12px', borderRadius: 'var(--radius-sm)', cursor: 'pointer', color: 'var(--text-ink-muted)' };
+    const navActive = { ...navBase, color: 'var(--text-ink)', background: 'var(--accent-primary-soft)', fontWeight: 600 };
+    const navM = (active) => ({ flex: 1, textAlign: 'center', border: 'none', background: active ? 'var(--accent-primary-soft)' : 'transparent', color: active ? 'var(--text-ink)' : 'var(--text-ink-muted)', fontWeight: active ? 600 : 500, fontSize: 'var(--text-sm)', padding: '7px 0', borderRadius: 'var(--radius-sm)', cursor: 'pointer' });
+
+    // ---- map svg / pan-zoom ----
+    const mapSvgStyle = { width: '100%', height: '100%', display: 'block' };
+    const mapPanZoom = `translate(${500 - 500 * s.zoom + s.pan.x} ${310 - 310 * s.zoom + s.pan.y}) scale(${s.zoom})`;
+
+    const mapPolities = DATA.polities.map(p => {
+      const um = uncertaintyMeta(p.uncertainty);
+      const isSel = selected && selected.id === p.id;
+      return { ...p, fill: p.fill, stroke: isSel ? 'var(--brass-300)' : p.color, strokeWidth: isSel ? 3.2 : 1.6, dash: um.dash, onClick: () => this.selectEntity(p.id) };
+    });
+
+    const journey = DATA.journeys[0];
+    const routePts = journey.route.map(id => DATA.places.find(pl => pl.id === id)).filter(Boolean);
+    const points = routePts.map(p => `${p.x},${p.y}`).join(' ');
+    const last = routePts[routePts.length - 1], prev = routePts[routePts.length - 2] || last;
+    const ang = Math.atan2(last.y - prev.y, last.x - prev.x);
+    const ax = last.x, ay = last.y;
+    const arrowPoints = `${ax},${ay} ${ax - 10 * Math.cos(ang - 0.4)},${ay - 10 * Math.sin(ang - 0.4)} ${ax - 10 * Math.cos(ang + 0.4)},${ay - 10 * Math.sin(ang + 0.4)}`;
+    const mapJourneys = [{ ...journey, points, arrowPoints, stroke: selected && selected.id === journey.id ? 'var(--brass-300)' : 'var(--brass-500)', strokeWidth: selected && selected.id === journey.id ? 3 : 2, onClick: () => this.selectEntity(journey.id) }];
+
+    const mapPlaces = DATA.places.map(p => {
+      const um = uncertaintyMeta(p.uncertainty);
+      const isSel = selected && selected.id === p.id;
+      const boxSize = isSel ? 46 : 40;
+      const r = isSel ? 7 : 5;
+      const labelTextStyle = `font-family:var(--font-ui);font-size:${p.major ? 12.5 : 12}px;font-weight:${p.major ? 600 : 500};color:var(--parchment-50);white-space:nowrap;text-shadow:-1px -1px 0 var(--ink-900),1px -1px 0 var(--ink-900),-1px 1px 0 var(--ink-900),1px 1px 0 var(--ink-900),0 0 4px var(--ink-900);line-height:18px;`;
+      return {
+        ...p, r, stroke: isSel ? 'var(--brass-400)' : um.color, strokeWidth: isSel ? 3 : 1.6, dash: um.dash,
+        boxX: p.x - boxSize / 2, boxY: p.y - boxSize / 2, boxSize,
+        majorBoxStyle: `width:${boxSize}px;height:${boxSize}px;border-radius:10px;background:linear-gradient(155deg, var(--parchment-300), var(--parchment-100));border:${isSel ? 3 : 2}px solid ${isSel ? 'var(--brass-300)' : 'var(--brass-500)'};box-shadow:0 2px 8px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;box-sizing:border-box;`,
+        labelX: p.x + (p.major ? boxSize / 2 + 6 : r + 6), labelY: p.y - 9, labelW: 160, labelStyle: labelTextStyle,
+        onClick: () => this.selectEntity(p.id),
+      };
+    });
+
+    const mapEvents = DATA.events.map(ev => {
+      const isSel = selected && selected.id === ev.id;
+      const r = isSel ? 11 : 9;
+      const cp = `M ${ev.x - r * 0.5} ${ev.y - r * 0.5} L ${ev.x + r * 0.5} ${ev.y + r * 0.5} M ${ev.x + r * 0.5} ${ev.y - r * 0.5} L ${ev.x - r * 0.5} ${ev.y + r * 0.5}`;
+      const labelTextStyle = `font-family:var(--font-ui);font-size:12.5px;font-weight:700;color:var(--parchment-50);white-space:nowrap;text-shadow:-1px -1px 0 var(--ink-900),1px -1px 0 var(--ink-900),-1px 1px 0 var(--ink-900),1px 1px 0 var(--ink-900),0 0 4px var(--ink-900);line-height:18px;`;
+      return { ...ev, r, opacity: isSel ? 1 : 0.92, strokeWidth: isSel ? 3 : 1.6, crossPath: cp, labelX: ev.x + r + 6, labelY: ev.y - 9, labelW: 200, labelStyle: labelTextStyle, onClick: () => this.selectEntity(ev.id) };
+    });
+
+    const mapPeople = DATA.people.map(pe => {
+      const isSel = selected && selected.id === pe.id;
+      const boxSize = isSel ? 48 : 42;
+      const initials = pe.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+      const labelTextStyle = `font-family:var(--font-ui);font-size:${pe.major ? 12.5 : 12}px;font-weight:700;color:var(--brass-200);white-space:nowrap;text-shadow:-1px -1px 0 var(--ink-900),1px -1px 0 var(--ink-900),-1px 1px 0 var(--ink-900),1px 1px 0 var(--ink-900),0 0 4px var(--ink-900);line-height:18px;`;
+      return {
+        ...pe, rx: pe.x - 7, ry: pe.y - 7, rot: `rotate(45 ${pe.x} ${pe.y})`, opacity: isSel ? 1 : 0.92, strokeWidth: isSel ? 3 : 1.4,
+        boxX: pe.x - boxSize / 2, boxY: pe.y - boxSize / 2, boxSize, initials,
+        majorBoxStyle: `width:${boxSize}px;height:${boxSize}px;border-radius:50%;background:linear-gradient(155deg, var(--accent-primary-soft), var(--parchment-200));border:${isSel ? 3 : 2}px solid ${isSel ? 'var(--brass-300)' : 'var(--brass-500)'};box-shadow:0 2px 8px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:var(--font-display);font-size:${boxSize * 0.36}px;font-weight:600;color:var(--brass-700);`,
+        labelX: pe.x + (pe.major ? boxSize / 2 + 6 : 12), labelY: pe.y - 9, labelW: 200, labelStyle: labelTextStyle,
+        onClick: () => this.selectEntity(pe.id),
+      };
+    });
+
+    const fieldIconBtnStyle = { width: '30px', height: '30px', border: 'none', background: 'transparent', color: 'var(--parchment-50)', fontSize: '16px', cursor: 'pointer' };
+    const fieldIconBtnStyleBorder = { ...fieldIconBtnStyle, borderTop: '1px solid var(--border-field)' };
+    const layersBtnStyle = { width: '30px', height: '30px', border: 'none', background: s.layersPanelOpen ? 'var(--accent-primary-soft)' : 'transparent', color: s.layersPanelOpen ? 'var(--brass-300)' : 'var(--parchment-50)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' };
+    const appearanceBtnStyle = { ...layersBtnStyle, background: s.showGraticule ? 'var(--accent-primary-soft)' : 'transparent', color: s.showGraticule ? 'var(--brass-300)' : 'var(--parchment-50)', borderLeft: '1px solid var(--border-field)' };
+    const coverageBtnStyle = { ...layersBtnStyle, background: s.coverageInfoOpen ? 'var(--accent-primary-soft)' : 'transparent', color: s.coverageInfoOpen ? 'var(--brass-300)' : 'var(--parchment-50)', borderLeft: '1px solid var(--border-field)' };
+
+    const layerRow = (on, disabled) => ({ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', border: 'none', background: 'transparent', color: disabled ? 'var(--text-on-field-faint)' : 'var(--text-on-field)', fontSize: 'var(--text-sm)', padding: '6px 8px', borderRadius: 'var(--radius-sm)', cursor: disabled ? 'default' : 'pointer', opacity: disabled ? 0.6 : 1 });
+    const checkGlyph = (on) => on ? '●' : '○';
+
+    // ---- timeline ----
+    const timelineArrowStyle = { width: '34px', height: '34px', flex: '0 0 auto', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-field)', background: 'transparent', color: 'var(--parchment-50)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' };
+    const timelineArrowStyleSm = { width: '28px', height: '28px', flex: '0 0 auto', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-field)', background: 'transparent', color: 'var(--parchment-50)', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' };
+    const stepBtn = (n) => ({ minWidth: '26px', height: '24px', border: 'none', background: s.step === n ? 'var(--accent-primary)' : 'transparent', color: s.step === n ? 'var(--text-on-accent)' : 'var(--text-on-field-muted)', fontSize: '11px', fontFamily: 'var(--font-mono)', fontWeight: s.step === n ? 700 : 400, cursor: 'pointer', padding: '0 6px' });
+
+    return {
+      isMobile, isDesktop, isPageMap: s.page === 'map', isPageExplore: s.page === 'explore', isPageSources: s.page === 'sources', isPageEntity: s.page === 'entity',
+      frameOuterStyle, wordmarkSize: isMobile ? '14px' : '17px',
+      deviceBtnDesktopStyle: isDesktop ? deviceBtnActive : deviceBtnBase, deviceBtnMobileStyle: isMobile ? deviceBtnActive : deviceBtnBase,
+      setDesktop: this.setDesktop, setMobile: this.setMobile,
+      goMap: this.goMap, goExplore: this.goExplore, goSources: this.goSources,
+      navMapStyle: s.page === 'map' ? navActive : navBase, navExploreStyle: s.page === 'explore' ? navActive : navBase, navSourcesStyle: s.page === 'sources' ? navActive : navBase,
+      navMapStyleM: navM(s.page === 'map'), navExploreStyleM: navM(s.page === 'explore'), navSourcesStyleM: navM(s.page === 'sources'),
+      openSearch: this.openSearch, yearLabel, shareAction: this.shareAction, toggleMenu: this.toggleMenu, menuOpen: s.menuOpen,
+
+      mapSvgStyle, showGraticule: s.showGraticule, mapPanZoom, mapPolities, mapJourneys, mapPlaces, mapEvents, mapPeople,
+      layers: s.layers,
+      attribLeft: isMobile ? '10px' : '12px',
+      zoomControlsPos: isMobile ? 'left:10px;top:10px' : 'left:16px;top:16px',
+      zoomIn: this.zoomIn, zoomOut: this.zoomOut, resetView: this.resetView, fieldIconBtnStyle, fieldIconBtnStyleBorder,
+      layerControlsPos: isMobile ? 'right:10px;top:10px' : 'right:16px;top:16px',
+      layersBtnStyle, appearanceBtnStyle, coverageBtnStyle, toggleLayersPanel: this.toggleLayersPanel, toggleGraticule: this.toggleGraticule, toggleCoverageInfo: this.toggleCoverageInfo,
+      layersPanelOpen: s.layersPanelOpen, coverageInfoOpen: s.coverageInfoOpen,
+      toggleLayerTerritories: this.toggleLayerTerritories, toggleLayerPlaces: this.toggleLayerPlaces, toggleLayerPeople: this.toggleLayerPeople, toggleLayerEvents: this.toggleLayerEvents,
+      layerRowStyleTerritories: layerRow(s.layers.territories), layerCheckTerritories: checkGlyph(s.layers.territories),
+      layerRowStylePlaces: layerRow(s.layers.places), layerCheckPlaces: checkGlyph(s.layers.places),
+      layerRowStylePeople: layerRow(s.layers.people), layerCheckPeople: checkGlyph(s.layers.people),
+      layerRowStyleEvents: layerRow(s.layers.events), layerCheckEvents: checkGlyph(s.layers.events),
+      layerRowStyleJourneys: layerRow(s.layers.journeys), layerCheckJourneys: checkGlyph(s.layers.journeys), toggleLayerJourneys: this.toggleLayerJourneys,
+
+      sheetStyle: {
+        position: 'absolute', left: 0, right: 0, bottom: 0, background: 'var(--surface-paper)', borderTopLeftRadius: 'var(--radius-xl)', borderTopRightRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-paper-lg)', zIndex: 400,
+        height: s.sheet === 'collapsed' ? '110px' : s.sheet === 'mid' ? '46%' : '86%', display: 'flex', flexDirection: 'column', transition: 'height 200ms ease',
+      },
+      cycleSheet: this.cycleSheet,
+      mobileTimelineBottom: s.sheet === 'collapsed' ? '110px' : s.sheet === 'mid' ? '46%' : '86%',
+
+      timelineArrowStyle, timelineArrowStyleSm, stepPrev: this.stepPrev, stepNext: this.stepNext,
+      yearInputValue: s.yearInputValue, onYearInputChange: this.onYearInputChange, onYearInputBlur: this.onYearInputBlur, onYearInputKeyDown: this.onYearInputKeyDown,
+      onYearSlide: this.onYearSlide, year, yearMin: YEAR_MIN, yearMax: YEAR_MAX, yearMinLabel: yearLabelOf(YEAR_MIN), yearMaxLabel: yearLabelOf(YEAR_MAX),
+      coverageBarLeft: '0%', coverageBarWidth: '100%',
+      stepBtnStyle1: stepBtn(1), stepBtnStyle5: stepBtn(5), stepBtnStyle10: stepBtn(10), stepBtnStyle25: stepBtn(25), stepBtnStyle50: stepBtn(50), stepBtnStyle100: stepBtn(100),
+      setStep1: this.setStep1, setStep5: this.setStep5, setStep10: this.setStep10, setStep25: this.setStep25, setStep50: this.setStep50, setStep100: this.setStep100,
+
+      searchOpen: s.searchOpen,
+      clearSelection: this.clearSelection,
+      ...ctx,
+      ...exploreVals,
+      ...sourcesVals,
+      ...entVals,
+      ...searchVals,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

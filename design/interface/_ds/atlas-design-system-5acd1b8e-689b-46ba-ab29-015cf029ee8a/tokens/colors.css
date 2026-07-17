@@ -1,0 +1,91 @@
+:root {
+  /* ---- Base palette: Parchment (warm neutrals) ---- */
+  --parchment-50:  #FBF6EA;
+  --parchment-100: #F5EAD2;
+  --parchment-200: #EADEBC;
+  --parchment-300: #DBC79C;
+  --parchment-400: #C7AC79;
+
+  /* ---- Base palette: Ink (warm dark neutrals) ---- */
+  --ink-500: #8C7355;
+  --ink-600: #6B5643;
+  --ink-700: #4A3B2E;
+  --ink-800: #322722;
+  --ink-900: #1C1611;
+
+  /* ---- Base palette: Brass (primary accent) ---- */
+  --brass-200: #F1DBA0;
+  --brass-300: #E4C378;
+  --brass-400: #D4A94A;
+  --brass-500: #B8862E;
+  --brass-600: #8F6620;
+  --brass-700: #664915;
+
+  /* ---- Semantic hues ---- */
+  --moss-400:  #7C9764;
+  --moss-500:  #5C7A4A;
+  --moss-600:  #435A35;
+
+  --amber-400: #D99A3E;
+  --amber-500: #C08427;
+  --amber-600: #93641B;
+
+  --brick-400: #C06B52;
+  --brick-500: #A64530;
+  --brick-600: #7C3122;
+
+  --teal-400:  #5E9997;
+  --teal-500:  #3E7A78;
+  --teal-600:  #2C5A58;
+
+  /* ---- Semantic aliases: surfaces ---- */
+  --surface-paper:        var(--parchment-50);
+  --surface-paper-raised: var(--parchment-100);
+  --surface-paper-sunken: var(--parchment-200);
+  --surface-paper-border: var(--parchment-300);
+
+  --surface-field:         rgba(28, 22, 17, 0.86);
+  --surface-field-raised:  rgba(46, 36, 28, 0.92);
+  --surface-field-sunken:  rgba(14, 11, 8, 0.88);
+  --surface-field-border:  rgba(212, 169, 74, 0.35);
+  --surface-field-border-strong: rgba(228, 195, 120, 0.55);
+
+  --surface-scrim: rgba(20, 15, 11, 0.55);
+
+  /* ---- Semantic aliases: text ---- */
+  --text-ink:          var(--ink-900);
+  --text-ink-muted:    var(--ink-600);
+  --text-ink-faint:    var(--ink-500);
+  --text-on-field:        var(--parchment-100);
+  --text-on-field-muted:  rgba(245, 234, 210, 0.68);
+  --text-on-field-faint:  rgba(245, 234, 210, 0.42);
+  --text-on-accent:    #2A1C0C;
+
+  /* ---- Semantic aliases: borders ---- */
+  --border-paper:        var(--parchment-300);
+  --border-paper-strong: var(--ink-500);
+  --border-field:        var(--surface-field-border);
+  --border-field-strong: var(--surface-field-border-strong);
+
+  /* ---- Semantic aliases: accent / interaction ---- */
+  --accent-primary:        var(--brass-500);
+  --accent-primary-hover:  var(--brass-400);
+  --accent-primary-active: var(--brass-600);
+  --accent-primary-soft:   rgba(184, 134, 46, 0.14);
+
+  /* ---- Semantic aliases: status ---- */
+  --status-success:      var(--moss-500);
+  --status-success-soft: rgba(92, 122, 74, 0.16);
+  --status-warning:      var(--amber-500);
+  --status-warning-soft: rgba(192, 132, 39, 0.16);
+  --status-danger:       var(--brick-500);
+  --status-danger-soft:  rgba(166, 69, 48, 0.16);
+  --status-info:         var(--teal-500);
+  --status-info-soft:    rgba(62, 122, 120, 0.16);
+
+  /* faction-style categorical accents, used sparingly on map/HUD */
+  --cat-1: var(--brass-500);
+  --cat-2: var(--teal-500);
+  --cat-3: var(--brick-500);
+  --cat-4: var(--moss-500);
+}
