@@ -90,9 +90,20 @@
       "type": "polities"
     },
     {
-      "geometryFeatureId": "synthetic-alpha-territory-feature",
-      "id": "synthetic-alpha-territory-period",
-      "name": "synthetic-alpha-territory-period",
+      "geometryFeatureId": "synthetic-alpha-territory-early-feature",
+      "id": "synthetic-alpha-territory-early",
+      "name": "synthetic-alpha-territory-early",
+      "relatedIds": [
+        "synthetic-alpha-polity"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "territories"
+    },
+    {
+      "geometryFeatureId": "synthetic-alpha-territory-late-feature",
+      "id": "synthetic-alpha-territory-late",
+      "name": "synthetic-alpha-territory-late",
       "relatedIds": [
         "synthetic-alpha-polity"
       ],
@@ -115,6 +126,17 @@
       "sourceCount": 1,
       "status": "published",
       "type": "polities"
+    },
+    {
+      "geometryFeatureId": "synthetic-beta-territory-claim-feature",
+      "id": "synthetic-beta-territory-claim",
+      "name": "synthetic-beta-territory-claim",
+      "relatedIds": [
+        "synthetic-beta-polity"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "territories"
     },
     {
       "id": "synthetic-fixture-source",

@@ -1,14 +1,36 @@
 {
   "schemaVersion": 1,
   "datasetVersion": "foundation-fixture-0.1.0",
-  "records": [{
-    "id": "synthetic-alpha-territory-period",
-    "polityId": "synthetic-alpha-polity",
-    "period": { "yearFrom": -10, "yearTo": 10 },
-    "controlCategory": "approximate",
-    "geometryFeatureId": "synthetic-alpha-territory-feature",
-    "uncertainty": { "confidence": "low", "note": "The geometry is deliberately synthetic." },
-    "editorialStatus": "published",
-    "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
-  }]
+  "records": [
+    {
+      "id": "synthetic-alpha-territory-early",
+      "polityId": "synthetic-alpha-polity",
+      "period": { "yearFrom": -500, "yearTo": -400 },
+      "controlCategory": "direct",
+      "geometryFeatureId": "synthetic-alpha-territory-early-feature",
+      "uncertainty": { "confidence": "high", "note": "The geometry is deliberately synthetic." },
+      "editorialStatus": "published",
+      "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+    },
+    {
+      "id": "synthetic-alpha-territory-late",
+      "polityId": "synthetic-alpha-polity",
+      "period": { "yearFrom": -399, "yearTo": 10 },
+      "controlCategory": "approximate",
+      "geometryFeatureId": "synthetic-alpha-territory-late-feature",
+      "uncertainty": { "confidence": "low", "note": "The geometry is deliberately synthetic and approximate." },
+      "editorialStatus": "published",
+      "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+    },
+    {
+      "id": "synthetic-beta-territory-claim",
+      "polityId": "synthetic-beta-polity",
+      "period": { "yearFrom": -350, "yearTo": -300 },
+      "controlCategory": "disputed",
+      "geometryFeatureId": "synthetic-beta-territory-claim-feature",
+      "uncertainty": { "confidence": "disputed", "note": "This overlapping claim is deliberately synthetic." },
+      "editorialStatus": "published",
+      "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+    }
+  ]
 }

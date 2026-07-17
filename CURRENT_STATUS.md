@@ -1,6 +1,6 @@
 # EraByEra — Current Status
 
-**Status:** Foundation implementation — F8 implemented; owner browser verification pending
+**Status:** Foundation implementation — F9 implemented; owner browser verification pending
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -12,9 +12,9 @@
 
 ## 1. Current Development Phase
 
-EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, and F7 at `5c8d61e`. F8 — Place Layer and Place Cards is implemented in the local working tree; owner external-browser verification remains pending.
+EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, F7 at `5c8d61e`, and F8 at `3c06c6c`. F9 — Polities and Territory Layers is implemented in the local working tree; owner external-browser verification remains pending.
 
-F8 establishes the first complete historical-entity flow using clearly synthetic data: generated runtime loading, selected-year place presentation, zoom-aware native MapLibre layers, typed URL selection, selected highlight, compact details, inactive-period navigation, and visible source references.
+F9 establishes the first time-changing area layer using clearly synthetic data: selected-year polity and territory presentation, uncertainty-aware native MapLibre fills and boundaries, typed URL selection, overlap preservation, compact polity details, missing-geometry behavior, and visible source references. F8 place behavior remains integrated above territories.
 
 ---
 
@@ -191,9 +191,35 @@ Validation on 2026-07-17:
 - `git diff --check`: PASS;
 - browser checks: NOT RUN — owner external-browser verification required.
 
-### F9–F18 — Planned
+### F9 — Polities and Territory Layers — Implemented; owner verification pending
 
-Not started. F9 — Polities and Territory Layers is next after owner browser verification confirms the F8 place flow. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
+Implemented:
+
+- pure F2-based polity activity, capital, ruler, active-territory, nearest-year, presentation, and selected-year evidence selectors;
+- three synthetic territory periods proving an immediate period change, overlapping default-year claims, Polygon and MultiPolygon geometry, approximate/disputed styling, and an active-but-unmapped polity year;
+- deterministic compact territory GeoJSON sourced from the immutable generated F4 runtime boundary;
+- one native MapLibre source with normal fill, solid and dashed boundary, selected fill, and non-color-only selected boundary layers beneath F8 places;
+- typed push-history polity selection, URL restoration, owned-selection clearing, selected override when `territories` is disabled, and explicit place-click priority;
+- compact responsive polity card with activity, existence, capitals, rulers, current control/confidence, evidence, inactive actions, and active-but-unmapped messaging;
+- 69 new selector, geometry, overlap, selection, source, and layer tests, bringing the suite to 447 tests in 11 files.
+
+Automated and static acceptance criteria pass. Actual WebGL territory rendering, clicks, overlap hit behavior, responsive panel layout, and browser console checks remain pending owner verification in ordinary Chrome or Edge.
+
+Validation on 2026-07-17:
+
+- `npm run typecheck`: PASS;
+- `npm run lint`: PASS;
+- `npm run test`: PASS — 11 files, 447 tests;
+- `npm run data:validate`: PASS — 16 canonical synthetic records;
+- `npm run data:build` twice with hash comparison: PASS — three byte-identical artifacts;
+- `npm run data:check`: PASS;
+- `npm run build`: PASS — MapLibre emits the known non-blocking large-chunk warning;
+- `git diff --check`: PASS;
+- browser checks: NOT RUN — owner external-browser verification required.
+
+### F10–F18 — Planned
+
+Not started. F10 — Events and Battle Model is next after owner verification confirms the F9 territory/polity flow. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
 
 ---
 
@@ -228,6 +254,11 @@ Not started. F9 — Polities and Territory Layers is next after owner browser ve
 - Place activity/name/ownership/importance presentation is F2-derived, and normal visibility requires active existence plus active importance.
 - Place importance 5–1 maps to minimum zoom 1.5, 2.5, 3.5, 4.5, and 5.5; explicit selection overrides zoom, inactivity, and layer-disabled state.
 - Place selection uses typed F6 references and push history; map and timeline movement retain their replace policies.
+- Polity existence is independent from territory geometry; active-but-unmapped and inactive selected polities retain an honest card without a fabricated polygon.
+- Active territory periods generate separate deterministic Polygon/MultiPolygon features. Overlapping claims remain separate, while rendered feature order determines the practical click target; cycling overlaps is deferred.
+- Normal territory rendering obeys the `territories` URL layer. An explicitly selected polity keeps only its active mapped geometry visible as an override when that layer is disabled.
+- Places render above territory fills and receive explicit click priority. Territory control groups use fill opacity plus solid/dashed boundaries, and selection adds a wide light outline.
+- Polity evidence prioritizes active territory, capital, and ruler references before entity references; inactive period evidence is excluded.
 - All entity temporal fields reuse `src/domain/time`; no second time model exists.
 - Zod and Vitest remain the only domain validation/testing dependencies.
 
@@ -240,7 +271,8 @@ Not started. F9 — Polities and Territory Layers is next after owner browser ve
 - Competing temporal interpretations cannot yet coexist in canonical fixture files because the current schema has no explicit variant/claim grouping.
 - Published-source enforcement checks coverage presence, not whether the referenced source exists or is editorially adequate.
 - Fixtures are synthetic structure examples, not publishable historical data.
-- Only places are rendered; no playback, territories, people, events, journeys, collection UI, search, or full entity pages exist yet.
+- Only places and territories are rendered; no playback, people, events, journeys, collection UI, search, or full entity pages exist yet.
+- Overlapping claims render separately, but F9 offers no click cycling when multiple polygons occupy the same point.
 - Natural Earth 1:110m vectors are intentionally generalized and become coarse at close zoom; F5 caps zoom at 7.
 - Actual WebGL load, pan/zoom, responsive rendering, visual forbidden-layer review, and browser console checks remain pending owner verification.
 - Direct application URLs still require a static-host fallback; no hosting provider is configured.
@@ -249,10 +281,10 @@ Not started. F9 — Polities and Territory Layers is next after owner browser ve
 
 ## 5. Nearest Next Steps
 
-1. Complete the F5–F8 owner external-browser checks for map/timeline rendering, runtime loading, place visibility, selection, cards, URL restoration, and responsive layout.
-2. Review and commit F8 when ready.
-3. Begin F9 — Polities and Territory Layers only after browser verification confirms the first place flow is stable.
-4. Keep the synthetic F4 fixture isolated from visible map UI.
+1. Complete the F5–F9 owner external-browser checks for map/timeline rendering, place and territory visibility, selection, cards, URL restoration, and responsive layout.
+2. Review and commit F9 when ready.
+3. Begin F10 — Events and Battle Model only after browser verification confirms the territory/polity flow is stable.
+4. Keep all current historical-layer fixtures unmistakably synthetic.
 
 ---
 
@@ -265,6 +297,11 @@ Only report validation that actually ran.
 ---
 
 ## Recent Changes — Rolling Three-Month History
+
+### 2026-07-17 — Implemented F9 polity and historical territory flow
+
+- Connected generated polity metadata and territory geometry to selected-year selectors, native uncertainty-aware MapLibre fills/boundaries, typed URL selection, and a responsive sourced polity card.
+- Expanded only synthetic fixtures to prove period change, overlap, Polygon/MultiPolygon geometry, and active-but-unmapped behavior; added 69 tests, with owner browser verification pending.
 
 ### 2026-07-17 — Implemented F8 place layer and compact place cards
 
@@ -309,6 +346,12 @@ Only report validation that actually ran.
 ---
 
 ## Significant Changes — Permanent History
+
+### 2026-07-17 — First time-changing historical area layer established
+
+- EraByEra now derives separate active territory interpretations from the URL year and renders them as native MapLibre geometry without collapsing overlapping claims.
+- Polity existence remains independent of mapping, while control category, uncertainty, source evidence, selected override, and missing geometry stay explicit.
+- Why it matters: future historical area layers have a tested, evidence-aware pattern that avoids false precision and modern-boundary substitution.
 
 ### 2026-07-17 — First complete historical-entity flow established
 

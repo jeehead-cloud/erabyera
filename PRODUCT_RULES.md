@@ -96,6 +96,12 @@ Do not convert вЂњcirca 500 BCEвЂќ into an apparently exact date without r
 - Territory polygons are interpretive approximations, not cadastral truth.
 - Overlapping territorial claims may be represented when historically justified.
 - Modern successor-state borders must not be used as substitutes for historical control without explicit justification.
+- Normal territory features require an active TerritoryPeriod and resolved generated geometry for the selected year.
+- Disabling `territories` hides normal polygons and boundaries; an explicitly selected polity may retain only its active mapped geometry as a visible selection override.
+- An active or inactive selected polity remains inspectable without geometry, and inactive geometry must not be displayed as current.
+- Overlapping active claims remain separate features. Rendered feature order selects the practical click target; overlap cycling is deferred.
+- Territory control and uncertainty must use non-color-only presentation as well as explicit card text.
+- Compact polity evidence prioritizes active territory, capital, and ruler references before entity-level references; inactive period evidence is excluded.
 
 ---
 
@@ -156,6 +162,7 @@ Initial rules:
 - an explicitly selected place remains visible regardless of activity, zoom threshold, or the `places` layer toggle;
 - hidden by zoom does not mean historically inactive;
 - layer toggles control categories independently.
+- place features are rendered above territory fills and receive click priority when both occupy the same point;
 
 The exact thresholds must be centralized and testable, not scattered across components.
 

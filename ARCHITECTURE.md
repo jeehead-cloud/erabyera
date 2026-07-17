@@ -484,6 +484,20 @@ The compact `PlaceDetailsCard` shows the selected-year name, default name when d
 
 Inactive selected places retain their card and marker and offer first-known and, when distinct and knowable, nearest-active-year actions. Missing-coordinate records retain a card without moving the map. Desktop cards sit below map controls and above the timeline; mobile uses a scrollable compact lower panel above the timeline. Historical-data status sits below the basemap loading notice, and all overlays leave attribution clearance. Pure Node tests cover loader compatibility, selectors, visibility, GeoJSON, URL selection, inactive navigation, sources, and layer configuration; rendered interaction remains an owner-browser check.
 
+### F9 polity and territory data and presentation flow
+
+F9 reuses the same immutable `useRuntimeData` result and generated `runtime.json`; browser code never imports editable territory metadata or GeoJSON. The F4 aggregate runtime schema/version check and deep freeze remain the single browser boundary, including `geometry.territories`. Geometry carries only its TerritoryPeriod link; TerritoryPeriod metadata is the authoritative evidence path.
+
+`src/domain/polities` derives polity activity, active capital and ruler records, active TerritoryPeriods, geometry availability, nearest active/mapped years, and compact evidence from the F7/F6 selected year. All temporal decisions reuse inclusive F2 helpers with the explicit non-open-ended unknown-end default. Period-aware place naming supplies capital names, people supply stable ruler names, and unresolved relations fail to null labels without inventing data. Polity existence never depends on mapped territory.
+
+Territory GeoJSON retains Polygon/MultiPolygon coordinates unchanged as `[longitude, latitude]`, uses stable geometry IDs, deterministic ordering, polity color, control category, confidence, and selection only, and omits full records and source objects. Normal active features appear only when `territories` is active. A selected polity retains only active resolved geometry as a layer-disabled override; inactive or unmapped selection never revives an old polygon.
+
+`TerritoryLayer` owns one local MapLibre GeoJSON source. Normal translucent fills are followed by solid certain boundaries, dashed approximate/claim/disputed boundaries, selected fill, and a wide light selected boundary. The entire territory component renders before `PlaceLayer`, keeping all place circles above fills. Map interaction scans rendered results for places before polities, then uses rendered territory order as the overlap click policy. Overlap cycling is deliberately deferred, but every active claim remains a separate feature.
+
+Territory clicks push `entity=polity:<id>` through F6 while preserving year, viewport, layers, collection, and unrelated parameters. Empty-map clearing owns only place and polity selections; person, event, and journey references remain untouched. Timeline and map movement retain replace history. The compact polity card presents activity, existence, capital/ruler relations, current control/confidence, summary, geometry availability, and selected-year sources; inactive and active-but-unmapped records remain inspectable with deterministic year actions.
+
+Polity evidence priority is active territories, active capitals, active rulers, then polity-level references. Exact duplicate references are removed, locator-distinct references remain, and inactive period evidence is excluded. Pure Node tests cover activity, relations, presentation, evidence, Polygon/MultiPolygon output, overlap preservation, layer activation/ordering/style groups, URL selection, and missing geometry; MapLibre rendering itself remains an owner-browser check.
+
 ---
 
 ## 8. Importance and Visibility

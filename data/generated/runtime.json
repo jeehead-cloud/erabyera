@@ -179,32 +179,126 @@
             "coordinates": [
               [
                 [
-                  9,
-                  9
+                  25,
+                  34
                 ],
                 [
-                  12,
-                  9
+                  30,
+                  34
                 ],
                 [
-                  12,
-                  12
+                  30,
+                  40
                 ],
                 [
-                  9,
-                  12
+                  25,
+                  40
                 ],
                 [
-                  9,
-                  9
+                  25,
+                  34
                 ]
               ]
             ],
             "type": "Polygon"
           },
-          "id": "synthetic-alpha-territory-feature",
+          "id": "synthetic-alpha-territory-early-feature",
           "properties": {
-            "territoryPeriodId": "synthetic-alpha-territory-period"
+            "territoryPeriodId": "synthetic-alpha-territory-early"
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  26,
+                  34
+                ],
+                [
+                  32,
+                  34
+                ],
+                [
+                  32,
+                  40
+                ],
+                [
+                  26,
+                  40
+                ],
+                [
+                  26,
+                  34
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "synthetic-alpha-territory-late-feature",
+          "properties": {
+            "territoryPeriodId": "synthetic-alpha-territory-late"
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  [
+                    29,
+                    35
+                  ],
+                  [
+                    33,
+                    35
+                  ],
+                  [
+                    33,
+                    39
+                  ],
+                  [
+                    29,
+                    39
+                  ],
+                  [
+                    29,
+                    35
+                  ]
+                ]
+              ],
+              [
+                [
+                  [
+                    24,
+                    37
+                  ],
+                  [
+                    26,
+                    37
+                  ],
+                  [
+                    26,
+                    40
+                  ],
+                  [
+                    24,
+                    40
+                  ],
+                  [
+                    24,
+                    37
+                  ]
+                ]
+              ]
+            ],
+            "type": "MultiPolygon"
+          },
+          "id": "synthetic-beta-territory-claim-feature",
+          "properties": {
+            "territoryPeriodId": "synthetic-beta-territory-claim"
           },
           "type": "Feature"
         }
@@ -536,7 +630,8 @@
         {
           "sourceId": "synthetic-fixture-source"
         }
-      ]
+      ],
+      "summary": "A deliberately synthetic polity used to verify changing territory periods."
     },
     {
       "capitals": [],
@@ -544,7 +639,7 @@
       "defaultName": "Synthetic Beta Polity",
       "editorialStatus": "published",
       "existence": {
-        "yearFrom": -10,
+        "yearFrom": -400,
         "yearTo": 10
       },
       "id": "synthetic-beta-polity",
@@ -554,7 +649,8 @@
         {
           "sourceId": "synthetic-fixture-source"
         }
-      ]
+      ],
+      "summary": "A deliberately synthetic polity used to verify overlapping claims and unmapped active years."
     }
   ],
   "schemaVersion": 1,
@@ -571,12 +667,32 @@
   ],
   "territories": [
     {
+      "controlCategory": "direct",
+      "editorialStatus": "published",
+      "geometryFeatureId": "synthetic-alpha-territory-early-feature",
+      "id": "synthetic-alpha-territory-early",
+      "period": {
+        "yearFrom": -500,
+        "yearTo": -400
+      },
+      "polityId": "synthetic-alpha-polity",
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "uncertainty": {
+        "confidence": "high",
+        "note": "The geometry is deliberately synthetic."
+      }
+    },
+    {
       "controlCategory": "approximate",
       "editorialStatus": "published",
-      "geometryFeatureId": "synthetic-alpha-territory-feature",
-      "id": "synthetic-alpha-territory-period",
+      "geometryFeatureId": "synthetic-alpha-territory-late-feature",
+      "id": "synthetic-alpha-territory-late",
       "period": {
-        "yearFrom": -10,
+        "yearFrom": -399,
         "yearTo": 10
       },
       "polityId": "synthetic-alpha-polity",
@@ -587,7 +703,27 @@
       ],
       "uncertainty": {
         "confidence": "low",
-        "note": "The geometry is deliberately synthetic."
+        "note": "The geometry is deliberately synthetic and approximate."
+      }
+    },
+    {
+      "controlCategory": "disputed",
+      "editorialStatus": "published",
+      "geometryFeatureId": "synthetic-beta-territory-claim-feature",
+      "id": "synthetic-beta-territory-claim",
+      "period": {
+        "yearFrom": -350,
+        "yearTo": -300
+      },
+      "polityId": "synthetic-beta-polity",
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "uncertainty": {
+        "confidence": "disputed",
+        "note": "This overlapping claim is deliberately synthetic."
       }
     }
   ]

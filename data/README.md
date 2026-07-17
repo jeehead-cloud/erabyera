@@ -16,6 +16,8 @@ The public runtime includes only `published` records and geometry referenced by 
 
 The F8 place-flow fixture contains exactly three published `synthetic-*` places. They deliberately cover a default-year active place with a changing name, a low-importance zoom-threshold place, and a place that is inactive at the default year. Their names, summaries, coordinates, periods, ownership, importance, and source are test-only inventions and are not reviewed historical content.
 
+The F9 territory fixture contains two published `synthetic-*` polities and three published territory periods. Synthetic Alpha changes from an early direct Polygon to a later approximate Polygon; Synthetic Beta contributes a disputed MultiPolygon overlapping the later Alpha feature at the default year, then remains an active polity without active geometry after its claim ends. These shapes and claims are architecture-only inventions. TerritoryPeriod metadata is the authoritative evidence record; geometry contains only the matching `territoryPeriodId` link.
+
 `data:check` performs a read-only in-memory rebuild and fails when committed generated output is missing, extra, or stale. Schema changes require a coordinated source-data update or explicit migration; do not silently coerce old data.
 
-The browser consumes the committed generated runtime artifact through `src/data`; application components never import editable `data/source` records.
+The browser consumes the committed generated runtime artifact, including published territory geometry, through `src/data`; application components never import editable `data/source` or `data/geometry` records.
