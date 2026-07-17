@@ -8,6 +8,7 @@ import Map, {
 import type { PlaceFeatureCollection } from '../domain/places'
 import type { TerritoryFeatureCollection } from '../domain/polities'
 import type { EventFeatureCollection } from '../domain/events'
+import type { PersonFeatureCollection } from '../domain/people'
 import {
   MAP_MOVEMENT_HISTORY_MODE,
   areMapUrlViewportsEquivalent,
@@ -25,6 +26,7 @@ import { MapLoadingState } from './MapLoadingState'
 import {
   PlaceLayer,
   EventLayer,
+  PersonLayer,
   TerritoryLayer,
   getHistoricalInteractiveLayerIds,
 } from './layers'
@@ -37,8 +39,11 @@ interface MapViewProps {
   placeFeatures?: PlaceFeatureCollection
   territoryFeatures?: TerritoryFeatureCollection
   eventFeatures?: EventFeatureCollection
+  personFeatures?: PersonFeatureCollection
   onSelectPlace?: (placeId: string) => void
   onSelectEvent?: (eventId: string) => void
+  onSelectPerson?: (personId: string) => void
+  onSelectPersonAggregate?: (placeId: string) => void
   onSelectPolity?: (polityId: string) => void
   onClearOwnedSelection?: () => void
 }
@@ -57,8 +62,11 @@ export function MapView({
   placeFeatures,
   territoryFeatures,
   eventFeatures,
+  personFeatures,
   onSelectPlace,
   onSelectEvent,
+  onSelectPerson,
+  onSelectPersonAggregate,
   onSelectPolity,
   onClearOwnedSelection,
 }: MapViewProps) {
@@ -123,6 +131,13 @@ export function MapView({
       onSelectPlace?.(placeId)
       return
     }
+    const personFeature = event.features?.find((feature) => typeof feature.properties?.placeId === 'string' && feature.properties?.entityType === 'person-location')
+    if (personFeature !== undefined) {
+      const personId = personFeature.properties?.personId
+      if (typeof personId === 'string') onSelectPerson?.(personId)
+      else onSelectPersonAggregate?.(personFeature.properties?.placeId as string)
+      return
+    }
     const eventId = event.features?.find((feature) => typeof feature.properties?.eventId === 'string')?.properties?.eventId
     if (typeof eventId === 'string') {
       onSelectEvent?.(eventId)
@@ -131,7 +146,7 @@ export function MapView({
     const polityId = event.features?.find((feature) => typeof feature.properties?.polityId === 'string')?.properties?.polityId
     if (typeof polityId === 'string') onSelectPolity?.(polityId)
     else onClearOwnedSelection?.()
-  }, [onClearOwnedSelection, onSelectEvent, onSelectPlace, onSelectPolity])
+  }, [onClearOwnedSelection, onSelectEvent, onSelectPerson, onSelectPersonAggregate, onSelectPlace, onSelectPolity])
 
   const handlePointerMove = useCallback((event: MapLayerMouseEvent) => {
     setEntityPointer(event.features !== undefined && event.features.length > 0)
@@ -154,6 +169,7 @@ export function MapView({
         interactiveLayerIds={getHistoricalInteractiveLayerIds({
           places: placeFeatures !== undefined,
           events: eventFeatures !== undefined,
+          people: personFeatures !== undefined,
           territories: territoryFeatures !== undefined,
         })}
         mapStyle={PHYSICAL_BASEMAP_STYLE}
@@ -177,6 +193,7 @@ export function MapView({
         <NavigationControl position="top-right" showCompass visualizePitch={false} />
         {territoryFeatures === undefined ? null : <TerritoryLayer data={territoryFeatures} />}
         {eventFeatures === undefined ? null : <EventLayer data={eventFeatures} />}
+        {personFeatures === undefined ? null : <PersonLayer data={personFeatures} />}
         {placeFeatures === undefined ? null : <PlaceLayer data={placeFeatures} />}
       </Map>
       {loadState === 'loading' ? <MapLoadingState /> : null}

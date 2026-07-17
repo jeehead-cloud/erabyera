@@ -29,6 +29,7 @@
         "synthetic-beta-person",
         "synthetic-beta-place",
         "synthetic-beta-polity",
+        "synthetic-gamma-person",
         "synthetic-unknown-event"
       ],
       "sourceCount": 1,
@@ -67,8 +68,11 @@
       "id": "synthetic-alpha-person",
       "name": "Synthetic Alpha Person",
       "relatedIds": [
+        "synthetic-alpha-event",
+        "synthetic-alpha-journey",
         "synthetic-alpha-place",
-        "synthetic-alpha-polity"
+        "synthetic-alpha-polity",
+        "synthetic-beta-place"
       ],
       "sourceCount": 1,
       "status": "published",
@@ -123,7 +127,7 @@
       "relatedIds": [
         "synthetic-alpha-battle",
         "synthetic-alpha-journey",
-        "synthetic-beta-place",
+        "synthetic-alpha-place",
         "synthetic-beta-polity"
       ],
       "sourceCount": 1,
@@ -164,6 +168,17 @@
       "sourceCount": 0,
       "status": "published",
       "type": "sources"
+    },
+    {
+      "id": "synthetic-gamma-person",
+      "name": "Synthetic Gamma Person",
+      "relatedIds": [
+        "synthetic-beta-place",
+        "synthetic-beta-polity"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "people"
     },
     {
       "id": "synthetic-gamma-place",

@@ -1,0 +1,2 @@
+import { Layer, Source } from 'react-map-gl/maplibre'; import type { PersonFeatureCollection } from '../../domain/people'; import { PERSON_AGGREGATE_LAYER, PERSON_INDIVIDUAL_LAYER, PERSON_SELECTED_LAYER, PERSON_SOURCE_ID } from './personLayerStyle'
+export function PersonLayer({ data }: { data: PersonFeatureCollection }) { return <Source id={PERSON_SOURCE_ID} type="geojson" data={data}><Layer {...PERSON_INDIVIDUAL_LAYER} /><Layer {...PERSON_AGGREGATE_LAYER} /><Layer {...PERSON_SELECTED_LAYER} /></Source> }

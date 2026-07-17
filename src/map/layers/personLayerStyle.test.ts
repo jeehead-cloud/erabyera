@@ -1,0 +1,11 @@
+import { describe,expect,it } from 'vitest'; import { PERSON_AGGREGATE_LAYER,PERSON_INDIVIDUAL_LAYER,PERSON_INTERACTIVE_LAYER_IDS,PERSON_LAYER_ORDER,PERSON_SELECTED_LAYER,PERSON_SELECTED_LAYER_ID,PERSON_SOURCE_ID } from './personLayerStyle'; import { HISTORICAL_INTERACTION_PRIORITY,HISTORICAL_LAYER_GROUP_ORDER,getHistoricalInteractiveLayerIds } from './historicalLayerOrder'; import { PLACE_INTERACTIVE_LAYER_IDS } from './placeLayerStyle'; import { EVENT_INTERACTIVE_LAYER_IDS } from './eventLayerStyle'; import { TERRITORY_INTERACTIVE_LAYER_IDS } from './territoryLayerStyle'
+describe('person layer configuration',()=>{
+  it('uses stable IDs',()=>{expect(PERSON_SOURCE_ID).toBe('historical-people');expect(PERSON_LAYER_ORDER).toEqual(['historical-people-individual','historical-people-aggregate','historical-people-selected'])})
+  it('uses native circles',()=>expect([PERSON_INDIVIDUAL_LAYER,PERSON_AGGREGATE_LAYER,PERSON_SELECTED_LAYER].every(l=>l.type==='circle')).toBe(true))
+  it('aggregate differs by size and stroke',()=>{expect(PERSON_AGGREGATE_LAYER.type==='circle'&&PERSON_AGGREGATE_LAYER.paint?.['circle-radius']).toBe(11);expect(PERSON_AGGREGATE_LAYER.type==='circle'&&PERSON_AGGREGATE_LAYER.paint?.['circle-stroke-width']).toBe(4)})
+  it('selected is top and non-color-only',()=>{expect(PERSON_LAYER_ORDER.at(-1)).toBe(PERSON_SELECTED_LAYER_ID);expect(PERSON_SELECTED_LAYER.type==='circle'&&PERSON_SELECTED_LAYER.paint?.['circle-stroke-width']).toBe(5)})
+  it('centralizes interactive IDs',()=>expect(PERSON_INTERACTIVE_LAYER_IDS).toHaveLength(3))
+  it('orders groups territory event people places',()=>expect(HISTORICAL_LAYER_GROUP_ORDER).toEqual(['territories','events','people','places']))
+  it('orders click place people event territory',()=>{expect(HISTORICAL_INTERACTION_PRIORITY).toEqual(['places','people','events','territories']);expect(getHistoricalInteractiveLayerIds({places:true,people:true,events:true,territories:true})).toEqual([...PLACE_INTERACTIVE_LAYER_IDS,...PERSON_INTERACTIVE_LAYER_IDS,...EVENT_INTERACTIVE_LAYER_IDS,...TERRITORY_INTERACTIVE_LAYER_IDS])})
+  it('has no remote or glyph dependency',()=>expect(PERSON_SOURCE_ID).not.toMatch(/^https?:/))
+})

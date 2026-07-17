@@ -29,7 +29,8 @@
         ],
         "personIds": [
           "synthetic-alpha-person",
-          "synthetic-beta-person"
+          "synthetic-beta-person",
+          "synthetic-gamma-person"
         ],
         "placeIds": [
           "synthetic-alpha-place",
@@ -439,9 +440,48 @@
           "relationType": "birth",
           "sourceRefs": [
             {
+              "locator": "Synthetic birth relationship",
               "sourceId": "synthetic-fixture-source"
             }
           ]
+        },
+        {
+          "eventId": "synthetic-alpha-event",
+          "journeyId": "synthetic-alpha-journey",
+          "period": {
+            "yearFrom": -350,
+            "yearTo": -330
+          },
+          "placeId": "synthetic-alpha-place",
+          "relationType": "campaign",
+          "sourceRefs": [
+            {
+              "locator": "Synthetic alpha campaign",
+              "sourceId": "synthetic-fixture-source"
+            }
+          ],
+          "uncertainty": {
+            "confidence": "high",
+            "note": "Synthetic active campaign relationship."
+          }
+        },
+        {
+          "period": {
+            "yearFrom": -329,
+            "yearTo": -300
+          },
+          "placeId": "synthetic-beta-place",
+          "relationType": "rule",
+          "sourceRefs": [
+            {
+              "locator": "Synthetic alpha rule",
+              "sourceId": "synthetic-fixture-source"
+            }
+          ],
+          "uncertainty": {
+            "confidence": "medium",
+            "note": "Synthetic location-change relationship."
+          }
         }
       ],
       "roles": [
@@ -450,9 +490,11 @@
       ],
       "sourceRefs": [
         {
+          "locator": "Synthetic alpha person",
           "sourceId": "synthetic-fixture-source"
         }
-      ]
+      ],
+      "summary": "A deliberately synthetic person used to verify active-place changes."
     },
     {
       "associatedPolityIds": [
@@ -474,13 +516,18 @@
             "yearFrom": -350,
             "yearTo": -300
           },
-          "placeId": "synthetic-beta-place",
+          "placeId": "synthetic-alpha-place",
           "relationType": "campaign",
           "sourceRefs": [
             {
+              "locator": "Synthetic beta campaign",
               "sourceId": "synthetic-fixture-source"
             }
-          ]
+          ],
+          "uncertainty": {
+            "confidence": "medium",
+            "note": "Synthetic aggregation relationship."
+          }
         }
       ],
       "roles": [
@@ -488,9 +535,58 @@
       ],
       "sourceRefs": [
         {
+          "locator": "Synthetic beta person",
           "sourceId": "synthetic-fixture-source"
         }
-      ]
+      ],
+      "summary": "A deliberately synthetic person used to verify aggregation at an active place."
+    },
+    {
+      "associatedPolityIds": [
+        "synthetic-beta-polity"
+      ],
+      "defaultName": "Synthetic Gamma Person",
+      "editorialStatus": "published",
+      "id": "synthetic-gamma-person",
+      "importance": 4,
+      "life": {
+        "yearFrom": -400,
+        "yearTo": -200
+      },
+      "places": [
+        {
+          "period": {
+            "yearFrom": -280,
+            "yearTo": -260
+          },
+          "placeId": "synthetic-beta-place",
+          "relationType": "residence",
+          "sourceRefs": [
+            {
+              "locator": "Synthetic gamma residence",
+              "sourceId": "synthetic-fixture-source"
+            }
+          ],
+          "uncertainty": {
+            "confidence": "low",
+            "note": "Synthetic later residence."
+          }
+        }
+      ],
+      "roles": [
+        "synthetic observer"
+      ],
+      "sourceRefs": [
+        {
+          "locator": "Synthetic gamma person",
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "summary": "A deliberately synthetic person used to verify alive-but-unmapped and outside-life states.",
+      "uncertainty": {
+        "confidence": "low",
+        "note": "This entire person record is synthetic."
+      }
     }
   ],
   "places": [

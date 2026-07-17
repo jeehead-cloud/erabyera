@@ -27,13 +27,13 @@ describe('MapLibre event-layer configuration', () => {
   it('puts selected event above normal event layers', () => expect(EVENT_LAYER_ORDER.at(-1)).toBe(EVENT_SELECTED_LAYER_ID))
   it('uses a non-color-only selected outline', () => expect(EVENT_SELECTED_LAYER.type === 'circle' && EVENT_SELECTED_LAYER.paint?.['circle-stroke-width']).toBe(5))
   it('centralizes interactive event layers', () => expect(EVENT_INTERACTIVE_LAYER_IDS).toEqual(['historical-events-selected', 'historical-events-battle', 'historical-events-uncertain', 'historical-events-ordinary']))
-  it('composes click priority as place then event then territory', () => {
-    expect(HISTORICAL_INTERACTION_PRIORITY).toEqual(['places', 'events', 'territories'])
+  it('composes click priority with people between place and event', () => {
+    expect(HISTORICAL_INTERACTION_PRIORITY).toEqual(['places', 'people', 'events', 'territories'])
     expect(getHistoricalInteractiveLayerIds({ places: true, events: true, territories: true })).toEqual([
       ...PLACE_INTERACTIVE_LAYER_IDS, ...EVENT_INTERACTIVE_LAYER_IDS, ...TERRITORY_INTERACTIVE_LAYER_IDS,
     ])
   })
-  it('orders rendered historical groups as territory then event then place', () => expect(HISTORICAL_LAYER_GROUP_ORDER).toEqual(['territories', 'events', 'places']))
+  it('orders rendered historical groups as territory, event, people, place', () => expect(HISTORICAL_LAYER_GROUP_ORDER).toEqual(['territories', 'events', 'people', 'places']))
   it('adds no remote source, glyph, sprite, or text dependency', () => {
     expect(EVENT_SOURCE_ID).not.toMatch(/^https?:/)
     expect(EVENT_LAYER_ORDER.every((id) => !id.includes('label'))).toBe(true)

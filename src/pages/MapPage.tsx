@@ -1,8 +1,9 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { HistoricalDataStatus, PlaceDetailsCard } from '../components/PlaceDetails'
 import { Timeline, TIMELINE_HISTORY_MODE } from '../components/Timeline'
 import { PolityDetailsCard } from '../components/PolityDetails'
 import { EventDetailsCard } from '../components/EventDetails'
+import { PersonAggregateChooser, PersonDetailsCard } from '../components/PersonDetails'
 import { useRuntimeData } from '../data'
 import {
   PLACE_SELECTION_HISTORY_MODE,
@@ -28,13 +29,23 @@ import {
   createEventSelection,
   selectedEventId,
 } from '../domain/events'
+import {
+  PERSON_SELECTION_HISTORY_MODE,
+  buildPersonFeatureCollection,
+  buildPersonLocationAggregates,
+  buildPersonPresentations,
+  createPersonSelection,
+  selectedPersonId,
+} from '../domain/people'
 
 export function MapPage() {
   const [mapUrlState, updateMapUrlState] = useMapUrlState()
   const runtimeData = useRuntimeData()
+  const [aggregatePlaceId, setAggregatePlaceId] = useState<string | null>(null)
   const selectedPlace = selectedPlaceId(mapUrlState.selectedEntity)
   const selectedPolity = selectedPolityId(mapUrlState.selectedEntity)
   const selectedEvent = selectedEventId(mapUrlState.selectedEntity)
+  const selectedPerson = selectedPersonId(mapUrlState.selectedEntity)
   const placeResult = useMemo(() => {
     if (runtimeData.status !== 'ready') return null
     try {
@@ -111,6 +122,20 @@ export function MapPage() {
   const activeMappedEventCount = eventResult?.presentations.filter((event) => event.active && event.locationAvailable).length ?? 0
   const activeUnmappedEventCount = eventResult?.presentations.filter((event) => event.active && !event.locationAvailable).length ?? 0
   const hasEmptyEventsState = eventResult?.error === null && eventsLayerActive && activeMappedEventCount === 0
+  const personResult = useMemo(() => {
+    if (runtimeData.status !== 'ready') return null
+    try { return { presentations: buildPersonPresentations(runtimeData.data, mapUrlState.year), error: null } }
+    catch (error) { console.error('Historical person presentation failed safely.', error); return { presentations: [], error: 'Historical people could not be prepared for this selected year.' } }
+  }, [mapUrlState.year, runtimeData])
+  const peopleLayerActive = mapUrlState.activeLayers.includes('people')
+  const personAggregates = useMemo(() => personResult === null || personResult.error !== null ? [] : buildPersonLocationAggregates(personResult.presentations, mapUrlState.zoom, peopleLayerActive, selectedPerson), [mapUrlState.zoom, peopleLayerActive, personResult, selectedPerson])
+  const personFeatures = useMemo(() => personResult === null || personResult.error !== null ? undefined : buildPersonFeatureCollection(personAggregates), [personAggregates, personResult])
+  const selectedPersonPresentation = personResult?.presentations.find((person) => person.id === selectedPerson) ?? null
+  const unresolvedPersonId = runtimeData.status === 'ready' && selectedPerson !== null && personResult?.error === null && selectedPersonPresentation === null ? selectedPerson : null
+  const aggregateChooser = personAggregates.find((aggregate) => aggregate.placeId === aggregatePlaceId && aggregate.aggregate) ?? null
+  const alivePeopleCount = personResult?.presentations.filter((person) => person.alive).length ?? 0
+  const mappedPeopleCount = personResult?.presentations.filter((person) => person.mapped).length ?? 0
+  const hasEmptyPeopleState = personResult?.error === null && peopleLayerActive && mappedPeopleCount === 0
   const emptyStateMessages = [
     hasEmptyPlacesState ? 'No mapped places are active.' : null,
     hasEmptyTerritoriesState ? 'No mapped territories are active.' : null,
@@ -119,6 +144,7 @@ export function MapPage() {
         ? 'Active events exist, but none has a reviewed map location.'
         : 'No mapped events are active.'
       : null,
+    hasEmptyPeopleState ? alivePeopleCount > 0 ? 'People are alive, but none has an active reviewed map relationship.' : 'No mapped people are active.' : null,
   ].filter((message): message is string => message !== null)
   const handleYearChange = useCallback(
     (year: HistoricalYear) => {
@@ -144,14 +170,19 @@ export function MapPage() {
       { history: EVENT_SELECTION_HISTORY_MODE },
     )
   }, [updateMapUrlState])
+  const handleSelectPerson = useCallback((personId: string) => {
+    setAggregatePlaceId(null)
+    updateMapUrlState({ selectedEntity: createPersonSelection(personId) }, { history: PERSON_SELECTION_HISTORY_MODE })
+  }, [updateMapUrlState])
   const handleClearOwnedSelection = useCallback(() => {
-    if (selectedPlace !== null || selectedPolity !== null || selectedEvent !== null) {
+    setAggregatePlaceId(null)
+    if (selectedPlace !== null || selectedPolity !== null || selectedEvent !== null || selectedPerson !== null) {
       updateMapUrlState(
         { selectedEntity: null },
         { history: POLITY_SELECTION_HISTORY_MODE },
       )
     }
-  }, [selectedEvent, selectedPlace, selectedPolity, updateMapUrlState])
+  }, [selectedEvent, selectedPerson, selectedPlace, selectedPolity, updateMapUrlState])
 
   return (
     <section className="map-page" aria-labelledby="map-heading">
@@ -162,8 +193,11 @@ export function MapPage() {
         placeFeatures={placeFeatures}
         territoryFeatures={territoryFeatures}
         eventFeatures={eventFeatures}
+        personFeatures={personFeatures}
         onSelectPlace={handleSelectPlace}
         onSelectEvent={handleSelectEvent}
+        onSelectPerson={handleSelectPerson}
+        onSelectPersonAggregate={setAggregatePlaceId}
         onSelectPolity={handleSelectPolity}
         onClearOwnedSelection={handleClearOwnedSelection}
       />
@@ -181,27 +215,30 @@ export function MapPage() {
       {eventResult === null || eventResult.error === null ? null : (
         <HistoricalDataStatus status="error" message={eventResult.error} onRetry={runtimeData.retry} />
       )}
+      {personResult === null || personResult.error === null ? null : <HistoricalDataStatus status="error" message={personResult.error} onRetry={runtimeData.retry} />}
       <PlaceDetailsCard
-        place={selectedPlacePresentation}
-        unresolvedPlaceId={unresolvedPlaceId}
+        place={aggregateChooser === null ? selectedPlacePresentation : null}
+        unresolvedPlaceId={aggregateChooser === null ? unresolvedPlaceId : null}
         selectedYear={mapUrlState.year}
         onClose={handleClearOwnedSelection}
         onGoToYear={handleYearChange}
       />
       <PolityDetailsCard
-        polity={selectedPolityPresentation}
-        unresolvedPolityId={unresolvedPolityId}
+        polity={aggregateChooser === null ? selectedPolityPresentation : null}
+        unresolvedPolityId={aggregateChooser === null ? unresolvedPolityId : null}
         selectedYear={mapUrlState.year}
         onClose={handleClearOwnedSelection}
         onGoToYear={handleYearChange}
       />
       <EventDetailsCard
-        event={selectedEventPresentation}
-        unresolvedEventId={unresolvedEventId}
+        event={aggregateChooser === null ? selectedEventPresentation : null}
+        unresolvedEventId={aggregateChooser === null ? unresolvedEventId : null}
         selectedYear={mapUrlState.year}
         onClose={handleClearOwnedSelection}
         onGoToYear={handleYearChange}
       />
+      <PersonDetailsCard person={aggregateChooser === null ? selectedPersonPresentation : null} unresolvedPersonId={aggregateChooser === null ? unresolvedPersonId : null} selectedYear={mapUrlState.year} onClose={handleClearOwnedSelection} onGoToYear={handleYearChange} />
+      {aggregateChooser === null ? null : <PersonAggregateChooser aggregate={aggregateChooser} onChoose={handleSelectPerson} onClose={() => setAggregatePlaceId(null)} />}
       <Timeline selectedYear={mapUrlState.year} onYearChange={handleYearChange} />
     </section>
   )

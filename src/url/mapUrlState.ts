@@ -29,6 +29,7 @@ export const MAP_URL_ZOOM_PRECISION = 2
 export const DEFAULT_ACTIVE_MAP_LAYERS: readonly MapLayerId[] = Object.freeze([
   'territories',
   'places',
+  'people',
   'events',
 ])
 

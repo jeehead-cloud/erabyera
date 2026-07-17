@@ -127,6 +127,13 @@ Do not convert вЂњcirca 500 BCEвЂќ into an apparently exact date without r
 - Person visibility should depend on an active person-place period or another explicitly defined map relationship.
 - A person may contribute to a place's importance only during the relevant active period.
 - Biographical summaries must not be AI-generated and stored as verified facts without review and sources.
+- Life activity and map-location activity are separate; being alive does not imply a reviewed active location.
+- A person is mapped only through an active resolved PersonPlacePeriod, using the Place coordinate without geographic offset.
+- Primary relationship priority is campaign, rule, activity, residence, visit, birth, death, unknown; additional active relationships remain visible in the card.
+- Birth and death relationships are bounded and never become permanent marker locations.
+- Visible people aggregate by resolved Place ID after zoom filtering; aggregate selection uses an explicit chooser and ordinary person URLs.
+- Selected active mapped people override zoom and the `people` layer toggle; selected unmapped or outside-life people receive no former or invented marker.
+- Person evidence prioritizes active relationship references then person-level references and excludes related entities' general sources.
 
 ---
 
@@ -168,7 +175,7 @@ Initial rules:
 - an explicitly selected place remains visible regardless of activity, zoom threshold, or the `places` layer toggle;
 - hidden by zoom does not mean historically inactive;
 - layer toggles control categories independently.
-- historical render order is territory, then event, then place; click priority is place, then event, then territory;
+- historical render order is territory, event, people, then place; click priority is place, person, event, then territory;
 
 The exact thresholds must be centralized and testable, not scattered across components.
 

@@ -512,6 +512,18 @@ Historical component order is physical basemap → territories → events → pl
 
 Event clicks push `entity=event:<id>` through F6 while preserving viewport, year, layers, collection, and unrelated parameters. Empty-map clearing owns place, polity, and event selections only. The compact event card shares the established contextual position but remains entity-specific; Battle adds structured sections rather than using a schema-driven universal renderer. Pure Node tests cover activity, all event types, location integrity, battle specialization, relations, evidence, GeoJSON, layer/order configuration, selection, and temporal actions; rendered behavior remains an owner-browser check.
 
+### F11 people and active-place presentation flow
+
+F11 consumes people and relations from the same immutable generated runtime. `src/domain/people` separates F2 life activity from active PersonPlacePeriod activity. Every map coordinate is taken from the resolved runtime Place; Person gains no coordinate field. Active relationships are ordered campaign, rule, activity, residence, visit, birth, death, unknown. The first is the primary marker location while all active relationships remain card-visible.
+
+Person presentations resolve associated polities and only explicitly modeled relationship event/journey IDs. Evidence prioritizes active relationship references then person-level references; Place, polity, event, and journey general sources are excluded. Mapped-year actions consider only relationships whose Place has coordinates. Alive-unmapped and outside-life states remain distinct and never revive an inactive location.
+
+Visibility mirrors the centralized F8 thresholds: importance 5 through 1 begins at zoom 1.5 through 5.5. Aggregation occurs after year, layer, zoom, and selection policy, keyed by Place ID rather than coordinates. Members sort by importance descending, then name and ID. Selected active mapped people override zoom and disabled `people`; selected unmapped people keep only their card.
+
+One compact GeoJSON source feeds native individual, aggregate, and selected circle layers. Aggregate size/stroke differs without glyphs or numeric labels. Render order is territories → events → people → places; query/click priority is places → people → events → territories. A place wins the exact center, while the larger aggregate ring remains practically queryable. Aggregate clicks open a local semantic-button chooser and member choice writes `entity=person:<id>` with push history.
+
+The person card presents life, roles, active relationship types/places, distinct relationship and Place uncertainty, associated polities, modeled events/journeys, sources, and explicit life/mapped-year actions. Pure Node tests cover life, relationships, priority, place naming, visibility, aggregation, GeoJSON, layers, selection, relations, evidence, and temporal actions; rendered behavior remains an owner-browser check.
+
 ---
 
 ## 8. Importance and Visibility

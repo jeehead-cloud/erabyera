@@ -1,6 +1,6 @@
 # EraByEra — Current Status
 
-**Status:** Foundation implementation — F10 implemented; owner browser verification pending
+**Status:** Foundation implementation — F11 implemented; owner browser verification pending
 **Last updated:** 2026-07-17
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -12,9 +12,9 @@
 
 ## 1. Current Development Phase
 
-EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, F7 at `5c8d61e`, F8 at `3c06c6c`, and F9 at `a07559f`. F10 — Events and Battle Model is implemented in the local working tree; owner external-browser verification remains pending.
+EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, F7 at `5c8d61e`, F8 at `3c06c6c`, F9 at `a07559f`, and F10 at `2b8899b`. F11 — People and Active-Place Representation is implemented in the local working tree; owner external-browser verification remains pending.
 
-F10 establishes the third complete historical-entity flow using clearly synthetic data: selected-year generic events and specialized battles, exact/uncertain/unknown location behavior, native MapLibre point layers, typed URL selection, related-entity resolution, compact event/battle details, and visible evidence. F8 places and F9 territories remain integrated with explicit interaction priority.
+F11 establishes selected-year people through active Place relationships using clearly synthetic data: life-versus-location presentation, primary-location selection, same-place aggregation, importance/zoom visibility, typed URL selection, a semantic aggregate chooser, compact person details, and visible evidence. F8–F10 layers remain integrated with explicit interaction priority.
 
 ---
 
@@ -243,9 +243,36 @@ Validation on 2026-07-17:
 - `git diff --check`: PASS;
 - browser checks: NOT RUN — owner external-browser verification required.
 
-### F11–F18 — Planned
+### F11 — People and Active-Place Representation — Implemented; owner verification pending
 
-Not started. F11 — People and Active-Place Representation is next after owner verification confirms the F10 event/battle flow. See `FOUNDATION_IMPLEMENTATION_PLAN.md` for the approved sequence.
+Implemented:
+
+- pure F2-based life, active PersonPlacePeriod, primary-location, visibility, relation, evidence, and nearest-year selectors;
+- three synthetic people proving bounded birth, default-year aggregation, location change, alive-but-unmapped state, and outside-life selection;
+- one primary marker location chosen by campaign → rule → activity → residence → visit → birth → death → unknown while retaining all active relationships;
+- importance 5–1 zoom thresholds of 1.5, 2.5, 3.5, 4.5, and 5.5 without changing F8 place importance;
+- deterministic Place-ID aggregation, compact GeoJSON, native individual/aggregate/selected MapLibre layers between events and places, and place → person → event → territory priority;
+- typed push-history person selection, selected mapped overrides, no false marker for unmapped selection, and an accessible aggregate chooser using person URLs rather than a new aggregate entity type;
+- responsive person card with life/mapped distinctions, active relationships, relations, evidence, and deterministic life/mapped-year actions;
+- 75 new person and layer tests, bringing the suite to 608 tests in 15 files.
+
+Automated and static acceptance criteria pass. Actual marker rendering, aggregate ring interaction, chooser/card layout, refresh/Back behavior, and browser console checks remain pending owner verification.
+
+Validation on 2026-07-17:
+
+- `npm run typecheck`: PASS;
+- `npm run lint`: PASS;
+- `npm run test`: PASS — 15 files, 608 tests;
+- `npm run data:validate`: PASS — 19 canonical synthetic records;
+- `npm run data:build` twice with hash comparison: PASS;
+- `npm run data:check`: PASS;
+- `npm run build`: PASS — known MapLibre chunk warning only;
+- `git diff --check`: PASS;
+- browser checks: NOT RUN — owner external-browser verification required.
+
+### F12–F18 — Planned
+
+Not started. F12 — Journeys and Campaign Routes is next after owner verification confirms the F11 people flow.
 
 ---
 
@@ -270,7 +297,7 @@ Not started. F11 — People and Active-Place Representation is next after owner 
 - The physical basemap is a local MapLibre style using only public-domain Natural Earth 1:110m land, coastline, lake, and river vectors.
 - F5 uses no external tile provider, provider account, token, glyphs, sprites, modern political boundaries, or settlement/transport labels.
 - The URL is the reproducible source of map-navigation state; the map keeps a local controlled camera for responsive interaction and commits only on `moveend`.
-- URL defaults are year `-334`, the F5 viewport, `territories`/`places`/`events`, and no selected entity or collection.
+- URL defaults are year `-334`, the F5 viewport, `territories`/`places`/`people`/`events`, and no selected entity or collection.
 - Finite out-of-range viewport values clamp; malformed and non-finite values fall back safely. Coordinates serialize to six decimals and zoom to two.
 - Map movement and URL canonicalization replace history; explicit future navigation updates can push history.
 - Timeline year is URL-owned; only draft magnitude, era, and step size are local component state.
@@ -289,7 +316,9 @@ Not started. F11 — People and Active-Place Representation is next after owner 
 - Unknown-location events never produce a point, remain URL-selectable, and retain a card without moving the viewport. Invalid accuracy/coordinate combinations fail presentation derivation safely.
 - Battle remains the F3 HistoricalEvent specialization; its side order is authored, participant lists are deduplicated deterministically, and unresolved relation names remain explicit null fallbacks.
 - Event evidence consists only of references directly attached to the event/battle record. Participant entities' general evidence is not promoted into event claims.
-- Historical render order is territory → event → place and interaction priority is place → event → territory.
+- Person life and mapped state are independent. Coordinates come only from the primary active resolved Place relationship; birthplace is never extended beyond its own period.
+- People aggregate by Place ID after zoom visibility is applied. Aggregate membership is importance-descending then name/ID; a semantic chooser writes an ordinary `person:<id>` selection.
+- Historical render order is territory → event → people → place and interaction priority is place → person → event → territory.
 - All entity temporal fields reuse `src/domain/time`; no second time model exists.
 - Zod and Vitest remain the only domain validation/testing dependencies.
 
@@ -302,7 +331,7 @@ Not started. F11 — People and Active-Place Representation is next after owner 
 - Competing temporal interpretations cannot yet coexist in canonical fixture files because the current schema has no explicit variant/claim grouping.
 - Published-source enforcement checks coverage presence, not whether the referenced source exists or is editorially adequate.
 - Fixtures are synthetic structure examples, not publishable historical data.
-- Places, territories, and events are rendered; no playback, people layer, journey routes, collection UI, search, or full entity pages exist yet.
+- Places, territories, events, and active-place people are rendered; no playback, journey routes, collection UI, search, or full entity pages exist yet.
 - F10 uses representative point markers only. It does not add regional polygons, clustering, overlap cycling, or automatic map fitting.
 - Overlapping claims render separately, but F9 offers no click cycling when multiple polygons occupy the same point.
 - Natural Earth 1:110m vectors are intentionally generalized and become coarse at close zoom; F5 caps zoom at 7.
@@ -313,9 +342,9 @@ Not started. F11 — People and Active-Place Representation is next after owner 
 
 ## 5. Nearest Next Steps
 
-1. Complete the F5–F10 owner external-browser checks for map/timeline rendering, historical-layer visibility, click priority, cards, URL restoration, and responsive layout.
-2. Review and commit F10 when ready.
-3. Begin F11 — People and Active-Place Representation only after browser verification confirms the event/battle flow is stable.
+1. Complete the F5–F11 owner external-browser checks for map/timeline rendering, aggregation, click priority, cards, URL restoration, and responsive layout.
+2. Review and commit F11 when ready.
+3. Begin F12 — Journeys and Campaign Routes only after browser verification confirms the people flow is stable.
 4. Keep all current historical-layer fixtures unmistakably synthetic.
 
 ---
@@ -329,6 +358,11 @@ Only report validation that actually ran.
 ---
 
 ## Recent Changes — Rolling Three-Month History
+
+### 2026-07-17 — Implemented F11 active-place people and aggregation
+
+- Connected generated people to selected-year Place relationships, zoom visibility, native aggregate markers, typed URL selection, a semantic chooser, and sourced person cards.
+- Expanded only synthetic fixtures to prove bounded birth, location change, aggregation, alive-unmapped, and outside-life behavior; added 75 tests, with owner browser verification pending.
 
 ### 2026-07-17 — Implemented F10 event and battle presentation
 
@@ -383,6 +417,12 @@ Only report validation that actually ran.
 ---
 
 ## Significant Changes — Permanent History
+
+### 2026-07-17 — First historically active person representation established
+
+- People now appear through bounded active relationships to resolved Places rather than permanent birth coordinates or invented person coordinates.
+- Life state remains separate from mapped state, while aggregation and explicit person selection preserve uncertainty and evidence.
+- Why it matters: future historical people can move over time without turning biography fields into misleading permanent map locations.
 
 ### 2026-07-17 — Specialized historical-event presentation established
 

@@ -5,24 +5,43 @@
     {
       "id": "synthetic-alpha-person",
       "defaultName": "Synthetic Alpha Person",
+      "summary": "A deliberately synthetic person used to verify active-place changes.",
       "life": { "yearFrom": -500, "yearTo": 10 },
       "roles": ["synthetic ruler", "synthetic commander"],
-      "places": [{ "placeId": "synthetic-alpha-place", "period": { "yearFrom": -500, "yearTo": -500 }, "relationType": "birth", "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }] }],
+      "places": [
+        { "placeId": "synthetic-alpha-place", "period": { "yearFrom": -500, "yearTo": -500 }, "relationType": "birth", "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic birth relationship" }] },
+        { "placeId": "synthetic-alpha-place", "period": { "yearFrom": -350, "yearTo": -330 }, "relationType": "campaign", "eventId": "synthetic-alpha-event", "journeyId": "synthetic-alpha-journey", "uncertainty": { "confidence": "high", "note": "Synthetic active campaign relationship." }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic alpha campaign" }] },
+        { "placeId": "synthetic-beta-place", "period": { "yearFrom": -329, "yearTo": -300 }, "relationType": "rule", "uncertainty": { "confidence": "medium", "note": "Synthetic location-change relationship." }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic alpha rule" }] }
+      ],
       "associatedPolityIds": ["synthetic-alpha-polity"],
       "importance": 3,
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+      "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic alpha person" }]
     },
     {
       "id": "synthetic-beta-person",
       "defaultName": "Synthetic Beta Person",
+      "summary": "A deliberately synthetic person used to verify aggregation at an active place.",
       "life": { "yearFrom": -400, "yearTo": 10 },
       "roles": ["synthetic commander"],
-      "places": [{ "placeId": "synthetic-beta-place", "period": { "yearFrom": -350, "yearTo": -300 }, "relationType": "campaign", "eventId": "synthetic-alpha-battle", "journeyId": "synthetic-alpha-journey", "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }] }],
+      "places": [{ "placeId": "synthetic-alpha-place", "period": { "yearFrom": -350, "yearTo": -300 }, "relationType": "campaign", "eventId": "synthetic-alpha-battle", "journeyId": "synthetic-alpha-journey", "uncertainty": { "confidence": "medium", "note": "Synthetic aggregation relationship." }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic beta campaign" }] }],
       "associatedPolityIds": ["synthetic-beta-polity"],
       "importance": 2,
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+      "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic beta person" }]
+    },
+    {
+      "id": "synthetic-gamma-person",
+      "defaultName": "Synthetic Gamma Person",
+      "summary": "A deliberately synthetic person used to verify alive-but-unmapped and outside-life states.",
+      "life": { "yearFrom": -400, "yearTo": -200 },
+      "roles": ["synthetic observer"],
+      "places": [{ "placeId": "synthetic-beta-place", "period": { "yearFrom": -280, "yearTo": -260 }, "relationType": "residence", "uncertainty": { "confidence": "low", "note": "Synthetic later residence." }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic gamma residence" }] }],
+      "associatedPolityIds": ["synthetic-beta-polity"],
+      "importance": 4,
+      "uncertainty": { "confidence": "low", "note": "This entire person record is synthetic." },
+      "editorialStatus": "published",
+      "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic gamma person" }]
     }
   ]
 }
