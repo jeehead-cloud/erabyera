@@ -31,6 +31,7 @@ export const DEFAULT_ACTIVE_MAP_LAYERS: readonly MapLayerId[] = Object.freeze([
   'places',
   'people',
   'events',
+  'journeys',
 ])
 
 export interface MapUrlViewport {

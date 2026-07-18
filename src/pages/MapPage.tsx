@@ -4,6 +4,7 @@ import { Timeline, TIMELINE_HISTORY_MODE } from '../components/Timeline'
 import { PolityDetailsCard } from '../components/PolityDetails'
 import { EventDetailsCard } from '../components/EventDetails'
 import { PersonAggregateChooser, PersonDetailsCard } from '../components/PersonDetails'
+import { JourneyDetailsCard } from '../components/JourneyDetails'
 import { useRuntimeData } from '../data'
 import {
   PLACE_SELECTION_HISTORY_MODE,
@@ -37,6 +38,13 @@ import {
   createPersonSelection,
   selectedPersonId,
 } from '../domain/people'
+import {
+  JOURNEY_SELECTION_HISTORY_MODE,
+  buildJourneyFeatureCollection,
+  buildJourneyPresentations,
+  createJourneySelection,
+  selectedJourneyId,
+} from '../domain/journeys'
 
 export function MapPage() {
   const [mapUrlState, updateMapUrlState] = useMapUrlState()
@@ -46,6 +54,7 @@ export function MapPage() {
   const selectedPolity = selectedPolityId(mapUrlState.selectedEntity)
   const selectedEvent = selectedEventId(mapUrlState.selectedEntity)
   const selectedPerson = selectedPersonId(mapUrlState.selectedEntity)
+  const selectedJourney = selectedJourneyId(mapUrlState.selectedEntity)
   const placeResult = useMemo(() => {
     if (runtimeData.status !== 'ready') return null
     try {
@@ -136,6 +145,22 @@ export function MapPage() {
   const alivePeopleCount = personResult?.presentations.filter((person) => person.alive).length ?? 0
   const mappedPeopleCount = personResult?.presentations.filter((person) => person.mapped).length ?? 0
   const hasEmptyPeopleState = personResult?.error === null && peopleLayerActive && mappedPeopleCount === 0
+  const journeyResult = useMemo(() => {
+    if (runtimeData.status !== 'ready') return null
+    try { return { presentations: buildJourneyPresentations(runtimeData.data, mapUrlState.year), error: null } }
+    catch (error) { console.error('Historical journey presentation failed safely.', error); return { presentations: [], error: 'Historical journeys could not be prepared for this selected year.' } }
+  }, [mapUrlState.year, runtimeData])
+  const journeysLayerActive = mapUrlState.activeLayers.includes('journeys')
+  const journeyFeatures = useMemo(() =>
+    journeyResult === null || journeyResult.error !== null || runtimeData.status !== 'ready'
+      ? undefined
+      : buildJourneyFeatureCollection(journeyResult.presentations, runtimeData.data.geometry.journeys, journeysLayerActive, selectedJourney),
+  [journeyResult, journeysLayerActive, runtimeData, selectedJourney])
+  const selectedJourneyPresentation = journeyResult?.presentations.find((journey) => journey.id === selectedJourney) ?? null
+  const unresolvedJourneyId = runtimeData.status === 'ready' && selectedJourney !== null && journeyResult?.error === null && selectedJourneyPresentation === null ? selectedJourney : null
+  const activeJourneyCount = journeyResult?.presentations.filter((journey) => journey.active).length ?? 0
+  const activeMappedJourneyCount = journeyResult?.presentations.filter((journey) => journey.active && journey.geometryAvailable).length ?? 0
+  const hasEmptyJourneysState = journeyResult?.error === null && journeysLayerActive && activeMappedJourneyCount === 0
   const emptyStateMessages = [
     hasEmptyPlacesState ? 'No mapped places are active.' : null,
     hasEmptyTerritoriesState ? 'No mapped territories are active.' : null,
@@ -145,6 +170,7 @@ export function MapPage() {
         : 'No mapped events are active.'
       : null,
     hasEmptyPeopleState ? alivePeopleCount > 0 ? 'People are alive, but none has an active reviewed map relationship.' : 'No mapped people are active.' : null,
+    hasEmptyJourneysState ? activeJourneyCount > 0 ? 'Journeys are active, but none has reviewed route geometry.' : 'No mapped journeys are active.' : null,
   ].filter((message): message is string => message !== null)
   const handleYearChange = useCallback(
     (year: HistoricalYear) => {
@@ -174,15 +200,18 @@ export function MapPage() {
     setAggregatePlaceId(null)
     updateMapUrlState({ selectedEntity: createPersonSelection(personId) }, { history: PERSON_SELECTION_HISTORY_MODE })
   }, [updateMapUrlState])
+  const handleSelectJourney = useCallback((journeyId: string) => {
+    updateMapUrlState({ selectedEntity: createJourneySelection(journeyId) }, { history: JOURNEY_SELECTION_HISTORY_MODE })
+  }, [updateMapUrlState])
   const handleClearOwnedSelection = useCallback(() => {
     setAggregatePlaceId(null)
-    if (selectedPlace !== null || selectedPolity !== null || selectedEvent !== null || selectedPerson !== null) {
+    if (selectedPlace !== null || selectedPolity !== null || selectedEvent !== null || selectedPerson !== null || selectedJourney !== null) {
       updateMapUrlState(
         { selectedEntity: null },
         { history: POLITY_SELECTION_HISTORY_MODE },
       )
     }
-  }, [selectedEvent, selectedPerson, selectedPlace, selectedPolity, updateMapUrlState])
+  }, [selectedEvent, selectedJourney, selectedPerson, selectedPlace, selectedPolity, updateMapUrlState])
 
   return (
     <section className="map-page" aria-labelledby="map-heading">
@@ -194,11 +223,13 @@ export function MapPage() {
         territoryFeatures={territoryFeatures}
         eventFeatures={eventFeatures}
         personFeatures={personFeatures}
+        journeyFeatures={journeyFeatures}
         onSelectPlace={handleSelectPlace}
         onSelectEvent={handleSelectEvent}
         onSelectPerson={handleSelectPerson}
         onSelectPersonAggregate={setAggregatePlaceId}
         onSelectPolity={handleSelectPolity}
+        onSelectJourney={handleSelectJourney}
         onClearOwnedSelection={handleClearOwnedSelection}
       />
       {runtimeData.status === 'loading' ? <HistoricalDataStatus status="loading" /> : null}
@@ -216,6 +247,7 @@ export function MapPage() {
         <HistoricalDataStatus status="error" message={eventResult.error} onRetry={runtimeData.retry} />
       )}
       {personResult === null || personResult.error === null ? null : <HistoricalDataStatus status="error" message={personResult.error} onRetry={runtimeData.retry} />}
+      {journeyResult === null || journeyResult.error === null ? null : <HistoricalDataStatus status="error" message={journeyResult.error} onRetry={runtimeData.retry} />}
       <PlaceDetailsCard
         place={aggregateChooser === null ? selectedPlacePresentation : null}
         unresolvedPlaceId={aggregateChooser === null ? unresolvedPlaceId : null}
@@ -238,6 +270,7 @@ export function MapPage() {
         onGoToYear={handleYearChange}
       />
       <PersonDetailsCard person={aggregateChooser === null ? selectedPersonPresentation : null} unresolvedPersonId={aggregateChooser === null ? unresolvedPersonId : null} selectedYear={mapUrlState.year} onClose={handleClearOwnedSelection} onGoToYear={handleYearChange} />
+      <JourneyDetailsCard journey={aggregateChooser === null ? selectedJourneyPresentation : null} unresolvedJourneyId={aggregateChooser === null ? unresolvedJourneyId : null} selectedYear={mapUrlState.year} onClose={handleClearOwnedSelection} onGoToYear={handleYearChange} />
       {aggregateChooser === null ? null : <PersonAggregateChooser aggregate={aggregateChooser} onChoose={handleSelectPerson} onClose={() => setAggregatePlaceId(null)} />}
       <Timeline selectedYear={mapUrlState.year} onYearChange={handleYearChange} />
     </section>

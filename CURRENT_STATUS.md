@@ -1,7 +1,7 @@
 # EraByEra — Current Status
 
-**Status:** Foundation implementation — F11 implemented; owner browser verification pending
-**Last updated:** 2026-07-17
+**Status:** Foundation implementation — F12 implemented; owner browser verification pending
+**Last updated:** 2026-07-18
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
 
@@ -12,9 +12,9 @@
 
 ## 1. Current Development Phase
 
-EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, F7 at `5c8d61e`, F8 at `3c06c6c`, F9 at `a07559f`, and F10 at `2b8899b`. F11 — People and Active-Place Representation is implemented in the local working tree; owner external-browser verification remains pending.
+EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, F7 at `5c8d61e`, F8 at `3c06c6c`, F9 at `a07559f`, F10 at `2b8899b`, and F11 at `7bcaabe`. F12 — Journeys and Campaign Routes is implemented in the local working tree; owner external-browser verification remains pending.
 
-F11 establishes selected-year people through active Place relationships using clearly synthetic data: life-versus-location presentation, primary-location selection, same-place aggregation, importance/zoom visibility, typed URL selection, a semantic aggregate chooser, compact person details, and visible evidence. F8–F10 layers remain integrated with explicit interaction priority.
+F12 establishes selected-year finite movements through generated Journey records and canonical LineString/MultiLineString geometry using clearly synthetic data. Activity remains separate from mapping, route certainty and explicit direction remain visible, ordered stages resolve Places and Events, typed URL selection restores a compact sourced card, and F8–F11 layers remain integrated with explicit render and click priority.
 
 ---
 
@@ -270,9 +270,35 @@ Validation on 2026-07-17:
 - `git diff --check`: PASS;
 - browser checks: NOT RUN — owner external-browser verification required.
 
-### F12–F18 — Planned
+### F12 — Journeys and Campaign Routes — Implemented; owner verification pending
 
-Not started. F12 — Journeys and Campaign Routes is next after owner verification confirms the F11 people flow.
+Implemented:
+
+- pure F2-based journey activity, nearest-year, geometry-availability, stage, relation, participant, evidence, and presentation selectors;
+- three published synthetic journeys proving campaign, expedition, single-year unmapped movement, LineString/MultiLineString, documented/unknown direction, probable/schematic/uncertain certainty, Place/Event stages, and Person/Polity participants;
+- deterministic compact route GeoJSON sourced only from generated F4 geometry, with selected inactive and disabled-layer overrides but no fabricated line for unmapped journeys;
+- one native MapLibre route source with solid documented/probable, dashed schematic/uncertain, active selected, and inactive selected line layers between territories and point features;
+- typed push-history journey selection, URL restoration, centralized place → person → event → journey → territory click priority, and empty-map clearing for all implemented selections;
+- responsive Journey card with activity/mapping distinction, explicit direction status, ordered stages, participants, relations, uncertainty, journey/stage evidence, and deterministic journey-year actions;
+- 60 new selector, pipeline, GeoJSON, style, order, interaction, selection, relation, and evidence tests, bringing the suite to 668 tests in 17 files.
+
+Automated and static acceptance criteria pass. Actual route rendering, certainty styling, line hit-testing, card layout, refresh/Back behavior, and browser console checks remain pending owner verification.
+
+Validation on 2026-07-18:
+
+- `npm run typecheck`: PASS;
+- `npm run lint`: PASS;
+- `npm run test`: PASS — 17 files, 668 tests;
+- `npm run data:validate`: PASS — 21 canonical synthetic records;
+- `npm run data:build` twice with hash comparison: PASS;
+- `npm run data:check`: PASS;
+- `npm run build`: PASS — known MapLibre chunk warning only;
+- `git diff --check`: PASS;
+- browser checks: NOT RUN — owner external-browser verification required.
+
+### F13–F18 — Planned
+
+Not started. F13 — Year Overview Panel is next after owner verification confirms the F12 route flow.
 
 ---
 
@@ -297,7 +323,7 @@ Not started. F12 — Journeys and Campaign Routes is next after owner verificati
 - The physical basemap is a local MapLibre style using only public-domain Natural Earth 1:110m land, coastline, lake, and river vectors.
 - F5 uses no external tile provider, provider account, token, glyphs, sprites, modern political boundaries, or settlement/transport labels.
 - The URL is the reproducible source of map-navigation state; the map keeps a local controlled camera for responsive interaction and commits only on `moveend`.
-- URL defaults are year `-334`, the F5 viewport, `territories`/`places`/`people`/`events`, and no selected entity or collection.
+- URL defaults are year `-334`, the F5 viewport, `territories`/`places`/`people`/`events`/`journeys`, and no selected entity or collection.
 - Finite out-of-range viewport values clamp; malformed and non-finite values fall back safely. Coordinates serialize to six decimals and zoom to two.
 - Map movement and URL canonicalization replace history; explicit future navigation updates can push history.
 - Timeline year is URL-owned; only draft magnitude, era, and step size are local component state.
@@ -318,7 +344,11 @@ Not started. F12 — Journeys and Campaign Routes is next after owner verificati
 - Event evidence consists only of references directly attached to the event/battle record. Participant entities' general evidence is not promoted into event claims.
 - Person life and mapped state are independent. Coordinates come only from the primary active resolved Place relationship; birthplace is never extended beyond its own period.
 - People aggregate by Place ID after zoom visibility is applied. Aggregate membership is importance-descending then name/ID; a semantic chooser writes an ordinary `person:<id>` selection.
-- Historical render order is territory → event → people → place and interaction priority is place → person → event → territory.
+- Journey activity is determined only from its F2 period; geometry availability is independent and never makes an inactive journey active or an unmapped journey disappear from presentation.
+- Normal routes require an active published Journey, enabled `journeys` layer, and resolved generated geometry. A selected mapped Journey overrides inactivity or a disabled layer with explicit styling; a selected unmapped Journey retains only its card.
+- Route direction is stated only when `directionKnown` is explicit. F12 uses card copy rather than inferred arrows or remote sprite assets; geometry coordinate order alone is not evidence of direction.
+- Journey evidence prioritizes journey-level references then stage references in authored order, deduplicates exact references, and excludes participants' general sources.
+- Historical render order is territory → journey → event → people → place and interaction priority is place → person → event → journey → territory.
 - All entity temporal fields reuse `src/domain/time`; no second time model exists.
 - Zod and Vitest remain the only domain validation/testing dependencies.
 
@@ -331,7 +361,7 @@ Not started. F12 — Journeys and Campaign Routes is next after owner verificati
 - Competing temporal interpretations cannot yet coexist in canonical fixture files because the current schema has no explicit variant/claim grouping.
 - Published-source enforcement checks coverage presence, not whether the referenced source exists or is editorially adequate.
 - Fixtures are synthetic structure examples, not publishable historical data.
-- Places, territories, events, and active-place people are rendered; no playback, journey routes, collection UI, search, or full entity pages exist yet.
+- Places, territories, journeys, events, and active-place people are rendered; no playback, route animation, collection UI, search, or full entity pages exist yet.
 - F10 uses representative point markers only. It does not add regional polygons, clustering, overlap cycling, or automatic map fitting.
 - Overlapping claims render separately, but F9 offers no click cycling when multiple polygons occupy the same point.
 - Natural Earth 1:110m vectors are intentionally generalized and become coarse at close zoom; F5 caps zoom at 7.
@@ -342,9 +372,9 @@ Not started. F12 — Journeys and Campaign Routes is next after owner verificati
 
 ## 5. Nearest Next Steps
 
-1. Complete the F5–F11 owner external-browser checks for map/timeline rendering, aggregation, click priority, cards, URL restoration, and responsive layout.
-2. Review and commit F11 when ready.
-3. Begin F12 — Journeys and Campaign Routes only after browser verification confirms the people flow is stable.
+1. Complete the F5–F12 owner external-browser checks for map/timeline rendering, route certainty/direction, aggregation, click priority, cards, URL restoration, and responsive layout.
+2. Review and commit F12 when ready.
+3. Begin F13 — Year Overview Panel only after browser verification confirms the route flow is stable.
 4. Keep all current historical-layer fixtures unmistakably synthetic.
 
 ---
@@ -358,6 +388,11 @@ Only report validation that actually ran.
 ---
 
 ## Recent Changes — Rolling Three-Month History
+
+### 2026-07-18 — Recovered and completed F12 journeys and campaign routes
+
+- Preserved and audited the interrupted F12 working tree, then connected generated Journey records and canonical route geometry to selected-year selectors, native certainty-aware MapLibre lines, typed URL selection, ordered stage/relationship resolution, and a compact sourced Journey card.
+- Expanded only synthetic fixtures to prove LineString/MultiLineString, known/unknown direction, mapped/unmapped, active/inactive, and certainty behavior; added 60 tests, including resolved per-stage evidence, with owner browser verification pending.
 
 ### 2026-07-17 — Implemented F11 active-place people and aggregation
 
@@ -417,6 +452,12 @@ Only report validation that actually ran.
 ---
 
 ## Significant Changes — Permanent History
+
+### 2026-07-18 — First finite historical movement layer established
+
+- EraByEra now renders selected-year journeys from canonical generated LineString/MultiLineString geometry while keeping historical activity independent from route availability.
+- Direction is never inferred, certainty changes non-color line treatment, and selected inactive or unmapped journeys remain honest and inspectable.
+- Why it matters: future campaigns, expeditions, and migrations have a tested evidence-aware movement pattern without implying exact day-by-day routing or conflating persistent trade networks with finite journeys.
 
 ### 2026-07-17 — First historically active person representation established
 

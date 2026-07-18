@@ -9,6 +9,7 @@ import type { PlaceFeatureCollection } from '../domain/places'
 import type { TerritoryFeatureCollection } from '../domain/polities'
 import type { EventFeatureCollection } from '../domain/events'
 import type { PersonFeatureCollection } from '../domain/people'
+import type { JourneyMapFeatureCollection } from '../domain/journeys'
 import {
   MAP_MOVEMENT_HISTORY_MODE,
   areMapUrlViewportsEquivalent,
@@ -28,7 +29,9 @@ import {
   EventLayer,
   PersonLayer,
   TerritoryLayer,
+  JourneyLayer,
   getHistoricalInteractiveLayerIds,
+  pickHistoricalMapInteraction,
 } from './layers'
 
 type MapLoadState = 'loading' | 'ready' | 'failed'
@@ -40,11 +43,13 @@ interface MapViewProps {
   territoryFeatures?: TerritoryFeatureCollection
   eventFeatures?: EventFeatureCollection
   personFeatures?: PersonFeatureCollection
+  journeyFeatures?: JourneyMapFeatureCollection
   onSelectPlace?: (placeId: string) => void
   onSelectEvent?: (eventId: string) => void
   onSelectPerson?: (personId: string) => void
   onSelectPersonAggregate?: (placeId: string) => void
   onSelectPolity?: (polityId: string) => void
+  onSelectJourney?: (journeyId: string) => void
   onClearOwnedSelection?: () => void
 }
 
@@ -63,11 +68,13 @@ export function MapView({
   territoryFeatures,
   eventFeatures,
   personFeatures,
+  journeyFeatures,
   onSelectPlace,
   onSelectEvent,
   onSelectPerson,
   onSelectPersonAggregate,
   onSelectPolity,
+  onSelectJourney,
   onClearOwnedSelection,
 }: MapViewProps) {
   const [loadState, setLoadState] = useState<MapLoadState>('loading')
@@ -126,27 +133,15 @@ export function MapView({
   )
 
   const handleMapClick = useCallback((event: MapLayerMouseEvent) => {
-    const placeId = event.features?.find((feature) => typeof feature.properties?.placeId === 'string')?.properties?.placeId
-    if (typeof placeId === 'string') {
-      onSelectPlace?.(placeId)
-      return
-    }
-    const personFeature = event.features?.find((feature) => typeof feature.properties?.placeId === 'string' && feature.properties?.entityType === 'person-location')
-    if (personFeature !== undefined) {
-      const personId = personFeature.properties?.personId
-      if (typeof personId === 'string') onSelectPerson?.(personId)
-      else onSelectPersonAggregate?.(personFeature.properties?.placeId as string)
-      return
-    }
-    const eventId = event.features?.find((feature) => typeof feature.properties?.eventId === 'string')?.properties?.eventId
-    if (typeof eventId === 'string') {
-      onSelectEvent?.(eventId)
-      return
-    }
-    const polityId = event.features?.find((feature) => typeof feature.properties?.polityId === 'string')?.properties?.polityId
-    if (typeof polityId === 'string') onSelectPolity?.(polityId)
+    const interaction = pickHistoricalMapInteraction(event.features)
+    if (interaction?.type === 'place') onSelectPlace?.(interaction.id)
+    else if (interaction?.type === 'person' && interaction.id !== null) onSelectPerson?.(interaction.id)
+    else if (interaction?.type === 'person') onSelectPersonAggregate?.(interaction.placeId)
+    else if (interaction?.type === 'event') onSelectEvent?.(interaction.id)
+    else if (interaction?.type === 'journey') onSelectJourney?.(interaction.id)
+    else if (interaction?.type === 'polity') onSelectPolity?.(interaction.id)
     else onClearOwnedSelection?.()
-  }, [onClearOwnedSelection, onSelectEvent, onSelectPerson, onSelectPersonAggregate, onSelectPlace, onSelectPolity])
+  }, [onClearOwnedSelection, onSelectEvent, onSelectJourney, onSelectPerson, onSelectPersonAggregate, onSelectPlace, onSelectPolity])
 
   const handlePointerMove = useCallback((event: MapLayerMouseEvent) => {
     setEntityPointer(event.features !== undefined && event.features.length > 0)
@@ -170,6 +165,7 @@ export function MapView({
           places: placeFeatures !== undefined,
           events: eventFeatures !== undefined,
           people: personFeatures !== undefined,
+          journeys: journeyFeatures !== undefined,
           territories: territoryFeatures !== undefined,
         })}
         mapStyle={PHYSICAL_BASEMAP_STYLE}
@@ -192,6 +188,7 @@ export function MapView({
       >
         <NavigationControl position="top-right" showCompass visualizePitch={false} />
         {territoryFeatures === undefined ? null : <TerritoryLayer data={territoryFeatures} />}
+        {journeyFeatures === undefined ? null : <JourneyLayer data={journeyFeatures} />}
         {eventFeatures === undefined ? null : <EventLayer data={eventFeatures} />}
         {personFeatures === undefined ? null : <PersonLayer data={personFeatures} />}
         {placeFeatures === undefined ? null : <PlaceLayer data={placeFeatures} />}

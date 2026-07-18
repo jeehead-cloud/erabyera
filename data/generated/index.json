@@ -56,8 +56,10 @@
         "synthetic-alpha-battle",
         "synthetic-alpha-event",
         "synthetic-alpha-person",
+        "synthetic-alpha-place",
         "synthetic-alpha-polity",
         "synthetic-beta-person",
+        "synthetic-beta-place",
         "synthetic-beta-polity"
       ],
       "sourceCount": 1,
@@ -122,6 +124,19 @@
       "type": "territories"
     },
     {
+      "geometryFeatureId": "synthetic-beta-expedition-feature",
+      "id": "synthetic-beta-expedition",
+      "name": "Synthetic Beta Expedition",
+      "relatedIds": [
+        "synthetic-beta-place",
+        "synthetic-beta-polity",
+        "synthetic-gamma-person"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "journeys"
+    },
+    {
       "id": "synthetic-beta-person",
       "name": "Synthetic Beta Person",
       "relatedIds": [
@@ -168,6 +183,17 @@
       "sourceCount": 0,
       "status": "published",
       "type": "sources"
+    },
+    {
+      "id": "synthetic-gamma-journey",
+      "name": "Synthetic Gamma Journey",
+      "relatedIds": [
+        "synthetic-beta-polity",
+        "synthetic-unknown-event"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "journeys"
     },
     {
       "id": "synthetic-gamma-person",

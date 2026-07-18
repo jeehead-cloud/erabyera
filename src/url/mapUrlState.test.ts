@@ -160,6 +160,7 @@ describe('map layer URL contract', () => {
   })
 
   it('uses the restrained default when layers is absent', () => {
+    expect(DEFAULT_ACTIVE_MAP_LAYERS).toEqual(['territories', 'places', 'people', 'events', 'journeys'])
     expect(parseMapUrlState('').activeLayers).toEqual(DEFAULT_ACTIVE_MAP_LAYERS)
   })
 

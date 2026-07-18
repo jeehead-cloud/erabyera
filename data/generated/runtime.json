@@ -226,6 +226,38 @@
             "journeyId": "synthetic-alpha-journey"
           },
           "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  30,
+                  35
+                ],
+                [
+                  29,
+                  36
+                ]
+              ],
+              [
+                [
+                  29,
+                  36
+                ],
+                [
+                  30,
+                  35
+                ]
+              ]
+            ],
+            "type": "MultiLineString"
+          },
+          "id": "synthetic-beta-expedition-feature",
+          "properties": {
+            "journeyId": "synthetic-beta-expedition"
+          },
+          "type": "Feature"
         }
       ],
       "schemaVersion": 1,
@@ -390,6 +422,7 @@
       "routeCertainty": "schematic",
       "sourceRefs": [
         {
+          "locator": "Synthetic alpha campaign route",
           "sourceId": "synthetic-fixture-source"
         }
       ],
@@ -397,8 +430,10 @@
         {
           "eventId": "synthetic-alpha-event",
           "order": 1,
+          "placeId": "synthetic-alpha-place",
           "sourceRefs": [
             {
+              "locator": "Synthetic campaign departure",
               "sourceId": "synthetic-fixture-source"
             }
           ],
@@ -407,14 +442,144 @@
         {
           "eventId": "synthetic-alpha-battle",
           "order": 2,
+          "placeId": "synthetic-beta-place",
           "sourceRefs": [
             {
+              "locator": "Synthetic campaign arrival",
               "sourceId": "synthetic-fixture-source"
             }
           ],
+          "uncertainty": {
+            "confidence": "low",
+            "note": "The stage sequence is schematic and wholly synthetic."
+          },
           "year": -334
         }
-      ]
+      ],
+      "summary": "A deliberately synthetic campaign used only to verify route presentation.",
+      "uncertainty": {
+        "confidence": "low",
+        "note": "The line represents a synthetic sequence, not exact movement."
+      }
+    },
+    {
+      "defaultName": "Synthetic Beta Expedition",
+      "directionKnown": false,
+      "editorialStatus": "published",
+      "geometryFeatureId": "synthetic-beta-expedition-feature",
+      "id": "synthetic-beta-expedition",
+      "journeyType": "expedition",
+      "participantPersonIds": [
+        "synthetic-gamma-person"
+      ],
+      "participantPolityIds": [
+        "synthetic-beta-polity"
+      ],
+      "period": {
+        "yearFrom": -280,
+        "yearTo": -260
+      },
+      "routeCertainty": "probable",
+      "sourceRefs": [
+        {
+          "locator": "Synthetic beta expedition route",
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "stages": [
+        {
+          "order": 1,
+          "placeId": "synthetic-beta-place",
+          "sourceRefs": [
+            {
+              "locator": "Synthetic expedition first stage",
+              "sourceId": "synthetic-fixture-source"
+            }
+          ],
+          "year": -280
+        },
+        {
+          "coordinates": [
+            29,
+            36
+          ],
+          "order": 2,
+          "period": {
+            "yearFrom": -275,
+            "yearTo": -270
+          },
+          "sourceRefs": [
+            {
+              "locator": "Synthetic expedition middle stage",
+              "sourceId": "synthetic-fixture-source"
+            }
+          ],
+          "uncertainty": {
+            "confidence": "medium",
+            "note": "A synthetic coordinate-only stage."
+          }
+        },
+        {
+          "order": 3,
+          "placeId": "synthetic-beta-place",
+          "sourceRefs": [
+            {
+              "locator": "Synthetic expedition final stage",
+              "sourceId": "synthetic-fixture-source"
+            }
+          ],
+          "year": -260
+        }
+      ],
+      "summary": "A deliberately synthetic expedition used to verify segmented route geometry.",
+      "uncertainty": {
+        "confidence": "medium",
+        "note": "The segmented route is an architecture-only synthetic fixture."
+      }
+    },
+    {
+      "defaultName": "Synthetic Gamma Journey",
+      "directionKnown": false,
+      "editorialStatus": "published",
+      "id": "synthetic-gamma-journey",
+      "journeyType": "journey",
+      "participantPersonIds": [],
+      "participantPolityIds": [
+        "synthetic-beta-polity"
+      ],
+      "period": {
+        "yearFrom": -250,
+        "yearTo": -250
+      },
+      "routeCertainty": "uncertain",
+      "sourceRefs": [
+        {
+          "locator": "Synthetic unmapped journey",
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "stages": [
+        {
+          "eventId": "synthetic-unknown-event",
+          "order": 1,
+          "sourceRefs": [
+            {
+              "locator": "Synthetic unmapped journey stage",
+              "sourceId": "synthetic-fixture-source"
+            }
+          ],
+          "uncertainty": {
+            "confidence": "unknown",
+            "note": "No route coordinate is supplied by design."
+          },
+          "year": -250
+        }
+      ],
+      "summary": "A deliberately synthetic journey with no reviewed route geometry.",
+      "uncertainty": {
+        "confidence": "unknown",
+        "note": "No reviewed synthetic route geometry is available."
+      }
     }
   ],
   "people": [

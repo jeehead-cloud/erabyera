@@ -1,7 +1,7 @@
 ﻿# EraByEra вЂ” Product and Historical Data Rules
 
 **Status:** Active baseline
-**Last updated:** 2026-07-10
+**Last updated:** 2026-07-18
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 
 > This document defines product behavior and historical-data invariants.
@@ -160,6 +160,12 @@ Do not convert вЂњcirca 500 BCEвЂќ into an apparently exact date without r
 - Route geometry is an approximation unless based on a documented reconstruction.
 - A rendered line must not imply exact day-by-day movement unless the data supports it.
 - Route direction should be visually represented only when known.
+- Journey activity comes from the Journey period; route-geometry availability is a separate state and must not hide an active or selected Journey record.
+- Normal routes require an active published Journey, enabled `journeys` layer, and resolved generated geometry.
+- A selected mapped Journey may remain visible when inactive or when `journeys` is disabled, but inactive styling must prevent it from appearing current. A selected unmapped Journey keeps its card and receives no invented path.
+- Coordinate order alone does not establish direction. Directional copy or treatment requires the canonical `directionKnown` flag; F12 does not add inferred arrows.
+- Documented/probable and schematic/uncertain routes must differ through opacity, width, dash, casing, or explicit text as well as color.
+- Journey evidence prioritizes Journey-level references, then stage references in authored order. Exact duplicates are removed, locator-distinct references remain, and participants' general sources are not Journey evidence.
 
 ---
 
@@ -175,7 +181,7 @@ Initial rules:
 - an explicitly selected place remains visible regardless of activity, zoom threshold, or the `places` layer toggle;
 - hidden by zoom does not mean historically inactive;
 - layer toggles control categories independently.
-- historical render order is territory, event, people, then place; click priority is place, person, event, then territory;
+- historical render order is territory, journey, event, people, then place; click priority is place, person, event, journey, then territory;
 
 The exact thresholds must be centralized and testable, not scattered across components.
 

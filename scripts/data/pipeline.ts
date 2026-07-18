@@ -207,14 +207,22 @@ function validateGeometry(data: ValidatedDataset, territoryPath: string, journey
   }
   for (const territory of data.territories) addMissing(issues, territoryPath, territory.id, 'geometryFeatureId', territory.geometryFeatureId, 'territory geometry feature', territoryFeatureIds)
   const journeyFeatureIds = new Set<string>()
+  const journeyIdByFeatureId = new Map<string, string>()
   const journeyIds = new Set(data.journeys.map((x) => x.id))
   for (const feature of data.journeyGeometry.features) {
     if (territoryFeatureIds.has(feature.id)) issues.push({ file: journeyPath, record: feature.id, path: 'id', message: `Geometry feature ID '${feature.id}' is already used by territory geometry.` })
     if (journeyFeatureIds.has(feature.id)) issues.push({ file: journeyPath, record: feature.id, path: 'id', message: `Duplicate geometry feature ID '${feature.id}'.` })
     journeyFeatureIds.add(feature.id)
+    journeyIdByFeatureId.set(feature.id, feature.properties.journeyId)
     addMissing(issues, journeyPath, feature.id, 'properties.journeyId', feature.properties.journeyId, 'journey', journeyIds)
   }
-  for (const journey of data.journeys) if (journey.geometryFeatureId) addMissing(issues, journeyPath, journey.id, 'geometryFeatureId', journey.geometryFeatureId, 'journey geometry feature', journeyFeatureIds)
+  for (const journey of data.journeys) if (journey.geometryFeatureId) {
+    addMissing(issues, journeyPath, journey.id, 'geometryFeatureId', journey.geometryFeatureId, 'journey geometry feature', journeyFeatureIds)
+    const linkedJourneyId = journeyIdByFeatureId.get(journey.geometryFeatureId)
+    if (linkedJourneyId !== undefined && linkedJourneyId !== journey.id) {
+      issues.push({ file: journeyPath, record: journey.id, path: 'geometryFeatureId', message: `Journey geometry feature '${journey.geometryFeatureId}' points to '${linkedJourneyId}' instead.` })
+    }
+  }
 }
 
 export function validateSourceWorkspace(workspace: RawWorkspace): ValidationResult {

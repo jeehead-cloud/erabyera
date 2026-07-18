@@ -1,7 +1,7 @@
 ﻿# EraByEra вЂ” Architecture
 
 **Status:** F1–F8 application, domain, static-data, map, URL-state, timeline, and first historical-entity flow implemented; later architecture proposed
-**Last updated:** 2026-07-17
+**Last updated:** 2026-07-18
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
 
@@ -508,7 +508,7 @@ Battle presentation extends the common event model with authored side order, ded
 
 `EventLayer` owns one local GeoJSON source and native circle layers for exact ordinary events, uncertain ordinary points, battles, and selected events. Uncertain points use increased radius, reduced opacity, and thicker outline; approximate battles also receive a thicker ring. Selected events use a larger five-pixel outline and lower opacity when inactive. No icons, text, glyphs, sprites, remote event assets, DOM markers, or importance system are introduced.
 
-Historical component order is physical basemap → territories → events → places. Interactive IDs and click handling use place → event → territory priority, so precise place points win over colocated event points and events win over polygons. Normal event features require the URL-owned F7 year, enabled `events` layer, active period, and coordinates. Explicit mapped selection overrides inactivity and the layer toggle; unknown-location selection retains only its card. No selection changes year or viewport automatically.
+Historical component order is now physical basemap → territories → journeys → events → people → places. Interactive IDs and click handling use place → person → event → journey → territory priority, so point features win over routes and routes win over polygons. Normal event features require the URL-owned F7 year, enabled `events` layer, active period, and coordinates. Explicit mapped selection overrides inactivity and the layer toggle; unknown-location selection retains only its card. No selection changes year or viewport automatically.
 
 Event clicks push `entity=event:<id>` through F6 while preserving viewport, year, layers, collection, and unrelated parameters. Empty-map clearing owns place, polity, and event selections only. The compact event card shares the established contextual position but remains entity-specific; Battle adds structured sections rather than using a schema-driven universal renderer. Pure Node tests cover activity, all event types, location integrity, battle specialization, relations, evidence, GeoJSON, layer/order configuration, selection, and temporal actions; rendered behavior remains an owner-browser check.
 
@@ -520,9 +520,25 @@ Person presentations resolve associated polities and only explicitly modeled rel
 
 Visibility mirrors the centralized F8 thresholds: importance 5 through 1 begins at zoom 1.5 through 5.5. Aggregation occurs after year, layer, zoom, and selection policy, keyed by Place ID rather than coordinates. Members sort by importance descending, then name and ID. Selected active mapped people override zoom and disabled `people`; selected unmapped people keep only their card.
 
-One compact GeoJSON source feeds native individual, aggregate, and selected circle layers. Aggregate size/stroke differs without glyphs or numeric labels. Render order is territories → events → people → places; query/click priority is places → people → events → territories. A place wins the exact center, while the larger aggregate ring remains practically queryable. Aggregate clicks open a local semantic-button chooser and member choice writes `entity=person:<id>` with push history.
+One compact GeoJSON source feeds native individual, aggregate, and selected circle layers. Aggregate size/stroke differs without glyphs or numeric labels. Current render order is territories → journeys → events → people → places; query/click priority is places → people → events → journeys → territories. A place wins the exact center, while the larger aggregate ring remains practically queryable. Aggregate clicks open a local semantic-button chooser and member choice writes `entity=person:<id>` with push history.
 
 The person card presents life, roles, active relationship types/places, distinct relationship and Place uncertainty, associated polities, modeled events/journeys, sources, and explicit life/mapped-year actions. Pure Node tests cover life, relationships, priority, place naming, visibility, aggregation, GeoJSON, layers, selection, relations, evidence, and temporal actions; rendered behavior remains an owner-browser check.
+
+### F12 journey and campaign route flow
+
+F12 consumes Journey records and route features from the same immutable generated runtime. `src/domain/journeys` uses F2 for inclusive activity and nearest-year actions while resolving geometry by the canonical `geometryFeatureId`/`journeyId` pair. Activity and mapping are independent: an active Journey may lack geometry, and an inactive selected Journey remains inspectable without becoming historically active.
+
+Stage resolution preserves the F3 authored sequential order. Each stage resolves only its explicit Place and Event links plus its own evidence; period-appropriate Place naming uses the stage year or nearest year in its stage period. Coordinate-only stages remain explicit, unresolved relations and sources fail visibly, and the browser neither inserts intermediate stages nor reconstructs routes.
+
+Journey presentations resolve explicit Person and Polity participants, stage-derived related Places and Events, certainty, direction, uncertainty, start/end stage, and temporal actions. Evidence priority is Journey references followed by stage references in authored order. Exact duplicate references are removed, locator-distinct references remain, unresolved sources fail safely, and participant entities' general references are excluded.
+
+`buildJourneyFeatureCollection` copies only validated generated LineString/MultiLineString geometry into compact deterministic features. Normal features require an active Journey, enabled `journeys` URL layer, and resolved geometry. A selected mapped Journey remains as an override when inactive or when the layer is disabled; selected active-but-unmapped journeys have a card but never receive an invented path.
+
+`JourneyLayer` owns one local GeoJSON source. Documented/probable routes use a solid translucent line, schematic/uncertain routes use lower-opacity dashed treatment, and selected active/inactive routes use distinct wide highlight styles. Direction is shown in the card only when the canonical `directionKnown` flag supports it. F12 deliberately defers arrowheads and start/end markers rather than infer direction from coordinate order or add sprite/glyph dependencies.
+
+Routes render between territory geometry and point layers. Centralized hit testing enforces place → person → event → journey → territory regardless of queried feature order. Journey clicks push `entity=journey:<id>` through F6 while preserving year, viewport, active layers, collection, and unrelated parameters; empty-map clearing covers only the five implemented entity types.
+
+The compact responsive Journey card presents type, activity, route availability, explicit direction status, certainty, participants, stages, related entities, uncertainty, one or two primary evidence references, source count, and deterministic journey-year actions. Pure Node tests cover activity, mapping, LineString/MultiLineString transfer, stages, relations, evidence, certainty/direction policy, visibility overrides, layer/click order, selection, and temporal behavior. Native MapLibre rendering itself remains an owner-browser check.
 
 ---
 
