@@ -6,7 +6,8 @@ import { EventDetailsCard } from '../components/EventDetails'
 import { PersonAggregateChooser, PersonDetailsCard } from '../components/PersonDetails'
 import { JourneyDetailsCard } from '../components/JourneyDetails'
 import { YearOverviewPanel } from '../components/YearOverview'
-import { useRuntimeData } from '../data'
+import { GlobalSearch } from '../components/GlobalSearch'
+import { loadBundledSearchIndex, useRuntimeData } from '../data'
 import {
   PLACE_SELECTION_HISTORY_MODE,
   buildPlaceFeatureCollection,
@@ -53,10 +54,26 @@ import {
   getYearOverviewSelectionState,
   type YearOverviewItem,
 } from '../domain/overview'
+import {
+  SEARCH_SELECTION_HISTORY_MODE,
+  createSearchNavigationUpdate,
+  type SearchResult,
+} from '../domain/search'
 
 export function MapPage() {
   const [mapUrlState, updateMapUrlState] = useMapUrlState()
   const runtimeData = useRuntimeData()
+  const [searchIndexResult] = useState(() => {
+    try {
+      return { index: loadBundledSearchIndex(), error: null }
+    } catch (error) {
+      console.error('Local historical search index failed safely.', error)
+      return {
+        index: null,
+        error: 'The bundled search index is unavailable or incompatible with this dataset.',
+      }
+    }
+  })
   const [aggregatePlaceId, setAggregatePlaceId] = useState<string | null>(null)
   const selectedPlace = selectedPlaceId(mapUrlState.selectedEntity)
   const selectedPolity = selectedPolityId(mapUrlState.selectedEntity)
@@ -226,6 +243,13 @@ export function MapPage() {
       { history: YEAR_OVERVIEW_SELECTION_HISTORY_MODE },
     )
   }, [updateMapUrlState])
+  const handleSelectSearchResult = useCallback((result: SearchResult) => {
+    setAggregatePlaceId(null)
+    updateMapUrlState(
+      createSearchNavigationUpdate(mapUrlState, result),
+      { history: SEARCH_SELECTION_HISTORY_MODE },
+    )
+  }, [mapUrlState, updateMapUrlState])
   const handleClearOwnedSelection = useCallback(() => {
     setAggregatePlaceId(null)
     if (selectedPlace !== null || selectedPolity !== null || selectedEvent !== null || selectedPerson !== null || selectedJourney !== null) {
@@ -254,6 +278,12 @@ export function MapPage() {
         onSelectPolity={handleSelectPolity}
         onSelectJourney={handleSelectJourney}
         onClearOwnedSelection={handleClearOwnedSelection}
+      />
+      <GlobalSearch
+        index={searchIndexResult.index}
+        error={searchIndexResult.error}
+        selectedYear={mapUrlState.year}
+        onSelect={handleSelectSearchResult}
       />
       {runtimeData.status === 'loading' ? <HistoricalDataStatus status="loading" /> : null}
       {runtimeData.status === 'error' ? (

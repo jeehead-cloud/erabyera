@@ -30,7 +30,8 @@ import {
   type JourneyFeatureCollection,
   type TerritoryFeatureCollection,
 } from '../../src/domain/geometry'
-import { runtimeDatasetSchema, type RuntimeDataset } from '../../src/data'
+import { runtimeDatasetSchema, type RuntimeDataset } from '../../src/data/runtime'
+import { buildSearchIndex } from './search/buildSearchIndex'
 
 export const DATA_KINDS = ['sources', 'places', 'polities', 'territories', 'people', 'events', 'journeys', 'collections'] as const
 export type DataKind = (typeof DATA_KINDS)[number]
@@ -310,13 +311,19 @@ export function buildGeneratedFiles(data: ValidatedDataset): Map<string, string>
     status: record.editorialStatus, sourceCount: 'sourceRefs' in record ? record.sourceRefs.length : 0,
     relatedIds: relatedIds(record, known), geometryFeatureId: 'geometryFeatureId' in record ? record.geometryFeatureId : undefined,
   }))).sort((a, b) => a.id.localeCompare(b.id))
-  const files = new Map<string, string>([['runtime.json', serialize(runtime)], ['index.json', serialize({ schemaVersion: 1, datasetVersion: data.datasetVersion, records: index })]])
+  const searchIndex = buildSearchIndex(runtime)
+  const files = new Map<string, string>([
+    ['runtime.json', serialize(runtime)],
+    ['index.json', serialize({ schemaVersion: 1, datasetVersion: data.datasetVersion, records: index })],
+    ['search-index.json', serialize(searchIndex)],
+  ])
   const fingerprint = createHash('sha256').update([...files.entries()].map(([name, content]) => `${name}\n${content}`).join('')).digest('hex')
   const counts = Object.fromEntries(allGroups.map(([kind, records]) => [kind, records.length]))
   files.set('manifest.json', serialize({
     schemaVersion: 1, datasetVersion: data.datasetVersion, datasetName: data.name,
     compatibility: { minimumRuntimeSchemaVersion: 1 }, editorialPolicy: 'published-only', timestampPolicy: 'none',
-    files: ['index.json', 'manifest.json', 'runtime.json'], counts,
+    files: ['index.json', 'manifest.json', 'runtime.json', 'search-index.json'], counts,
+    search: { indexVersion: searchIndex.searchIndexVersion, entries: searchIndex.entries.length },
     geometryCounts: { territories: runtime.geometry.territories.features.length, journeys: runtime.geometry.journeys.features.length },
     fingerprint: { algorithm: 'sha256', value: fingerprint },
   }))

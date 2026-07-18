@@ -3,6 +3,7 @@ import { join, resolve } from 'node:path'
 import { tmpdir } from 'node:os'
 import { beforeAll, describe, expect, it } from 'vitest'
 import { loadRuntimeDataset } from '../../src/data'
+import { loadSearchIndex, type SearchIndex } from '../../src/domain/search'
 import {
   DATA_KINDS,
   buildGeneratedFiles,
@@ -87,6 +88,70 @@ describe('deterministic generation and browser-safe loading', () => {
   it('emits no timestamps', () => expect([...buildGeneratedFiles(validData()).values()].join('\n')).not.toMatch(/generatedAt|createdAt/))
   it('includes counts and a SHA-256 fingerprint in the manifest', () => { const manifest = JSON.parse(buildGeneratedFiles(validData()).get('manifest.json') ?? '{}') as { fingerprint: { value: string }; counts: Record<string, number> }; expect(manifest.fingerprint.value).toMatch(/^[a-f0-9]{64}$/); expect(manifest.counts.places).toBe(3) })
   it('builds a stable reference index', () => { const index = JSON.parse(buildGeneratedFiles(validData()).get('index.json') ?? '{}') as { records: { id: string }[] }; expect(index.records.map((x) => x.id)).toEqual([...index.records.map((x) => x.id)].sort()) })
+  it('builds a versioned search index for every implemented entity type', () => {
+    const search = JSON.parse(buildGeneratedFiles(validData()).get('search-index.json') ?? '{}') as SearchIndex
+    expect(search).toMatchObject({ schemaVersion: 1, searchIndexVersion: 1, datasetVersion: 'foundation-fixture-0.1.0' })
+    expect(new Set(search.entries.map((entry) => entry.entityType))).toEqual(new Set(['place', 'polity', 'person', 'event', 'journey']))
+  })
+  it('keeps Battle under Event and Campaign under Journey', () => {
+    const search = JSON.parse(buildGeneratedFiles(validData()).get('search-index.json') ?? '{}') as SearchIndex
+    expect(search.entries.find((entry) => entry.entityId === 'synthetic-alpha-battle')).toMatchObject({ entityType: 'event', subtype: 'battle' })
+    expect(search.entries.find((entry) => entry.entityId === 'synthetic-alpha-journey')).toMatchObject({ entityType: 'journey', subtype: 'campaign' })
+  })
+  it('indexes default and authored historical Place names with periods', () => {
+    const search = JSON.parse(buildGeneratedFiles(validData()).get('search-index.json') ?? '{}') as SearchIndex
+    const place = search.entries.find((entry) => entry.entityId === 'synthetic-alpha-place')!
+    expect(place.names).toEqual(expect.arrayContaining([
+      expect.objectContaining({ value: 'Synthetic Alpha Place', kind: 'default' }),
+      expect.objectContaining({ value: 'Synthetic Alpha Old Name', kind: 'historical', relevantYear: -500, period: { yearFrom: -500, yearTo: -400 } }),
+    ]))
+  })
+  it('does not invent aliases or transliterations', () => {
+    const search = JSON.parse(buildGeneratedFiles(validData()).get('search-index.json') ?? '{}') as SearchIndex
+    expect(search.entries.flatMap((entry) => entry.names).some((name) => name.kind === 'alias' || name.kind === 'transliteration')).toBe(false)
+  })
+  it('orders entries and name variants deterministically', () => {
+    const search = JSON.parse(buildGeneratedFiles(validData()).get('search-index.json') ?? '{}') as SearchIndex
+    const identities = search.entries.map((entry) => `${entry.entityType}:${entry.entityId}`)
+    expect(identities).toEqual([...identities].sort())
+    for (const entry of search.entries) {
+      expect(entry.names.map((name) => `${name.normalizedValue}:${name.kind}`)).toEqual(
+        [...entry.names.map((name) => `${name.normalizedValue}:${name.kind}`)].sort(),
+      )
+    }
+  })
+  it('keeps typed entry identities globally unique', () => {
+    const search = JSON.parse(buildGeneratedFiles(validData()).get('search-index.json') ?? '{}') as SearchIndex
+    const identities = search.entries.map((entry) => `${entry.entityType}:${entry.entityId}`)
+    expect(new Set(identities).size).toBe(identities.length)
+  })
+  it('keeps search entries compact and free of canonical record payloads', () => {
+    const serialized = buildGeneratedFiles(validData()).get('search-index.json') ?? ''
+    expect(serialized).not.toContain('sourceRefs')
+    expect(serialized).not.toContain('summary')
+    expect(serialized).not.toContain('participantPersonIds')
+    expect(serialized).not.toContain('geometryFeatureId')
+  })
+  it('contains no absolute paths or generation timestamps in the search artifact', () => {
+    const serialized = buildGeneratedFiles(validData()).get('search-index.json') ?? ''
+    expect(serialized).not.toMatch(/[A-Z]:\\|generatedAt|createdAt/)
+  })
+  it('includes search metadata and the artifact in the manifest', () => {
+    const manifest = JSON.parse(buildGeneratedFiles(validData()).get('manifest.json') ?? '{}') as { files: string[]; search: { indexVersion: number; entries: number } }
+    expect(manifest.files).toContain('search-index.json')
+    expect(manifest.search).toEqual({ indexVersion: 1, entries: 14 })
+  })
+  it('loads and deep-freezes a compatible search index', () => {
+    const raw = JSON.parse(buildGeneratedFiles(validData()).get('search-index.json') ?? '{}')
+    const loaded = loadSearchIndex(raw, 'foundation-fixture-0.1.0')
+    expect(Object.isFrozen(loaded)).toBe(true)
+    expect(Object.isFrozen(loaded.entries[0]?.names)).toBe(true)
+  })
+  it('rejects incompatible or malformed search indexes without affecting runtime loading', () => {
+    const raw = JSON.parse(buildGeneratedFiles(validData()).get('search-index.json') ?? '{}')
+    expect(() => loadSearchIndex(raw, 'other-1.0.0')).toThrow('version mismatch')
+    expect(() => loadSearchIndex({ schemaVersion: 1 }, 'foundation-fixture-0.1.0')).toThrow()
+  })
   it('loads and freezes valid runtime data', () => { const raw = JSON.parse(buildGeneratedFiles(validData()).get('runtime.json') ?? '{}'); const loaded = loadRuntimeDataset(raw, 'foundation-fixture-0.1.0'); expect(Object.isFrozen(loaded)).toBe(true); expect(Object.isFrozen(loaded.places)).toBe(true) })
   it('rejects an unexpected runtime dataset version', () => { const raw = JSON.parse(buildGeneratedFiles(validData()).get('runtime.json') ?? '{}'); expect(() => loadRuntimeDataset(raw, 'other-1.0.0')).toThrow('version mismatch') })
   it('rejects malformed runtime data', () => expect(() => loadRuntimeDataset({ schemaVersion: 1 })).toThrow())
@@ -95,6 +160,7 @@ describe('deterministic generation and browser-safe loading', () => {
     try {
       const files = buildGeneratedFiles(validData())
       expect(await compareGeneratedFiles(files, dir)).toContain('runtime.json is missing.')
+      expect(await compareGeneratedFiles(files, dir)).toContain('search-index.json is missing.')
       await writeGeneratedFiles(files, dir)
       await writeFile(join(dir, 'runtime.json'), '{}\n', 'utf8')
       await writeFile(join(dir, 'extra.json'), '{}\n', 'utf8')

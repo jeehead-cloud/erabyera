@@ -18,16 +18,21 @@
   "files": [
     "index.json",
     "manifest.json",
-    "runtime.json"
+    "runtime.json",
+    "search-index.json"
   ],
   "fingerprint": {
     "algorithm": "sha256",
-    "value": "c841b9e8556c896e2874e00617abb9a6b44f37bba4f0259dffd32d7fc2ac45f4"
+    "value": "25dfb3d4641b0510ccb084c0155ea479162320f0a5d70da403cc290812ee8551"
   },
   "geometryCounts": {
     "journeys": 2,
     "territories": 3
   },
   "schemaVersion": 1,
+  "search": {
+    "entries": 14,
+    "indexVersion": 1
+  },
   "timestampPolicy": "none"
 }

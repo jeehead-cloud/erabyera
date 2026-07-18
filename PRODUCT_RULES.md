@@ -220,8 +220,14 @@ The exact thresholds must be centralized and testable, not scattered across comp
 ## 14. Search and Permalinks
 
 - Search may return entities outside the currently selected year.
-- Choosing a search result moves to a relevant year and location.
-- When several relevant years exist, use a clearly documented default such as the first active year or ask the user through the UI later.
+- Search indexes only authored default names, historical names, aliases, and transliterations; it must never invent alternate spellings or transliterate automatically.
+- Normalization is Unicode NFKC, locale-neutral lowercase, punctuation-to-space, whitespace collapse, and trim. Non-Latin text and digits remain meaningful.
+- Matching order is exact primary name, exact authored variant, primary prefix, variant prefix, token prefix, then substring. Current-year activity is only a same-category tie-break; stable type, matched name, and entity ID complete the comparator.
+- Search has no AI, semantic embedding, randomness, opaque importance score, geometry-area score, route-length score, or remote service.
+- A historical-name match uses that authored name period before the entity's general period. Other relevant years reuse F2 activity and nearest-range rules; Person results prefer a reviewed mapped relationship before falling back to life years.
+- Choosing a search result adds only its required layer in canonical order, preserves other layers and unrelated URL state, sets the typed entity, and commits one push-history update.
+- Deterministic Place, Event, and Person points may focus at a minimum zoom of 5.5 while preserving a closer valid zoom. Polity and Journey fitting is deferred.
+- A target-year-unmapped or unknown-location result remains searchable and selectable, enables its layer, opens its card, and never receives a fabricated coordinate or viewport movement.
 - The URL is the reproducible source of selected year, map center, zoom, active layers, selected entity, and active collection.
 - Map dragging and zooming replace the current history entry only when interaction ends; explicit committed navigation may push a new entry so Back and Forward remain meaningful.
 - Unknown query parameters are preserved when map state is canonicalized or updated.

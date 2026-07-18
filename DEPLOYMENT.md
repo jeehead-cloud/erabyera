@@ -71,7 +71,7 @@ The scripts perform:
 - `data:validate`: read-only strict validation of canonical JSON, references, overlap policy, and GeoJSON;
 - `data:check`: read-only deterministic comparison of canonical inputs with committed runtime output.
 
-`npm run data:build` intentionally writes the three files in `data/generated/`; use it after canonical source or geometry changes, then rerun `data:check`. Generated files are committed and must never be hand-edited. An optional `npm run test:watch` script runs Vitest in watch mode. There is no `preview` script.
+`npm run data:build` intentionally writes the four files in `data/generated/`, including the bundled local `search-index.json`; use it after canonical source, geometry, or search-generation changes, then rerun `data:check`. Generated files are committed and must never be hand-edited. An optional `npm run test:watch` script runs Vitest in watch mode. There is no `preview` script.
 
 On Windows systems where PowerShell blocks `npm.ps1`, invoke the same scripts through `npm.cmd`, for example `npm.cmd run lint`.
 

@@ -1,0 +1,455 @@
+{
+  "datasetVersion": "foundation-fixture-0.1.0",
+  "entries": [
+    {
+      "context": "battle · Synthetic Beta Outpost",
+      "entityId": "synthetic-alpha-battle",
+      "entityType": "event",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "coordinates": [
+            30.5,
+            36.5
+          ],
+          "period": {
+            "yearFrom": -334,
+            "yearTo": -334
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "synthetic alpha battle",
+          "value": "Synthetic Alpha Battle"
+        }
+      ],
+      "period": {
+        "yearFrom": -334,
+        "yearTo": -334
+      },
+      "primaryName": "Synthetic Alpha Battle",
+      "requiredLayer": "events",
+      "subtype": "battle"
+    },
+    {
+      "context": "political event · Synthetic Alpha Place",
+      "entityId": "synthetic-alpha-event",
+      "entityType": "event",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "coordinates": [
+            28,
+            37
+          ],
+          "period": {
+            "yearFrom": -334,
+            "yearTo": -334
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "synthetic alpha event",
+          "value": "Synthetic Alpha Event"
+        }
+      ],
+      "period": {
+        "yearFrom": -334,
+        "yearTo": -334
+      },
+      "primaryName": "Synthetic Alpha Event",
+      "requiredLayer": "events",
+      "subtype": "political"
+    },
+    {
+      "context": "cultural event · Synthetic Beta Outpost",
+      "entityId": "synthetic-unknown-event",
+      "entityType": "event",
+      "mapped": false,
+      "mapPeriods": [],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "synthetic unknown location event",
+          "value": "Synthetic Unknown-Location Event"
+        }
+      ],
+      "period": {
+        "yearFrom": -250,
+        "yearTo": -250
+      },
+      "primaryName": "Synthetic Unknown-Location Event",
+      "requiredLayer": "events",
+      "subtype": "cultural"
+    },
+    {
+      "context": "campaign · schematic route · Synthetic Alpha Place · Synthetic Beta Outpost",
+      "entityId": "synthetic-alpha-journey",
+      "entityType": "journey",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "period": {
+            "yearFrom": -350,
+            "yearTo": -300
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "synthetic alpha journey",
+          "value": "Synthetic Alpha Journey"
+        }
+      ],
+      "period": {
+        "yearFrom": -350,
+        "yearTo": -300
+      },
+      "primaryName": "Synthetic Alpha Journey",
+      "requiredLayer": "journeys",
+      "subtype": "campaign"
+    },
+    {
+      "context": "expedition · probable route · Synthetic Beta Outpost",
+      "entityId": "synthetic-beta-expedition",
+      "entityType": "journey",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "period": {
+            "yearFrom": -280,
+            "yearTo": -260
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "synthetic beta expedition",
+          "value": "Synthetic Beta Expedition"
+        }
+      ],
+      "period": {
+        "yearFrom": -280,
+        "yearTo": -260
+      },
+      "primaryName": "Synthetic Beta Expedition",
+      "requiredLayer": "journeys",
+      "subtype": "expedition"
+    },
+    {
+      "context": "journey · uncertain route",
+      "entityId": "synthetic-gamma-journey",
+      "entityType": "journey",
+      "mapped": false,
+      "mapPeriods": [],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "synthetic gamma journey",
+          "value": "Synthetic Gamma Journey"
+        }
+      ],
+      "period": {
+        "yearFrom": -250,
+        "yearTo": -250
+      },
+      "primaryName": "Synthetic Gamma Journey",
+      "requiredLayer": "journeys",
+      "subtype": "journey"
+    },
+    {
+      "context": "synthetic ruler, synthetic commander · Synthetic Alpha Place · Synthetic Beta Outpost",
+      "entityId": "synthetic-alpha-person",
+      "entityType": "person",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "coordinates": [
+            28,
+            37
+          ],
+          "period": {
+            "yearFrom": -500,
+            "yearTo": -500
+          }
+        },
+        {
+          "coordinates": [
+            28,
+            37
+          ],
+          "period": {
+            "yearFrom": -350,
+            "yearTo": -330
+          }
+        },
+        {
+          "coordinates": [
+            30,
+            35
+          ],
+          "period": {
+            "yearFrom": -329,
+            "yearTo": -300
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "synthetic alpha person",
+          "value": "Synthetic Alpha Person"
+        }
+      ],
+      "period": {
+        "yearFrom": -500,
+        "yearTo": 10
+      },
+      "primaryName": "Synthetic Alpha Person",
+      "requiredLayer": "people",
+      "subtype": "person"
+    },
+    {
+      "context": "synthetic commander · Synthetic Alpha Place",
+      "entityId": "synthetic-beta-person",
+      "entityType": "person",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "coordinates": [
+            28,
+            37
+          ],
+          "period": {
+            "yearFrom": -350,
+            "yearTo": -300
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "synthetic beta person",
+          "value": "Synthetic Beta Person"
+        }
+      ],
+      "period": {
+        "yearFrom": -400,
+        "yearTo": 10
+      },
+      "primaryName": "Synthetic Beta Person",
+      "requiredLayer": "people",
+      "subtype": "person"
+    },
+    {
+      "context": "synthetic observer · Synthetic Beta Outpost",
+      "entityId": "synthetic-gamma-person",
+      "entityType": "person",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "coordinates": [
+            30,
+            35
+          ],
+          "period": {
+            "yearFrom": -280,
+            "yearTo": -260
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "synthetic gamma person",
+          "value": "Synthetic Gamma Person"
+        }
+      ],
+      "period": {
+        "yearFrom": -400,
+        "yearTo": -200
+      },
+      "primaryName": "Synthetic Gamma Person",
+      "requiredLayer": "people",
+      "subtype": "person"
+    },
+    {
+      "context": "city · Synthetic Alpha Polity",
+      "entityId": "synthetic-alpha-place",
+      "entityType": "place",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "coordinates": [
+            28,
+            37
+          ],
+          "period": {
+            "datePrecision": "range",
+            "yearFrom": -500,
+            "yearTo": 10
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "historical",
+          "normalizedValue": "synthetic alpha old name",
+          "period": {
+            "yearFrom": -500,
+            "yearTo": -400
+          },
+          "relevantYear": -500,
+          "value": "Synthetic Alpha Old Name"
+        },
+        {
+          "kind": "default",
+          "normalizedValue": "synthetic alpha place",
+          "value": "Synthetic Alpha Place"
+        }
+      ],
+      "period": {
+        "datePrecision": "range",
+        "yearFrom": -500,
+        "yearTo": 10
+      },
+      "primaryName": "Synthetic Alpha Place",
+      "requiredLayer": "places",
+      "subtype": "city"
+    },
+    {
+      "context": "settlement",
+      "entityId": "synthetic-beta-place",
+      "entityType": "place",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "coordinates": [
+            30,
+            35
+          ],
+          "period": {
+            "yearFrom": -400,
+            "yearTo": -250
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "synthetic beta outpost",
+          "value": "Synthetic Beta Outpost"
+        }
+      ],
+      "period": {
+        "yearFrom": -400,
+        "yearTo": -250
+      },
+      "primaryName": "Synthetic Beta Outpost",
+      "requiredLayer": "places",
+      "subtype": "settlement"
+    },
+    {
+      "context": "port",
+      "entityId": "synthetic-gamma-place",
+      "entityType": "place",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "coordinates": [
+            26,
+            39
+          ],
+          "period": {
+            "yearFrom": -100,
+            "yearTo": 100
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "synthetic gamma haven",
+          "value": "Synthetic Gamma Haven"
+        }
+      ],
+      "period": {
+        "yearFrom": -100,
+        "yearTo": 100
+      },
+      "primaryName": "Synthetic Gamma Haven",
+      "requiredLayer": "places",
+      "subtype": "port"
+    },
+    {
+      "context": "kingdom · Synthetic Alpha Place",
+      "entityId": "synthetic-alpha-polity",
+      "entityType": "polity",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "period": {
+            "yearFrom": -500,
+            "yearTo": -400
+          }
+        },
+        {
+          "period": {
+            "yearFrom": -399,
+            "yearTo": 10
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "synthetic alpha polity",
+          "value": "Synthetic Alpha Polity"
+        }
+      ],
+      "period": {
+        "yearFrom": -500,
+        "yearTo": 10
+      },
+      "primaryName": "Synthetic Alpha Polity",
+      "requiredLayer": "territories",
+      "subtype": "kingdom"
+    },
+    {
+      "context": "city state",
+      "entityId": "synthetic-beta-polity",
+      "entityType": "polity",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "period": {
+            "yearFrom": -350,
+            "yearTo": -300
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "synthetic beta polity",
+          "value": "Synthetic Beta Polity"
+        }
+      ],
+      "period": {
+        "yearFrom": -400,
+        "yearTo": 10
+      },
+      "primaryName": "Synthetic Beta Polity",
+      "requiredLayer": "territories",
+      "subtype": "city-state"
+    }
+  ],
+  "schemaVersion": 1,
+  "searchIndexVersion": 1
+}

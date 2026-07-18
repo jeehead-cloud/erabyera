@@ -2,7 +2,7 @@
 
 `data/source/` and `data/geometry/` are the canonical, editable repository data. Every file declares schema version `1` and the same dataset version. The current records and coordinates are deliberately synthetic fixtures; they are not historical claims and must not be expanded into real content without reviewed sources and licensing.
 
-`data/generated/` is committed runtime output. Never edit it by hand. Run:
+`data/generated/` is committed runtime output. Never edit it by hand. It includes `runtime.json`, the general reference `index.json`, the compact browser `search-index.json`, and `manifest.json`. Run:
 
 ```powershell
 npm run data:validate
@@ -12,7 +12,9 @@ npm run data:check
 
 Validation parses every strict F3 entity schema, verifies version agreement, globally unique entity IDs, source and cross-entity references, non-overlapping place names/ownership/importance and polity capitals, and matching bounded GeoJSON. Overlaps are rejected until a future schema explicitly represents competing interpretations.
 
-The public runtime includes only `published` records and geometry referenced by them. Generation sorts entity records, stable set-like ID arrays, source references, index entries, and object keys while preserving temporal record arrays and journey-stage order. It emits no timestamps. The manifest includes deterministic counts and a SHA-256 fingerprint, so two builds from identical source produce byte-identical files.
+The public runtime includes only `published` records and geometry referenced by them. Generation sorts entity records, stable set-like ID arrays, source references, index entries, search entries/name variants, and object keys while preserving temporal record arrays and journey-stage order. It emits no timestamps. The manifest includes deterministic counts, search-index format/count metadata, and a SHA-256 fingerprint covering the generated runtime, reference index, and search index, so two builds from identical source produce byte-identical files.
+
+`search-index.json` uses schema version `1` and search-index format version `1`. It contains compact typed entries for Places, polities, people, events/battles, and journeys/campaigns: stable/default names, distinct authored historical Place names, authored Place transliterations where present, periods, concise context, required layers, and only the mapping metadata required for deterministic target-year and point-focus behavior. It never copies summaries, sources, battle sides, participants, relation arrays, territory polygons, or route geometry. Do not edit it or its normalized strings manually; change canonical authored fields or the generator and run `data:build`.
 
 The F8 place-flow fixture contains exactly three published `synthetic-*` places. They deliberately cover a default-year active place with a changing name, a low-importance zoom-threshold place, and a place that is inactive at the default year. Their names, summaries, coordinates, periods, ownership, importance, and source are test-only inventions and are not reviewed historical content.
 
@@ -25,6 +27,8 @@ The F11 people fixture contains three published `synthetic-*` people. At 334 BCE
 The F12 journey fixture contains three published `synthetic-*` finite movements. Synthetic Alpha is a default-year campaign with a schematic LineString and explicit known direction. Synthetic Beta is a later probable expedition with MultiLineString geometry and unknown direction. Synthetic Gamma is a single-year active Journey with no geometry, proving that activity and mapping are independent. Stages explicitly link synthetic Places and Events or provide an authored coordinate-only stage; no intermediate route or coordinate is generated in browser code. Journey-level references are authoritative first, followed by stage references in authored order. Participant entity sources are not copied into Journey evidence.
 
 F13 does not add or rewrite fixtures. Its selected-year overview derives published, active, mapped, and unmapped counts from the generated runtime and resolves the existing optional collection coverage metadata read-only. The UI must continue to identify this dataset as intentionally sparse synthetic foundation data; an empty overview year or geography is not evidence that no historical activity existed.
+
+F14 also adds no fixture. The search generator indexes only fields already authored in the F13 synthetic dataset. There are currently no authored aliases or transliterations, so none appears in generated output; tests use in-memory entries for those edge contracts rather than inventing canonical content.
 
 `data:check` performs a read-only in-memory rebuild and fails when committed generated output is missing, extra, or stale. Schema changes require a coordinated source-data update or explicit migration; do not silently coerce old data.
 

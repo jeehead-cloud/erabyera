@@ -1,6 +1,6 @@
 ﻿# EraByEra вЂ” Architecture
 
-**Status:** F1–F13 application, domain, static-data, map, URL-state, historical entities, and selected-year overview implemented; later architecture proposed
+**Status:** F1–F14 application, domain, static-data, map, URL-state, historical entities, overview, and local search implemented; later architecture proposed
 **Last updated:** 2026-07-19
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -91,7 +91,8 @@ erabyera/
     |   |-- AppShell/AppShell.tsx
     |   |-- Timeline/       # F7 controls, input, step selector, model, styles, and tests
     |   |-- PlaceDetails/   # F8 compact card and historical-data status UI
-    |   `-- YearOverview/   # F13 responsive contextual overview and section lists
+    |   |-- YearOverview/   # F13 responsive contextual overview and section lists
+    |   `-- GlobalSearch/   # F14 keyboard-accessible responsive search overlay
     |-- domain/time/
     |   |-- datePrecision.ts
     |   |-- historicalYear.ts
@@ -116,6 +117,7 @@ erabyera/
     |-- domain/geometry/    # browser-safe GeoJSON Zod contracts
     |-- domain/places/      # F8 selectors, presentation, GeoJSON, selection, and tests
     |-- domain/overview/    # F13 ranking, coverage/presentation model, selection, and tests
+    |-- domain/search/      # F14 schemas, normalization, matching/ranking, navigation, and tests
     |-- data/               # runtime schema, bundled generated-data loader, hook, and tests
     |-- map/                # basemap/camera plus F8 native historical place layers
     |-- url/                # F6 URL schemas, pure state contract, router hook, and tests
@@ -556,6 +558,24 @@ Coverage distinguishes normal active content, no active published records, and a
 
 Overview selection delegates to existing typed selection constructors, pushes one history entry, and preserves year, viewport, layers, collection, and unknown parameters. F13 intentionally does not enable layers or move/focus the map; existing F8–F12 selected-feature overrides provide mapped context where available. Pure Node tests cover eligibility, ranking, limits, ties, coverage, collections, empty states, URL preservation, immutability, and prior entity-presentation regressions; rendered behavior remains an owner-browser check.
 
+### F14 generated local search and browser flow
+
+F14 adds `data/generated/search-index.json` as a fourth committed F4 artifact. It carries runtime schema version `1`, search-index format version `1`, the matching dataset version, and compact entries only: typed identity, primary name, authored variants, entity period, subtype/context, required layer, mapped periods, and point coordinates where deterministic. It excludes summaries, sources, participant arrays, full records, polygons, and route geometry. The manifest lists the file and entry count, and its SHA-256 fingerprint input includes the artifact. `data:check` therefore detects a missing, extra, or stale search index.
+
+`scripts/data/search/buildSearchIndex.ts` derives entries only from validated published runtime data. Place name periods become historical variants when distinct from the stable default; authored Place transliterations retain their period. No alternate spelling, alias, or transliteration is inferred. Variants and entries are deduplicated and sorted deterministically, and output contains neither timestamps nor local paths.
+
+`src/domain/search` is browser-safe and shared where appropriate with generation. `loadSearchIndex` validates schema, format, and dataset compatibility and deep-freezes the artifact before use. A failure disables only search; the physical map, timeline, layers, overview, and existing cards remain usable. The artifact is bundled like runtime data, so no independent fetch, fake progress, server, or network search boundary exists.
+
+Normalization truncates to 200 input characters, applies Unicode NFKC, JavaScript locale-neutral lowercase, replaces Unicode punctuation/symbol runs with spaces, collapses whitespace, and trims. It preserves non-Latin characters and digits and performs no ASCII folding or automatic transliteration. Queries require two normalized characters.
+
+Matching categories are exact primary, exact authored variant, primary prefix, variant prefix, ordered token-prefix, and substring. The comparator uses that category order, then current-year activity only as a tie-break, canonical type order, matched normalized name, and stable ID. It uses no fuzzy distance, opaque score, AI, randomness, geometry area, route length, source count, or description length. Results cap at 20 and group as Places, Polities, People, Events, and Journeys; Battle and Campaign remain subtypes.
+
+Relevant-year derivation reuses F2 inclusive activity and nearest-range helpers. A matched historical/alias/transliteration period wins first. Active Places, polities, events, and Journeys retain the selected year; inactive records use the nearest valid entity year. People prefer an active reviewed point at the selected year, then the nearest reviewed mapped relationship, then their life range. The model cannot return year zero.
+
+Selection creates one F6 push update containing the target year, typed entity, and the required layer added in canonical order while preserving every active layer, collection, and unrelated parameter. Place and mapped Event/Person results may set a validated point viewport; zoom is at least 5.5, preserves a closer zoom, and remains within F5 bounds. Polity polygon and Journey route fitting are deferred. Unknown-location and target-year-unmapped results do not change the viewport.
+
+`GlobalSearch` is Map-local in F14 but reusable for a later global shell. Query and active-option state remain local React state and never enter the URL. The overlay provides a visible label, bounded `type=search` input, semantic grouped listbox/options, live status, clear/close actions, Escape, Arrow Up/Down, Home/End, Enter, touch selection, active-option ARIA, visible focus, opener focus restoration, bounded independent scrolling, and a mobile full-width presentation above the timeline. Opening search never changes the selected entity; successful selection closes it and existing F8–F12 cards respond to the single URL update.
+
 ---
 
 ## 8. Importance and Visibility
@@ -578,7 +598,7 @@ Zoom thresholds should be deterministic and centralized. The exact formula belon
 
 1. Edit versioned canonical wrappers in `data/source/` and GeoJSON in `data/geometry/`.
 2. Run `npm run data:validate` to parse strict F3 schemas and validate the complete graph.
-3. Run `npm run data:build` to create byte-stable `data/generated/runtime.json`, `index.json`, and `manifest.json`.
+3. Run `npm run data:build` to create byte-stable `data/generated/runtime.json`, `index.json`, `search-index.json`, and `manifest.json`.
 4. Run `npm run data:check` to compare an in-memory rebuild with committed output without writing files.
 5. Commit canonical and generated data together after review.
 

@@ -1,6 +1,6 @@
 # EraByEra — Current Status
 
-**Status:** Foundation implementation — F13 implemented; owner browser verification pending
+**Status:** Foundation implementation — F14 implemented; owner browser verification pending
 **Last updated:** 2026-07-19
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -12,9 +12,9 @@
 
 ## 1. Current Development Phase
 
-EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, F7 at `5c8d61e`, F8 at `3c06c6c`, F9 at `a07559f`, F10 at `2b8899b`, F11 at `7bcaabe`, and F12 at `2afcfb8`. F13 — Year Overview Panel is implemented in the local working tree; owner external-browser verification remains pending.
+EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, F7 at `5c8d61e`, F8 at `3c06c6c`, F9 at `a07559f`, F10 at `2b8899b`, F11 at `7bcaabe`, and F12 at `2afcfb8`. F13 and F14 are implemented in the local working tree; owner external-browser verification remains pending.
 
-F13 establishes a deterministic selected-year synthesis panel over the generated synthetic runtime. It reuses F8–F12 presentations for active events, polities, places, mapped people, and journeys; communicates mapped, unmapped, disabled-layer, sparse, collection, and empty-coverage states; and selects existing entity cards without changing year, viewport, layer filters, collection, or unrelated URL parameters.
+F14 adds a deterministic generated local search index and a keyboard-accessible Map overlay for all five implemented entity types. Historical Place names retain period context; selection applies one push-history update containing the target year, required layer, typed entity, and restrained point focus where supported while preserving unrelated URL state.
 
 ---
 
@@ -321,9 +321,35 @@ Validation on 2026-07-19:
 - `git diff --check`: PASS;
 - browser checks: NOT RUN — owner external-browser verification required.
 
-### F14–F18 — Planned
+### F14 — Local Search — Implemented; owner verification pending
 
-Not started. F14 — Local Search is next after owner verification confirms the F13 overview flow.
+Implemented:
+
+- deterministic committed `data/generated/search-index.json` with schema version `1`, search-index version `1`, dataset compatibility, compact entries, authored name variants, temporal/map metadata, and manifest fingerprint coverage;
+- all implemented Place, Polity, Person, Event/Battle, and Journey/Campaign records, with Battle grouped under Event and Campaign under Journey;
+- Unicode NFKC, locale-neutral lowercase, punctuation-to-space, whitespace-collapse normalization without automatic transliteration;
+- exact primary, exact authored variant, primary/variant prefix, token-prefix, and substring matching with explicit comparator categories, current-year tie-breaking, stable type/name/ID ties, grouping, and a 20-result cap;
+- historical-name-first target years, F2-based entity target years, required-layer enabling in F6 canonical order, typed selection, one push update, point-only focus at minimum zoom 5.5, and no viewport movement for unmapped/polygon/route results;
+- a responsive Map search overlay with a labeled bounded search input, clear/close controls, Escape, Arrow/Home/End/Enter interaction, semantic listbox options, live result status, honest no-result/unmapped text, and recoverable incompatible-index state;
+- 55 focused pipeline, normalization, matching, ranking, year, grouping, navigation, focus, URL, and immutability tests, bringing the suite to 778 tests in 19 files.
+
+Automated and static acceptance criteria pass. Search opening, input/results, keyboard interaction, selection/card behavior, point focus, unmapped behavior, Back/Forward, responsive layout, and browser console/network behavior remain pending owner verification in ordinary Chrome or Edge.
+
+Validation on 2026-07-19:
+
+- `npm run typecheck`: PASS;
+- `npm run lint`: PASS;
+- `npm run test`: PASS — 19 files, 778 tests;
+- `npm run data:validate`: PASS — 21 canonical synthetic records;
+- `npm run data:build` twice with hash comparison: PASS — four byte-identical artifacts;
+- `npm run data:check`: PASS;
+- `npm run build`: PASS — known MapLibre chunk warning only;
+- `git diff --check`: PASS;
+- browser checks: NOT RUN — owner external-browser verification required.
+
+### F15–F18 — Planned
+
+Not started. F15 — Entity Pages and Explore Catalogs is next after owner verification confirms the F13–F14 discovery flows.
 
 ---
 
@@ -376,6 +402,8 @@ Not started. F14 — Local Search is next after owner verification confirms the 
 - Historical render order is territory → journey → event → people → place and interaction priority is place → person → event → journey → territory.
 - The year overview is derived from generated runtime presentations rather than visible map features, so disabled layers do not erase active historical context. Rankings use explicit comparator chains and stable ties, never AI, randomness, polygon area, route length, or an opaque score.
 - Overview item selection uses existing typed entity references with push history and preserves the current year, viewport, layers, collection, and unrelated parameters. F13 deliberately performs no automatic focus and leaves selected-feature overrides to F8–F12.
+- Search data is a separate compact generated artifact, validated and deep-frozen against the runtime dataset version. Only authored default, historical, alias, or transliteration fields may become variants.
+- Search uses explicit exact/prefix/token-prefix/substring categories and stable comparator ties. Selection adds exactly the required layer, keeps canonical ordering, writes one push-history URL update, and focuses only deterministic Place/Event/Person points.
 - All entity temporal fields reuse `src/domain/time`; no second time model exists.
 - Zod and Vitest remain the only domain validation/testing dependencies.
 
@@ -388,7 +416,7 @@ Not started. F14 — Local Search is next after owner verification confirms the 
 - Competing temporal interpretations cannot yet coexist in canonical fixture files because the current schema has no explicit variant/claim grouping.
 - Published-source enforcement checks coverage presence, not whether the referenced source exists or is editorially adequate.
 - Fixtures are synthetic structure examples, not publishable historical data.
-- Places, territories, journeys, events, active-place people, and the selected-year overview are rendered; no playback, route animation, collection UI, search, or full entity pages exist yet.
+- Places, territories, journeys, events, active-place people, the selected-year overview, and Map-local search are rendered; no playback, route animation, collection UI, Explore catalogs, or full entity pages exist yet.
 - F10 uses representative point markers only. It does not add regional polygons, clustering, overlap cycling, or automatic map fitting.
 - Overlapping claims render separately, but F9 offers no click cycling when multiple polygons occupy the same point.
 - Natural Earth 1:110m vectors are intentionally generalized and become coarse at close zoom; F5 caps zoom at 7.
@@ -399,9 +427,9 @@ Not started. F14 — Local Search is next after owner verification confirms the 
 
 ## 5. Nearest Next Steps
 
-1. Complete the F5–F13 owner external-browser checks for map/timeline rendering, overview ranking and coverage, route certainty/direction, aggregation, click priority, cards, URL restoration, and responsive layout.
-2. Review and commit F13 when ready.
-3. Begin F14 — Local Search only after browser verification confirms the overview flow is stable.
+1. Complete the F5–F14 owner external-browser checks for map/timeline rendering, overview/search behavior, route certainty/direction, aggregation, click priority, cards, URL restoration, and responsive layout.
+2. Review and commit F13–F14 when ready.
+3. Begin F15 — Entity Pages and Explore Catalogs only after browser verification confirms the discovery flows are stable.
 4. Keep all current historical-layer fixtures unmistakably synthetic.
 
 ---
@@ -415,6 +443,11 @@ Only report validation that actually ran.
 ---
 
 ## Recent Changes — Rolling Three-Month History
+
+### 2026-07-19 — Implemented F14 local historical search
+
+- Added a deterministic generated cross-entity index, transparent Unicode-safe matching/ranking, period-aware navigation, canonical layer enabling, and point-only focus without adding content or dependencies.
+- Added a responsive keyboard-accessible Map overlay and 55 focused tests; owner external-browser verification remains pending.
 
 ### 2026-07-19 — Implemented F13 selected-year overview
 
@@ -484,6 +517,12 @@ Only report validation that actually ran.
 ---
 
 ## Significant Changes — Permanent History
+
+### 2026-07-19 — First generated cross-entity local search boundary established
+
+- EraByEra now publishes a compact, version-compatible search artifact derived from validated runtime content and queries it entirely in the browser through explicit match categories and stable comparator ties.
+- Historical Place names carry their authored periods into navigation; result selection coherently updates year, required layer, typed entity, and only deterministic point focus while unmapped records remain selectable without invented geography.
+- Why it matters: future Explore catalogs and entity pages can reuse one deterministic discovery contract without remote services, AI ranking, duplicated canonical records, or a second navigation state.
 
 ### 2026-07-19 — First deterministic cross-entity year synthesis established
 
