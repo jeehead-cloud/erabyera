@@ -1,7 +1,7 @@
 ﻿# EraByEra вЂ” Product and Historical Data Rules
 
 **Status:** Active baseline
-**Last updated:** 2026-07-18
+**Last updated:** 2026-07-19
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 
 > This document defines product behavior and historical-data invariants.
@@ -187,7 +187,22 @@ The exact thresholds must be centralized and testable, not scattered across comp
 
 ---
 
-## 12. Timeline Interaction
+## 12. Selected-Year Overview
+
+- The overview appears only when no entity selection is active; valid and unresolved typed selections retain their established detail or unresolved state.
+- Overview eligibility is derived from the selected year and generated runtime presentations, not from currently rendered map features.
+- Events, polities, and Journeys must be active; Places must be active with active importance; listed People must be alive with an active mapped relationship.
+- Active-but-unmapped entities remain eligible where the entity contract permits them, and mapped/unmapped state must be stated in text.
+- Disabled map layers do not remove historically eligible overview items. Selecting an item preserves layer filters and relies on existing selected-feature overrides.
+- Rankings use centralized comparator chains: explicit importance where available, documented display/context signals, display name, then stable ID. AI, randomness, polygon area, route length, and opaque combined scores are forbidden.
+- Overview selection uses existing typed entity references and push history while preserving year, viewport, layers, collection, and unrelated URL parameters.
+- F13 selection does not automatically move the map, enable a layer, activate a collection, or change the selected year.
+- Coverage messaging must distinguish active content, no active published records, active-but-unmapped records, disabled layers, sparse data, and collection-year mismatch without implying an absence of historical activity.
+- The foundation synthetic-fixture warning remains visible in the overview.
+
+---
+
+## 13. Timeline Interaction
 
 - Changing the selected year updates every active historical layer consistently.
 - The year shown in the UI and URL is the year used by selectors.
@@ -202,7 +217,7 @@ The exact thresholds must be centralized and testable, not scattered across comp
 
 ---
 
-## 13. Search and Permalinks
+## 14. Search and Permalinks
 
 - Search may return entities outside the currently selected year.
 - Choosing a search result moves to a relevant year and location.
@@ -214,7 +229,7 @@ The exact thresholds must be centralized and testable, not scattered across comp
 
 ---
 
-## 14. Content Editing Rules
+## 15. Content Editing Rules
 
 - Runtime app code must not contain canonical historical content.
 - Data changes should be reviewable separately from UI changes.
@@ -225,7 +240,7 @@ The exact thresholds must be centralized and testable, not scattered across comp
 
 ---
 
-## 15. Localization
+## 16. Localization
 
 Localization is not required for the first MVP, but the architecture should avoid embedding irreversible English- or Russian-only assumptions into IDs and schemas.
 
@@ -235,7 +250,7 @@ Localization is not required for the first MVP, but the architecture should avoi
 
 ---
 
-## 16. Explicitly Deferred
+## 17. Explicitly Deferred
 
 - accounts and cloud bookmarks;
 - collaborative editing;
@@ -251,7 +266,7 @@ Localization is not required for the first MVP, but the architecture should avoi
 
 ---
 
-## 17. Rule Priority
+## 18. Rule Priority
 
 When rules conflict:
 

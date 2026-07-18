@@ -1,7 +1,7 @@
 ﻿# EraByEra вЂ” Architecture
 
-**Status:** F1–F8 application, domain, static-data, map, URL-state, timeline, and first historical-entity flow implemented; later architecture proposed
-**Last updated:** 2026-07-18
+**Status:** F1–F13 application, domain, static-data, map, URL-state, historical entities, and selected-year overview implemented; later architecture proposed
+**Last updated:** 2026-07-19
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
 
@@ -90,7 +90,8 @@ erabyera/
     |-- components/
     |   |-- AppShell/AppShell.tsx
     |   |-- Timeline/       # F7 controls, input, step selector, model, styles, and tests
-    |   `-- PlaceDetails/   # F8 compact card and historical-data status UI
+    |   |-- PlaceDetails/   # F8 compact card and historical-data status UI
+    |   `-- YearOverview/   # F13 responsive contextual overview and section lists
     |-- domain/time/
     |   |-- datePrecision.ts
     |   |-- historicalYear.ts
@@ -114,6 +115,7 @@ erabyera/
     |   `-- entities.test.ts
     |-- domain/geometry/    # browser-safe GeoJSON Zod contracts
     |-- domain/places/      # F8 selectors, presentation, GeoJSON, selection, and tests
+    |-- domain/overview/    # F13 ranking, coverage/presentation model, selection, and tests
     |-- data/               # runtime schema, bundled generated-data loader, hook, and tests
     |-- map/                # basemap/camera plus F8 native historical place layers
     |-- url/                # F6 URL schemas, pure state contract, router hook, and tests
@@ -539,6 +541,20 @@ Journey presentations resolve explicit Person and Polity participants, stage-der
 Routes render between territory geometry and point layers. Centralized hit testing enforces place → person → event → journey → territory regardless of queried feature order. Journey clicks push `entity=journey:<id>` through F6 while preserving year, viewport, active layers, collection, and unrelated parameters; empty-map clearing covers only the five implemented entity types.
 
 The compact responsive Journey card presents type, activity, route availability, explicit direction status, certainty, participants, stages, related entities, uncertainty, one or two primary evidence references, source count, and deterministic journey-year actions. Pure Node tests cover activity, mapping, LineString/MultiLineString transfer, stages, relations, evidence, certainty/direction policy, visibility overrides, layer/click order, selection, and temporal behavior. Native MapLibre rendering itself remains an owner-browser check.
+
+### F13 selected-year overview flow
+
+`src/domain/overview` composes the existing F8–F12 presentation builders over the immutable generated runtime and the F6/F7 selected year. It emits a compact model containing formatted year, ranked cross-entity items, published/active/mapped/unmapped counts, active territory count, dataset identity, collection resolution, layer-filter context, synthetic-fixture warning, and an explicit empty-state classification. It contains no JSX, MapLibre objects, mutable canonical records, AI prose, or duplicate time logic.
+
+Eligibility is historical rather than map-visibility based. Events, polities, Places, and Journeys must be active; Places also require active F8 importance; People must be alive and have an active mapped relationship. Unknown-location events and active-but-unmapped polities or Journeys remain eligible. Disabled layers do not remove overview items and are retained as textual presentation state.
+
+Ranking lives in `yearOverviewRanking.ts`. Events use a documented type display order, polities and Journeys use mapped status only as a map-context signal, Places use active importance descending, and People use importance then the existing relationship priority. Every comparator finishes with display name and stable ID. Limits are events 5, polities 5, Places 5, People 5, and Journeys 4. No polygon area, route length, randomness, combined score, or array-authoring order acts as historical importance.
+
+Coverage distinguishes normal active content, no active published records, and active-but-unmapped records. Sparse foundation coverage and synthetic fixture status remain explicit. A URL collection is resolved read-only when available; its coverage note, regions, status, and selected-year inclusion are displayed without activating it or changing year/viewport. Unresolved collection IDs fail safely and remain in the URL.
+
+`YearOverviewPanel` occupies the existing contextual-card position only when no typed entity is selected and no person aggregate chooser is open. Semantic sections and lists use ordinary buttons with visible focus and textual mapped/unmapped/layer-off/confidence states. Mobile uses the same scrollable panel above the timeline. Valid and unresolved entity selections continue to suppress the overview and use their established cards.
+
+Overview selection delegates to existing typed selection constructors, pushes one history entry, and preserves year, viewport, layers, collection, and unknown parameters. F13 intentionally does not enable layers or move/focus the map; existing F8–F12 selected-feature overrides provide mapped context where available. Pure Node tests cover eligibility, ranking, limits, ties, coverage, collections, empty states, URL preservation, immutability, and prior entity-presentation regressions; rendered behavior remains an owner-browser check.
 
 ---
 

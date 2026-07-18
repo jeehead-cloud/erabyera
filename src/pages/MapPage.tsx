@@ -5,6 +5,7 @@ import { PolityDetailsCard } from '../components/PolityDetails'
 import { EventDetailsCard } from '../components/EventDetails'
 import { PersonAggregateChooser, PersonDetailsCard } from '../components/PersonDetails'
 import { JourneyDetailsCard } from '../components/JourneyDetails'
+import { YearOverviewPanel } from '../components/YearOverview'
 import { useRuntimeData } from '../data'
 import {
   PLACE_SELECTION_HISTORY_MODE,
@@ -45,6 +46,13 @@ import {
   createJourneySelection,
   selectedJourneyId,
 } from '../domain/journeys'
+import {
+  YEAR_OVERVIEW_SELECTION_HISTORY_MODE,
+  buildYearOverview,
+  createYearOverviewSelection,
+  getYearOverviewSelectionState,
+  type YearOverviewItem,
+} from '../domain/overview'
 
 export function MapPage() {
   const [mapUrlState, updateMapUrlState] = useMapUrlState()
@@ -161,6 +169,15 @@ export function MapPage() {
   const activeJourneyCount = journeyResult?.presentations.filter((journey) => journey.active).length ?? 0
   const activeMappedJourneyCount = journeyResult?.presentations.filter((journey) => journey.active && journey.geometryAvailable).length ?? 0
   const hasEmptyJourneysState = journeyResult?.error === null && journeysLayerActive && activeMappedJourneyCount === 0
+  const overviewResult = useMemo(() => {
+    if (runtimeData.status !== 'ready') return null
+    try {
+      return { presentation: buildYearOverview(runtimeData.data, mapUrlState.year, mapUrlState.activeLayers, mapUrlState.collectionId), error: null }
+    } catch (error) {
+      console.error('Selected-year overview failed safely.', error)
+      return { presentation: null, error: 'The selected-year overview could not be prepared.' }
+    }
+  }, [mapUrlState.activeLayers, mapUrlState.collectionId, mapUrlState.year, runtimeData])
   const emptyStateMessages = [
     hasEmptyPlacesState ? 'No mapped places are active.' : null,
     hasEmptyTerritoriesState ? 'No mapped territories are active.' : null,
@@ -202,6 +219,12 @@ export function MapPage() {
   }, [updateMapUrlState])
   const handleSelectJourney = useCallback((journeyId: string) => {
     updateMapUrlState({ selectedEntity: createJourneySelection(journeyId) }, { history: JOURNEY_SELECTION_HISTORY_MODE })
+  }, [updateMapUrlState])
+  const handleSelectOverviewItem = useCallback((item: YearOverviewItem) => {
+    updateMapUrlState(
+      { selectedEntity: createYearOverviewSelection(item.entityType, item.id) },
+      { history: YEAR_OVERVIEW_SELECTION_HISTORY_MODE },
+    )
   }, [updateMapUrlState])
   const handleClearOwnedSelection = useCallback(() => {
     setAggregatePlaceId(null)
@@ -248,6 +271,11 @@ export function MapPage() {
       )}
       {personResult === null || personResult.error === null ? null : <HistoricalDataStatus status="error" message={personResult.error} onRetry={runtimeData.retry} />}
       {journeyResult === null || journeyResult.error === null ? null : <HistoricalDataStatus status="error" message={journeyResult.error} onRetry={runtimeData.retry} />}
+      {overviewResult === null || overviewResult.error === null ? null : <HistoricalDataStatus status="error" message={overviewResult.error} onRetry={runtimeData.retry} />}
+      <YearOverviewPanel
+        overview={runtimeData.status === 'ready' && aggregateChooser === null && getYearOverviewSelectionState(runtimeData.data, mapUrlState.selectedEntity) === 'overview' ? overviewResult?.presentation ?? null : null}
+        onSelect={handleSelectOverviewItem}
+      />
       <PlaceDetailsCard
         place={aggregateChooser === null ? selectedPlacePresentation : null}
         unresolvedPlaceId={aggregateChooser === null ? unresolvedPlaceId : null}

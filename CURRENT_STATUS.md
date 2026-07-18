@@ -1,7 +1,7 @@
 # EraByEra — Current Status
 
-**Status:** Foundation implementation — F12 implemented; owner browser verification pending
-**Last updated:** 2026-07-18
+**Status:** Foundation implementation — F13 implemented; owner browser verification pending
+**Last updated:** 2026-07-19
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
 
@@ -12,9 +12,9 @@
 
 ## 1. Current Development Phase
 
-EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, F7 at `5c8d61e`, F8 at `3c06c6c`, F9 at `a07559f`, F10 at `2b8899b`, and F11 at `7bcaabe`. F12 — Journeys and Campaign Routes is implemented in the local working tree; owner external-browser verification remains pending.
+EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, F7 at `5c8d61e`, F8 at `3c06c6c`, F9 at `a07559f`, F10 at `2b8899b`, F11 at `7bcaabe`, and F12 at `2afcfb8`. F13 — Year Overview Panel is implemented in the local working tree; owner external-browser verification remains pending.
 
-F12 establishes selected-year finite movements through generated Journey records and canonical LineString/MultiLineString geometry using clearly synthetic data. Activity remains separate from mapping, route certainty and explicit direction remain visible, ordered stages resolve Places and Events, typed URL selection restores a compact sourced card, and F8–F11 layers remain integrated with explicit render and click priority.
+F13 establishes a deterministic selected-year synthesis panel over the generated synthetic runtime. It reuses F8–F12 presentations for active events, polities, places, mapped people, and journeys; communicates mapped, unmapped, disabled-layer, sparse, collection, and empty-coverage states; and selects existing entity cards without changing year, viewport, layer filters, collection, or unrelated URL parameters.
 
 ---
 
@@ -296,9 +296,34 @@ Validation on 2026-07-18:
 - `git diff --check`: PASS;
 - browser checks: NOT RUN — owner external-browser verification required.
 
-### F13–F18 — Planned
+### F13 — Year Overview Panel — Implemented; owner verification pending
 
-Not started. F13 — Year Overview Panel is next after owner verification confirms the F12 route flow.
+Implemented:
+
+- pure overview selectors and a compact immutable presentation model derived from the F2 selected year and existing F8–F12 presentations;
+- centralized deterministic ranking with explicit per-section limits, stable name/ID ties, Place/Person importance, relationship priority, and mapped status used only as a map-context signal;
+- active events, active polities, important active Places, alive mapped People, and active Journeys, while retaining honest unmapped and disabled-layer metadata;
+- published, active, mapped, unmapped, territory, dataset, synthetic-fixture, collection, sparse-coverage, outside-collection, no-active-record, and active-but-unmapped summaries;
+- a responsive, keyboard-operable contextual panel using semantic sections, lists, buttons, visible focus, and textual state labels;
+- push-history typed selection that preserves year, viewport, layers, collection, and unrelated parameters, with no automatic focus or layer mutation;
+- 55 new overview eligibility, ranking, limit, tie-break, coverage, empty-state, selection, URL, immutability, layer-order, and entity-flow regression tests, bringing the suite to 723 tests in 18 files.
+
+Automated and static acceptance criteria pass. Actual panel rendering, mobile scrolling, keyboard traversal, URL Back/Forward behavior, and browser console checks remain pending owner verification.
+
+Validation on 2026-07-19:
+
+- `npm run typecheck`: PASS;
+- `npm run lint`: PASS;
+- `npm run test`: PASS — 18 files, 723 tests;
+- `npm run data:validate`: PASS — 21 canonical synthetic records;
+- `npm run data:check`: PASS;
+- `npm run build`: PASS — known MapLibre chunk warning only;
+- `git diff --check`: PASS;
+- browser checks: NOT RUN — owner external-browser verification required.
+
+### F14–F18 — Planned
+
+Not started. F14 — Local Search is next after owner verification confirms the F13 overview flow.
 
 ---
 
@@ -349,6 +374,8 @@ Not started. F13 — Year Overview Panel is next after owner verification confir
 - Route direction is stated only when `directionKnown` is explicit. F12 uses card copy rather than inferred arrows or remote sprite assets; geometry coordinate order alone is not evidence of direction.
 - Journey evidence prioritizes journey-level references then stage references in authored order, deduplicates exact references, and excludes participants' general sources.
 - Historical render order is territory → journey → event → people → place and interaction priority is place → person → event → journey → territory.
+- The year overview is derived from generated runtime presentations rather than visible map features, so disabled layers do not erase active historical context. Rankings use explicit comparator chains and stable ties, never AI, randomness, polygon area, route length, or an opaque score.
+- Overview item selection uses existing typed entity references with push history and preserves the current year, viewport, layers, collection, and unrelated parameters. F13 deliberately performs no automatic focus and leaves selected-feature overrides to F8–F12.
 - All entity temporal fields reuse `src/domain/time`; no second time model exists.
 - Zod and Vitest remain the only domain validation/testing dependencies.
 
@@ -361,7 +388,7 @@ Not started. F13 — Year Overview Panel is next after owner verification confir
 - Competing temporal interpretations cannot yet coexist in canonical fixture files because the current schema has no explicit variant/claim grouping.
 - Published-source enforcement checks coverage presence, not whether the referenced source exists or is editorially adequate.
 - Fixtures are synthetic structure examples, not publishable historical data.
-- Places, territories, journeys, events, and active-place people are rendered; no playback, route animation, collection UI, search, or full entity pages exist yet.
+- Places, territories, journeys, events, active-place people, and the selected-year overview are rendered; no playback, route animation, collection UI, search, or full entity pages exist yet.
 - F10 uses representative point markers only. It does not add regional polygons, clustering, overlap cycling, or automatic map fitting.
 - Overlapping claims render separately, but F9 offers no click cycling when multiple polygons occupy the same point.
 - Natural Earth 1:110m vectors are intentionally generalized and become coarse at close zoom; F5 caps zoom at 7.
@@ -372,9 +399,9 @@ Not started. F13 — Year Overview Panel is next after owner verification confir
 
 ## 5. Nearest Next Steps
 
-1. Complete the F5–F12 owner external-browser checks for map/timeline rendering, route certainty/direction, aggregation, click priority, cards, URL restoration, and responsive layout.
-2. Review and commit F12 when ready.
-3. Begin F13 — Year Overview Panel only after browser verification confirms the route flow is stable.
+1. Complete the F5–F13 owner external-browser checks for map/timeline rendering, overview ranking and coverage, route certainty/direction, aggregation, click priority, cards, URL restoration, and responsive layout.
+2. Review and commit F13 when ready.
+3. Begin F14 — Local Search only after browser verification confirms the overview flow is stable.
 4. Keep all current historical-layer fixtures unmistakably synthetic.
 
 ---
@@ -388,6 +415,11 @@ Only report validation that actually ran.
 ---
 
 ## Recent Changes — Rolling Three-Month History
+
+### 2026-07-19 — Implemented F13 selected-year overview
+
+- Added a deterministic, coverage-aware contextual panel for active events, polities, important Places, mapped People, and Journeys using only generated synthetic runtime presentations.
+- Kept selection within existing typed URL/card contracts, added 55 pure tests, and deferred automatic focus, layer mutation, search, catalogs, and collection activation.
 
 ### 2026-07-18 — Recovered and completed F12 journeys and campaign routes
 
@@ -452,6 +484,12 @@ Only report validation that actually ran.
 ---
 
 ## Significant Changes — Permanent History
+
+### 2026-07-19 — First deterministic cross-entity year synthesis established
+
+- EraByEra can now explain a selected year through one compact model that composes existing entity presentations without generating prose or inventing a cross-domain importance score.
+- Eligibility remains historical rather than visibility-based: disabled layers and active-but-unmapped entities stay explicit, while selection preserves the complete URL context.
+- Why it matters: future search, catalogs, collections, and richer overview surfaces have a tested cross-entity pattern that remains explainable and coverage-honest.
 
 ### 2026-07-18 — First finite historical movement layer established
 

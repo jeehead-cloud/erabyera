@@ -24,6 +24,8 @@ The F11 people fixture contains three published `synthetic-*` people. At 334 BCE
 
 The F12 journey fixture contains three published `synthetic-*` finite movements. Synthetic Alpha is a default-year campaign with a schematic LineString and explicit known direction. Synthetic Beta is a later probable expedition with MultiLineString geometry and unknown direction. Synthetic Gamma is a single-year active Journey with no geometry, proving that activity and mapping are independent. Stages explicitly link synthetic Places and Events or provide an authored coordinate-only stage; no intermediate route or coordinate is generated in browser code. Journey-level references are authoritative first, followed by stage references in authored order. Participant entity sources are not copied into Journey evidence.
 
+F13 does not add or rewrite fixtures. Its selected-year overview derives published, active, mapped, and unmapped counts from the generated runtime and resolves the existing optional collection coverage metadata read-only. The UI must continue to identify this dataset as intentionally sparse synthetic foundation data; an empty overview year or geography is not evidence that no historical activity existed.
+
 `data:check` performs a read-only in-memory rebuild and fails when committed generated output is missing, extra, or stale. Schema changes require a coordinated source-data update or explicit migration; do not silently coerce old data.
 
 The browser consumes the committed generated runtime artifact, including published territory geometry, through `src/data`; application components never import editable `data/source` or `data/geometry` records.
