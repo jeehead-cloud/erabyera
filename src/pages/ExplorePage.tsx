@@ -1,32 +1,34 @@
-const plannedAreas = ['Places', 'Polities', 'People', 'Events', 'Journeys']
+import { Link, useSearchParams } from 'react-router-dom'
+import { useRuntimeData } from '../data'
+import { buildExploreLandingCounts, DEFAULT_CATALOG_YEAR } from '../domain/explore'
+import { formatHistoricalYear, isHistoricalYear } from '../domain/time'
 
 export function ExplorePage() {
+  const runtime = useRuntimeData()
+  const [params] = useSearchParams()
+  const requested = Number(params.get('year'))
+  const year = isHistoricalYear(requested) ? requested : DEFAULT_CATALOG_YEAR
+  const catalogs = runtime.status === 'ready' ? buildExploreLandingCounts(runtime.data, year) : []
   return (
-    <section className="content-page" aria-labelledby="explore-heading">
+    <section className="content-page explore-page" aria-labelledby="explore-heading">
       <div className="content-page__intro">
-        <p className="eyebrow">Discovery</p>
-        <h1 id="explore-heading">Explore history by subject</h1>
-        <p>
-          EraByEra will connect the map to browsable historical subjects. The
-          catalogs and their reviewed records arrive in later milestones.
-        </p>
+        <p className="eyebrow">Discovery</p><h1 id="explore-heading">Explore history by subject</h1>
+        <p>Browse every published historical entity, including records outside the map year, below zoom thresholds, or without reviewed geometry.</p>
       </div>
-
-      <div className="planned-section" aria-labelledby="planned-heading">
-        <h2 id="planned-heading">Planned areas</h2>
-        <ul className="planned-list">
-          {plannedAreas.map((area) => (
-            <li key={area}>
-              <span>{area}</span>
-              <span className="planned-list__status">Planned</span>
-            </li>
+      {runtime.status === 'loading' ? <div className="empty-state" role="status"><div><h2>Loading catalogs</h2><p>The immutable runtime dataset is being prepared.</p></div></div> : null}
+      {runtime.status === 'error' ? <div className="empty-state" role="alert"><div><h2>Catalogs unavailable</h2><p>{runtime.message}</p></div></div> : null}
+      {runtime.status !== 'ready' ? null : (
+        <div className="explore-entries" aria-label="Historical entity catalogs">
+          {catalogs.map((catalog) => (
+            <article key={catalog.type}>
+              <div><p className="eyebrow">{catalog.publishedCount} published</p><h2>{catalog.label}</h2><p>{catalog.description}</p></div>
+              <p>{catalog.activeCount} active at {formatHistoricalYear(year)}</p>
+              <Link className="button button--secondary" to={`/explore/${catalog.slug}?period=current&year=${year}`}>Browse {catalog.label}</Link>
+            </article>
           ))}
-        </ul>
-        <p className="planned-section__note">
-          Search, filters, catalogs, cards, and historical records are
-          intentionally outside this application-shell milestone.
-        </p>
-      </div>
+        </div>
+      )}
+      <p className="explore-page__deferred">A Sources catalog is deferred beyond F15. Full evidence is available on each entity page.</p>
     </section>
   )
 }

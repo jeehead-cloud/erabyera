@@ -6,6 +6,8 @@ import {
 } from '../../domain/journeys'
 import { formatHistoricalYear, formatHistoricalYearRange, type HistoricalYear } from '../../domain/time'
 import { RouteStages } from './RouteStages'
+import { Link } from 'react-router-dom'
+import { entityPagePath } from '../../domain/entityPages'
 import './JourneyDetailsCard.css'
 
 function names(relations: readonly ResolvedJourneyRelation[]): string {
@@ -51,6 +53,7 @@ export function JourneyDetailsCard({
         <span>{routeCertaintyLabel(journey.routeCertainty)}</span>
       </div>
       {journey.summary === undefined ? null : <p>{journey.summary}</p>}
+      <Link className="button button--secondary" to={entityPagePath('journey', journey.id)}>View full page</Link>
       <dl className="journey-details__facts">
         <div><dt>Period</dt><dd>{formatHistoricalYearRange(journey.period)}</dd></div>
         <div><dt>Route</dt><dd>{journey.geometryAvailable ? 'Reviewed route geometry available' : 'No reviewed route geometry available'}</dd></div>

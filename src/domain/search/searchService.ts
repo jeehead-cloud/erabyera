@@ -112,7 +112,7 @@ function nearestMapPeriod(
     )[0]?.period ?? null
 }
 
-function targetYear(
+export function getSearchEntryTargetYear(
   entry: SearchIndexEntry,
   variant: SearchNameVariant,
   selectedYear: HistoricalYear,
@@ -137,7 +137,7 @@ function targetYear(
   return nearestYearInTemporalRange(entry.period, selectedYear) ?? entry.period.yearFrom
 }
 
-function focusCoordinates(
+export function getSearchEntryFocusCoordinates(
   entry: SearchIndexEntry,
   year: HistoricalYear,
 ): readonly [number, number] | null {
@@ -190,7 +190,7 @@ export function searchEntities(
   const results = index.entries.flatMap((entry): SearchResult[] => {
     const match = bestMatch(entry, normalizedQuery)
     if (match === null) return []
-    const year = targetYear(entry, match.variant, currentYear)
+    const year = getSearchEntryTargetYear(entry, match.variant, currentYear)
     return [{
       entityType: entry.entityType,
       entityId: entry.entityId,
@@ -205,7 +205,7 @@ export function searchEntities(
       mapped: mappedAtYear(entry, year),
       activeAtSelectedYear: isActiveAtYear(entry.period, currentYear),
       targetYear: year,
-      focusCoordinates: focusCoordinates(entry, year),
+      focusCoordinates: getSearchEntryFocusCoordinates(entry, year),
     }]
   }).sort((first, second) =>
     MATCH_ORDER.indexOf(first.matchCategory) - MATCH_ORDER.indexOf(second.matchCategory) ||

@@ -1,6 +1,6 @@
 # EraByEra — Current Status
 
-**Status:** Foundation implementation — F14 implemented; owner browser verification pending
+**Status:** Foundation implementation — F15 implemented; owner browser verification pending
 **Last updated:** 2026-07-19
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -12,9 +12,9 @@
 
 ## 1. Current Development Phase
 
-EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, F7 at `5c8d61e`, F8 at `3c06c6c`, F9 at `a07559f`, F10 at `2b8899b`, F11 at `7bcaabe`, and F12 at `2afcfb8`. F13 and F14 are implemented in the local working tree; owner external-browser verification remains pending.
+EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, F7 at `5c8d61e`, F8 at `3c06c6c`, F9 at `a07559f`, F10 at `2b8899b`, F11 at `7bcaabe`, and F12 at `2afcfb8`. F13–F15 are implemented; owner external-browser verification remains pending.
 
-F14 adds a deterministic generated local search index and a keyboard-accessible Map overlay for all five implemented entity types. Historical Place names retain period context; selection applies one push-history update containing the target year, required layer, typed entity, and restrained point focus where supported while preserving unrelated URL state.
+F15 adds stable full-page routes for all five implemented entity types and compact Explore catalogs. Pages retain entity-specific chronology and evidence while sharing layout, sources, relations, recovery, and map navigation. Catalog filters are URL-owned, reuse F14 search and relevant-year logic, include unmapped records honestly, and never import editable data.
 
 ---
 
@@ -347,9 +347,35 @@ Validation on 2026-07-19:
 - `git diff --check`: PASS;
 - browser checks: NOT RUN — owner external-browser verification required.
 
-### F15–F18 — Planned
+### F15 — Entity Pages and Explore Catalogs — Implemented; owner verification pending
 
-Not started. F15 — Entity Pages and Explore Catalogs is next after owner verification confirms the F13–F14 discovery flows.
+Implemented:
+
+- stable `/place/:id`, `/polity/:id`, `/person/:id`, `/event/:id`, and `/journey/:id` routes with invalid, missing, loading, and runtime-error recovery;
+- a shared responsive Entity Page shell plus explicit Place, Polity, Person, Event/Battle, and Journey sections;
+- full entity-specific evidence aggregation, exact-reference deduplication, locator preservation, unresolved-source isolation, and explicit non-proximity relations;
+- functional Explore landing counts and compact `/explore/places`, `/explore/polities`, `/explore/people`, `/explore/events`, and `/explore/journeys` catalogs;
+- URL-backed current/all-period, signed year, query, and valid per-type sort state with safe canonicalization and unrelated-parameter preservation;
+- F14 generated-index search reuse, including historical Place-name match context and safe unavailable-index behavior;
+- centralized F14/F6-based `View on map` links with typed selection, relevant year, required layer, validated point focus, and unchanged default viewport for polygons, routes, and unmapped records;
+- 55 focused F15 tests, bringing the suite to 833 tests in 21 files.
+
+Automated and static acceptance criteria pass. Direct refresh, Back/Forward, rendered layouts, keyboard traversal, links, and actual map transitions remain pending owner verification in ordinary Chrome or Edge.
+
+Validation on 2026-07-19:
+
+- `npm run typecheck`: PASS;
+- `npm run lint`: PASS;
+- `npm run test`: PASS — 21 files, 833 tests;
+- `npm run data:validate`: PASS — 21 canonical synthetic records;
+- `npm run data:check`: PASS;
+- `npm run build`: PASS — known non-blocking large-chunk warning only;
+- `git diff --check`: PASS;
+- browser checks: NOT RUN — owner external-browser verification required.
+
+### F16–F18 — Planned
+
+Not started. F16 — Content Collections and Coverage is next when F15 owner browser verification is complete.
 
 ---
 
@@ -404,6 +430,9 @@ Not started. F15 — Entity Pages and Explore Catalogs is next after owner verif
 - Overview item selection uses existing typed entity references with push history and preserves the current year, viewport, layers, collection, and unrelated parameters. F13 deliberately performs no automatic focus and leaves selected-feature overrides to F8–F12.
 - Search data is a separate compact generated artifact, validated and deep-frozen against the runtime dataset version. Only authored default, historical, alias, or transliteration fields may become variants.
 - Search uses explicit exact/prefix/token-prefix/substring categories and stable comparator ties. Selection adds exactly the required layer, keeps canonical ordering, writes one push-history URL update, and focuses only deterministic Place/Event/Person points.
+- Stable entity routes resolve only against the immutable generated runtime. Full pages may reuse compact presentations for shared meaning but retain explicit entity-specific chronology, relations, and complete relevant evidence.
+- Explore catalog identity is path-owned; period, selected year, search query, and sorting are query-owned. Current-year eligibility reuses F8–F12 semantics, including alive-unmapped People, while all-period mode includes every published record.
+- Entity relation links open stable pages. `View on map` alone changes to `/map`, reusing F14 target-year and point-focus policy plus F6 serialization; polygon, route, and unknown geometry never receive fabricated focus.
 - All entity temporal fields reuse `src/domain/time`; no second time model exists.
 - Zod and Vitest remain the only domain validation/testing dependencies.
 
@@ -416,7 +445,7 @@ Not started. F15 — Entity Pages and Explore Catalogs is next after owner verif
 - Competing temporal interpretations cannot yet coexist in canonical fixture files because the current schema has no explicit variant/claim grouping.
 - Published-source enforcement checks coverage presence, not whether the referenced source exists or is editorially adequate.
 - Fixtures are synthetic structure examples, not publishable historical data.
-- Places, territories, journeys, events, active-place people, the selected-year overview, and Map-local search are rendered; no playback, route animation, collection UI, Explore catalogs, or full entity pages exist yet.
+- Places, territories, journeys, events, active-place people, the selected-year overview, Map-local search, Explore catalogs, and full entity pages are implemented; no playback, route animation, or collection UI exists yet.
 - F10 uses representative point markers only. It does not add regional polygons, clustering, overlap cycling, or automatic map fitting.
 - Overlapping claims render separately, but F9 offers no click cycling when multiple polygons occupy the same point.
 - Natural Earth 1:110m vectors are intentionally generalized and become coarse at close zoom; F5 caps zoom at 7.
@@ -427,9 +456,9 @@ Not started. F15 — Entity Pages and Explore Catalogs is next after owner verif
 
 ## 5. Nearest Next Steps
 
-1. Complete the F5–F14 owner external-browser checks for map/timeline rendering, overview/search behavior, route certainty/direction, aggregation, click priority, cards, URL restoration, and responsive layout.
-2. Review and commit F13–F14 when ready.
-3. Begin F15 — Entity Pages and Explore Catalogs only after browser verification confirms the discovery flows are stable.
+1. Complete the F5–F15 owner external-browser checks for map/timeline rendering, overview/search behavior, all Explore and entity routes, URL restoration, relation/source links, and responsive/keyboard layout.
+2. Review and commit the current discovery work when ready.
+3. Begin F16 — Content Collections and Coverage after F15 browser verification.
 4. Keep all current historical-layer fixtures unmistakably synthetic.
 
 ---
@@ -443,6 +472,11 @@ Only report validation that actually ran.
 ---
 
 ## Recent Changes — Rolling Three-Month History
+
+### 2026-07-19 — Implemented F15 entity pages and Explore catalogs
+
+- Added stable full pages for all five entity types with specialized chronology, explicit relations, full relevant evidence, safe recovery, and centralized `View on map` links.
+- Replaced the Explore placeholder with five compact URL-filtered catalogs using current/all-period eligibility, deterministic sorting, and F14 search reuse; owner browser verification remains pending.
 
 ### 2026-07-19 — Implemented F14 local historical search
 
@@ -517,6 +551,12 @@ Only report validation that actually ran.
 ---
 
 ## Significant Changes — Permanent History
+
+### 2026-07-19 — Stable public entity and non-map discovery boundary established
+
+- Every published Place, Polity, Person, Event/Battle, and Journey/Campaign now has a stable runtime-backed page, while explicit relation links stay on entity pages and map movement requires a distinct `View on map` action.
+- Explore now owns reproducible catalog filters independently from Map URL state and reuses the generated F14 index and F8–F12 activity semantics, preserving unmapped records and full evidence without a backend or duplicate content store.
+- Why it matters: future collections and external links can rely on stable non-spatial discovery while the Map remains the primary spatial surface and no geometry, relationship, or historical fact is inferred.
 
 ### 2026-07-19 — First generated cross-entity local search boundary established
 

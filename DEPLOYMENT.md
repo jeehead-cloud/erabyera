@@ -1,7 +1,7 @@
 # EraByEra — Deployment and Operations
 
 **Status:** Local application, data pipeline, and physical map foundation; not deployed
-**Last updated:** 2026-07-17
+**Last updated:** 2026-07-19
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
 
@@ -79,9 +79,9 @@ On Windows systems where PowerShell blocks `npm.ps1`, invoke the same scripts th
 
 ## 5. Client-Side Routing
 
-F1 uses React Router's `createBrowserRouter` and defines `/map`, `/explore`, and `/sources` as client-side routes. `/` redirects to `/map`, and unknown client routes render the application not-found page.
+React Router's `createBrowserRouter` defines `/map`, `/explore`, five `/explore/<catalog>` routes, `/sources`, and stable `/place/:id`, `/polity/:id`, `/person/:id`, `/event/:id`, and `/journey/:id` client-side routes. `/` redirects to `/map`, and unknown client routes render the application not-found page.
 
-A static host must rewrite unresolved application paths to `/index.html`. Without this fallback, opening or refreshing `/map`, `/explore`, or `/sources` directly may produce a host-level 404 before the application loads.
+A static host must rewrite unresolved application paths to `/index.html`. Without this fallback, opening or refreshing any Map, Explore catalog, Sources, or stable entity route directly may produce a host-level 404 before the application loads.
 
 No provider-specific rewrite file is committed because no hosting provider has been selected. Add and document the provider's fallback only when deployment is authorized.
 

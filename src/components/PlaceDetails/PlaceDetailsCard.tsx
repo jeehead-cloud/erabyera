@@ -1,5 +1,7 @@
 import { formatHistoricalYear, formatHistoricalYearRange, type HistoricalYear } from '../../domain/time'
 import type { PlacePresentation } from '../../domain/places'
+import { Link } from 'react-router-dom'
+import { entityPagePath } from '../../domain/entityPages'
 import './PlaceDetailsCard.css'
 
 interface PlaceDetailsCardProps {
@@ -62,6 +64,7 @@ export function PlaceDetailsCard({
       </div>
 
       {place.summary === undefined ? null : <p>{place.summary}</p>}
+      <Link className="button button--secondary" to={entityPagePath('place', place.id)}>View full page</Link>
 
       <dl className="place-details__facts">
         <div><dt>Existence</dt><dd>{formatHistoricalYearRange(place.existence)}</dd></div>

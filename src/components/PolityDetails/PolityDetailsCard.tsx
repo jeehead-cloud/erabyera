@@ -1,5 +1,7 @@
 import type { PolityPresentation } from '../../domain/polities'
 import { formatHistoricalYear, formatHistoricalYearRange, type HistoricalYear } from '../../domain/time'
+import { Link } from 'react-router-dom'
+import { entityPagePath } from '../../domain/entityPages'
 import './PolityDetailsCard.css'
 
 interface PolityDetailsCardProps {
@@ -50,6 +52,7 @@ export function PolityDetailsCard({
       </div>
 
       {polity.summary === undefined ? null : <p>{polity.summary}</p>}
+      <Link className="button button--secondary" to={entityPagePath('polity', polity.id)}>View full page</Link>
       <dl className="polity-details__facts">
         <div><dt>Existence</dt><dd>{formatHistoricalYearRange(polity.existence)}</dd></div>
         <div><dt>Capital</dt><dd>{polity.capitals.length === 0 ? 'No active capital recorded' : polity.capitals.map((capital) => capital.name ?? 'Referenced place unavailable').join(', ')}</dd></div>

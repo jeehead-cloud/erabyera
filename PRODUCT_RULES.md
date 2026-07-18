@@ -235,7 +235,22 @@ The exact thresholds must be centralized and testable, not scattered across comp
 
 ---
 
-## 15. Content Editing Rules
+## 15. Entity Pages and Explore Catalogs
+
+- Every published Place, Polity, Person, Event/Battle, and Journey/Campaign has one stable explicit entity-page route backed by the immutable generated runtime.
+- Relation-name links open stable entity pages. Moving to the Map requires an explicit `View on map` action; relations do not silently change year or geography.
+- Full pages show every relevant entity-specific resolved reference. Exact duplicates are removed, locator-distinct references remain, and related entities' general sources are never promoted into another entity's claims.
+- Relations come only from authored references and their deterministic inverse lookup. Geographic proximity, polygon overlap, and coordinate coincidence do not create relationships.
+- Current-year catalogs use the same activity semantics as their map/domain presentations. Places require active existence and importance; People require life activity but not a mapped relationship; polities, events, and Journeys use their active periods.
+- All-period catalogs include every published record of the requested type, including unmapped records.
+- Catalog identity belongs to the route; period mode, selected catalog year, search query, and valid type-specific sort belong to reproducible query parameters. Year zero and unsupported sorts canonicalize safely.
+- Catalog search reuses the generated F14 index and ranking, remains constrained to one entity type, and retains historical Place-name match context. Search failure must not disable unfiltered catalog browsing.
+- `View on map` reuses F14 relevant-year logic, enables the required F6 layer, and selects the typed entity. Only validated point entities receive focus; polygons, routes, and unknown locations never receive fabricated focus.
+- A missing geometry state keeps the page and catalog row useful and must not be described as proof that the entity never existed.
+
+---
+
+## 16. Content Editing Rules
 
 - Runtime app code must not contain canonical historical content.
 - Data changes should be reviewable separately from UI changes.
@@ -246,7 +261,7 @@ The exact thresholds must be centralized and testable, not scattered across comp
 
 ---
 
-## 16. Localization
+## 17. Localization
 
 Localization is not required for the first MVP, but the architecture should avoid embedding irreversible English- or Russian-only assumptions into IDs and schemas.
 
@@ -256,7 +271,7 @@ Localization is not required for the first MVP, but the architecture should avoi
 
 ---
 
-## 17. Explicitly Deferred
+## 18. Explicitly Deferred
 
 - accounts and cloud bookmarks;
 - collaborative editing;
@@ -272,7 +287,7 @@ Localization is not required for the first MVP, but the architecture should avoi
 
 ---
 
-## 18. Rule Priority
+## 19. Rule Priority
 
 When rules conflict:
 

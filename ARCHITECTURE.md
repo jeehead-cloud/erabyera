@@ -1,6 +1,6 @@
 ﻿# EraByEra вЂ” Architecture
 
-**Status:** F1–F14 application, domain, static-data, map, URL-state, historical entities, overview, and local search implemented; later architecture proposed
+**Status:** F1–F15 application, domain, static-data, map, URL-state, historical entities, overview, search, pages, and catalogs implemented; later architecture proposed
 **Last updated:** 2026-07-19
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -118,6 +118,8 @@ erabyera/
     |-- domain/places/      # F8 selectors, presentation, GeoJSON, selection, and tests
     |-- domain/overview/    # F13 ranking, coverage/presentation model, selection, and tests
     |-- domain/search/      # F14 schemas, normalization, matching/ranking, navigation, and tests
+    |-- domain/entityPages/ # F15 full-page models, stable routes, relations/evidence, and Map links
+    |-- domain/explore/     # F15 catalog eligibility, URL state, search constraint, sorting, and counts
     |-- data/               # runtime schema, bundled generated-data loader, hook, and tests
     |-- map/                # basemap/camera plus F8 native historical place layers
     |-- url/                # F6 URL schemas, pure state contract, router hook, and tests
@@ -125,6 +127,8 @@ erabyera/
     |   |-- MapPage.tsx
     |   |-- ExplorePage.tsx
     |   |-- SourcesPage.tsx
+    |   |-- EntityPage/     # shared route component with explicit per-type sections
+    |   |-- ExploreCatalogPage/
     |   `-- NotFoundPage.tsx
     `-- styles/
         |-- tokens.css
@@ -575,6 +579,22 @@ Relevant-year derivation reuses F2 inclusive activity and nearest-range helpers.
 Selection creates one F6 push update containing the target year, typed entity, and the required layer added in canonical order while preserving every active layer, collection, and unrelated parameter. Place and mapped Event/Person results may set a validated point viewport; zoom is at least 5.5, preserves a closer zoom, and remains within F5 bounds. Polity polygon and Journey route fitting are deferred. Unknown-location and target-year-unmapped results do not change the viewport.
 
 `GlobalSearch` is Map-local in F14 but reusable for a later global shell. Query and active-option state remain local React state and never enter the URL. The overlay provides a visible label, bounded `type=search` input, semantic grouped listbox/options, live status, clear/close actions, Escape, Arrow Up/Down, Home/End, Enter, touch selection, active-option ARIA, visible focus, opener focus restoration, bounded independent scrolling, and a mobile full-width presentation above the timeline. Opening search never changes the selected entity; successful selection closes it and existing F8–F12 cards respond to the single URL update.
+
+### F15 entity pages and Explore flow
+
+F15 extends the existing nested React Router with `/explore` plus five catalog routes and stable `/place/:entityId`, `/polity/:entityId`, `/person/:entityId`, `/event/:entityId`, and `/journey/:entityId` routes. All remain inside `AppShell`; there is no second router or duplicate shell. Route IDs reuse the F3 entity-ID validator, resolve against the immutable F4 runtime, and distinguish invalid parameters, valid missing IDs, runtime failure, and ordinary wildcard routes.
+
+`src/domain/entityPages` builds a discriminated full-page model for each entity type. The shared base contains identity, full period, uncertainty, resolved complete evidence, deterministic explicit relations, and map availability. Specialized models retain Place name/importance chronology, Polity territory periods and control categories, bounded PersonPlace chronology, Event/Battle structured details, and ordered Journey stages. Existing F8–F12 presentations are composed for established meaning; raw runtime records remain immutable and no JSX or router object enters the domain model.
+
+Full evidence follows entity-specific provenance: Place includes entity/name/ownership/importance references; Polity includes entity/capital/ruler/territory references; Person includes entity and bounded PersonPlace references; Event uses event-level references; Journey uses entity then stage references. Exact duplicate references are removed, locator-distinct references remain, resolved output is deterministically ordered, and unresolved IDs are isolated. Relations are derived only from authored IDs and inverse authored references, never geographic proximity.
+
+`EntityPageShell` owns breadcrumbs, one page `h1`, status badges, summary, action position, relations, sources, and data notes. Explicit specialized sections remain in the route page rather than a schema-driven universal renderer. The same semantic document layout collapses to one column on narrow screens; native links, controls, headings, lists, external-link disclosure, focus styles, and recovery actions provide the static accessibility boundary.
+
+`src/domain/explore` defines the five catalog paths, URL query model, eligibility, search constraint, sorting, counts, and compact row models. Query parameters are `period=current|all`, signed zero-free `year`, `q`, and valid per-type `sort`; unrelated parameters are preserved. Current-year mode reuses F8–F12 presentations, including Place importance and alive-unmapped Person eligibility. All-period mode includes every published runtime record. Empty queries use runtime records, non-empty queries reuse F14 matching and historical-name context, and an unavailable search artifact leaves unfiltered browsing usable.
+
+`createEntityMapHref` is the single F15 map-link boundary used by pages and catalogs. It resolves the matching generated search entry, reuses the exported F14 relevant-year and point-focus functions, enables the required layer in F6 canonical order, writes a typed selection, and serializes an ordinary `/map` URL. Only validated Place/Event/Person points focus at the restrained F14 zoom; polity polygons, Journey routes, and unmapped records preserve the default viewport.
+
+F15 tests remain pure Vitest/Node tests. They cover every entity type and route path, invalid/missing model resolution, specialization, full evidence, duplicate/unresolved references, deterministic explicit relations, immutability, catalog counts and eligibility, alive-unmapped People, historical Place-name search, entity-type constraint, safe search failure, valid sorts, query canonicalization/preservation, landing counts, and all five map-navigation contracts. Rendered direct refresh, history, responsive, keyboard, and link behavior remain owner external-browser checks.
 
 ---
 

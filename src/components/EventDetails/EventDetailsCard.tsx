@@ -2,6 +2,8 @@ import type { EventPresentation, ResolvedEventRelation } from '../../domain/even
 import { eventLocationLabel } from '../../domain/events'
 import { formatHistoricalYear, formatHistoricalYearRange, type HistoricalYear } from '../../domain/time'
 import { BattleDetails } from './BattleDetails'
+import { Link } from 'react-router-dom'
+import { entityPagePath } from '../../domain/entityPages'
 import './EventDetailsCard.css'
 
 interface EventDetailsCardProps {
@@ -51,6 +53,7 @@ export function EventDetailsCard({ event, unresolvedEventId, selectedYear, onClo
       </div>
 
       {event.summary === undefined ? null : <p>{event.summary}</p>}
+      <Link className="button button--secondary" to={entityPagePath('event', event.id)}>View full page</Link>
       <dl className="event-details__facts">
         <div><dt>Period</dt><dd>{formatHistoricalYearRange(event.period)}</dd></div>
         {event.participantPolities.length === 0 ? null : <div><dt>Polities</dt><dd>{names(event.participantPolities)}</dd></div>}

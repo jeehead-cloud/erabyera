@@ -1,15 +1,49 @@
-import type { PersonPresentation, ResolvedPersonRelation } from '../../domain/people'; import { formatHistoricalYear, formatHistoricalYearRange, type HistoricalYear } from '../../domain/time'; import './PersonDetailsCard.css'
+import { Link } from 'react-router-dom'
+import { entityPagePath } from '../../domain/entityPages'
+import type { PersonPresentation, ResolvedPersonRelation } from '../../domain/people'
+import { formatHistoricalYear, formatHistoricalYearRange, type HistoricalYear } from '../../domain/time'
+import './PersonDetailsCard.css'
+
 const names = (items: readonly ResolvedPersonRelation[]) => items.map((item) => item.name ?? 'Referenced entity unavailable').join(', ')
 const humanize = (value: string) => value.replaceAll('-', ' ')
-export function PersonDetailsCard({ person, unresolvedPersonId, selectedYear, onClose, onGoToYear }: { person: PersonPresentation | null; unresolvedPersonId: string | null; selectedYear: HistoricalYear; onClose: () => void; onGoToYear: (year: HistoricalYear) => void }) {
+
+export function PersonDetailsCard({
+  person,
+  unresolvedPersonId,
+  selectedYear,
+  onClose,
+  onGoToYear,
+}: {
+  person: PersonPresentation | null
+  unresolvedPersonId: string | null
+  selectedYear: HistoricalYear
+  onClose: () => void
+  onGoToYear: (year: HistoricalYear) => void
+}) {
   if (person === null && unresolvedPersonId === null) return null
-  if (person === null) return <aside className="person-details" aria-label="Selected person details"><header className="person-details__header"><div><p className="person-details__eyebrow">Person unavailable</p><h2>Selected person could not be resolved</h2></div><button aria-label="Close person details" className="person-details__close" onClick={onClose} type="button">&times;</button></header><p>The person reference <code>{unresolvedPersonId}</code> is valid but absent from this runtime dataset.</p></aside>
+  if (person === null) return (
+    <aside className="person-details" aria-label="Selected person details">
+      <header className="person-details__header"><div><p className="person-details__eyebrow">Person unavailable</p><h2>Selected person could not be resolved</h2></div><button aria-label="Close person details" className="person-details__close" onClick={onClose} type="button">&times;</button></header>
+      <p>The person reference <code>{unresolvedPersonId}</code> is valid but absent from this runtime dataset.</p>
+    </aside>
+  )
   const sources = person.sources.resolved.slice(0, 2)
-  return <aside className="person-details" aria-label={`Person details for ${person.displayName}`}><header className="person-details__header"><div><p className="person-details__eyebrow">Person</p><h2>{person.displayName}</h2></div><button aria-label="Close person details" className="person-details__close" onClick={onClose} type="button">&times;</button></header>
-    <div className="person-details__badges"><span>{person.roles.join(', ')}</span><span className={person.alive ? 'is-active' : 'is-inactive'}>{person.alive ? `Alive in ${formatHistoricalYear(selectedYear)}` : `Outside life in ${formatHistoricalYear(selectedYear)}`}</span><span>{person.mapped ? 'Active mapped relationship' : person.alive ? 'Alive · unmapped' : 'No current marker'}</span></div>
-    {person.summary === undefined ? null : <p>{person.summary}</p>}<dl className="person-details__facts"><div><dt>Life</dt><dd>{formatHistoricalYearRange(person.life)}</dd></div>{person.activeLocations.map((location) => <div key={`${location.relationType}:${location.placeId}`}><dt>{humanize(location.relationType)}</dt><dd>{location.placeName ?? 'Referenced place unavailable'}{location.placeUncertainty === undefined ? '' : ` · ${humanize(location.placeUncertainty.locationAccuracy)}`}{location.relationshipUncertainty === undefined ? '' : ` · ${humanize(location.relationshipUncertainty.confidence)} relationship confidence`}</dd></div>)}{person.associatedPolities.length === 0 ? null : <div><dt>Polities</dt><dd>{names(person.associatedPolities)}</dd></div>}{person.relatedEvents.length === 0 ? null : <div><dt>Events</dt><dd>{names(person.relatedEvents)}</dd></div>}{person.relatedJourneys.length === 0 ? null : <div><dt>Journeys</dt><dd>{names(person.relatedJourneys)}</dd></div>}</dl>
-    {person.alive && !person.mapped ? <div className="person-details__notice"><p>This person is alive in the selected year but has no active reviewed map relationship. No former or invented location is shown.</p>{person.nearestMappedYear === null ? null : <button onClick={() => onGoToYear(person.nearestMappedYear!)} type="button">Go to nearest mapped year</button>}</div> : null}
-    {!person.alive ? <div className="person-details__notice"><p>This selected year is outside the person’s life range. The card remains inspectable without a current marker.</p><button onClick={() => onGoToYear(person.firstLifeYear)} type="button">Go to first life year</button>{person.nearestLifeYear === null || person.nearestLifeYear === person.firstLifeYear ? null : <button onClick={() => onGoToYear(person.nearestLifeYear!)} type="button">Go to nearest life year</button>}{person.nearestMappedYear === null ? null : <button onClick={() => onGoToYear(person.nearestMappedYear!)} type="button">Go to nearest mapped year</button>}</div> : null}
-    <section className="person-details__sources"><h3>Sources ({person.sources.resolved.length})</h3>{sources.length === 0 ? <p>No resolved source is available.</p> : <ol>{sources.map(({ source, reference }) => <li key={[source.id, reference.locator].join(':')}>{source.url === undefined ? source.title : <a href={source.url} rel="noreferrer" target="_blank">{source.title}</a>}{reference.locator === undefined ? null : <span>{reference.locator}</span>}</li>)}</ol>}{person.sources.unresolvedSourceIds.length === 0 ? null : <p>Some referenced sources could not be resolved.</p>}</section>
-  </aside>
+  return (
+    <aside className="person-details" aria-label={`Person details for ${person.displayName}`}>
+      <header className="person-details__header"><div><p className="person-details__eyebrow">Person</p><h2>{person.displayName}</h2></div><button aria-label="Close person details" className="person-details__close" onClick={onClose} type="button">&times;</button></header>
+      <div className="person-details__badges"><span>{person.roles.join(', ')}</span><span className={person.alive ? 'is-active' : 'is-inactive'}>{person.alive ? `Alive in ${formatHistoricalYear(selectedYear)}` : `Outside life in ${formatHistoricalYear(selectedYear)}`}</span><span>{person.mapped ? 'Active mapped relationship' : person.alive ? 'Alive В· unmapped' : 'No current marker'}</span></div>
+      {person.summary === undefined ? null : <p>{person.summary}</p>}
+      <Link className="button button--secondary" to={entityPagePath('person', person.id)}>View full page</Link>
+      <dl className="person-details__facts">
+        <div><dt>Life</dt><dd>{formatHistoricalYearRange(person.life)}</dd></div>
+        {person.activeLocations.map((location) => <div key={`${location.relationType}:${location.placeId}`}><dt>{humanize(location.relationType)}</dt><dd>{location.placeName ?? 'Referenced place unavailable'}{location.placeUncertainty === undefined ? '' : ` В· ${humanize(location.placeUncertainty.locationAccuracy)}`}{location.relationshipUncertainty === undefined ? '' : ` В· ${humanize(location.relationshipUncertainty.confidence)} relationship confidence`}</dd></div>)}
+        {person.associatedPolities.length === 0 ? null : <div><dt>Polities</dt><dd>{names(person.associatedPolities)}</dd></div>}
+        {person.relatedEvents.length === 0 ? null : <div><dt>Events</dt><dd>{names(person.relatedEvents)}</dd></div>}
+        {person.relatedJourneys.length === 0 ? null : <div><dt>Journeys</dt><dd>{names(person.relatedJourneys)}</dd></div>}
+      </dl>
+      {person.alive && !person.mapped ? <div className="person-details__notice"><p>This person is alive in the selected year but has no active reviewed map relationship. No former or invented location is shown.</p>{person.nearestMappedYear === null ? null : <button onClick={() => onGoToYear(person.nearestMappedYear!)} type="button">Go to nearest mapped year</button>}</div> : null}
+      {!person.alive ? <div className="person-details__notice"><p>This selected year is outside the personвЂ™s life range. The card remains inspectable without a current marker.</p><button onClick={() => onGoToYear(person.firstLifeYear)} type="button">Go to first life year</button>{person.nearestLifeYear === null || person.nearestLifeYear === person.firstLifeYear ? null : <button onClick={() => onGoToYear(person.nearestLifeYear!)} type="button">Go to nearest life year</button>}{person.nearestMappedYear === null ? null : <button onClick={() => onGoToYear(person.nearestMappedYear!)} type="button">Go to nearest mapped year</button>}</div> : null}
+      <section className="person-details__sources"><h3>Sources ({person.sources.resolved.length})</h3>{sources.length === 0 ? <p>No resolved source is available.</p> : <ol>{sources.map(({ source, reference }) => <li key={[source.id, reference.locator].join(':')}>{source.url === undefined ? source.title : <a href={source.url} rel="noreferrer" target="_blank">{source.title}</a>}{reference.locator === undefined ? null : <span>{reference.locator}</span>}</li>)}</ol>}{person.sources.unresolvedSourceIds.length === 0 ? null : <p>Some referenced sources could not be resolved.</p>}</section>
+    </aside>
+  )
 }
