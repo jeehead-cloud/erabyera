@@ -2,6 +2,26 @@
   "datasetVersion": "foundation-fixture-0.1.0",
   "records": [
     {
+      "id": "alexanders-world",
+      "name": "Alexander’s World",
+      "relatedIds": [
+        "synthetic-alpha-battle",
+        "synthetic-alpha-event",
+        "synthetic-alpha-journey",
+        "synthetic-alpha-person",
+        "synthetic-alpha-place",
+        "synthetic-alpha-polity",
+        "synthetic-beta-person",
+        "synthetic-beta-place",
+        "synthetic-beta-polity",
+        "synthetic-gamma-person",
+        "synthetic-unknown-event"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "collections"
+    },
+    {
       "id": "synthetic-alpha-battle",
       "name": "Synthetic Alpha Battle",
       "relatedIds": [

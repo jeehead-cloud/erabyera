@@ -219,7 +219,7 @@ describe('journey overview eligibility and ranking', () => {
 describe('coverage, collection, and empty-state taxonomy', () => {
   it('reports exact published, active, mapped, unmapped, and territory counts', () => {
     const coverage = buildYearOverview(data, -334, allLayers, null).coverage
-    expect(coverage.totalPublishedRecords).toBe(19)
+    expect(coverage.totalPublishedRecords).toBe(20)
     expect(coverage.entities.events).toEqual({ published: 3, active: 2, mapped: 2, unmapped: 0 })
     expect(coverage.activeTerritories).toBe(2)
   })
@@ -232,9 +232,18 @@ describe('coverage, collection, and empty-state taxonomy', () => {
   })
 
   it('resolves collection coverage without changing year or viewport', () => {
-    const overview = buildYearOverview(data, -334, allLayers, 'synthetic-alpha-collection')
-    expect(overview.collection).toMatchObject({ state: 'resolved', name: 'Synthetic Alpha Collection', inSelectedYear: true })
-    expect(overview.collection.detailedRegions).toEqual(['Synthetic Alpha Region'])
+    const global = buildYearOverview(data, -334, allLayers, null)
+    const overview = buildYearOverview(data, -334, allLayers, 'alexanders-world')
+    expect(overview.collection).toMatchObject({
+      state: 'resolved', name: 'Alexander’s World', inSelectedYear: true,
+      completeness: 'foundation-preview', membershipKind: 'synthetic-demonstration', linkedTotal: 11, linkedActive: 10,
+    })
+    expect(overview.collection.detailedRegions).toContain('Macedonia')
+    expect(overview.events).toEqual(global.events)
+    expect(overview.polities).toEqual(global.polities)
+    expect(overview.places).toEqual(global.places)
+    expect(overview.people).toEqual(global.people)
+    expect(overview.journeys).toEqual(global.journeys)
   })
 
   it('handles an unresolved collection safely', () => {

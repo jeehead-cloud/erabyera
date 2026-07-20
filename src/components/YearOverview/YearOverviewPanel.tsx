@@ -43,6 +43,7 @@ export function YearOverviewPanel({
         {collection.state === 'resolved' ? (
           <>
             <p><strong>{collection.coverageStatus} collection coverage.</strong> {collection.coverageNote}</p>
+            <p><strong>{collection.completeness?.replaceAll('-', ' ')}.</strong> {collection.linkedActive} of {collection.linkedTotal} linked foundation demonstrations are active at this year. The overview itself remains global and is not filtered to collection membership.</p>
             {collection.detailedRegions.length === 0 ? null : <p>Detailed regions: {collection.detailedRegions.join(', ')}.</p>}
             {collection.partialRegions.length === 0 ? null : <p>Partial regions: {collection.partialRegions.join(', ')}.</p>}
             {collection.inSelectedYear === false ? <p>The selected year is outside this collection's coverage period.</p> : null}

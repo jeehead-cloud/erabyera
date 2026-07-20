@@ -175,6 +175,11 @@ describe('map layer URL contract', () => {
 })
 
 describe('entity and collection URL references', () => {
+  it('keeps a collection Map state explicit even when its values equal defaults', () => {
+    expect(serializeMapUrlState({ ...DEFAULT_MAP_URL_STATE, collectionId: 'alexanders-world' }).toString()).toBe(
+      'year=-334&lat=37&lng=28&zoom=3.5&layers=territories%2Cplaces%2Cpeople%2Cevents%2Cjourneys&collection=alexanders-world',
+    )
+  })
   it('parses a valid selected entity', () => {
     expect(parseMapUrlState('?entity=event:sample-event').selectedEntity)
       .toEqual({ type: 'event', id: 'sample-event' })

@@ -7,6 +7,7 @@ import { PersonAggregateChooser, PersonDetailsCard } from '../components/PersonD
 import { JourneyDetailsCard } from '../components/JourneyDetails'
 import { YearOverviewPanel } from '../components/YearOverview'
 import { GlobalSearch } from '../components/GlobalSearch'
+import { ActiveCollectionBadge } from '../components/ActiveCollectionBadge'
 import { loadBundledSearchIndex, useRuntimeData } from '../data'
 import {
   PLACE_SELECTION_HISTORY_MODE,
@@ -59,6 +60,12 @@ import {
   createSearchNavigationUpdate,
   type SearchResult,
 } from '../domain/search'
+import {
+  buildActiveCollectionPresentation,
+  collectionRecommendedMapUpdate,
+  COLLECTION_NAVIGATION_HISTORY_MODE,
+  leaveCollectionUpdate,
+} from '../domain/collections'
 
 export function MapPage() {
   const [mapUrlState, updateMapUrlState] = useMapUrlState()
@@ -195,6 +202,10 @@ export function MapPage() {
       return { presentation: null, error: 'The selected-year overview could not be prepared.' }
     }
   }, [mapUrlState.activeLayers, mapUrlState.collectionId, mapUrlState.year, runtimeData])
+  const activeCollection = useMemo(() => {
+    if (runtimeData.status !== 'ready' || mapUrlState.collectionId === null) return null
+    return buildActiveCollectionPresentation(runtimeData.data, mapUrlState.collectionId, mapUrlState.year, mapUrlState)
+  }, [mapUrlState, runtimeData])
   const emptyStateMessages = [
     hasEmptyPlacesState ? 'No mapped places are active.' : null,
     hasEmptyTerritoriesState ? 'No mapped territories are active.' : null,
@@ -259,6 +270,13 @@ export function MapPage() {
       )
     }
   }, [selectedEvent, selectedJourney, selectedPerson, selectedPlace, selectedPolity, updateMapUrlState])
+  const handleResetCollection = useCallback(() => {
+    if (activeCollection?.state !== 'resolved') return
+    updateMapUrlState(collectionRecommendedMapUpdate(activeCollection.collection), { history: COLLECTION_NAVIGATION_HISTORY_MODE })
+  }, [activeCollection, updateMapUrlState])
+  const handleLeaveCollection = useCallback(() => {
+    updateMapUrlState(leaveCollectionUpdate(), { history: COLLECTION_NAVIGATION_HISTORY_MODE })
+  }, [updateMapUrlState])
 
   return (
     <section className="map-page" aria-labelledby="map-heading">
@@ -285,6 +303,7 @@ export function MapPage() {
         selectedYear={mapUrlState.year}
         onSelect={handleSelectSearchResult}
       />
+      <ActiveCollectionBadge presentation={activeCollection} selectedYear={mapUrlState.year} onReset={handleResetCollection} onLeave={handleLeaveCollection} />
       {runtimeData.status === 'loading' ? <HistoricalDataStatus status="loading" /> : null}
       {runtimeData.status === 'error' ? (
         <HistoricalDataStatus status="error" message={runtimeData.message} onRetry={runtimeData.retry} />

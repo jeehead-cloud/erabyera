@@ -1,0 +1,24 @@
+.collections-page,.collection-page { color: var(--text-ink); background: var(--surface-paper); }
+.collection-list { display: grid; gap: var(--space-5); max-width: 64rem; margin-top: var(--space-7); }
+.collection-card,.collection-section { padding: var(--space-5); background: var(--surface-paper-raised); border: 1px solid var(--border-paper); border-radius: var(--radius-lg); }
+.collection-card { display: grid; gap: var(--space-4); }
+.collection-card h2,.collection-card p,.collection-section h2,.collection-section h3,.collection-section p { margin-top: 0; }
+.collection-facts { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: var(--space-3); margin: 0; }
+.collection-facts div { min-width: 0; }
+.collection-facts dt { color: var(--text-ink-faint); font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; }
+.collection-facts dd { margin: var(--space-1) 0 0; overflow-wrap: anywhere; }
+.collection-notice,.collection-section--notice { color: var(--text-ink-muted); border-color: var(--brass-300); background: var(--accent-primary-soft); }
+.collection-actions,.collection-member-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.collection-page { min-height: calc(100vh - 4.05rem); padding: clamp(var(--space-6),6vw,5rem) clamp(var(--space-5),8vw,8rem); }
+.collection-page__header { display: flex; max-width: 70rem; align-items: flex-start; justify-content: space-between; gap: var(--space-5); margin: var(--space-5) 0; }
+.collection-page__header > div { max-width: 48rem; }
+.collection-badges { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-2) 0 var(--space-4); }
+.collection-badges span { padding: .2rem .55rem; border: 1px solid var(--border-paper-strong); border-radius: 999px; font-size: var(--text-xs); }
+.collection-section { max-width: 70rem; margin: var(--space-4) 0; }
+.collection-region-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); max-width: 70rem; }
+.collection-region-grid .collection-section { margin: 0; }
+.collection-member-group { margin-top: var(--space-5); }
+.collection-member-group ul { display: grid; gap: var(--space-2); padding: 0; list-style: none; }
+.collection-member-group li { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-3); border: 1px solid var(--border-paper); border-radius: var(--radius-md); }
+.collection-member-group span { display: block; margin-top: .2rem; color: var(--text-ink-muted); font-size: var(--text-xs); }
+@media (max-width:720px){.collection-page{min-height:calc(100vh - 7.05rem);padding:var(--space-5)}.collection-page__header{flex-direction:column}.collection-facts,.collection-region-grid{grid-template-columns:1fr}.collection-member-group li{align-items:flex-start;flex-direction:column}.collection-actions .button{width:100%}}

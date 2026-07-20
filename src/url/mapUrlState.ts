@@ -268,28 +268,29 @@ function sameLayers(
 }
 
 function appendKnownMapParameters(params: URLSearchParams, state: MapUrlState): void {
-  if (state.year !== DEFAULT_MAP_URL_STATE.year) {
+  const collectionStateIsExplicit = state.collectionId !== null
+  if (collectionStateIsExplicit || state.year !== DEFAULT_MAP_URL_STATE.year) {
     params.append('year', String(state.year))
   }
   if (
-    roundForUrl(state.latitude, MAP_URL_COORDINATE_PRECISION) !==
+    collectionStateIsExplicit || roundForUrl(state.latitude, MAP_URL_COORDINATE_PRECISION) !==
     DEFAULT_MAP_URL_STATE.latitude
   ) {
     params.append('lat', formatForUrl(state.latitude, MAP_URL_COORDINATE_PRECISION))
   }
   if (
-    roundForUrl(state.longitude, MAP_URL_COORDINATE_PRECISION) !==
+    collectionStateIsExplicit || roundForUrl(state.longitude, MAP_URL_COORDINATE_PRECISION) !==
     DEFAULT_MAP_URL_STATE.longitude
   ) {
     params.append('lng', formatForUrl(state.longitude, MAP_URL_COORDINATE_PRECISION))
   }
   if (
-    roundForUrl(state.zoom, MAP_URL_ZOOM_PRECISION) !==
+    collectionStateIsExplicit || roundForUrl(state.zoom, MAP_URL_ZOOM_PRECISION) !==
     DEFAULT_MAP_URL_STATE.zoom
   ) {
     params.append('zoom', formatForUrl(state.zoom, MAP_URL_ZOOM_PRECISION))
   }
-  if (!sameLayers(state.activeLayers, DEFAULT_ACTIVE_MAP_LAYERS)) {
+  if (collectionStateIsExplicit || !sameLayers(state.activeLayers, DEFAULT_ACTIVE_MAP_LAYERS)) {
     params.append('layers', state.activeLayers.join(','))
   }
   if (state.selectedEntity !== null) {

@@ -20,6 +20,7 @@ import type {
   YearOverviewItem,
   YearOverviewPresentation,
 } from './yearOverviewPresentation'
+import { getCollectionCounts, getCollectionMembers } from '../collections'
 
 const FOUNDATION_FIXTURE_WARNING = 'Foundation demonstration dataset. Sparse coverage is intentional and does not represent the absence of historical activity.'
 
@@ -38,14 +39,17 @@ function resolveCollection(
 ): YearOverviewCollection {
   if (collectionId === null) return {
     state: 'none', id: null, name: null, coverageStatus: null, coverageNote: null,
-    detailedRegions: [], partialRegions: [], inSelectedYear: null,
+    detailedRegions: [], partialRegions: [], inSelectedYear: null, completeness: null,
+    linkedTotal: 0, linkedActive: 0, membershipKind: null,
   }
   const collection = dataset.collections.find((candidate) => candidate.id === collectionId)
   if (collection === undefined) return {
     state: 'unresolved', id: collectionId, name: null, coverageStatus: null,
     coverageNote: 'The collection in this URL is not available in the current runtime dataset.',
-    detailedRegions: [], partialRegions: [], inSelectedYear: null,
+    detailedRegions: [], partialRegions: [], inSelectedYear: null, completeness: null,
+    linkedTotal: 0, linkedActive: 0, membershipKind: null,
   }
+  const counts = getCollectionCounts(getCollectionMembers(dataset, collection, year))
   return {
     state: 'resolved',
     id: collection.id,
@@ -55,6 +59,10 @@ function resolveCollection(
     detailedRegions: collection.coverage.detailedRegions,
     partialRegions: collection.coverage.partialRegions,
     inSelectedYear: isActiveAtYear(collection.coverage.timeRange, year),
+    completeness: collection.completeness,
+    linkedTotal: counts.total,
+    linkedActive: counts.active,
+    membershipKind: collection.membershipKind,
   }
 }
 

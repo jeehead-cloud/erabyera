@@ -1,7 +1,7 @@
 # EraByEra — Product Structure
 
 **Status:** Approved product baseline  
-**Last updated:** 2026-07-12  
+**Last updated:** 2026-07-20
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`  
 **Local repository path:** `C:\Projects\erabyera`
 
@@ -226,7 +226,7 @@ The map remains visually dominant. On mobile, the right panel becomes a bottom s
 
 - year: 334 BCE;
 - viewport: Eastern Mediterranean;
-- active collection: Alexander’s World;
+- no collection is activated silently; Alexander’s World is available through Collections and its recommended Map action;
 - core historical layers enabled;
 - a short data-coverage explanation available without blocking exploration.
 

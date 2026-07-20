@@ -1,7 +1,7 @@
 ﻿# EraByEra вЂ” Architecture
 
-**Status:** F1–F15 application, domain, static-data, map, URL-state, historical entities, overview, search, pages, and catalogs implemented; later architecture proposed
-**Last updated:** 2026-07-19
+**Status:** F1–F16 application, domain, static-data, map, URL-state, historical entities, overview, search, pages, catalogs, collections, and coverage implemented; later architecture proposed
+**Last updated:** 2026-07-20
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
 
@@ -120,6 +120,7 @@ erabyera/
     |-- domain/search/      # F14 schemas, normalization, matching/ranking, navigation, and tests
     |-- domain/entityPages/ # F15 full-page models, stable routes, relations/evidence, and Map links
     |-- domain/explore/     # F15 catalog eligibility, URL state, search constraint, sorting, and counts
+    |-- domain/collections/ # F16 membership, coverage, counts, inverse lookup, and navigation
     |-- data/               # runtime schema, bundled generated-data loader, hook, and tests
     |-- map/                # basemap/camera plus F8 native historical place layers
     |-- url/                # F6 URL schemas, pure state contract, router hook, and tests
@@ -595,6 +596,20 @@ Full evidence follows entity-specific provenance: Place includes entity/name/own
 `createEntityMapHref` is the single F15 map-link boundary used by pages and catalogs. It resolves the matching generated search entry, reuses the exported F14 relevant-year and point-focus functions, enables the required layer in F6 canonical order, writes a typed selection, and serializes an ordinary `/map` URL. Only validated Place/Event/Person points focus at the restrained F14 zoom; polity polygons, Journey routes, and unmapped records preserve the default viewport.
 
 F15 tests remain pure Vitest/Node tests. They cover every entity type and route path, invalid/missing model resolution, specialization, full evidence, duplicate/unresolved references, deterministic explicit relations, immutability, catalog counts and eligibility, alive-unmapped People, historical Place-name search, entity-type constraint, safe search failure, valid sorts, query canonicalization/preservation, landing counts, and all five map-navigation contracts. Rendered direct refresh, history, responsive, keyboard, and link behavior remain owner external-browser checks.
+
+### F16 content collection and coverage flow
+
+F16 finalizes ContentCollection as canonical generated data rather than a React-only model. In addition to its period, recommended year/viewport, authored regional lists, grouped entity IDs, and provenance, each collection carries canonical recommended layers, an explicitly non-historical product focus bounding box, public/internal visibility, completeness, membership kind, and structured missing-content categories. Validation rejects duplicate membership, regions, layers, and missing categories; layer order is canonical, coverage and collection periods must match, and recommended years remain inside closed zero-free periods.
+
+`alexanders-world` is the single public collection. It is a published `foundation-preview` shell for 360–300 BCE with a 334 BCE Eastern Mediterranean recommendation. Its 11 linked records are explicitly `synthetic-demonstration` members supported only as fixtures, never represented as genuine historical members. `synthetic-alpha-collection` remains published in the runtime solely as an internal compatibility fixture and is excluded by the visibility selector, not by an ID check. Reviewed historical membership and evidence remain F17 work.
+
+`src/domain/collections` resolves public/detail records, explicit membership, deterministic type groups, inverse membership, active/mapped counts, inclusive period state, and conservative viewport state. The single broad focus bounds classify only whether the viewport center remains within the authored content-focus extent. They are not rendered, do not classify detailed versus partial subregions, and are never described as a historical border. Coverage output is pure presentation data with deterministic authored messaging and no JSX or MapLibre objects.
+
+The nested router adds `/collections` and `/collections/:collectionId`. Activation from either page serializes one explicit `/map` URL containing year, viewport, canonical layers, and `collection`, while clearing unrelated entity selection. A valid Map collection opens a compact accessible details panel; an unresolved valid ID remains visible in the URL with an explicit Clear action. Reset reapplies the collection recommendation in one push update. Leave removes only `collection` and preserves year, viewport, layers, selection, hash, and unrelated query parameters.
+
+Collection state remains context, not filtering. F13 Year Overview still derives global selected-year content and now adds linked demonstration counts, period state, and completeness. Entity pages derive inverse membership only from explicit linked IDs and label synthetic demonstration membership. Individual collection-member Map links reuse F15 navigation with the collection recommendation as their base, retaining the collection ID. Local expanded/collapsed panel state is the only new component state; no global store, backend, geospatial dependency, polygon, or browser-side canonical content was added.
+
+Pure Vitest coverage exercises the public/internal boundary, schema rejection, explicit membership and inverse membership, grouped and active/mapped counts, inclusive period edges, product-focus classification, unresolved IDs, explicit recommended URLs, selection clearing, Leave preservation, global Year Overview behavior, and server-rendered valid/unresolved badge states. Direct refresh, responsive layout, actual Map panel coexistence, interaction, and keyboard behavior remain owner external-browser checks.
 
 ---
 

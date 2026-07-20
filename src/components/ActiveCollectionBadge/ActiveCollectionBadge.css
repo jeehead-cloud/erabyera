@@ -1,0 +1,11 @@
+.active-collection { position:absolute; z-index:5; top:6.5rem; left:clamp(1.25rem,3vw,2.5rem); width:min(22rem,calc(100% - 2.5rem)); color:var(--text-ink); background:rgba(251,246,234,.97); border:1px solid var(--border-paper-strong); border-radius:var(--radius-lg); box-shadow:0 .5rem 1.5rem rgba(28,22,17,.25); }
+.active-collection summary { min-height:2.75rem; padding:var(--space-3) var(--space-4); cursor:pointer; }
+.active-collection summary span,.active-collection summary small { display:block; }
+.active-collection summary small { margin-top:.15rem; color:var(--text-ink-muted); }
+.active-collection__body { display:grid; gap:var(--space-2); padding:0 var(--space-4) var(--space-4); border-top:1px solid var(--border-paper); }
+.active-collection__body p { margin:var(--space-2) 0 0; font-size:var(--text-xs); line-height:1.45; }
+.active-collection__actions { display:grid; gap:var(--space-2); margin-top:var(--space-2); }
+.active-collection__actions .button { width:100%; }
+.active-collection--warning { padding:var(--space-4); }
+.active-collection--warning p { font-size:var(--text-xs); }
+@media(max-width:720px){.active-collection{top:6.5rem;right:var(--space-3);bottom:auto;left:var(--space-3);width:auto;max-height:30%;overflow:auto}}

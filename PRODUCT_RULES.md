@@ -1,7 +1,7 @@
 ﻿# EraByEra вЂ” Product and Historical Data Rules
 
 **Status:** Active baseline
-**Last updated:** 2026-07-19
+**Last updated:** 2026-07-20
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 
 > This document defines product behavior and historical-data invariants.
@@ -250,7 +250,25 @@ The exact thresholds must be centralized and testable, not scattered across comp
 
 ---
 
-## 16. Content Editing Rules
+## 16. Content Collections and Coverage
+
+- A collection is a curated authored content scope, not a bookmark or an automatic Map filter. Membership comes only from grouped linked IDs; year, geography, proximity, participants, and names never infer membership.
+- The active collection belongs to Map URL state. When present, year, viewport, layers, and collection parameters remain explicit even when values match defaults.
+- Opening a collection's recommended Map state sets its authored year, viewport, canonical layers, and ID in one push update and clears unrelated entity selection.
+- Reset to recommended view is explicit and reapplies those defaults. Leave removes only `collection` and preserves year, viewport, layers, selection, and unrelated parameters.
+- A missing valid collection ID remains in the URL, fails safely, and offers explicit clearing; it is never silently replaced.
+- Editorial publication, public/internal visibility, geographic coverage status, implementation completeness, and membership kind are separate concepts.
+- The authored collection period and coverage period must match; the recommended year must lie inside that shared inclusive range.
+- `alexanders-world` is a public foundation-preview shell. Its current linked entities are labeled synthetic foundation demonstrations and are not historical members; reviewed membership is reserved for F17.
+- `synthetic-alpha-collection` remains an internal runtime fixture and is excluded publicly through authored visibility metadata.
+- Coverage regions and gaps are authored. The F16 focus bounds are conservative content-navigation metadata, are never drawn, and must not be called a historical border.
+- Outside-period and outside-focus warnings never imply historical inactivity. Sparse or absent records describe dataset coverage only; the physical map remains operable everywhere.
+- Year Overview remains global. Collection name, period status, completeness, and linked counts provide context without filtering map layers or overview eligibility.
+- Entity-to-collection relations are deterministic inverses of explicit membership. Member `View on map` retains collection context only when invoked from that collection.
+
+---
+
+## 17. Content Editing Rules
 
 - Runtime app code must not contain canonical historical content.
 - Data changes should be reviewable separately from UI changes.
@@ -261,7 +279,7 @@ The exact thresholds must be centralized and testable, not scattered across comp
 
 ---
 
-## 17. Localization
+## 18. Localization
 
 Localization is not required for the first MVP, but the architecture should avoid embedding irreversible English- or Russian-only assumptions into IDs and schemas.
 
@@ -271,7 +289,7 @@ Localization is not required for the first MVP, but the architecture should avoi
 
 ---
 
-## 18. Explicitly Deferred
+## 19. Explicitly Deferred
 
 - accounts and cloud bookmarks;
 - collaborative editing;
@@ -287,7 +305,7 @@ Localization is not required for the first MVP, but the architecture should avoi
 
 ---
 
-## 19. Rule Priority
+## 20. Rule Priority
 
 When rules conflict:
 

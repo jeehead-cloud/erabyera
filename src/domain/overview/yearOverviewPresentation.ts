@@ -58,6 +58,10 @@ export interface YearOverviewCollection {
   detailedRegions: readonly string[]
   partialRegions: readonly string[]
   inSelectedYear: boolean | null
+  completeness: RuntimeDataset['collections'][number]['completeness'] | null
+  linkedTotal: number
+  linkedActive: number
+  membershipKind: RuntimeDataset['collections'][number]['membershipKind'] | null
 }
 
 export interface YearOverviewPresentation {

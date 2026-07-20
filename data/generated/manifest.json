@@ -3,7 +3,7 @@
     "minimumRuntimeSchemaVersion": 1
   },
   "counts": {
-    "collections": 1,
+    "collections": 2,
     "events": 3,
     "journeys": 3,
     "people": 3,
@@ -23,7 +23,7 @@
   ],
   "fingerprint": {
     "algorithm": "sha256",
-    "value": "25dfb3d4641b0510ccb084c0155ea479162320f0a5d70da403cc290812ee8551"
+    "value": "9a50ed5aef325e34118c7d7d7e4b043a9dff2e5338cbd0f1e05e5801e7a466a9"
   },
   "geometryCounts": {
     "journeys": 2,

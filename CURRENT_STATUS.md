@@ -1,7 +1,7 @@
 # EraByEra — Current Status
 
-**Status:** Foundation implementation — F15 implemented; owner browser verification pending
-**Last updated:** 2026-07-19
+**Status:** Foundation implementation — F16 implemented; owner browser verification pending
+**Last updated:** 2026-07-20
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
 
@@ -12,9 +12,11 @@
 
 ## 1. Current Development Phase
 
-EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, F7 at `5c8d61e`, F8 at `3c06c6c`, F9 at `a07559f`, F10 at `2b8899b`, F11 at `7bcaabe`, and F12 at `2afcfb8`. F13–F15 are implemented; owner external-browser verification remains pending.
+EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, F7 at `5c8d61e`, F8 at `3c06c6c`, F9 at `a07559f`, F10 at `2b8899b`, F11 at `7bcaabe`, and F12 at `2afcfb8`. F13–F16 are implemented; owner external-browser verification remains pending.
 
 F15 adds stable full-page routes for all five implemented entity types and compact Explore catalogs. Pages retain entity-specific chronology and evidence while sharing layout, sources, relations, recovery, and map navigation. Catalog filters are URL-owned, reuse F14 search and relevant-year logic, include unmapped records honestly, and never import editable data.
+
+F16 adds the public `Alexander's World` collection shell, explicit synthetic-demonstration membership, coverage/time/focus communication, stable collection routes, recommended Map activation, a URL-backed active-collection panel, distinct Reset and Leave behavior, and collection context in Year Overview and entity pages. No reviewed F17 historical record or geometry was added.
 
 ---
 
@@ -373,9 +375,37 @@ Validation on 2026-07-19:
 - `git diff --check`: PASS;
 - browser checks: NOT RUN — owner external-browser verification required.
 
-### F16–F18 — Planned
+### F16 — Content Collections and Coverage — Implemented; owner verification pending
 
-Not started. F16 — Content Collections and Coverage is next when F15 owner browser verification is complete.
+Implemented:
+
+- public `/collections` and `/collections/alexanders-world` routes plus safe invalid, missing, loading, and runtime-error states;
+- a finalized strict collection contract for visibility, completeness, membership kind, canonical recommended layers, conservative product focus bounds, structured coverage gaps, and duplicate rejection;
+- a published 360–300 BCE `Alexander's World` foundation-preview shell recommending 334 BCE and the existing Eastern Mediterranean viewport;
+- 11 explicitly linked synthetic foundation demonstrations with grouped, active, mapped/unmapped, and inverse membership selectors;
+- internal retention of `synthetic-alpha-collection`, excluded from public lists by authored visibility rather than ID logic;
+- one coherent explicit Map URL for activation, a compact valid/unresolved collection panel, conservative year/focus warnings, Reset, and Leave-only-collection behavior;
+- global non-filtering Year Overview context and explicit synthetic-demonstration relations on entity pages;
+- matching collection/coverage periods, detailed-focus metadata on the public landing, and explicit no-active/unmapped/non-filtering coverage messages;
+- no historical coverage polygon, automatic filter, real historical entity, fabricated citation, new dependency, backend, or global state.
+
+Automated and static acceptance criteria pass. Collection route rendering, direct refresh, actual Map panel interaction, responsive coexistence, keyboard traversal, and browser console/network behavior remain pending owner verification in ordinary Chrome or Edge.
+
+Validation on 2026-07-20:
+
+- `npm run typecheck`: PASS;
+- `npm run lint`: PASS;
+- `npm run test`: PASS — 24 files, 864 tests;
+- `npm run data:validate`: PASS — 22 canonical records;
+- `npm run data:build` twice with hash comparison: PASS — four byte-identical artifacts;
+- `npm run data:check`: PASS;
+- `npm run build`: PASS — known non-blocking large-chunk warning only;
+- `git diff --check`: PASS;
+- browser checks: NOT RUN — owner external-browser verification required.
+
+### F17–F18 — Planned
+
+F17 — Granicus Vertical Content Slice is next after owner verification and review of F16. Reviewed historical entities, evidence, territory geometry, route geometry, and genuine collection membership remain out of F16.
 
 ---
 
@@ -392,6 +422,9 @@ Not started. F16 — Content Collections and Coverage is next when F15 owner bro
 - Battle is a specialized member of the HistoricalEvent union and requires structured sides and result details.
 - Journey stages must appear in a unique sequential order beginning at 1.
 - Content collections use grouped entity IDs and require their recommended start year inside a closed collection range.
+- Public/internal visibility, coverage status, completeness, and membership kind are independent collection fields. Membership and inverse membership use only authored linked IDs.
+- The F16 focus bounds are conservative product-navigation metadata, not historical geometry; only inside/outside focus is classified.
+- Collection activation and Reset use push history and explicit year/viewport/layer parameters. Leave removes only the collection ID and preserves all other Map state.
 - Top-level entity IDs are globally unique across types so reference-index and future untyped-selection keys are unambiguous.
 - Canonical source and geometry are editable; committed generated files are derived and never hand-edited.
 - Validation covers every editorial state, while public runtime output includes only `published` records and referenced geometry.
@@ -445,7 +478,7 @@ Not started. F16 — Content Collections and Coverage is next when F15 owner bro
 - Competing temporal interpretations cannot yet coexist in canonical fixture files because the current schema has no explicit variant/claim grouping.
 - Published-source enforcement checks coverage presence, not whether the referenced source exists or is editorially adequate.
 - Fixtures are synthetic structure examples, not publishable historical data.
-- Places, territories, journeys, events, active-place people, the selected-year overview, Map-local search, Explore catalogs, and full entity pages are implemented; no playback, route animation, or collection UI exists yet.
+- Places, territories, journeys, events, active-place people, the selected-year overview, Map-local search, Explore catalogs, full entity pages, and collection coverage UI are implemented; no playback or route animation exists yet.
 - F10 uses representative point markers only. It does not add regional polygons, clustering, overlap cycling, or automatic map fitting.
 - Overlapping claims render separately, but F9 offers no click cycling when multiple polygons occupy the same point.
 - Natural Earth 1:110m vectors are intentionally generalized and become coarse at close zoom; F5 caps zoom at 7.
@@ -456,9 +489,9 @@ Not started. F16 — Content Collections and Coverage is next when F15 owner bro
 
 ## 5. Nearest Next Steps
 
-1. Complete the F5–F15 owner external-browser checks for map/timeline rendering, overview/search behavior, all Explore and entity routes, URL restoration, relation/source links, and responsive/keyboard layout.
+1. Complete the F5–F16 owner external-browser checks for map/timeline rendering, overview/search/collection behavior, all Explore, Collection, and entity routes, URL restoration, links, and responsive/keyboard layout.
 2. Review and commit the current discovery work when ready.
-3. Begin F16 — Content Collections and Coverage after F15 browser verification.
+3. Begin F17 — Granicus Vertical Content Slice only after F16 review and owner browser verification.
 4. Keep all current historical-layer fixtures unmistakably synthetic.
 
 ---
@@ -472,6 +505,16 @@ Only report validation that actually ran.
 ---
 
 ## Recent Changes — Rolling Three-Month History
+
+### 2026-07-20 — Recovered and completed interrupted F16 work
+
+- Audited and preserved the restart-interrupted F16 schema, canonical/generated data, domain, routing, UI, integration, tests, and documentation work without resetting or regenerating it blindly.
+- Closed the remaining contract gaps for matching coverage periods, landing-page detailed regions, deterministic coverage warnings, global Year Overview behavior, and valid/unresolved badge rendering; all automated checks pass and owner external-browser verification remains pending.
+
+### 2026-07-19 — Implemented F16 content collections and coverage
+
+- Added the public `Alexander's World` foundation-preview shell, internal fixture visibility, explicit synthetic membership/counts, collection routes, and deterministic coverage/navigation models.
+- Added recommended Map activation, a compact active-collection panel, distinct Reset/Leave behavior, Year Overview and entity-page context, and focused tests; owner browser verification remains pending.
 
 ### 2026-07-19 — Implemented F15 entity pages and Explore catalogs
 
@@ -551,6 +594,12 @@ Only report validation that actually ran.
 ---
 
 ## Significant Changes — Permanent History
+
+### 2026-07-19 — First public collection and coverage boundary established
+
+- Collections are now canonical authored runtime scopes with explicit public/internal visibility, membership, completeness, recommended state, and coverage metadata rather than inferred filters or bookmarks.
+- `Alexander's World` is deliberately a real product shell around unmistakably synthetic demonstrations until F17; conservative focus bounds communicate content navigation only and are never historical borders.
+- Why it matters: future reviewed slices can replace or extend explicit membership without changing the URL/navigation contract or misleading users that sparse map areas lack history.
 
 ### 2026-07-19 — Stable public entity and non-map discovery boundary established
 

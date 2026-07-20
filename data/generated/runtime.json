@@ -1,6 +1,101 @@
 {
   "collections": [
     {
+      "completeness": "foundation-preview",
+      "coverage": {
+        "detailedRegions": [
+          "Macedonia",
+          "Greece and the Aegean",
+          "western and central Anatolia",
+          "the Levant",
+          "Egypt",
+          "Mesopotamia",
+          "Persia"
+        ],
+        "note": "Coverage is incomplete. Areas without records should not be interpreted as historically inactive.",
+        "partialRegions": [
+          "Central Asia",
+          "the Indus Valley",
+          "other route-connected geography"
+        ],
+        "timeRange": {
+          "yearFrom": -360,
+          "yearTo": -300
+        }
+      },
+      "coverageStatus": "partial",
+      "datasetVersion": "foundation-fixture-0.1.0",
+      "defaultName": "Alexander’s World",
+      "description": "A structured entry point for the future reviewed historical slice covering Alexander’s world from 360 to 300 BCE.",
+      "editorialNotes": "The collection structure is active. Its linked records are synthetic foundation demonstrations, not historical members of Alexander’s world. Reviewed historical entity content is reserved for F17.",
+      "editorialStatus": "published",
+      "focusBounds": {
+        "east": 75,
+        "north": 50,
+        "south": 20,
+        "west": 10
+      },
+      "id": "alexanders-world",
+      "linkedEntities": {
+        "eventIds": [
+          "synthetic-alpha-battle",
+          "synthetic-alpha-event",
+          "synthetic-unknown-event"
+        ],
+        "journeyIds": [
+          "synthetic-alpha-journey"
+        ],
+        "personIds": [
+          "synthetic-alpha-person",
+          "synthetic-beta-person",
+          "synthetic-gamma-person"
+        ],
+        "placeIds": [
+          "synthetic-alpha-place",
+          "synthetic-beta-place"
+        ],
+        "polityIds": [
+          "synthetic-alpha-polity",
+          "synthetic-beta-polity"
+        ]
+      },
+      "membershipKind": "synthetic-demonstration",
+      "missingContent": [
+        "reviewed-entities",
+        "territories",
+        "places",
+        "people",
+        "events",
+        "journeys",
+        "source-review"
+      ],
+      "recommendedLayers": [
+        "territories",
+        "places",
+        "people",
+        "events",
+        "journeys"
+      ],
+      "recommendedStartYear": -334,
+      "recommendedViewport": {
+        "latitude": 37,
+        "longitude": 28,
+        "zoom": 3.5
+      },
+      "sourceRefs": [
+        {
+          "note": "Supports the linked synthetic demonstration records only; it is not a historical source for the collection framing.",
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "timeRange": {
+        "yearFrom": -360,
+        "yearTo": -300
+      },
+      "visibility": "public"
+    },
+    {
+      "completeness": "foundation-preview",
       "coverage": {
         "detailedRegions": [
           "Synthetic Alpha Region"
@@ -15,8 +110,15 @@
       "coverageStatus": "partial",
       "datasetVersion": "foundation-fixture-0.1.0",
       "defaultName": "Synthetic Alpha Collection",
-      "description": "Synthetic collection used only to verify pipeline links.",
+      "description": "Internal synthetic collection retained to verify pipeline links and compatibility.",
+      "editorialNotes": "Internal compatibility fixture; not shown on the public Collections landing page.",
       "editorialStatus": "published",
+      "focusBounds": {
+        "east": 40,
+        "north": 45,
+        "south": 30,
+        "west": 20
+      },
       "id": "synthetic-alpha-collection",
       "linkedEntities": {
         "eventIds": [
@@ -41,6 +143,17 @@
           "synthetic-beta-polity"
         ]
       },
+      "membershipKind": "synthetic-demonstration",
+      "missingContent": [
+        "reviewed-entities"
+      ],
+      "recommendedLayers": [
+        "territories",
+        "places",
+        "people",
+        "events",
+        "journeys"
+      ],
       "recommendedStartYear": -334,
       "recommendedViewport": {
         "latitude": 37,
@@ -55,7 +168,8 @@
       "timeRange": {
         "yearFrom": -500,
         "yearTo": 10
-      }
+      },
+      "visibility": "internal"
     }
   ],
   "datasetName": "Synthetic Foundation Fixture Dataset",

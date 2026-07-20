@@ -36,6 +36,14 @@ const expectInvalid = (workspace: RawWorkspace, text: string) => {
 
 describe('source wrapper and schema validation', () => {
   it('accepts the canonical synthetic workspace', () => expect(validateSourceWorkspace(copy()).ok).toBe(true))
+  it('validates the public Alexander collection shell and internal compatibility fixture', () => {
+    const result = validateSourceWorkspace(copy())
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.data.collections).toEqual(expect.arrayContaining([
+      expect.objectContaining({ id: 'alexanders-world', recommendedStartYear: -334, visibility: 'public', completeness: 'foundation-preview' }),
+      expect.objectContaining({ id: 'synthetic-alpha-collection', visibility: 'internal' }),
+    ]))
+  })
   it('rejects a descriptor unknown field', () => { const w = copy(); (w.descriptor as Record<string, unknown>).extra = true; expectInvalid(w, 'Unrecognized key') })
   it('rejects a descriptor schema version mismatch', () => { const w = copy(); (w.descriptor as Record<string, unknown>).schemaVersion = 2; expectInvalid(w, 'Invalid input') })
   it('rejects a wrapper dataset version mismatch', () => { const w = copy(); (w.records.places.value as Record<string, unknown>).datasetVersion = 'other-1.0.0'; expectInvalid(w, 'does not match') })
@@ -87,6 +95,7 @@ describe('deterministic generation and browser-safe loading', () => {
   it('generates byte-identical files repeatedly', () => expect([...buildGeneratedFiles(validData())]).toEqual([...buildGeneratedFiles(validData())]))
   it('emits no timestamps', () => expect([...buildGeneratedFiles(validData()).values()].join('\n')).not.toMatch(/generatedAt|createdAt/))
   it('includes counts and a SHA-256 fingerprint in the manifest', () => { const manifest = JSON.parse(buildGeneratedFiles(validData()).get('manifest.json') ?? '{}') as { fingerprint: { value: string }; counts: Record<string, number> }; expect(manifest.fingerprint.value).toMatch(/^[a-f0-9]{64}$/); expect(manifest.counts.places).toBe(3) })
+  it('includes both public and internal published collections in deterministic runtime output', () => { const manifest = JSON.parse(buildGeneratedFiles(validData()).get('manifest.json') ?? '{}') as { counts: Record<string, number> }; expect(manifest.counts.collections).toBe(2) })
   it('builds a stable reference index', () => { const index = JSON.parse(buildGeneratedFiles(validData()).get('index.json') ?? '{}') as { records: { id: string }[] }; expect(index.records.map((x) => x.id)).toEqual([...index.records.map((x) => x.id)].sort()) })
   it('builds a versioned search index for every implemented entity type', () => {
     const search = JSON.parse(buildGeneratedFiles(validData()).get('search-index.json') ?? '{}') as SearchIndex

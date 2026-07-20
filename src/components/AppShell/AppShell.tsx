@@ -1,10 +1,5 @@
 import { Link, NavLink, Outlet } from 'react-router-dom'
-
-const navigation = [
-  { to: '/map', label: 'Map' },
-  { to: '/explore', label: 'Explore' },
-  { to: '/sources', label: 'Sources' },
-]
+import { PRIMARY_NAVIGATION } from '../../app/routes'
 
 export function AppShell() {
   return (
@@ -17,7 +12,7 @@ export function AppShell() {
         </Link>
 
         <nav className="primary-nav" aria-label="Primary navigation">
-          {navigation.map((item) => (
+          {PRIMARY_NAVIGATION.map((item) => (
             <NavLink
               key={item.to}
               className={({ isActive }) =>

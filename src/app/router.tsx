@@ -12,6 +12,9 @@ import { EntityPage } from '../pages/EntityPage'
 import { MapPage } from '../pages/MapPage'
 import { NotFoundPage } from '../pages/NotFoundPage'
 import { SourcesPage } from '../pages/SourcesPage'
+import { CollectionsPage } from '../pages/CollectionsPage'
+import { CollectionPage } from '../pages/CollectionPage'
+import { APP_ROUTES } from './routes'
 
 function RouteErrorPage() {
   const error = useRouteError()
@@ -43,19 +46,21 @@ export const router = createBrowserRouter([
     errorElement: <RouteErrorPage />,
     children: [
       { index: true, element: <Navigate to="/map" replace /> },
-      { path: 'map', element: <MapPage /> },
-      { path: 'explore', element: <ExplorePage /> },
+      { path: APP_ROUTES.map.slice(1), element: <MapPage /> },
+      { path: APP_ROUTES.explore.slice(1), element: <ExplorePage /> },
       { path: 'explore/places', element: <ExploreCatalogPage catalogType="place" /> },
       { path: 'explore/polities', element: <ExploreCatalogPage catalogType="polity" /> },
       { path: 'explore/people', element: <ExploreCatalogPage catalogType="person" /> },
       { path: 'explore/events', element: <ExploreCatalogPage catalogType="event" /> },
       { path: 'explore/journeys', element: <ExploreCatalogPage catalogType="journey" /> },
+      { path: APP_ROUTES.collections.slice(1), element: <CollectionsPage /> },
+      { path: APP_ROUTES.collection.slice(1), element: <CollectionPage /> },
       { path: 'place/:entityId', element: <EntityPage entityType="place" /> },
       { path: 'polity/:entityId', element: <EntityPage entityType="polity" /> },
       { path: 'person/:entityId', element: <EntityPage entityType="person" /> },
       { path: 'event/:entityId', element: <EntityPage entityType="event" /> },
       { path: 'journey/:entityId', element: <EntityPage entityType="journey" /> },
-      { path: 'sources', element: <SourcesPage /> },
+      { path: APP_ROUTES.sources.slice(1), element: <SourcesPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },

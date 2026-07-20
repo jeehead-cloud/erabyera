@@ -30,6 +30,8 @@ F13 does not add or rewrite fixtures. Its selected-year overview derives publish
 
 F14 also adds no fixture. The search generator indexes only fields already authored in the F13 synthetic dataset. There are currently no authored aliases or transliterations, so none appears in generated output; tests use in-memory entries for those edge contracts rather than inventing canonical content.
 
+F16 adds the public `alexanders-world` collection shell with the approved 360–300 BCE framing, 334 BCE start, Eastern Mediterranean viewport, descriptive detailed/partial regions, conservative product focus bounds, and explicit missing-content metadata. The collection and coverage periods must match. It links 11 existing synthetic records only as `synthetic-demonstration` members; the UI must never present them as real historical members. Reviewed historical entities and source claims remain F17 work. `synthetic-alpha-collection` is retained as an `internal` compatibility fixture and public collection selectors exclude it through authored visibility metadata. Membership is always explicit and generated ID arrays remain deterministically sorted; coverage geography never infers membership or historical borders.
+
 `data:check` performs a read-only in-memory rebuild and fails when committed generated output is missing, extra, or stale. Schema changes require a coordinated source-data update or explicit migration; do not silently coerce old data.
 
 The browser consumes the committed generated runtime artifact, including published territory geometry, through `src/data`; application components never import editable `data/source` or `data/geometry` records.
