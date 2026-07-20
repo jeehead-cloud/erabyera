@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { loadBundledRuntimeData } from '../../data'
+import { syntheticRuntime } from '../../test/syntheticRuntime'
 import type { Journey, SourceReference } from '../entities'
 import {
   aggregateJourneySources,
@@ -19,7 +20,7 @@ import {
 } from '.'
 import { DEFAULT_MAP_URL_STATE, type MapUrlState } from '../../url'
 
-const data = loadBundledRuntimeData()
+const data = syntheticRuntime(loadBundledRuntimeData())
 const alpha = data.journeys.find((journey) => journey.id === 'synthetic-alpha-journey')!
 const beta = data.journeys.find((journey) => journey.id === 'synthetic-beta-expedition')!
 const gamma = data.journeys.find((journey) => journey.id === 'synthetic-gamma-journey')!

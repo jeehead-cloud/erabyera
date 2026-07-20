@@ -37,6 +37,7 @@ const MATCH_ORDER: readonly SearchMatchCategory[] = [
 export interface SearchResult {
   entityType: SelectedEntityType
   entityId: string
+  contentClassification: SearchIndexEntry['contentClassification']
   primaryName: string
   matchedName: string
   matchKind: SearchNameKind
@@ -194,6 +195,7 @@ export function searchEntities(
     return [{
       entityType: entry.entityType,
       entityId: entry.entityId,
+      contentClassification: entry.contentClassification,
       primaryName: entry.primaryName,
       matchedName: match.variant.value,
       matchKind: match.variant.kind,

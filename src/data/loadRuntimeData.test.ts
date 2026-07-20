@@ -10,7 +10,7 @@ describe('bundled runtime-data loading', () => {
   it('accepts the valid generated runtime place data', () => {
     const dataset = loadBundledRuntimeData()
     expect(dataset.datasetVersion).toBe(BUNDLED_RUNTIME_DATASET_VERSION)
-    expect(dataset.places).toHaveLength(3)
+    expect(dataset.places).toHaveLength(7)
   })
 
   it('rejects an incompatible schema version', () => {
@@ -34,7 +34,9 @@ describe('bundled runtime-data loading', () => {
     expect(Object.isFrozen(dataset.places[0])).toBe(true)
   })
 
-  it('keeps every bundled place explicitly synthetic', () => {
-    expect(loadBundledRuntimeData().places.every((place) => place.id.startsWith('synthetic-'))).toBe(true)
+  it('classifies reviewed places separately from retained synthetic fixtures', () => {
+    const places = loadBundledRuntimeData().places
+    expect(places.filter((place) => place.contentClassification === 'reviewed-historical')).toHaveLength(4)
+    expect(places.filter((place) => place.contentClassification === 'synthetic-fixture').every((place) => place.id.startsWith('synthetic-'))).toBe(true)
   })
 })

@@ -29,7 +29,7 @@ export function ActiveCollectionBadge({
       <div className="active-collection__body">
         <p><strong>{collection.completeness.replaceAll('-', ' ')}</strong> · {collection.coverageStatus} coverage</p>
         {presentation.messages.map((message) => <p key={message}>{message}</p>)}
-        <p>{presentation.counts.active} linked demonstrations active at this year: {presentation.counts.activeMapped} mapped and {presentation.counts.activeUnmapped} unmapped.</p>
+        <p>{presentation.counts.active} linked {collection.membershipKind === 'reviewed' ? 'reviewed records' : 'demonstrations'} active at this year: {presentation.counts.activeMapped} mapped and {presentation.counts.activeUnmapped} unmapped.</p>
         <div className="active-collection__actions">
           <Link className="button button--secondary" to={`/collections/${collection.id}`}>Collection page</Link>
           <button className="button button--secondary" type="button" onClick={onReset}>Reset to recommended view</button>

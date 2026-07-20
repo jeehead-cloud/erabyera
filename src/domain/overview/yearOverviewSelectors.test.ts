@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { loadBundledRuntimeData, type RuntimeDataset } from '../../data'
+import { syntheticRuntime } from '../../test/syntheticRuntime'
 import { buildEventPresentations } from '../events'
 import { buildJourneyPresentations } from '../journeys'
 import { buildPersonPresentations } from '../people'
@@ -24,7 +25,7 @@ import {
   withYearOverviewSelection,
 } from '.'
 
-const data = loadBundledRuntimeData()
+const data = syntheticRuntime(loadBundledRuntimeData())
 const allLayers = DEFAULT_MAP_URL_STATE.activeLayers
 
 describe('year overview visibility and selected-year model', () => {
@@ -219,7 +220,7 @@ describe('journey overview eligibility and ranking', () => {
 describe('coverage, collection, and empty-state taxonomy', () => {
   it('reports exact published, active, mapped, unmapped, and territory counts', () => {
     const coverage = buildYearOverview(data, -334, allLayers, null).coverage
-    expect(coverage.totalPublishedRecords).toBe(20)
+    expect(coverage.totalPublishedRecords).toBe(19)
     expect(coverage.entities.events).toEqual({ published: 3, active: 2, mapped: 2, unmapped: 0 })
     expect(coverage.activeTerritories).toBe(2)
   })
@@ -233,12 +234,12 @@ describe('coverage, collection, and empty-state taxonomy', () => {
 
   it('resolves collection coverage without changing year or viewport', () => {
     const global = buildYearOverview(data, -334, allLayers, null)
-    const overview = buildYearOverview(data, -334, allLayers, 'alexanders-world')
+    const overview = buildYearOverview(data, -334, allLayers, 'synthetic-alpha-collection')
     expect(overview.collection).toMatchObject({
-      state: 'resolved', name: 'Alexander’s World', inSelectedYear: true,
+      state: 'resolved', name: 'Synthetic Alpha Collection', inSelectedYear: true,
       completeness: 'foundation-preview', membershipKind: 'synthetic-demonstration', linkedTotal: 11, linkedActive: 10,
     })
-    expect(overview.collection.detailedRegions).toContain('Macedonia')
+    expect(overview.collection.detailedRegions).toContain('Synthetic Alpha Region')
     expect(overview.events).toEqual(global.events)
     expect(overview.polities).toEqual(global.polities)
     expect(overview.places).toEqual(global.places)

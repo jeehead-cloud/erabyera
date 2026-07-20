@@ -1,36 +1,81 @@
 {
   "schemaVersion": 1,
-  "datasetVersion": "foundation-fixture-0.1.0",
+  "datasetVersion": "granicus-core-0.1.0",
   "records": [
     {
       "id": "synthetic-alpha-territory-early",
       "polityId": "synthetic-alpha-polity",
-      "period": { "yearFrom": -500, "yearTo": -400 },
+      "period": {
+        "yearFrom": -500,
+        "yearTo": -400
+      },
       "controlCategory": "direct",
       "geometryFeatureId": "synthetic-alpha-territory-early-feature",
-      "uncertainty": { "confidence": "high", "note": "The geometry is deliberately synthetic." },
+      "uncertainty": {
+        "confidence": "high",
+        "note": "The geometry is deliberately synthetic."
+      },
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "contentClassification": "synthetic-fixture"
     },
     {
       "id": "synthetic-alpha-territory-late",
       "polityId": "synthetic-alpha-polity",
-      "period": { "yearFrom": -399, "yearTo": 10 },
+      "period": {
+        "yearFrom": -399,
+        "yearTo": 10
+      },
       "controlCategory": "approximate",
       "geometryFeatureId": "synthetic-alpha-territory-late-feature",
-      "uncertainty": { "confidence": "low", "note": "The geometry is deliberately synthetic and approximate." },
+      "uncertainty": {
+        "confidence": "low",
+        "note": "The geometry is deliberately synthetic and approximate."
+      },
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "contentClassification": "synthetic-fixture"
     },
     {
       "id": "synthetic-beta-territory-claim",
       "polityId": "synthetic-beta-polity",
-      "period": { "yearFrom": -350, "yearTo": -300 },
+      "period": {
+        "yearFrom": -350,
+        "yearTo": -300
+      },
       "controlCategory": "disputed",
       "geometryFeatureId": "synthetic-beta-territory-claim-feature",
-      "uncertainty": { "confidence": "disputed", "note": "This overlapping claim is deliberately synthetic." },
+      "uncertainty": {
+        "confidence": "disputed",
+        "note": "This overlapping claim is deliberately synthetic."
+      },
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "contentClassification": "synthetic-fixture"
+    },
+    {
+      "id": "kingdom-of-macedon-territory-334", "polityId": "kingdom-of-macedon", "contentClassification": "reviewed-historical",
+      "period": { "yearFrom": -334, "yearTo": -334, "datePrecision": "year" }, "controlCategory": "approximate", "geometryFeatureId": "kingdom-of-macedon-territory-334-feature",
+      "uncertainty": { "confidence": "low", "note": "A deliberately conservative generalized core-region footprint for 334 BCE, not a surveyed or exhaustive frontier." },
+      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "met-rise-of-macedonia", "note": "Evidence for Macedonian kingdom context; polygon is an editorial generalization with low confidence." }]
+    },
+    {
+      "id": "achaemenid-western-anatolia-territory-334", "polityId": "achaemenid-empire", "contentClassification": "reviewed-historical",
+      "period": { "yearFrom": -334, "yearTo": -334, "datePrecision": "year" }, "controlCategory": "approximate", "geometryFeatureId": "achaemenid-western-anatolia-territory-334-feature",
+      "uncertainty": { "confidence": "low", "note": "Only a conservative western-Anatolian campaign-context footprint is shown; it is not the full empire and does not assert exact satrapal frontiers." },
+      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "met-achaemenid-empire", "note": "Evidence for imperial extent into Anatolia." }, { "sourceId": "iranica-granicus", "note": "Evidence for Achaemenid regional forces in northwestern Asia Minor in 334 BCE." }]
     }
   ]
 }

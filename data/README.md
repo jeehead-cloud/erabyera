@@ -1,6 +1,6 @@
 # EraByEra data pipeline
 
-`data/source/` and `data/geometry/` are the canonical, editable repository data. Every file declares schema version `1` and the same dataset version. The current records and coordinates are deliberately synthetic fixtures; they are not historical claims and must not be expanded into real content without reviewed sources and licensing.
+`data/source/` and `data/geometry/` are the canonical, editable repository data. Every file declares schema version `1` and the same dataset version. The dataset is mixed: `reviewed-historical` records form the Granicus vertical slice, while retained `synthetic-fixture` records continue to exercise compatibility behavior. Classification is explicit on every canonical record.
 
 `data/generated/` is committed runtime output. Never edit it by hand. It includes `runtime.json`, the general reference `index.json`, the compact browser `search-index.json`, and `manifest.json`. Run:
 
@@ -10,7 +10,7 @@ npm run data:build
 npm run data:check
 ```
 
-Validation parses every strict F3 entity schema, verifies version agreement, globally unique entity IDs, source and cross-entity references, non-overlapping place names/ownership/importance and polity capitals, and matching bounded GeoJSON. Overlaps are rejected until a future schema explicitly represents competing interpretations.
+Validation parses every strict F3 entity schema, verifies version agreement, globally unique entity IDs, source and cross-entity references, non-overlapping place names/ownership/importance and polity capitals, and matching bounded GeoJSON. Polygon rings must be closed and non-self-intersecting. Overlapping authored time periods are rejected until a future schema explicitly represents competing interpretations.
 
 The public runtime includes only `published` records and geometry referenced by them. Generation sorts entity records, stable set-like ID arrays, source references, index entries, search entries/name variants, and object keys while preserving temporal record arrays and journey-stage order. It emits no timestamps. The manifest includes deterministic counts, search-index format/count metadata, and a SHA-256 fingerprint covering the generated runtime, reference index, and search index, so two builds from identical source produce byte-identical files.
 
@@ -28,9 +28,11 @@ The F12 journey fixture contains three published `synthetic-*` finite movements.
 
 F13 does not add or rewrite fixtures. Its selected-year overview derives published, active, mapped, and unmapped counts from the generated runtime and resolves the existing optional collection coverage metadata read-only. The UI must continue to identify this dataset as intentionally sparse synthetic foundation data; an empty overview year or geography is not evidence that no historical activity existed.
 
-F14 also adds no fixture. The search generator indexes only fields already authored in the F13 synthetic dataset. There are currently no authored aliases or transliterations, so none appears in generated output; tests use in-memory entries for those edge contracts rather than inventing canonical content.
+F14 originally indexed only fields authored in the synthetic dataset. F17 extends the same compact format with explicit content classification and authored aliases; no alias or transliteration is generated from inference.
 
-F16 adds the public `alexanders-world` collection shell with the approved 360–300 BCE framing, 334 BCE start, Eastern Mediterranean viewport, descriptive detailed/partial regions, conservative product focus bounds, and explicit missing-content metadata. The collection and coverage periods must match. It links 11 existing synthetic records only as `synthetic-demonstration` members; the UI must never present them as real historical members. Reviewed historical entities and source claims remain F17 work. `synthetic-alpha-collection` is retained as an `internal` compatibility fixture and public collection selectors exclude it through authored visibility metadata. Membership is always explicit and generated ID arrays remain deterministically sorted; coverage geography never infers membership or historical borders.
+F16 introduced the public `alexanders-world` collection shell. F17 activates it as a reviewed, partial Granicus-centered collection with ten explicit members: two polities, four places, two people, one battle, and one schematic campaign journey. Its public membership contains no synthetic fixtures. `synthetic-alpha-collection` remains an `internal` compatibility fixture. Membership is explicit; coverage geography never infers membership or exact historical borders.
+
+The Granicus slice uses primary narratives (Arrian, Diodorus, and Plutarch) alongside modern institutional and scholarly synthesis. Conflicts are recorded rather than silently reconciled. Darius III is not a battle participant; disputed force and loss totals are omitted; the battle coordinate is a representative river/battlefield-region point; and the Hellespont-to-Granicus line is a schematic sequence of sourced stages. The two 334 BCE territory polygons are conservative, low-confidence contextual generalizations, not exhaustive or surveyed frontiers.
 
 `data:check` performs a read-only in-memory rebuild and fails when committed generated output is missing, extra, or stale. Schema changes require a coordinated source-data update or explicit migration; do not silently coerce old data.
 

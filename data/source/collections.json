@@ -1,59 +1,171 @@
 {
   "schemaVersion": 1,
-  "datasetVersion": "foundation-fixture-0.1.0",
+  "datasetVersion": "granicus-core-0.1.0",
   "records": [
     {
       "id": "alexanders-world",
       "defaultName": "Alexander’s World",
-      "description": "A structured entry point for the future reviewed historical slice covering Alexander’s world from 360 to 300 BCE.",
-      "timeRange": { "yearFrom": -360, "yearTo": -300 },
+      "description": "A reviewed Granicus-centered entry point into Alexander's 334 BCE crossing from Europe into Asia.",
+      "timeRange": {
+        "yearFrom": -360,
+        "yearTo": -300
+      },
       "recommendedStartYear": -334,
-      "recommendedViewport": { "longitude": 28, "latitude": 37, "zoom": 3.5 },
-      "recommendedLayers": ["territories", "places", "people", "events", "journeys"],
-      "focusBounds": { "west": 10, "south": 20, "east": 75, "north": 50 },
+      "recommendedViewport": {
+        "longitude": 25.5,
+        "latitude": 40,
+        "zoom": 5
+      },
+      "recommendedLayers": [
+        "territories",
+        "places",
+        "people",
+        "events",
+        "journeys"
+      ],
+      "focusBounds": {
+        "west": 19,
+        "south": 34,
+        "east": 33,
+        "north": 43
+      },
       "coverage": {
-        "detailedRegions": ["Macedonia", "Greece and the Aegean", "western and central Anatolia", "the Levant", "Egypt", "Mesopotamia", "Persia"],
-        "partialRegions": ["Central Asia", "the Indus Valley", "other route-connected geography"],
-        "timeRange": { "yearFrom": -360, "yearTo": -300 },
-        "note": "Coverage is incomplete. Areas without records should not be interpreted as historically inactive."
+        "detailedRegions": [
+          "Macedonia",
+          "Hellespont crossing corridor",
+          "Granicus campaign region"
+        ],
+        "partialRegions": [
+          "Other regions of the Achaemenid Empire",
+          "The wider Alexander campaign"
+        ],
+        "timeRange": {
+          "yearFrom": -360,
+          "yearTo": -300
+        },
+        "note": "This is a minimal reviewed vertical slice, not comprehensive coverage. Areas without records should not be interpreted as historically inactive."
       },
       "linkedEntities": {
-        "placeIds": ["synthetic-alpha-place", "synthetic-beta-place"],
-        "polityIds": ["synthetic-alpha-polity", "synthetic-beta-polity"],
-        "personIds": ["synthetic-alpha-person", "synthetic-beta-person", "synthetic-gamma-person"],
-        "eventIds": ["synthetic-alpha-battle", "synthetic-alpha-event", "synthetic-unknown-event"],
-        "journeyIds": ["synthetic-alpha-journey"]
+        "placeIds": [
+          "pella",
+          "sestos",
+          "abydos",
+          "granicus-battlefield"
+        ],
+        "polityIds": [
+          "kingdom-of-macedon",
+          "achaemenid-empire"
+        ],
+        "personIds": [
+          "alexander-iii",
+          "darius-iii"
+        ],
+        "eventIds": [
+          "battle-of-the-granicus"
+        ],
+        "journeyIds": [
+          "alexander-crossing-into-asia"
+        ]
       },
       "coverageStatus": "partial",
       "visibility": "public",
-      "completeness": "foundation-preview",
-      "membershipKind": "synthetic-demonstration",
-      "missingContent": ["reviewed-entities", "territories", "places", "people", "events", "journeys", "source-review"],
-      "datasetVersion": "foundation-fixture-0.1.0",
-      "editorialNotes": "The collection structure is active. Its linked records are synthetic foundation demonstrations, not historical members of Alexander’s world. Reviewed historical entity content is reserved for F17.",
+      "completeness": "partial",
+      "membershipKind": "reviewed",
+      "missingContent": [
+        "places",
+        "people",
+        "journeys"
+      ],
+      "datasetVersion": "granicus-core-0.1.0",
+      "editorialNotes": "Public membership contains reviewed historical records only. Synthetic compatibility fixtures remain available outside this collection.",
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "note": "Supports the linked synthetic demonstration records only; it is not a historical source for the collection framing." }]
+      "sourceRefs": [
+        {
+          "sourceId": "iranica-granicus",
+          "note": "Supports the collection's Granicus-centered editorial scope."
+        }
+      ],
+      "aliases": [],
+      "contentClassification": "reviewed-historical"
     },
     {
       "id": "synthetic-alpha-collection",
       "defaultName": "Synthetic Alpha Collection",
       "description": "Internal synthetic collection retained to verify pipeline links and compatibility.",
-      "timeRange": { "yearFrom": -500, "yearTo": 10 },
+      "timeRange": {
+        "yearFrom": -500,
+        "yearTo": 10
+      },
       "recommendedStartYear": -334,
-      "recommendedViewport": { "longitude": 28, "latitude": 37, "zoom": 4 },
-      "recommendedLayers": ["territories", "places", "people", "events", "journeys"],
-      "focusBounds": { "west": 20, "south": 30, "east": 40, "north": 45 },
-      "coverage": { "detailedRegions": ["Synthetic Alpha Region"], "partialRegions": [], "timeRange": { "yearFrom": -500, "yearTo": 10 }, "note": "No historical coverage is claimed." },
-      "linkedEntities": { "placeIds": ["synthetic-alpha-place", "synthetic-beta-place"], "polityIds": ["synthetic-alpha-polity", "synthetic-beta-polity"], "personIds": ["synthetic-alpha-person", "synthetic-beta-person", "synthetic-gamma-person"], "eventIds": ["synthetic-alpha-battle", "synthetic-alpha-event", "synthetic-unknown-event"], "journeyIds": ["synthetic-alpha-journey"] },
+      "recommendedViewport": {
+        "longitude": 28,
+        "latitude": 37,
+        "zoom": 4
+      },
+      "recommendedLayers": [
+        "territories",
+        "places",
+        "people",
+        "events",
+        "journeys"
+      ],
+      "focusBounds": {
+        "west": 20,
+        "south": 30,
+        "east": 40,
+        "north": 45
+      },
+      "coverage": {
+        "detailedRegions": [
+          "Synthetic Alpha Region"
+        ],
+        "partialRegions": [],
+        "timeRange": {
+          "yearFrom": -500,
+          "yearTo": 10
+        },
+        "note": "No historical coverage is claimed."
+      },
+      "linkedEntities": {
+        "placeIds": [
+          "synthetic-alpha-place",
+          "synthetic-beta-place"
+        ],
+        "polityIds": [
+          "synthetic-alpha-polity",
+          "synthetic-beta-polity"
+        ],
+        "personIds": [
+          "synthetic-alpha-person",
+          "synthetic-beta-person",
+          "synthetic-gamma-person"
+        ],
+        "eventIds": [
+          "synthetic-alpha-battle",
+          "synthetic-alpha-event",
+          "synthetic-unknown-event"
+        ],
+        "journeyIds": [
+          "synthetic-alpha-journey"
+        ]
+      },
       "coverageStatus": "partial",
       "visibility": "internal",
       "completeness": "foundation-preview",
       "membershipKind": "synthetic-demonstration",
-      "missingContent": ["reviewed-entities"],
-      "datasetVersion": "foundation-fixture-0.1.0",
+      "missingContent": [
+        "reviewed-entities"
+      ],
+      "datasetVersion": "granicus-core-0.1.0",
       "editorialNotes": "Internal compatibility fixture; not shown on the public Collections landing page.",
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "aliases": [],
+      "contentClassification": "synthetic-fixture"
     }
   ]
 }

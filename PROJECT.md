@@ -142,6 +142,8 @@ Every displayed record should support sources and optional confidence / date-pre
 
 ## 7. Roadmap
 
+The repository's implementation-plan sequence has reached F17: the first reviewed Granicus content slice is published in the local generated dataset. The product remains pre-deployment, partial in coverage, and pending owner browser verification; the next planned milestone is F18 stabilization rather than unsourced content expansion.
+
 | # | Milestone | Scope | Status |
 |---|---|---|---|
 | M0 | Project foundation | Repository, Vite app, documents, lint/build baseline | Planned |

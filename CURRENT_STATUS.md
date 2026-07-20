@@ -1,6 +1,6 @@
 # EraByEra — Current Status
 
-**Status:** Foundation implementation — F16 implemented; owner browser verification pending
+**Status:** Foundation implementation — F17 implemented; owner browser verification pending
 **Last updated:** 2026-07-20
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -12,11 +12,11 @@
 
 ## 1. Current Development Phase
 
-EraByEra is a Git repository on `main`. F1 is committed at `e80b4a6`, F2 at `44867c5`, F3 at `1a9fa5d`, F4 at `2fe64a7`, F5 at `78ef489`, F6 at `89bb5ea`, F7 at `5c8d61e`, F8 at `3c06c6c`, F9 at `a07559f`, F10 at `2b8899b`, F11 at `7bcaabe`, and F12 at `2afcfb8`. F13–F16 are implemented; owner external-browser verification remains pending.
+EraByEra is a Git repository on `main`. F1–F12 are committed through `2afcfb8`. F13–F17 are implemented in the current working tree; owner external-browser verification remains pending.
 
 F15 adds stable full-page routes for all five implemented entity types and compact Explore catalogs. Pages retain entity-specific chronology and evidence while sharing layout, sources, relations, recovery, and map navigation. Catalog filters are URL-owned, reuse F14 search and relevant-year logic, include unmapped records honestly, and never import editable data.
 
-F16 adds the public `Alexander's World` collection shell, explicit synthetic-demonstration membership, coverage/time/focus communication, stable collection routes, recommended Map activation, a URL-backed active-collection panel, distinct Reset and Leave behavior, and collection context in Year Overview and entity pages. No reviewed F17 historical record or geometry was added.
+F17 replaces the public collection's demonstration membership with a reviewed Granicus vertical slice: two polities, four places, Alexander III and Darius III, one disputed-location battle, one schematic Hellespont-to-Granicus journey, and two low-confidence contextual territories. Retained fixtures are explicitly classified and remain outside the public collection. Search indexes authored aliases and shows fixture classification; source conflict and geometry decisions are documented in `docs/research/GRANICUS_F17.md`.
 
 ---
 
@@ -506,6 +506,14 @@ Only report validation that actually ran.
 
 ## Recent Changes — Rolling Three-Month History
 
+### 2026-07-20 — First reviewed Granicus vertical slice implemented
+
+- Added a compact reviewed corpus for 334 BCE: two polities, four places, Alexander III, Darius III, the Battle of the Granicus, a schematic Hellespont crossing/campaign journey, and two conservative contextual territories.
+- Added explicit reviewed-versus-synthetic classification, authored searchable aliases, source-reference confidence, non-self-intersecting polygon validation, and a dedicated F17 contract suite.
+- Converted `alexanders-world` to reviewed-only membership while retaining the internal synthetic compatibility collection.
+- Documented conflicting ancient narratives, omitted unsupported force/loss figures, excluded Darius from battle participation, and recorded representative-location and schematic-geometry limitations.
+- Validation: `data:validate`, `data:check`, `typecheck`, `lint`, `test` (25 files, 870 tests), and `build` pass; consecutive generated-artifact SHA-256 hashes match. Browser/WebGL verification was not run and remains an owner task.
+
 ### 2026-07-20 — Recovered and completed interrupted F16 work
 
 - Audited and preserved the restart-interrupted F16 schema, canonical/generated data, domain, routing, UI, integration, tests, and documentation work without resetting or regenerating it blindly.
@@ -594,6 +602,12 @@ Only report validation that actually ran.
 ---
 
 ## Significant Changes — Permanent History
+
+### 2026-07-20 — First reviewed historical content slice established
+
+- EraByEra now carries a sourced Granicus core through canonical records, deterministic runtime/search generation, Map and overview selectors, Explore, entity pages, and reviewed public collection membership.
+- Ancient-source disagreement, representative coordinates, schematic movement, conservative territory reconstruction, and omitted unsupported quantities remain explicit data decisions.
+- Why it matters: the foundation systems now demonstrate a complete trustworthy historical-content flow without removing synthetic regression fixtures or overstating geographic coverage.
 
 ### 2026-07-19 — First public collection and coverage boundary established
 

@@ -259,8 +259,11 @@ The exact thresholds must be centralized and testable, not scattered across comp
 - A missing valid collection ID remains in the URL, fails safely, and offers explicit clearing; it is never silently replaced.
 - Editorial publication, public/internal visibility, geographic coverage status, implementation completeness, and membership kind are separate concepts.
 - The authored collection period and coverage period must match; the recommended year must lie inside that shared inclusive range.
-- `alexanders-world` is a public foundation-preview shell. Its current linked entities are labeled synthetic foundation demonstrations and are not historical members; reviewed membership is reserved for F17.
+- `alexanders-world` is a public partial collection whose explicit membership is reviewed historical content only. It must remain honest about the narrow Granicus scope and must never infer wider coverage from period or geography.
 - `synthetic-alpha-collection` remains an internal runtime fixture and is excluded publicly through authored visibility metadata.
+- Every canonical record explicitly identifies reviewed historical content versus a synthetic fixture. Public collection membership must not reclassify or disguise synthetic records.
+- Conflicting ancient testimony remains visible in evidence/uncertainty notes. Unsupported numerical claims are omitted rather than normalized into a single authoritative value.
+- Schematic routes and approximate territory reconstructions must say what their geometry represents and must not imply surveyed paths, exact frontiers, or modern-border substitution.
 - Coverage regions and gaps are authored. The F16 focus bounds are conservative content-navigation metadata, are never drawn, and must not be called a historical border.
 - Outside-period and outside-focus warnings never imply historical inactivity. Sparse or absent records describe dataset coverage only; the physical map remains operable everywhere.
 - Year Overview remains global. Collection name, period status, completeness, and linked counts provide context without filtering map layers or overview eligibility.

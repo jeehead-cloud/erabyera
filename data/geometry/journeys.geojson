@@ -1,19 +1,64 @@
 {
   "type": "FeatureCollection",
   "schemaVersion": 1,
-  "datasetVersion": "foundation-fixture-0.1.0",
+  "datasetVersion": "granicus-core-0.1.0",
   "features": [
     {
       "type": "Feature",
       "id": "synthetic-alpha-journey-feature",
-      "properties": { "journeyId": "synthetic-alpha-journey" },
-      "geometry": { "type": "LineString", "coordinates": [[28, 37], [30.5, 36.5]] }
+      "properties": {
+        "journeyId": "synthetic-alpha-journey"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            28,
+            37
+          ],
+          [
+            30.5,
+            36.5
+          ]
+        ]
+      }
     },
     {
       "type": "Feature",
       "id": "synthetic-beta-expedition-feature",
-      "properties": { "journeyId": "synthetic-beta-expedition" },
-      "geometry": { "type": "MultiLineString", "coordinates": [[[30, 35], [29, 36]], [[29, 36], [30, 35]]] }
+      "properties": {
+        "journeyId": "synthetic-beta-expedition"
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [
+              30,
+              35
+            ],
+            [
+              29,
+              36
+            ]
+          ],
+          [
+            [
+              29,
+              36
+            ],
+            [
+              30,
+              35
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature", "id": "alexander-crossing-into-asia-feature",
+      "properties": { "journeyId": "alexander-crossing-into-asia" },
+      "geometry": { "type": "LineString", "coordinates": [[26.417225, 40.228356], [26.41122, 40.19406], [27.3077, 40.3804]] }
     }
   ]
 }

@@ -1,25 +1,237 @@
 {
-  "datasetVersion": "foundation-fixture-0.1.0",
+  "datasetVersion": "granicus-core-0.1.0",
   "records": [
+    {
+      "id": "abydos",
+      "name": "Abydos",
+      "relatedIds": [],
+      "sourceCount": 2,
+      "status": "published",
+      "type": "places"
+    },
+    {
+      "id": "achaemenid-empire",
+      "name": "Achaemenid Empire",
+      "relatedIds": [
+        "darius-iii"
+      ],
+      "sourceCount": 2,
+      "status": "published",
+      "type": "polities"
+    },
+    {
+      "geometryFeatureId": "achaemenid-western-anatolia-territory-334-feature",
+      "id": "achaemenid-western-anatolia-territory-334",
+      "name": "achaemenid-western-anatolia-territory-334",
+      "relatedIds": [
+        "achaemenid-empire"
+      ],
+      "sourceCount": 2,
+      "status": "published",
+      "type": "territories"
+    },
+    {
+      "geometryFeatureId": "alexander-crossing-into-asia-feature",
+      "id": "alexander-crossing-into-asia",
+      "name": "Alexander's crossing into Asia",
+      "relatedIds": [
+        "abydos",
+        "alexander-iii",
+        "battle-of-the-granicus",
+        "granicus-battlefield",
+        "kingdom-of-macedon",
+        "sestos"
+      ],
+      "sourceCount": 2,
+      "status": "published",
+      "type": "journeys"
+    },
+    {
+      "id": "alexander-iii",
+      "name": "Alexander III",
+      "relatedIds": [
+        "alexander-crossing-into-asia",
+        "battle-of-the-granicus",
+        "granicus-battlefield",
+        "kingdom-of-macedon",
+        "pella"
+      ],
+      "sourceCount": 2,
+      "status": "published",
+      "type": "people"
+    },
     {
       "id": "alexanders-world",
       "name": "Alexander’s World",
       "relatedIds": [
-        "synthetic-alpha-battle",
-        "synthetic-alpha-event",
-        "synthetic-alpha-journey",
-        "synthetic-alpha-person",
-        "synthetic-alpha-place",
-        "synthetic-alpha-polity",
-        "synthetic-beta-person",
-        "synthetic-beta-place",
-        "synthetic-beta-polity",
-        "synthetic-gamma-person",
-        "synthetic-unknown-event"
+        "abydos",
+        "achaemenid-empire",
+        "alexander-crossing-into-asia",
+        "alexander-iii",
+        "battle-of-the-granicus",
+        "darius-iii",
+        "granicus-battlefield",
+        "kingdom-of-macedon",
+        "pella",
+        "sestos"
       ],
       "sourceCount": 1,
       "status": "published",
       "type": "collections"
+    },
+    {
+      "id": "arrian-anabasis-chinnock",
+      "name": "The Anabasis of Alexander",
+      "relatedIds": [],
+      "sourceCount": 0,
+      "status": "published",
+      "type": "sources"
+    },
+    {
+      "id": "battle-of-the-granicus",
+      "name": "Battle of the Granicus",
+      "relatedIds": [
+        "achaemenid-empire",
+        "alexander-crossing-into-asia",
+        "alexander-iii",
+        "granicus-battlefield",
+        "kingdom-of-macedon"
+      ],
+      "sourceCount": 5,
+      "status": "published",
+      "type": "events"
+    },
+    {
+      "id": "darius-iii",
+      "name": "Darius III",
+      "relatedIds": [
+        "achaemenid-empire"
+      ],
+      "sourceCount": 2,
+      "status": "published",
+      "type": "people"
+    },
+    {
+      "id": "diodorus-library-book-seventeen",
+      "name": "Library of History, Book XVII",
+      "relatedIds": [],
+      "sourceCount": 0,
+      "status": "published",
+      "type": "sources"
+    },
+    {
+      "id": "getty-tgn-granicus",
+      "name": "Getty Thesaurus of Geographic Names: Granicus",
+      "relatedIds": [],
+      "sourceCount": 0,
+      "status": "published",
+      "type": "sources"
+    },
+    {
+      "id": "granicus-battlefield",
+      "name": "Granicus battlefield region",
+      "relatedIds": [
+        "achaemenid-empire"
+      ],
+      "sourceCount": 2,
+      "status": "published",
+      "type": "places"
+    },
+    {
+      "id": "iranica-alexander",
+      "name": "Alexander the Great (356-323 B.C.)",
+      "relatedIds": [],
+      "sourceCount": 0,
+      "status": "published",
+      "type": "sources"
+    },
+    {
+      "id": "iranica-darius-three",
+      "name": "Darius III",
+      "relatedIds": [],
+      "sourceCount": 0,
+      "status": "published",
+      "type": "sources"
+    },
+    {
+      "id": "iranica-granicus",
+      "name": "Granicus",
+      "relatedIds": [],
+      "sourceCount": 0,
+      "status": "published",
+      "type": "sources"
+    },
+    {
+      "id": "kingdom-of-macedon",
+      "name": "Kingdom of Macedon",
+      "relatedIds": [
+        "alexander-iii",
+        "pella"
+      ],
+      "sourceCount": 2,
+      "status": "published",
+      "type": "polities"
+    },
+    {
+      "geometryFeatureId": "kingdom-of-macedon-territory-334-feature",
+      "id": "kingdom-of-macedon-territory-334",
+      "name": "kingdom-of-macedon-territory-334",
+      "relatedIds": [
+        "kingdom-of-macedon"
+      ],
+      "sourceCount": 1,
+      "status": "published",
+      "type": "territories"
+    },
+    {
+      "id": "met-achaemenid-empire",
+      "name": "The Achaemenid Persian Empire (550-330 B.C.)",
+      "relatedIds": [],
+      "sourceCount": 0,
+      "status": "published",
+      "type": "sources"
+    },
+    {
+      "id": "met-rise-of-macedonia",
+      "name": "The Rise of Macedonia and the Conquests of Alexander the Great",
+      "relatedIds": [],
+      "sourceCount": 0,
+      "status": "published",
+      "type": "sources"
+    },
+    {
+      "id": "pella",
+      "name": "Pella",
+      "relatedIds": [
+        "kingdom-of-macedon"
+      ],
+      "sourceCount": 2,
+      "status": "published",
+      "type": "places"
+    },
+    {
+      "id": "pleiades-gazetteer",
+      "name": "Pleiades: A Gazetteer of Past Places",
+      "relatedIds": [],
+      "sourceCount": 0,
+      "status": "published",
+      "type": "sources"
+    },
+    {
+      "id": "plutarch-alexander-perseus",
+      "name": "Life of Alexander",
+      "relatedIds": [],
+      "sourceCount": 0,
+      "status": "published",
+      "type": "sources"
+    },
+    {
+      "id": "sestos",
+      "name": "Sestos",
+      "relatedIds": [],
+      "sourceCount": 2,
+      "status": "published",
+      "type": "places"
     },
     {
       "id": "synthetic-alpha-battle",

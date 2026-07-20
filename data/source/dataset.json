@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "datasetVersion": "foundation-fixture-0.1.0",
-  "name": "Synthetic Foundation Fixture Dataset",
-  "description": "Obvious synthetic records used only to exercise the EraByEra data pipeline.",
-  "fixturePolicy": "synthetic-only",
+  "datasetVersion": "granicus-core-0.1.0",
+  "name": "EraByEra Granicus Core Dataset",
+  "description": "Reviewed Granicus vertical-slice records alongside explicit synthetic compatibility fixtures.",
+  "fixturePolicy": "mixed-reviewed-and-synthetic",
   "files": {
     "sources": "sources.json",
     "places": "places.json",

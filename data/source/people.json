@@ -1,47 +1,198 @@
 {
   "schemaVersion": 1,
-  "datasetVersion": "foundation-fixture-0.1.0",
+  "datasetVersion": "granicus-core-0.1.0",
   "records": [
     {
       "id": "synthetic-alpha-person",
       "defaultName": "Synthetic Alpha Person",
       "summary": "A deliberately synthetic person used to verify active-place changes.",
-      "life": { "yearFrom": -500, "yearTo": 10 },
-      "roles": ["synthetic ruler", "synthetic commander"],
-      "places": [
-        { "placeId": "synthetic-alpha-place", "period": { "yearFrom": -500, "yearTo": -500 }, "relationType": "birth", "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic birth relationship" }] },
-        { "placeId": "synthetic-alpha-place", "period": { "yearFrom": -350, "yearTo": -330 }, "relationType": "campaign", "eventId": "synthetic-alpha-event", "journeyId": "synthetic-alpha-journey", "uncertainty": { "confidence": "high", "note": "Synthetic active campaign relationship." }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic alpha campaign" }] },
-        { "placeId": "synthetic-beta-place", "period": { "yearFrom": -329, "yearTo": -300 }, "relationType": "rule", "uncertainty": { "confidence": "medium", "note": "Synthetic location-change relationship." }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic alpha rule" }] }
+      "life": {
+        "yearFrom": -500,
+        "yearTo": 10
+      },
+      "roles": [
+        "synthetic ruler",
+        "synthetic commander"
       ],
-      "associatedPolityIds": ["synthetic-alpha-polity"],
+      "places": [
+        {
+          "placeId": "synthetic-alpha-place",
+          "period": {
+            "yearFrom": -500,
+            "yearTo": -500
+          },
+          "relationType": "birth",
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic birth relationship"
+            }
+          ]
+        },
+        {
+          "placeId": "synthetic-alpha-place",
+          "period": {
+            "yearFrom": -350,
+            "yearTo": -330
+          },
+          "relationType": "campaign",
+          "eventId": "synthetic-alpha-event",
+          "journeyId": "synthetic-alpha-journey",
+          "uncertainty": {
+            "confidence": "high",
+            "note": "Synthetic active campaign relationship."
+          },
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic alpha campaign"
+            }
+          ]
+        },
+        {
+          "placeId": "synthetic-beta-place",
+          "period": {
+            "yearFrom": -329,
+            "yearTo": -300
+          },
+          "relationType": "rule",
+          "uncertainty": {
+            "confidence": "medium",
+            "note": "Synthetic location-change relationship."
+          },
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic alpha rule"
+            }
+          ]
+        }
+      ],
+      "associatedPolityIds": [
+        "synthetic-alpha-polity"
+      ],
       "importance": 3,
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic alpha person" }]
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source",
+          "locator": "Synthetic alpha person"
+        }
+      ],
+      "aliases": [],
+      "contentClassification": "synthetic-fixture"
     },
     {
       "id": "synthetic-beta-person",
       "defaultName": "Synthetic Beta Person",
       "summary": "A deliberately synthetic person used to verify aggregation at an active place.",
-      "life": { "yearFrom": -400, "yearTo": 10 },
-      "roles": ["synthetic commander"],
-      "places": [{ "placeId": "synthetic-alpha-place", "period": { "yearFrom": -350, "yearTo": -300 }, "relationType": "campaign", "eventId": "synthetic-alpha-battle", "journeyId": "synthetic-alpha-journey", "uncertainty": { "confidence": "medium", "note": "Synthetic aggregation relationship." }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic beta campaign" }] }],
-      "associatedPolityIds": ["synthetic-beta-polity"],
+      "life": {
+        "yearFrom": -400,
+        "yearTo": 10
+      },
+      "roles": [
+        "synthetic commander"
+      ],
+      "places": [
+        {
+          "placeId": "synthetic-alpha-place",
+          "period": {
+            "yearFrom": -350,
+            "yearTo": -300
+          },
+          "relationType": "campaign",
+          "eventId": "synthetic-alpha-battle",
+          "journeyId": "synthetic-alpha-journey",
+          "uncertainty": {
+            "confidence": "medium",
+            "note": "Synthetic aggregation relationship."
+          },
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic beta campaign"
+            }
+          ]
+        }
+      ],
+      "associatedPolityIds": [
+        "synthetic-beta-polity"
+      ],
       "importance": 2,
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic beta person" }]
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source",
+          "locator": "Synthetic beta person"
+        }
+      ],
+      "aliases": [],
+      "contentClassification": "synthetic-fixture"
     },
     {
       "id": "synthetic-gamma-person",
       "defaultName": "Synthetic Gamma Person",
       "summary": "A deliberately synthetic person used to verify alive-but-unmapped and outside-life states.",
-      "life": { "yearFrom": -400, "yearTo": -200 },
-      "roles": ["synthetic observer"],
-      "places": [{ "placeId": "synthetic-beta-place", "period": { "yearFrom": -280, "yearTo": -260 }, "relationType": "residence", "uncertainty": { "confidence": "low", "note": "Synthetic later residence." }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic gamma residence" }] }],
-      "associatedPolityIds": ["synthetic-beta-polity"],
+      "life": {
+        "yearFrom": -400,
+        "yearTo": -200
+      },
+      "roles": [
+        "synthetic observer"
+      ],
+      "places": [
+        {
+          "placeId": "synthetic-beta-place",
+          "period": {
+            "yearFrom": -280,
+            "yearTo": -260
+          },
+          "relationType": "residence",
+          "uncertainty": {
+            "confidence": "low",
+            "note": "Synthetic later residence."
+          },
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic gamma residence"
+            }
+          ]
+        }
+      ],
+      "associatedPolityIds": [
+        "synthetic-beta-polity"
+      ],
       "importance": 4,
-      "uncertainty": { "confidence": "low", "note": "This entire person record is synthetic." },
+      "uncertainty": {
+        "confidence": "low",
+        "note": "This entire person record is synthetic."
+      },
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic gamma person" }]
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source",
+          "locator": "Synthetic gamma person"
+        }
+      ],
+      "aliases": [],
+      "contentClassification": "synthetic-fixture"
+    },
+    {
+      "id": "alexander-iii", "defaultName": "Alexander III", "aliases": ["Alexander the Great", "Alexander of Macedon"], "contentClassification": "reviewed-historical",
+      "summary": "King of Macedon from 336 to 323 BCE; he led the 334 BCE crossing into Asia and fought at the Granicus.",
+      "life": { "yearFrom": -356, "yearTo": -323, "datePrecision": "year" }, "roles": ["king of Macedon", "military commander"],
+      "places": [{ "placeId": "pella", "period": { "yearFrom": -356, "yearTo": -356, "datePrecision": "year" }, "relationType": "birth", "sourceRefs": [{ "sourceId": "iranica-alexander", "locator": "Birth and chronology" }] }, { "placeId": "granicus-battlefield", "period": { "yearFrom": -334, "yearTo": -334, "datePrecision": "year" }, "relationType": "campaign", "eventId": "battle-of-the-granicus", "journeyId": "alexander-crossing-into-asia", "uncertainty": { "confidence": "disputed", "note": "Presence at the battle is secure; the mapped point is only a disputed regional representation." }, "sourceRefs": [{ "sourceId": "arrian-anabasis-chinnock", "locator": "Book I, chapters XIII-XVI" }, { "sourceId": "iranica-granicus" }] }],
+      "associatedPolityIds": ["kingdom-of-macedon"], "importance": 5,
+      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "iranica-alexander" }, { "sourceId": "met-rise-of-macedonia" }]
+    },
+    {
+      "id": "darius-iii", "defaultName": "Darius III", "aliases": ["Darius Codomannus", "Dareios III"], "contentClassification": "reviewed-historical",
+      "summary": "Last Achaemenid king, ruling from 336 to 330 BCE. He was not present at the Granicus battle in this dataset.",
+      "life": { "yearFrom": -380, "yearTo": -330, "datePrecision": "approximate" }, "roles": ["king of the Achaemenid Empire"], "places": [],
+      "associatedPolityIds": ["achaemenid-empire"], "importance": 5,
+      "uncertainty": { "confidence": "medium", "note": "The birth year is approximate and the surviving narrative evidence is predominantly Greek." },
+      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "iranica-darius-three", "locator": "Biography and reign" }, { "sourceId": "met-achaemenid-empire", "locator": "Darius III reign" }]
     }
   ]
 }

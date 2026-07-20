@@ -1,37 +1,164 @@
 {
   "schemaVersion": 1,
-  "datasetVersion": "foundation-fixture-0.1.0",
+  "datasetVersion": "granicus-core-0.1.0",
   "records": [
     {
-      "id": "synthetic-alpha-event", "defaultName": "Synthetic Alpha Event", "type": "political",
+      "id": "synthetic-alpha-event",
+      "defaultName": "Synthetic Alpha Event",
+      "type": "political",
       "summary": "A deliberately synthetic exact-location event used only to verify event presentation.",
-      "period": { "yearFrom": -334, "yearTo": -334 }, "coordinates": [28, 37],
-      "participantPolityIds": ["synthetic-alpha-polity"],
-      "participantPersonIds": ["synthetic-alpha-person"], "relatedPlaceIds": ["synthetic-alpha-place"],
-      "locationAccuracy": "exact", "uncertainty": { "confidence": "high", "note": "The event and coordinates are synthetic." },
-      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic exact event" }]
+      "period": {
+        "yearFrom": -334,
+        "yearTo": -334
+      },
+      "coordinates": [
+        28,
+        37
+      ],
+      "participantPolityIds": [
+        "synthetic-alpha-polity"
+      ],
+      "participantPersonIds": [
+        "synthetic-alpha-person"
+      ],
+      "relatedPlaceIds": [
+        "synthetic-alpha-place"
+      ],
+      "locationAccuracy": "exact",
+      "uncertainty": {
+        "confidence": "high",
+        "note": "The event and coordinates are synthetic."
+      },
+      "editorialStatus": "published",
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source",
+          "locator": "Synthetic exact event"
+        }
+      ],
+      "aliases": [],
+      "contentClassification": "synthetic-fixture"
     },
     {
-      "id": "synthetic-alpha-battle", "defaultName": "Synthetic Alpha Battle", "type": "battle",
+      "id": "synthetic-alpha-battle",
+      "defaultName": "Synthetic Alpha Battle",
+      "type": "battle",
       "summary": "A deliberately synthetic battle used only to verify structured battle presentation.",
-      "period": { "yearFrom": -334, "yearTo": -334 }, "coordinates": [30.5, 36.5], "locationAccuracy": "approximate",
-      "participantPolityIds": ["synthetic-alpha-polity", "synthetic-beta-polity"], "participantPersonIds": ["synthetic-alpha-person", "synthetic-beta-person"],
-      "relatedPlaceIds": ["synthetic-beta-place"],
-      "battle": { "sides": [
-        { "id": "synthetic-alpha-side", "label": "Synthetic Alpha Side", "polityIds": ["synthetic-alpha-polity"], "personIds": ["synthetic-alpha-person"], "commanderIds": ["synthetic-alpha-person"], "outcome": "Synthetic favorable outcome" },
-        { "id": "synthetic-beta-side", "label": "Synthetic Beta Side", "polityIds": ["synthetic-beta-polity"], "personIds": ["synthetic-beta-person"], "commanderIds": ["synthetic-beta-person"], "outcome": "Synthetic unfavorable outcome" }
-      ], "result": "Synthetic fixture result", "relatedJourneyId": "synthetic-alpha-journey", "disputedNotes": ["A deliberately synthetic disputed interpretation."] },
-      "uncertainty": { "confidence": "low", "note": "The approximate battle location is synthetic." },
-      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic battle" }]
+      "period": {
+        "yearFrom": -334,
+        "yearTo": -334
+      },
+      "coordinates": [
+        30.5,
+        36.5
+      ],
+      "locationAccuracy": "approximate",
+      "participantPolityIds": [
+        "synthetic-alpha-polity",
+        "synthetic-beta-polity"
+      ],
+      "participantPersonIds": [
+        "synthetic-alpha-person",
+        "synthetic-beta-person"
+      ],
+      "relatedPlaceIds": [
+        "synthetic-beta-place"
+      ],
+      "battle": {
+        "sides": [
+          {
+            "id": "synthetic-alpha-side",
+            "label": "Synthetic Alpha Side",
+            "polityIds": [
+              "synthetic-alpha-polity"
+            ],
+            "personIds": [
+              "synthetic-alpha-person"
+            ],
+            "commanderIds": [
+              "synthetic-alpha-person"
+            ],
+            "outcome": "Synthetic favorable outcome"
+          },
+          {
+            "id": "synthetic-beta-side",
+            "label": "Synthetic Beta Side",
+            "polityIds": [
+              "synthetic-beta-polity"
+            ],
+            "personIds": [
+              "synthetic-beta-person"
+            ],
+            "commanderIds": [
+              "synthetic-beta-person"
+            ],
+            "outcome": "Synthetic unfavorable outcome"
+          }
+        ],
+        "result": "Synthetic fixture result",
+        "relatedJourneyId": "synthetic-alpha-journey",
+        "disputedNotes": [
+          "A deliberately synthetic disputed interpretation."
+        ]
+      },
+      "uncertainty": {
+        "confidence": "low",
+        "note": "The approximate battle location is synthetic."
+      },
+      "editorialStatus": "published",
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source",
+          "locator": "Synthetic battle"
+        }
+      ],
+      "aliases": [],
+      "contentClassification": "synthetic-fixture"
     },
     {
-      "id": "synthetic-unknown-event", "defaultName": "Synthetic Unknown-Location Event", "type": "cultural",
+      "id": "synthetic-unknown-event",
+      "defaultName": "Synthetic Unknown-Location Event",
+      "type": "cultural",
       "summary": "A deliberately synthetic event with no reviewed map location.",
-      "period": { "yearFrom": -250, "yearTo": -250 }, "locationAccuracy": "unknown",
-      "participantPolityIds": ["synthetic-beta-polity"], "participantPersonIds": ["synthetic-beta-person"],
-      "relatedPlaceIds": ["synthetic-beta-place"],
-      "uncertainty": { "confidence": "unknown", "note": "No synthetic coordinate is supplied by design." },
-      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic unknown-location event" }]
+      "period": {
+        "yearFrom": -250,
+        "yearTo": -250
+      },
+      "locationAccuracy": "unknown",
+      "participantPolityIds": [
+        "synthetic-beta-polity"
+      ],
+      "participantPersonIds": [
+        "synthetic-beta-person"
+      ],
+      "relatedPlaceIds": [
+        "synthetic-beta-place"
+      ],
+      "uncertainty": {
+        "confidence": "unknown",
+        "note": "No synthetic coordinate is supplied by design."
+      },
+      "editorialStatus": "published",
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source",
+          "locator": "Synthetic unknown-location event"
+        }
+      ],
+      "aliases": [],
+      "contentClassification": "synthetic-fixture"
+    },
+    {
+      "id": "battle-of-the-granicus", "defaultName": "Battle of the Granicus", "aliases": ["Granicus"], "contentClassification": "reviewed-historical", "type": "battle",
+      "summary": "In 334 BCE Alexander's invading Macedonian-led army defeated Achaemenid regional forces at the Granicus. The exact site, tactical sequence, force totals, and losses are not asserted as settled.",
+      "period": { "yearFrom": -334, "yearTo": -334, "datePrecision": "year" }, "coordinates": [27.3077, 40.3804], "locationAccuracy": "disputed",
+      "participantPolityIds": ["kingdom-of-macedon", "achaemenid-empire"], "participantPersonIds": ["alexander-iii"], "relatedPlaceIds": ["granicus-battlefield"],
+      "battle": { "sides": [
+        { "id": "macedonian-led-army", "label": "Macedonian-led army", "polityIds": ["kingdom-of-macedon"], "personIds": ["alexander-iii"], "commanderIds": ["alexander-iii"], "outcome": "Victory" },
+        { "id": "achaemenid-regional-forces", "label": "Achaemenid regional forces", "polityIds": ["achaemenid-empire"], "personIds": [], "commanderIds": [], "outcome": "Defeat" }
+      ], "result": "Macedonian victory", "relatedJourneyId": "alexander-crossing-into-asia", "disputedNotes": ["Arrian presents a late-day contested crossing; Diodorus presents a dawn crossing with a materially different tactical sequence.", "Modern critical synthesis considers detailed reconstruction and numerical totals unreliable; forces and losses are therefore omitted.", "Darius III was not present and is not listed as a participant."] },
+      "uncertainty": { "confidence": "disputed", "note": "The representative point follows Getty TGN 6002329; it is not an exact battlefield coordinate." },
+      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "arrian-anabasis-chinnock", "locator": "Book I, chapters XIII-XVI", "confidence": "medium" }, { "sourceId": "diodorus-library-book-seventeen", "locator": "Book XVII, sections 17-21", "note": "Conflicting ancient account", "confidence": "disputed" }, { "sourceId": "plutarch-alexander-perseus", "locator": "Alexander 16", "confidence": "medium" }, { "sourceId": "iranica-granicus", "locator": "Full article, especially topography and source criticism", "confidence": "high" }, { "sourceId": "getty-tgn-granicus", "locator": "TGN 6002329", "note": "Representative point only", "confidence": "disputed" }]
     }
   ]
 }

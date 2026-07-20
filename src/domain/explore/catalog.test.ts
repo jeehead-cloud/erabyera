@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { loadBundledRuntimeData, loadBundledSearchIndex } from '../../data'
+import { syntheticRuntime } from '../../test/syntheticRuntime'
 import { parseMapUrlState } from '../../url'
 import { createEntityMapHref } from '../entityPages'
 import {
@@ -12,7 +13,7 @@ import {
   type ExploreCatalogType,
 } from './catalog'
 
-const dataset = loadBundledRuntimeData()
+const dataset = syntheticRuntime(loadBundledRuntimeData())
 const index = loadBundledSearchIndex()
 const expectedCurrent: Record<ExploreCatalogType, number> = {
   place: 2, polity: 2, person: 3, event: 2, journey: 1,

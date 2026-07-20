@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { loadBundledRuntimeData } from '../../data'; import type { Person, SourceReference } from '../entities'; import { parseMapUrlState, serializeMapUrlState } from '../../url'
+import { syntheticRuntime } from '../../test/syntheticRuntime'
 import { aggregatePersonSources, buildPersonPresentation, buildPersonPresentations, getActivePersonPlaceRelationships, getPersonMinZoom, isPersonAliveAtYear, isPersonNormallyVisible, PERSON_RELATIONSHIP_PRIORITY } from './personSelectors'
 import { buildPersonLocationAggregates } from './personAggregation'; import { buildPersonFeatureCollection } from './personGeoJson'; import { createPersonSelection, PERSON_SELECTION_HISTORY_MODE, selectedPersonId, withSelectedPerson, withSelectedPersonYear, withoutImplementedMapSelection } from './selection'
-const dataset = loadBundledRuntimeData(); const alpha = dataset.people.find((p) => p.id === 'synthetic-alpha-person') as Person; const beta = dataset.people.find((p) => p.id === 'synthetic-beta-person') as Person; const gamma = dataset.people.find((p) => p.id === 'synthetic-gamma-person') as Person
+const dataset = syntheticRuntime(loadBundledRuntimeData()); const alpha = dataset.people.find((p) => p.id === 'synthetic-alpha-person') as Person; const beta = dataset.people.find((p) => p.id === 'synthetic-beta-person') as Person; const gamma = dataset.people.find((p) => p.id === 'synthetic-gamma-person') as Person
 const at = (person: Person, year = -334) => buildPersonPresentation(person, dataset, year)
 describe('person life and relationships', () => {
   it('loads three synthetic people', () => expect(dataset.people).toHaveLength(3))

@@ -35,12 +35,12 @@ const expectInvalid = (workspace: RawWorkspace, text: string) => {
 }
 
 describe('source wrapper and schema validation', () => {
-  it('accepts the canonical synthetic workspace', () => expect(validateSourceWorkspace(copy()).ok).toBe(true))
+  it('accepts the canonical mixed reviewed and synthetic workspace', () => expect(validateSourceWorkspace(copy()).ok).toBe(true))
   it('validates the public Alexander collection shell and internal compatibility fixture', () => {
     const result = validateSourceWorkspace(copy())
     expect(result.ok).toBe(true)
     if (result.ok) expect(result.data.collections).toEqual(expect.arrayContaining([
-      expect.objectContaining({ id: 'alexanders-world', recommendedStartYear: -334, visibility: 'public', completeness: 'foundation-preview' }),
+      expect.objectContaining({ id: 'alexanders-world', recommendedStartYear: -334, visibility: 'public', completeness: 'partial', membershipKind: 'reviewed' }),
       expect.objectContaining({ id: 'synthetic-alpha-collection', visibility: 'internal' }),
     ]))
   })
@@ -80,6 +80,7 @@ describe('GeoJSON integrity', () => {
   const journeyFeatures = (w: RawWorkspace) => (w.journeyGeometry.value as { features: Record<string, unknown>[] }).features
   it('rejects an unclosed polygon ring', () => { const w = copy(); const geometry = territoryFeatures(w)[0].geometry as Record<string, unknown>; geometry.coordinates = [[[9, 9], [12, 9], [12, 12], [9, 12]]]; expectInvalid(w, 'closed') })
   it('rejects too-short polygon rings', () => { const w = copy(); const geometry = territoryFeatures(w)[0].geometry as Record<string, unknown>; geometry.coordinates = [[[9, 9], [12, 9], [9, 9]]]; expectInvalid(w, '>=4') })
+  it('rejects self-intersecting polygon rings', () => { const w = copy(); const geometry = territoryFeatures(w)[0].geometry as Record<string, unknown>; geometry.coordinates = [[[9, 9], [12, 12], [9, 12], [12, 9], [9, 9]]]; expectInvalid(w, 'must not self-intersect') })
   it('rejects out-of-bounds coordinates', () => { const w = copy(); const geometry = territoryFeatures(w)[0].geometry as Record<string, unknown>; geometry.coordinates = [[[999, 9], [12, 9], [12, 12], [999, 9]]]; expectInvalid(w, 'Too big') })
   it('rejects a too-short journey line', () => { const w = copy(); const geometry = journeyFeatures(w)[0].geometry as Record<string, unknown>; geometry.coordinates = [[10, 10]]; expectInvalid(w, '>=2') })
   it('accepts the canonical MultiLineString journey route', () => { const w = copy(); const result = validateSourceWorkspace(w); expect(result.ok).toBe(true); expect((w.journeyGeometry.value as { features: { geometry: { type: string } }[] }).features.some((feature) => feature.geometry.type === 'MultiLineString')).toBe(true) })
@@ -94,12 +95,12 @@ describe('deterministic generation and browser-safe loading', () => {
   it('filters draft records from public runtime data', () => { const runtime = JSON.parse(buildGeneratedFiles(validData()).get('runtime.json') ?? '{}') as { places: { id: string }[] }; expect(runtime.places.map((x) => x.id)).not.toContain('synthetic-draft-place') })
   it('generates byte-identical files repeatedly', () => expect([...buildGeneratedFiles(validData())]).toEqual([...buildGeneratedFiles(validData())]))
   it('emits no timestamps', () => expect([...buildGeneratedFiles(validData()).values()].join('\n')).not.toMatch(/generatedAt|createdAt/))
-  it('includes counts and a SHA-256 fingerprint in the manifest', () => { const manifest = JSON.parse(buildGeneratedFiles(validData()).get('manifest.json') ?? '{}') as { fingerprint: { value: string }; counts: Record<string, number> }; expect(manifest.fingerprint.value).toMatch(/^[a-f0-9]{64}$/); expect(manifest.counts.places).toBe(3) })
+  it('includes counts and a SHA-256 fingerprint in the manifest', () => { const manifest = JSON.parse(buildGeneratedFiles(validData()).get('manifest.json') ?? '{}') as { fingerprint: { value: string }; counts: Record<string, number> }; expect(manifest.fingerprint.value).toMatch(/^[a-f0-9]{64}$/); expect(manifest.counts.places).toBe(7) })
   it('includes both public and internal published collections in deterministic runtime output', () => { const manifest = JSON.parse(buildGeneratedFiles(validData()).get('manifest.json') ?? '{}') as { counts: Record<string, number> }; expect(manifest.counts.collections).toBe(2) })
   it('builds a stable reference index', () => { const index = JSON.parse(buildGeneratedFiles(validData()).get('index.json') ?? '{}') as { records: { id: string }[] }; expect(index.records.map((x) => x.id)).toEqual([...index.records.map((x) => x.id)].sort()) })
   it('builds a versioned search index for every implemented entity type', () => {
     const search = JSON.parse(buildGeneratedFiles(validData()).get('search-index.json') ?? '{}') as SearchIndex
-    expect(search).toMatchObject({ schemaVersion: 1, searchIndexVersion: 1, datasetVersion: 'foundation-fixture-0.1.0' })
+    expect(search).toMatchObject({ schemaVersion: 1, searchIndexVersion: 1, datasetVersion: 'granicus-core-0.1.0' })
     expect(new Set(search.entries.map((entry) => entry.entityType))).toEqual(new Set(['place', 'polity', 'person', 'event', 'journey']))
   })
   it('keeps Battle under Event and Campaign under Journey', () => {
@@ -115,9 +116,9 @@ describe('deterministic generation and browser-safe loading', () => {
       expect.objectContaining({ value: 'Synthetic Alpha Old Name', kind: 'historical', relevantYear: -500, period: { yearFrom: -500, yearTo: -400 } }),
     ]))
   })
-  it('does not invent aliases or transliterations', () => {
+  it('indexes only authored aliases and transliterations', () => {
     const search = JSON.parse(buildGeneratedFiles(validData()).get('search-index.json') ?? '{}') as SearchIndex
-    expect(search.entries.flatMap((entry) => entry.names).some((name) => name.kind === 'alias' || name.kind === 'transliteration')).toBe(false)
+    expect(search.entries.find((entry) => entry.entityId === 'alexander-iii')?.names).toEqual(expect.arrayContaining([expect.objectContaining({ value: 'Alexander the Great', kind: 'alias' })]))
   })
   it('orders entries and name variants deterministically', () => {
     const search = JSON.parse(buildGeneratedFiles(validData()).get('search-index.json') ?? '{}') as SearchIndex
@@ -148,20 +149,20 @@ describe('deterministic generation and browser-safe loading', () => {
   it('includes search metadata and the artifact in the manifest', () => {
     const manifest = JSON.parse(buildGeneratedFiles(validData()).get('manifest.json') ?? '{}') as { files: string[]; search: { indexVersion: number; entries: number } }
     expect(manifest.files).toContain('search-index.json')
-    expect(manifest.search).toEqual({ indexVersion: 1, entries: 14 })
+    expect(manifest.search).toEqual({ indexVersion: 1, entries: 24 })
   })
   it('loads and deep-freezes a compatible search index', () => {
     const raw = JSON.parse(buildGeneratedFiles(validData()).get('search-index.json') ?? '{}')
-    const loaded = loadSearchIndex(raw, 'foundation-fixture-0.1.0')
+    const loaded = loadSearchIndex(raw, 'granicus-core-0.1.0')
     expect(Object.isFrozen(loaded)).toBe(true)
     expect(Object.isFrozen(loaded.entries[0]?.names)).toBe(true)
   })
   it('rejects incompatible or malformed search indexes without affecting runtime loading', () => {
     const raw = JSON.parse(buildGeneratedFiles(validData()).get('search-index.json') ?? '{}')
     expect(() => loadSearchIndex(raw, 'other-1.0.0')).toThrow('version mismatch')
-    expect(() => loadSearchIndex({ schemaVersion: 1 }, 'foundation-fixture-0.1.0')).toThrow()
+    expect(() => loadSearchIndex({ schemaVersion: 1 }, 'granicus-core-0.1.0')).toThrow()
   })
-  it('loads and freezes valid runtime data', () => { const raw = JSON.parse(buildGeneratedFiles(validData()).get('runtime.json') ?? '{}'); const loaded = loadRuntimeDataset(raw, 'foundation-fixture-0.1.0'); expect(Object.isFrozen(loaded)).toBe(true); expect(Object.isFrozen(loaded.places)).toBe(true) })
+  it('loads and freezes valid runtime data', () => { const raw = JSON.parse(buildGeneratedFiles(validData()).get('runtime.json') ?? '{}'); const loaded = loadRuntimeDataset(raw, 'granicus-core-0.1.0'); expect(Object.isFrozen(loaded)).toBe(true); expect(Object.isFrozen(loaded.places)).toBe(true) })
   it('rejects an unexpected runtime dataset version', () => { const raw = JSON.parse(buildGeneratedFiles(validData()).get('runtime.json') ?? '{}'); expect(() => loadRuntimeDataset(raw, 'other-1.0.0')).toThrow('version mismatch') })
   it('rejects malformed runtime data', () => expect(() => loadRuntimeDataset({ schemaVersion: 1 })).toThrow())
   it('detects missing, stale, and unexpected generated files without changing them', async () => {

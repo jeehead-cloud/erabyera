@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { loadBundledRuntimeData, type RuntimeDataset } from '../../data'
+import { syntheticRuntime } from '../../test/syntheticRuntime'
 import type { Place, SourceReference } from '../entities'
 import { formatHistoricalYearRange } from '../time'
 import { buildPlaceFeatureCollection } from './placeGeoJson'
@@ -27,7 +28,7 @@ import {
 } from './selection'
 import { parseMapUrlState, serializeMapUrlState } from '../../url'
 
-const dataset = loadBundledRuntimeData()
+const dataset = syntheticRuntime(loadBundledRuntimeData())
 const alpha = dataset.places.find((place) => place.id === 'synthetic-alpha-place') as Place
 const beta = dataset.places.find((place) => place.id === 'synthetic-beta-place') as Place
 const gamma = dataset.places.find((place) => place.id === 'synthetic-gamma-place') as Place

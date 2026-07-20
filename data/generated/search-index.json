@@ -1,7 +1,48 @@
 {
-  "datasetVersion": "foundation-fixture-0.1.0",
+  "datasetVersion": "granicus-core-0.1.0",
   "entries": [
     {
+      "contentClassification": "reviewed-historical",
+      "context": "battle · Granicus battlefield region",
+      "entityId": "battle-of-the-granicus",
+      "entityType": "event",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "coordinates": [
+            27.3077,
+            40.3804
+          ],
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -334,
+            "yearTo": -334
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "battle of the granicus",
+          "value": "Battle of the Granicus"
+        },
+        {
+          "kind": "alias",
+          "normalizedValue": "granicus",
+          "value": "Granicus"
+        }
+      ],
+      "period": {
+        "datePrecision": "year",
+        "yearFrom": -334,
+        "yearTo": -334
+      },
+      "primaryName": "Battle of the Granicus",
+      "requiredLayer": "events",
+      "subtype": "battle"
+    },
+    {
+      "contentClassification": "synthetic-fixture",
       "context": "battle · Synthetic Beta Outpost",
       "entityId": "synthetic-alpha-battle",
       "entityType": "event",
@@ -34,6 +75,7 @@
       "subtype": "battle"
     },
     {
+      "contentClassification": "synthetic-fixture",
       "context": "political event · Synthetic Alpha Place",
       "entityId": "synthetic-alpha-event",
       "entityType": "event",
@@ -66,6 +108,7 @@
       "subtype": "political"
     },
     {
+      "contentClassification": "synthetic-fixture",
       "context": "cultural event · Synthetic Beta Outpost",
       "entityId": "synthetic-unknown-event",
       "entityType": "event",
@@ -87,6 +130,43 @@
       "subtype": "cultural"
     },
     {
+      "contentClassification": "reviewed-historical",
+      "context": "campaign · schematic route · Sestos · Abydos · Granicus battlefield region",
+      "entityId": "alexander-crossing-into-asia",
+      "entityType": "journey",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -334,
+            "yearTo": -334
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "alexander s crossing into asia",
+          "value": "Alexander's crossing into Asia"
+        },
+        {
+          "kind": "alias",
+          "normalizedValue": "hellespont crossing and granicus campaign",
+          "value": "Hellespont crossing and Granicus campaign"
+        }
+      ],
+      "period": {
+        "datePrecision": "year",
+        "yearFrom": -334,
+        "yearTo": -334
+      },
+      "primaryName": "Alexander's crossing into Asia",
+      "requiredLayer": "journeys",
+      "subtype": "campaign"
+    },
+    {
+      "contentClassification": "synthetic-fixture",
       "context": "campaign · schematic route · Synthetic Alpha Place · Synthetic Beta Outpost",
       "entityId": "synthetic-alpha-journey",
       "entityType": "journey",
@@ -115,6 +195,7 @@
       "subtype": "campaign"
     },
     {
+      "contentClassification": "synthetic-fixture",
       "context": "expedition · probable route · Synthetic Beta Outpost",
       "entityId": "synthetic-beta-expedition",
       "entityType": "journey",
@@ -143,6 +224,7 @@
       "subtype": "expedition"
     },
     {
+      "contentClassification": "synthetic-fixture",
       "context": "journey · uncertain route",
       "entityId": "synthetic-gamma-journey",
       "entityType": "journey",
@@ -164,6 +246,96 @@
       "subtype": "journey"
     },
     {
+      "contentClassification": "reviewed-historical",
+      "context": "king of Macedon, military commander · Pella · Granicus battlefield region",
+      "entityId": "alexander-iii",
+      "entityType": "person",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "coordinates": [
+            22.518485,
+            40.754555
+          ],
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -356,
+            "yearTo": -356
+          }
+        },
+        {
+          "coordinates": [
+            27.3077,
+            40.3804
+          ],
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -334,
+            "yearTo": -334
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "alexander iii",
+          "value": "Alexander III"
+        },
+        {
+          "kind": "alias",
+          "normalizedValue": "alexander of macedon",
+          "value": "Alexander of Macedon"
+        },
+        {
+          "kind": "alias",
+          "normalizedValue": "alexander the great",
+          "value": "Alexander the Great"
+        }
+      ],
+      "period": {
+        "datePrecision": "year",
+        "yearFrom": -356,
+        "yearTo": -323
+      },
+      "primaryName": "Alexander III",
+      "requiredLayer": "people",
+      "subtype": "person"
+    },
+    {
+      "contentClassification": "reviewed-historical",
+      "context": "king of the Achaemenid Empire",
+      "entityId": "darius-iii",
+      "entityType": "person",
+      "mapped": false,
+      "mapPeriods": [],
+      "names": [
+        {
+          "kind": "alias",
+          "normalizedValue": "dareios iii",
+          "value": "Dareios III"
+        },
+        {
+          "kind": "alias",
+          "normalizedValue": "darius codomannus",
+          "value": "Darius Codomannus"
+        },
+        {
+          "kind": "default",
+          "normalizedValue": "darius iii",
+          "value": "Darius III"
+        }
+      ],
+      "period": {
+        "datePrecision": "approximate",
+        "yearFrom": -380,
+        "yearTo": -330
+      },
+      "primaryName": "Darius III",
+      "requiredLayer": "people",
+      "subtype": "person"
+    },
+    {
+      "contentClassification": "synthetic-fixture",
       "context": "synthetic ruler, synthetic commander · Synthetic Alpha Place · Synthetic Beta Outpost",
       "entityId": "synthetic-alpha-person",
       "entityType": "person",
@@ -216,6 +388,7 @@
       "subtype": "person"
     },
     {
+      "contentClassification": "synthetic-fixture",
       "context": "synthetic commander · Synthetic Alpha Place",
       "entityId": "synthetic-beta-person",
       "entityType": "person",
@@ -248,6 +421,7 @@
       "subtype": "person"
     },
     {
+      "contentClassification": "synthetic-fixture",
       "context": "synthetic observer · Synthetic Beta Outpost",
       "entityId": "synthetic-gamma-person",
       "entityType": "person",
@@ -280,6 +454,173 @@
       "subtype": "person"
     },
     {
+      "contentClassification": "reviewed-historical",
+      "context": "settlement",
+      "entityId": "abydos",
+      "entityType": "place",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "coordinates": [
+            26.41122,
+            40.19406
+          ],
+          "period": {
+            "datePrecision": "approximate",
+            "yearFrom": -700,
+            "yearTo": 600
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "abydos",
+          "value": "Abydos"
+        }
+      ],
+      "period": {
+        "datePrecision": "approximate",
+        "yearFrom": -700,
+        "yearTo": 600
+      },
+      "primaryName": "Abydos",
+      "requiredLayer": "places",
+      "subtype": "settlement"
+    },
+    {
+      "contentClassification": "reviewed-historical",
+      "context": "battlefield · Achaemenid Empire",
+      "entityId": "granicus-battlefield",
+      "entityType": "place",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "coordinates": [
+            27.3077,
+            40.3804
+          ],
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -334,
+            "yearTo": -334
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "alias",
+          "normalizedValue": "biga çayı",
+          "value": "Biga Çayı"
+        },
+        {
+          "kind": "default",
+          "normalizedValue": "granicus battlefield region",
+          "value": "Granicus battlefield region"
+        },
+        {
+          "kind": "alias",
+          "normalizedValue": "granicus river",
+          "value": "Granicus River"
+        },
+        {
+          "kind": "historical",
+          "normalizedValue": "granicus",
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -334,
+            "yearTo": -334
+          },
+          "relevantYear": -334,
+          "value": "Granicus"
+        }
+      ],
+      "period": {
+        "datePrecision": "year",
+        "yearFrom": -334,
+        "yearTo": -334
+      },
+      "primaryName": "Granicus battlefield region",
+      "requiredLayer": "places",
+      "subtype": "battlefield"
+    },
+    {
+      "contentClassification": "reviewed-historical",
+      "context": "capital · Kingdom of Macedon",
+      "entityId": "pella",
+      "entityType": "place",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "coordinates": [
+            22.518485,
+            40.754555
+          ],
+          "period": {
+            "datePrecision": "approximate",
+            "yearFrom": -500,
+            "yearTo": 500
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "pella",
+          "value": "Pella"
+        }
+      ],
+      "period": {
+        "datePrecision": "approximate",
+        "yearFrom": -500,
+        "yearTo": 500
+      },
+      "primaryName": "Pella",
+      "requiredLayer": "places",
+      "subtype": "capital"
+    },
+    {
+      "contentClassification": "reviewed-historical",
+      "context": "settlement",
+      "entityId": "sestos",
+      "entityType": "place",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "coordinates": [
+            26.417225,
+            40.228356
+          ],
+          "period": {
+            "datePrecision": "approximate",
+            "yearFrom": -700,
+            "yearTo": 600
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "sestos",
+          "value": "Sestos"
+        },
+        {
+          "kind": "alias",
+          "normalizedValue": "sestus",
+          "value": "Sestus"
+        }
+      ],
+      "period": {
+        "datePrecision": "approximate",
+        "yearFrom": -700,
+        "yearTo": 600
+      },
+      "primaryName": "Sestos",
+      "requiredLayer": "places",
+      "subtype": "settlement"
+    },
+    {
+      "contentClassification": "synthetic-fixture",
       "context": "city · Synthetic Alpha Polity",
       "entityId": "synthetic-alpha-place",
       "entityType": "place",
@@ -324,6 +665,7 @@
       "subtype": "city"
     },
     {
+      "contentClassification": "synthetic-fixture",
       "context": "settlement",
       "entityId": "synthetic-beta-place",
       "entityType": "place",
@@ -356,6 +698,7 @@
       "subtype": "settlement"
     },
     {
+      "contentClassification": "synthetic-fixture",
       "context": "port",
       "entityId": "synthetic-gamma-place",
       "entityType": "place",
@@ -388,6 +731,89 @@
       "subtype": "port"
     },
     {
+      "contentClassification": "reviewed-historical",
+      "context": "empire",
+      "entityId": "achaemenid-empire",
+      "entityType": "polity",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -334,
+            "yearTo": -334
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "achaemenid empire",
+          "value": "Achaemenid Empire"
+        },
+        {
+          "kind": "alias",
+          "normalizedValue": "achaemenid persian empire",
+          "value": "Achaemenid Persian Empire"
+        },
+        {
+          "kind": "alias",
+          "normalizedValue": "persian empire",
+          "value": "Persian Empire"
+        }
+      ],
+      "period": {
+        "datePrecision": "year",
+        "yearFrom": -550,
+        "yearTo": -330
+      },
+      "primaryName": "Achaemenid Empire",
+      "requiredLayer": "territories",
+      "subtype": "empire"
+    },
+    {
+      "contentClassification": "reviewed-historical",
+      "context": "kingdom · Pella",
+      "entityId": "kingdom-of-macedon",
+      "entityType": "polity",
+      "mapped": true,
+      "mapPeriods": [
+        {
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -334,
+            "yearTo": -334
+          }
+        }
+      ],
+      "names": [
+        {
+          "kind": "default",
+          "normalizedValue": "kingdom of macedon",
+          "value": "Kingdom of Macedon"
+        },
+        {
+          "kind": "alias",
+          "normalizedValue": "macedon",
+          "value": "Macedon"
+        },
+        {
+          "kind": "alias",
+          "normalizedValue": "macedonia",
+          "value": "Macedonia"
+        }
+      ],
+      "period": {
+        "datePrecision": "approximate",
+        "yearFrom": -650,
+        "yearTo": -168
+      },
+      "primaryName": "Kingdom of Macedon",
+      "requiredLayer": "territories",
+      "subtype": "kingdom"
+    },
+    {
+      "contentClassification": "synthetic-fixture",
       "context": "kingdom · Synthetic Alpha Place",
       "entityId": "synthetic-alpha-polity",
       "entityType": "polity",
@@ -422,6 +848,7 @@
       "subtype": "kingdom"
     },
     {
+      "contentClassification": "synthetic-fixture",
       "context": "city state",
       "entityId": "synthetic-beta-polity",
       "entityType": "polity",

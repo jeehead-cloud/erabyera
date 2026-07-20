@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import {
+  contentClassificationSchema,
   datasetVersionSchema,
   entityIdSchema,
   longitudeLatitudeSchema,
@@ -36,6 +37,7 @@ export type SearchMapPeriod = z.infer<typeof searchMapPeriodSchema>
 export const searchIndexEntrySchema = z.object({
   entityType: z.enum(SELECTED_ENTITY_TYPES),
   entityId: entityIdSchema,
+  contentClassification: contentClassificationSchema,
   primaryName: nonEmptyTextSchema,
   names: z.array(searchNameVariantSchema).min(1),
   period: temporalRangeSchema,

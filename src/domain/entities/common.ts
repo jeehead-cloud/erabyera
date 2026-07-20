@@ -34,6 +34,12 @@ export type EditorialStatus = z.infer<typeof editorialStatusSchema>
 
 export const importanceSchema = z.number().int().min(1).max(5)
 
+export const contentClassificationSchema = z.enum([
+  'reviewed-historical',
+  'synthetic-fixture',
+])
+export type ContentClassification = z.infer<typeof contentClassificationSchema>
+
 export const longitudeLatitudeSchema = z.tuple([
   z.number().finite().min(-180).max(180),
   z.number().finite().min(-90).max(90),
@@ -44,6 +50,8 @@ export const entityCoreSchema = z
   .object({
     id: entityIdSchema,
     defaultName: nonEmptyTextSchema,
+    aliases: z.array(nonEmptyTextSchema),
+    contentClassification: contentClassificationSchema,
     editorialStatus: editorialStatusSchema,
     summary: nonEmptyTextSchema.optional(),
   })

@@ -42,6 +42,7 @@ interface EntityPageBase {
   id: string
   name: string
   subtype: string
+  contentClassification: 'reviewed-historical' | 'synthetic-fixture'
   period: TemporalRange
   summary?: string
   contextYear: HistoricalYear
@@ -109,6 +110,7 @@ function referenceKey(reference: SourceReference): string {
     reference.note ?? '',
     reference.excerptNote ?? '',
     reference.reviewedOn ?? '',
+    reference.confidence ?? '',
   ].join('\u0000')
 }
 
@@ -255,7 +257,7 @@ export function buildEntityPageModel(
     if (record === undefined) return null
     const year = contextYear(record.existence, preferredYear)
     return {
-      entityType: type, id, name: record.defaultName, subtype: record.placeType,
+      entityType: type, id, name: record.defaultName, subtype: record.placeType, contentClassification: record.contentClassification,
       period: record.existence, summary: record.summary, contextYear: year, relations,
       sources: collectSources([
         ...record.sourceRefs,
@@ -273,7 +275,7 @@ export function buildEntityPageModel(
     const year = contextYear(record.existence, preferredYear)
     const territoryPeriods = dataset.territories.filter((item) => item.polityId === id)
     return {
-      entityType: type, id, name: record.defaultName, subtype: record.polityType,
+      entityType: type, id, name: record.defaultName, subtype: record.polityType, contentClassification: record.contentClassification,
       period: record.existence, summary: record.summary, contextYear: year, relations,
       sources: collectSources([
         ...record.sourceRefs,
@@ -292,7 +294,7 @@ export function buildEntityPageModel(
     const year = contextYear(record.life, preferredYear)
     const presentation = buildPersonPresentation(record, dataset, year)
     return {
-      entityType: type, id, name: record.defaultName, subtype: record.roles.join(', '),
+      entityType: type, id, name: record.defaultName, subtype: record.roles.join(', '), contentClassification: record.contentClassification,
       period: record.life, summary: record.summary, contextYear: year, relations,
       sources: collectSources([...record.sourceRefs, ...record.places.flatMap((item) => item.sourceRefs)], dataset.sources),
       uncertainty: record.uncertainty, mapped: presentation.firstMappedYear !== null,
@@ -319,7 +321,7 @@ export function buildEntityPageModel(
     if (record === undefined) return null
     const year = contextYear(record.period, preferredYear)
     return {
-      entityType: type, id, name: record.defaultName, subtype: record.type,
+      entityType: type, id, name: record.defaultName, subtype: record.type, contentClassification: record.contentClassification,
       period: record.period, summary: record.summary, contextYear: year, relations,
       sources: collectSources(record.sourceRefs, dataset.sources),
       uncertainty: record.uncertainty, mapped: record.coordinates !== undefined,
@@ -331,7 +333,7 @@ export function buildEntityPageModel(
   const year = contextYear(record.period, preferredYear)
   const presentation = buildJourneyPresentation(record, dataset, dataset.geometry.journeys, year)
   return {
-    entityType: type, id, name: record.defaultName, subtype: record.journeyType,
+    entityType: type, id, name: record.defaultName, subtype: record.journeyType, contentClassification: record.contentClassification,
     period: record.period, summary: record.summary, contextYear: year, relations,
     sources: collectSources([...record.sourceRefs, ...record.stages.flatMap((item) => item.sourceRefs)], dataset.sources),
     uncertainty: record.uncertainty, mapped: presentation.geometryAvailable,

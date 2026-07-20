@@ -9,6 +9,7 @@ import { sourceSchema } from './source'
 export const sampleSource = sourceSchema.parse({
   id: 'sample-source',
   title: 'Synthetic source fixture',
+  contentClassification: 'synthetic-fixture',
   sourceType: 'reference',
   organization: 'Fixture Organization',
   url: 'https://example.com/sample-source',
@@ -21,6 +22,7 @@ const samplePeriod = { yearFrom: -10, yearTo: 10, datePrecision: 'range' as cons
 export const samplePlace = placeSchema.parse({
   id: 'sample-place',
   defaultName: 'Sample Place',
+  aliases: [], contentClassification: 'synthetic-fixture',
   placeType: 'city',
   coordinates: [30, 45],
   existence: samplePeriod,
@@ -45,6 +47,7 @@ export const samplePlace = placeSchema.parse({
 export const samplePolity = politySchema.parse({
   id: 'sample-polity',
   defaultName: 'Sample Polity',
+  aliases: [], contentClassification: 'synthetic-fixture',
   polityType: 'kingdom',
   existence: samplePeriod,
   color: '#8f6620',
@@ -61,6 +64,7 @@ export const samplePolity = politySchema.parse({
 export const sampleTerritoryPeriod = territoryPeriodSchema.parse({
   id: 'sample-territory-period',
   polityId: samplePolity.id,
+  contentClassification: 'synthetic-fixture',
   period: samplePeriod,
   controlCategory: 'approximate',
   geometryFeatureId: 'sample-territory-feature',
@@ -72,6 +76,7 @@ export const sampleTerritoryPeriod = territoryPeriodSchema.parse({
 export const samplePerson = personSchema.parse({
   id: 'sample-person',
   defaultName: 'Sample Person',
+  aliases: [], contentClassification: 'synthetic-fixture',
   life: samplePeriod,
   roles: ['fixture role'],
   places: [
@@ -91,6 +96,7 @@ export const samplePerson = personSchema.parse({
 export const sampleEvent = eventSchema.parse({
   id: 'sample-event',
   defaultName: 'Sample Event',
+  aliases: [], contentClassification: 'synthetic-fixture',
   type: 'political',
   period: { yearFrom: -2, yearTo: -1 },
   participantPolityIds: [samplePolity.id],
@@ -104,6 +110,7 @@ export const sampleEvent = eventSchema.parse({
 export const sampleBattle = battleSchema.parse({
   id: 'sample-battle',
   defaultName: 'Sample Battle',
+  aliases: [], contentClassification: 'synthetic-fixture',
   type: 'battle',
   period: { yearFrom: -1, yearTo: -1 },
   coordinates: [30, 45],
@@ -138,6 +145,7 @@ export const sampleBattle = battleSchema.parse({
 export const sampleJourney = journeySchema.parse({
   id: 'sample-journey',
   defaultName: 'Sample Journey',
+  aliases: [], contentClassification: 'synthetic-fixture',
   journeyType: 'campaign',
   period: samplePeriod,
   participantPersonIds: [samplePerson.id],
@@ -156,6 +164,7 @@ export const sampleJourney = journeySchema.parse({
 export const sampleCollection = contentCollectionSchema.parse({
   id: 'sample-collection',
   defaultName: 'Sample Collection',
+  aliases: [], contentClassification: 'synthetic-fixture',
   description: 'Synthetic collection fixture.',
   timeRange: samplePeriod,
   recommendedStartYear: -1,

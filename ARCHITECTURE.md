@@ -611,6 +611,14 @@ Collection state remains context, not filtering. F13 Year Overview still derives
 
 Pure Vitest coverage exercises the public/internal boundary, schema rejection, explicit membership and inverse membership, grouped and active/mapped counts, inclusive period edges, product-focus classification, unresolved IDs, explicit recommended URLs, selection clearing, Leave preservation, global Year Overview behavior, and server-rendered valid/unresolved badge states. Direct refresh, responsive layout, actual Map panel coexistence, interaction, and keyboard behavior remain owner external-browser checks.
 
+### F17 reviewed-content and classification boundary
+
+F17 keeps the same canonical-to-generated architecture and changes the dataset policy from synthetic-only to mixed reviewed content plus explicit compatibility fixtures. `contentClassification` is required on sources, entity-core records, and territory periods; aliases are canonical authored arrays and are indexed without inference. Source references may carry categorical confidence. The application continues to consume only the immutable published generated runtime and never imports authoring files.
+
+The public `alexanders-world` collection now has `reviewed` membership and `partial` completeness. Its ten linked records are the Granicus core; the internal synthetic collection preserves regression fixtures. Search entries carry classification so synthetic results can remain visibly synthetic, while entity pages expose the same distinction as record metadata rather than ID-name heuristics.
+
+Geometry contracts remain GeoJSON Polygon/MultiPolygon and LineString/MultiLineString, but polygon validation now rejects self-intersecting rings. The reviewed journey is explicitly schematic and territory features are evidence-linked low-confidence contextual generalizations. No browser-side routing, interpolation, border generation, remote content fetch, or parallel content model was introduced.
+
 ---
 
 ## 8. Importance and Visibility

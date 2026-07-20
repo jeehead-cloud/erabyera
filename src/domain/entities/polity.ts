@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { temporalRangeSchema } from '../time'
 import {
+  contentClassificationSchema,
   editorialStatusSchema,
   entityCoreSchema,
   entityIdSchema,
@@ -75,6 +76,7 @@ export type Polity = z.infer<typeof politySchema>
 export const territoryPeriodSchema = z
   .object({
     id: entityIdSchema,
+    contentClassification: contentClassificationSchema,
     polityId: entityIdSchema,
     period: temporalRangeSchema,
     controlCategory: territoryControlSchema,

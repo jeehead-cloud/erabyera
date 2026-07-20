@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { loadBundledRuntimeData } from '../../data'
+import { syntheticRuntime } from '../../test/syntheticRuntime'
 import type { Battle, HistoricalEvent, SourceReference } from '../entities'
 import { eventSchema, historicalEventSchema } from '../entities'
 import { parseMapUrlState, serializeMapUrlState } from '../../url'
@@ -22,7 +23,7 @@ import {
   withoutImplementedMapSelection,
 } from './selection'
 
-const dataset = loadBundledRuntimeData()
+const dataset = syntheticRuntime(loadBundledRuntimeData())
 const ordinary = dataset.events.find((event) => event.id === 'synthetic-alpha-event') as HistoricalEvent
 const battle = dataset.events.find((event) => event.id === 'synthetic-alpha-battle') as Battle
 const unknown = dataset.events.find((event) => event.id === 'synthetic-unknown-event') as HistoricalEvent

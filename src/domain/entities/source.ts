@@ -1,11 +1,13 @@
 import { z } from 'zod'
 import { historicalYearSchema } from '../time'
 import {
+  contentClassificationSchema,
   editorialStatusSchema,
   entityIdSchema,
   nonEmptyTextSchema,
   type EditorialStatus,
 } from './common'
+import { confidenceSchema } from './uncertainty'
 
 export const sourceTypeSchema = z.enum([
   'primary',
@@ -30,6 +32,7 @@ export const sourceSchema = z
   .object({
     id: entityIdSchema,
     title: nonEmptyTextSchema,
+    contentClassification: contentClassificationSchema,
     sourceType: sourceTypeSchema,
     author: nonEmptyTextSchema.optional(),
     organization: nonEmptyTextSchema.optional(),
@@ -51,6 +54,7 @@ export const sourceReferenceSchema = z
     note: nonEmptyTextSchema.optional(),
     excerptNote: nonEmptyTextSchema.optional(),
     reviewedOn: z.iso.date().optional(),
+    confidence: confidenceSchema.optional(),
   })
   .strict()
 export type SourceReference = z.infer<typeof sourceReferenceSchema>

@@ -30,8 +30,7 @@ function variants(values: readonly Omit<SearchNameVariant, 'normalizedValue'>[])
     if (!unique.has(key)) unique.set(key, variant)
   }
   return [...unique.values()].sort((first, second) =>
-    compareText(first.normalizedValue, second.normalizedValue) ||
-    compareText(first.kind, second.kind) ||
+    compareText(`${first.normalizedValue}:${first.kind}`, `${second.normalizedValue}:${second.kind}`) ||
     (first.period?.yearFrom ?? 0) - (second.period?.yearFrom ?? 0) ||
     (first.period?.yearTo ?? 0) - (second.period?.yearTo ?? 0),
   )
@@ -65,9 +64,11 @@ export function buildSearchIndex(runtime: Readonly<RuntimeDataset>): SearchIndex
     ...runtime.places.map((place): SearchIndexEntry => ({
       entityType: 'place',
       entityId: place.id,
+      contentClassification: place.contentClassification,
       primaryName: place.defaultName,
       names: variants([
         { value: place.defaultName, kind: 'default' },
+        ...place.aliases.map((value) => ({ value, kind: 'alias' as const })),
         ...place.names.filter((name) => name.name !== place.defaultName).map((name) => ({
           value: name.name,
           kind: 'historical' as const,
@@ -93,7 +94,8 @@ export function buildSearchIndex(runtime: Readonly<RuntimeDataset>): SearchIndex
     })),
     ...runtime.polities.map((polity): SearchIndexEntry => ({
       entityType: 'polity', entityId: polity.id, primaryName: polity.defaultName,
-      names: variants([{ value: polity.defaultName, kind: 'default' }]),
+      contentClassification: polity.contentClassification,
+      names: variants([{ value: polity.defaultName, kind: 'default' }, ...polity.aliases.map((value) => ({ value, kind: 'alias' as const }))]),
       period: polity.existence,
       context: context([
         polity.polityType.replaceAll('-', ' '),
@@ -112,7 +114,8 @@ export function buildSearchIndex(runtime: Readonly<RuntimeDataset>): SearchIndex
       }))
       return {
         entityType: 'person', entityId: person.id, primaryName: person.defaultName,
-        names: variants([{ value: person.defaultName, kind: 'default' }]),
+        contentClassification: person.contentClassification,
+        names: variants([{ value: person.defaultName, kind: 'default' }, ...person.aliases.map((value) => ({ value, kind: 'alias' as const }))]),
         period: person.life,
         context: context([
           person.roles.join(', '),
@@ -124,7 +127,8 @@ export function buildSearchIndex(runtime: Readonly<RuntimeDataset>): SearchIndex
     }),
     ...runtime.events.map((event): SearchIndexEntry => ({
       entityType: 'event', entityId: event.id, primaryName: event.defaultName,
-      names: variants([{ value: event.defaultName, kind: 'default' }]),
+      contentClassification: event.contentClassification,
+      names: variants([{ value: event.defaultName, kind: 'default' }, ...event.aliases.map((value) => ({ value, kind: 'alias' as const }))]),
       period: event.period,
       context: context([
         event.type === 'battle' ? 'battle' : `${event.type.replaceAll('-', ' ')} event`,
@@ -138,7 +142,8 @@ export function buildSearchIndex(runtime: Readonly<RuntimeDataset>): SearchIndex
       const mapped = journey.geometryFeatureId !== undefined && journeyGeometry.has(journey.geometryFeatureId)
       return {
         entityType: 'journey', entityId: journey.id, primaryName: journey.defaultName,
-        names: variants([{ value: journey.defaultName, kind: 'default' }]),
+        contentClassification: journey.contentClassification,
+        names: variants([{ value: journey.defaultName, kind: 'default' }, ...journey.aliases.map((value) => ({ value, kind: 'alias' as const }))]),
         period: journey.period,
         context: context([
           journey.journeyType.replaceAll('-', ' '),

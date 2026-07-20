@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "datasetVersion": "foundation-fixture-0.1.0",
+  "datasetVersion": "granicus-core-0.1.0",
   "records": [
     {
       "id": "synthetic-fixture-source",
@@ -9,13 +9,137 @@
       "organization": "EraByEra Fixture Laboratory",
       "url": "https://example.com/erabyera-synthetic-fixture",
       "license": "Synthetic test data; no historical claim",
-      "editorialStatus": "published"
+      "editorialStatus": "published",
+      "contentClassification": "synthetic-fixture"
     },
     {
       "id": "draft-fixture-source",
       "title": "Draft-only synthetic fixture source",
       "sourceType": "other",
-      "editorialStatus": "draft"
+      "editorialStatus": "draft",
+      "contentClassification": "synthetic-fixture"
+    },
+    {
+      "id": "arrian-anabasis-chinnock",
+      "title": "The Anabasis of Alexander",
+      "contentClassification": "reviewed-historical",
+      "sourceType": "primary",
+      "author": "Arrian; translated by E. J. Chinnock",
+      "publicationYear": 1893,
+      "publisher": "Project Gutenberg",
+      "url": "https://www.gutenberg.org/ebooks/46976",
+      "license": "Public domain in the United States",
+      "bibliographicNote": "Ancient narrative in a public-domain English translation; Book I is used with precise chapter locators and is not treated as neutral eyewitness reporting.",
+      "editorialStatus": "published",
+      "review": { "reviewedBy": "EraByEra editorial review", "reviewedOn": "2026-07-20" }
+    },
+    {
+      "id": "diodorus-library-book-seventeen",
+      "title": "Library of History, Book XVII",
+      "contentClassification": "reviewed-historical",
+      "sourceType": "primary",
+      "author": "Diodorus Siculus; translated by C. Bradford Welles",
+      "publicationYear": 1963,
+      "publisher": "Harvard University Press; LacusCurtius transcription",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Diodorus_Siculus/17B%2A.html",
+      "bibliographicNote": "Ancient narrative used chiefly to preserve the conflict with Arrian over the river crossing; online transcription reproduces the Loeb edition.",
+      "editorialStatus": "published",
+      "review": { "reviewedBy": "EraByEra editorial review", "reviewedOn": "2026-07-20" }
+    },
+    {
+      "id": "plutarch-alexander-perseus",
+      "title": "Life of Alexander",
+      "contentClassification": "reviewed-historical",
+      "sourceType": "primary",
+      "author": "Plutarch; translated by Bernadotte Perrin",
+      "publicationYear": 1919,
+      "publisher": "Perseus Digital Library",
+      "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:2008.01.0129",
+      "bibliographicNote": "Ancient biographical narrative; section 16 is used as a parallel Granicus account, not as independent modern verification.",
+      "editorialStatus": "published",
+      "review": { "reviewedBy": "EraByEra editorial review", "reviewedOn": "2026-07-20" }
+    },
+    {
+      "id": "iranica-granicus",
+      "title": "Granicus",
+      "contentClassification": "reviewed-historical",
+      "sourceType": "secondary",
+      "author": "Ernst Badian",
+      "publicationYear": 2002,
+      "publisher": "Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/granicus/",
+      "bibliographicNote": "Modern critical synthesis emphasizing that detailed reconstruction and numerical claims are unreliable.",
+      "editorialStatus": "published",
+      "review": { "reviewedBy": "EraByEra editorial review", "reviewedOn": "2026-07-20" }
+    },
+    {
+      "id": "iranica-alexander",
+      "title": "Alexander the Great (356-323 B.C.)",
+      "contentClassification": "reviewed-historical",
+      "sourceType": "secondary",
+      "author": "Pierre Briant",
+      "publicationYear": 1985,
+      "publisher": "Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/alexander-the-great-356-23-bc/",
+      "editorialStatus": "published",
+      "review": { "reviewedBy": "EraByEra editorial review", "reviewedOn": "2026-07-20" }
+    },
+    {
+      "id": "iranica-darius-three",
+      "title": "Darius III",
+      "contentClassification": "reviewed-historical",
+      "sourceType": "secondary",
+      "author": "Ernst Badian",
+      "publicationYear": 1994,
+      "publisher": "Encyclopaedia Iranica",
+      "url": "https://www.iranicaonline.org/articles/darius-v/",
+      "editorialStatus": "published",
+      "review": { "reviewedBy": "EraByEra editorial review", "reviewedOn": "2026-07-20" }
+    },
+    {
+      "id": "met-achaemenid-empire",
+      "title": "The Achaemenid Persian Empire (550-330 B.C.)",
+      "contentClassification": "reviewed-historical",
+      "sourceType": "secondary",
+      "organization": "The Metropolitan Museum of Art, Department of Ancient Near Eastern Art",
+      "publicationYear": 2004,
+      "url": "https://www.metmuseum.org/essays/the-achaemenid-persian-empire-550-330-b-c",
+      "editorialStatus": "published",
+      "review": { "reviewedBy": "EraByEra editorial review", "reviewedOn": "2026-07-20" }
+    },
+    {
+      "id": "met-rise-of-macedonia",
+      "title": "The Rise of Macedonia and the Conquests of Alexander the Great",
+      "contentClassification": "reviewed-historical",
+      "sourceType": "secondary",
+      "organization": "The Metropolitan Museum of Art, Department of Greek and Roman Art",
+      "publicationYear": 2004,
+      "url": "https://www.metmuseum.org/essays/the-rise-of-macedonia-and-the-conquests-of-alexander-the-great",
+      "editorialStatus": "published",
+      "review": { "reviewedBy": "EraByEra editorial review", "reviewedOn": "2026-07-20" }
+    },
+    {
+      "id": "pleiades-gazetteer",
+      "title": "Pleiades: A Gazetteer of Past Places",
+      "contentClassification": "reviewed-historical",
+      "sourceType": "dataset",
+      "organization": "Institute for the Study of the Ancient World, New York University",
+      "url": "https://pleiades.stoa.org/",
+      "license": "CC BY 3.0",
+      "bibliographicNote": "Stable place identifiers and representative points; coordinates are not claims of survey-grade precision.",
+      "editorialStatus": "published",
+      "review": { "reviewedBy": "EraByEra editorial review", "reviewedOn": "2026-07-20" }
+    },
+    {
+      "id": "getty-tgn-granicus",
+      "title": "Getty Thesaurus of Geographic Names: Granicus",
+      "contentClassification": "reviewed-historical",
+      "sourceType": "dataset",
+      "organization": "Getty Research Institute",
+      "url": "https://www.getty.edu/vow/TGNFullDisplay?english=Y&find=7009485&nation=&place=&subjectid=6002329",
+      "bibliographicNote": "TGN subject 6002329; supplies a representative river/battlefield point, not an exact ancient battle location.",
+      "editorialStatus": "published",
+      "review": { "reviewedBy": "EraByEra editorial review", "reviewedOn": "2026-07-20" }
     }
   ]
 }

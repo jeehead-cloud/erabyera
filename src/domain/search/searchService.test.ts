@@ -29,6 +29,7 @@ function customIndex(entries: SearchIndex['entries']): SearchIndex {
 const baseEntry: SearchIndex['entries'][number] = {
   entityType: 'place',
   entityId: 'test-place',
+  contentClassification: 'synthetic-fixture',
   primaryName: 'Alpha Harbor',
   names: [{ value: 'Alpha Harbor', normalizedValue: 'alpha harbor', kind: 'default' }],
   period: { yearFrom: -10, yearTo: 10 },

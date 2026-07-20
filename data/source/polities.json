@@ -1,29 +1,92 @@
 {
   "schemaVersion": 1,
-  "datasetVersion": "foundation-fixture-0.1.0",
+  "datasetVersion": "granicus-core-0.1.0",
   "records": [
     {
       "id": "synthetic-alpha-polity",
       "defaultName": "Synthetic Alpha Polity",
       "polityType": "kingdom",
-      "existence": { "yearFrom": -500, "yearTo": 10 },
+      "existence": {
+        "yearFrom": -500,
+        "yearTo": 10
+      },
       "color": "#336699",
       "summary": "A deliberately synthetic polity used to verify changing territory periods.",
-      "capitals": [{ "placeId": "synthetic-alpha-place", "period": { "yearFrom": -10, "yearTo": 10 }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }] }],
-      "rulers": [{ "personId": "synthetic-alpha-person", "period": { "yearFrom": -10, "yearTo": 10 }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }] }],
+      "capitals": [
+        {
+          "placeId": "synthetic-alpha-place",
+          "period": {
+            "yearFrom": -10,
+            "yearTo": 10
+          },
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source"
+            }
+          ]
+        }
+      ],
+      "rulers": [
+        {
+          "personId": "synthetic-alpha-person",
+          "period": {
+            "yearFrom": -10,
+            "yearTo": 10
+          },
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source"
+            }
+          ]
+        }
+      ],
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "aliases": [],
+      "contentClassification": "synthetic-fixture"
     },
     {
       "id": "synthetic-beta-polity",
       "defaultName": "Synthetic Beta Polity",
       "polityType": "city-state",
-      "existence": { "yearFrom": -400, "yearTo": 10 },
+      "existence": {
+        "yearFrom": -400,
+        "yearTo": 10
+      },
       "color": "#993366",
       "summary": "A deliberately synthetic polity used to verify overlapping claims and unmapped active years.",
-      "capitals": [], "rulers": [],
+      "capitals": [],
+      "rulers": [],
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source" }]
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source"
+        }
+      ],
+      "aliases": [],
+      "contentClassification": "synthetic-fixture"
+    },
+    {
+      "id": "kingdom-of-macedon", "defaultName": "Kingdom of Macedon", "aliases": ["Macedonia", "Macedon"], "contentClassification": "reviewed-historical",
+      "polityType": "kingdom", "existence": { "yearFrom": -650, "yearTo": -168, "datePrecision": "approximate" }, "color": "#7a4e9d",
+      "summary": "The Macedonian kingdom ruled by Alexander III from 336 to 323 BCE.",
+      "capitals": [{ "placeId": "pella", "period": { "yearFrom": -399, "yearTo": -168, "datePrecision": "approximate" }, "status": "royal capital", "uncertainty": { "confidence": "medium", "note": "The start is deliberately approximate." }, "sourceRefs": [{ "sourceId": "met-rise-of-macedonia" }, { "sourceId": "pleiades-gazetteer", "locator": "Pleiades place 491687" }] }],
+      "rulers": [{ "personId": "alexander-iii", "period": { "yearFrom": -336, "yearTo": -323, "datePrecision": "year" }, "title": "king", "sourceRefs": [{ "sourceId": "iranica-alexander", "locator": "Accession and reign" }] }],
+      "uncertainty": { "confidence": "medium", "note": "The broad polity lifespan is contextual; this slice focuses on 336-323 BCE." },
+      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "met-rise-of-macedonia" }, { "sourceId": "iranica-alexander" }]
+    },
+    {
+      "id": "achaemenid-empire", "defaultName": "Achaemenid Empire", "aliases": ["Achaemenid Persian Empire", "Persian Empire"], "contentClassification": "reviewed-historical",
+      "polityType": "empire", "existence": { "yearFrom": -550, "yearTo": -330, "datePrecision": "year" }, "color": "#b87a2b",
+      "summary": "The Persian empire ruled by Darius III from 336 to 330 BCE and opposed by Alexander's invasion.",
+      "capitals": [],
+      "rulers": [{ "personId": "darius-iii", "period": { "yearFrom": -336, "yearTo": -330, "datePrecision": "year" }, "title": "king", "sourceRefs": [{ "sourceId": "iranica-darius-three", "locator": "Reign chronology" }] }],
+      "uncertainty": { "confidence": "high", "note": "The dates model the conventional imperial span; the displayed 334 BCE territory is explicitly approximate." },
+      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "met-achaemenid-empire" }, { "sourceId": "iranica-darius-three" }]
     }
   ]
 }

@@ -4,16 +4,16 @@
   },
   "counts": {
     "collections": 2,
-    "events": 3,
-    "journeys": 3,
-    "people": 3,
-    "places": 3,
-    "polities": 2,
-    "sources": 1,
-    "territories": 3
+    "events": 4,
+    "journeys": 4,
+    "people": 5,
+    "places": 7,
+    "polities": 4,
+    "sources": 11,
+    "territories": 5
   },
-  "datasetName": "Synthetic Foundation Fixture Dataset",
-  "datasetVersion": "foundation-fixture-0.1.0",
+  "datasetName": "EraByEra Granicus Core Dataset",
+  "datasetVersion": "granicus-core-0.1.0",
   "editorialPolicy": "published-only",
   "files": [
     "index.json",
@@ -23,15 +23,15 @@
   ],
   "fingerprint": {
     "algorithm": "sha256",
-    "value": "9a50ed5aef325e34118c7d7d7e4b043a9dff2e5338cbd0f1e05e5801e7a466a9"
+    "value": "9eeb54768bdfc461374e0c06aad2a6ee89140456b5412886d20487f1eaaddec8"
   },
   "geometryCounts": {
-    "journeys": 2,
-    "territories": 3
+    "journeys": 3,
+    "territories": 5
   },
   "schemaVersion": 1,
   "search": {
-    "entries": 14,
+    "entries": 24,
     "indexVersion": 1
   },
   "timestampPolicy": "none"

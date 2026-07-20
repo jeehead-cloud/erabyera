@@ -1,62 +1,207 @@
 {
   "schemaVersion": 1,
-  "datasetVersion": "foundation-fixture-0.1.0",
+  "datasetVersion": "granicus-core-0.1.0",
   "records": [
     {
       "id": "synthetic-alpha-journey",
       "defaultName": "Synthetic Alpha Journey",
       "summary": "A deliberately synthetic campaign used only to verify route presentation.",
       "journeyType": "campaign",
-      "period": { "yearFrom": -350, "yearTo": -300 },
-      "participantPersonIds": ["synthetic-alpha-person", "synthetic-beta-person"],
-      "participantPolityIds": ["synthetic-alpha-polity", "synthetic-beta-polity"],
+      "period": {
+        "yearFrom": -350,
+        "yearTo": -300
+      },
+      "participantPersonIds": [
+        "synthetic-alpha-person",
+        "synthetic-beta-person"
+      ],
+      "participantPolityIds": [
+        "synthetic-alpha-polity",
+        "synthetic-beta-polity"
+      ],
       "stages": [
-        { "order": 1, "placeId": "synthetic-alpha-place", "eventId": "synthetic-alpha-event", "year": -334, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic campaign departure" }] },
-        { "order": 2, "placeId": "synthetic-beta-place", "eventId": "synthetic-alpha-battle", "year": -334, "uncertainty": { "confidence": "low", "note": "The stage sequence is schematic and wholly synthetic." }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic campaign arrival" }] }
+        {
+          "order": 1,
+          "placeId": "synthetic-alpha-place",
+          "eventId": "synthetic-alpha-event",
+          "year": -334,
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic campaign departure"
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "placeId": "synthetic-beta-place",
+          "eventId": "synthetic-alpha-battle",
+          "year": -334,
+          "uncertainty": {
+            "confidence": "low",
+            "note": "The stage sequence is schematic and wholly synthetic."
+          },
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic campaign arrival"
+            }
+          ]
+        }
       ],
       "geometryFeatureId": "synthetic-alpha-journey-feature",
       "directionKnown": true,
       "routeCertainty": "schematic",
-      "uncertainty": { "confidence": "low", "note": "The line represents a synthetic sequence, not exact movement." },
+      "uncertainty": {
+        "confidence": "low",
+        "note": "The line represents a synthetic sequence, not exact movement."
+      },
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic alpha campaign route" }]
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source",
+          "locator": "Synthetic alpha campaign route"
+        }
+      ],
+      "aliases": [],
+      "contentClassification": "synthetic-fixture"
     },
     {
       "id": "synthetic-beta-expedition",
       "defaultName": "Synthetic Beta Expedition",
       "summary": "A deliberately synthetic expedition used to verify segmented route geometry.",
       "journeyType": "expedition",
-      "period": { "yearFrom": -280, "yearTo": -260 },
-      "participantPersonIds": ["synthetic-gamma-person"],
-      "participantPolityIds": ["synthetic-beta-polity"],
+      "period": {
+        "yearFrom": -280,
+        "yearTo": -260
+      },
+      "participantPersonIds": [
+        "synthetic-gamma-person"
+      ],
+      "participantPolityIds": [
+        "synthetic-beta-polity"
+      ],
       "stages": [
-        { "order": 1, "placeId": "synthetic-beta-place", "year": -280, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic expedition first stage" }] },
-        { "order": 2, "coordinates": [29, 36], "period": { "yearFrom": -275, "yearTo": -270 }, "uncertainty": { "confidence": "medium", "note": "A synthetic coordinate-only stage." }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic expedition middle stage" }] },
-        { "order": 3, "placeId": "synthetic-beta-place", "year": -260, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic expedition final stage" }] }
+        {
+          "order": 1,
+          "placeId": "synthetic-beta-place",
+          "year": -280,
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic expedition first stage"
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "coordinates": [
+            29,
+            36
+          ],
+          "period": {
+            "yearFrom": -275,
+            "yearTo": -270
+          },
+          "uncertainty": {
+            "confidence": "medium",
+            "note": "A synthetic coordinate-only stage."
+          },
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic expedition middle stage"
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "placeId": "synthetic-beta-place",
+          "year": -260,
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic expedition final stage"
+            }
+          ]
+        }
       ],
       "geometryFeatureId": "synthetic-beta-expedition-feature",
       "directionKnown": false,
       "routeCertainty": "probable",
-      "uncertainty": { "confidence": "medium", "note": "The segmented route is an architecture-only synthetic fixture." },
+      "uncertainty": {
+        "confidence": "medium",
+        "note": "The segmented route is an architecture-only synthetic fixture."
+      },
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic beta expedition route" }]
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source",
+          "locator": "Synthetic beta expedition route"
+        }
+      ],
+      "aliases": [],
+      "contentClassification": "synthetic-fixture"
     },
     {
       "id": "synthetic-gamma-journey",
       "defaultName": "Synthetic Gamma Journey",
       "summary": "A deliberately synthetic journey with no reviewed route geometry.",
       "journeyType": "journey",
-      "period": { "yearFrom": -250, "yearTo": -250 },
+      "period": {
+        "yearFrom": -250,
+        "yearTo": -250
+      },
       "participantPersonIds": [],
-      "participantPolityIds": ["synthetic-beta-polity"],
+      "participantPolityIds": [
+        "synthetic-beta-polity"
+      ],
       "stages": [
-        { "order": 1, "eventId": "synthetic-unknown-event", "year": -250, "uncertainty": { "confidence": "unknown", "note": "No route coordinate is supplied by design." }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic unmapped journey stage" }] }
+        {
+          "order": 1,
+          "eventId": "synthetic-unknown-event",
+          "year": -250,
+          "uncertainty": {
+            "confidence": "unknown",
+            "note": "No route coordinate is supplied by design."
+          },
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic unmapped journey stage"
+            }
+          ]
+        }
       ],
       "directionKnown": false,
       "routeCertainty": "uncertain",
-      "uncertainty": { "confidence": "unknown", "note": "No reviewed synthetic route geometry is available." },
+      "uncertainty": {
+        "confidence": "unknown",
+        "note": "No reviewed synthetic route geometry is available."
+      },
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic unmapped journey" }]
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source",
+          "locator": "Synthetic unmapped journey"
+        }
+      ],
+      "aliases": [],
+      "contentClassification": "synthetic-fixture"
+    },
+    {
+      "id": "alexander-crossing-into-asia", "defaultName": "Alexander's crossing into Asia", "aliases": ["Hellespont crossing and Granicus campaign"], "contentClassification": "reviewed-historical",
+      "summary": "A schematic 334 BCE sequence from Sestos across the Hellespont to Abydos and onward to the Granicus battlefield region.",
+      "journeyType": "campaign", "period": { "yearFrom": -334, "yearTo": -334, "datePrecision": "year" },
+      "participantPersonIds": ["alexander-iii"], "participantPolityIds": ["kingdom-of-macedon"],
+      "stages": [
+        { "order": 1, "placeId": "sestos", "year": -334, "uncertainty": { "confidence": "medium", "note": "Representative settlement point, not an exact embarkation coordinate." }, "sourceRefs": [{ "sourceId": "arrian-anabasis-chinnock", "locator": "Book I, chapter XI", "confidence": "medium" }] },
+        { "order": 2, "placeId": "abydos", "year": -334, "uncertainty": { "confidence": "medium", "note": "Representative settlement point, not an exact landing coordinate." }, "sourceRefs": [{ "sourceId": "arrian-anabasis-chinnock", "locator": "Book I, chapter XI", "confidence": "medium" }] },
+        { "order": 3, "placeId": "granicus-battlefield", "eventId": "battle-of-the-granicus", "year": -334, "uncertainty": { "confidence": "disputed", "note": "The endpoint is the representative Granicus region point, not an exact battlefield." }, "sourceRefs": [{ "sourceId": "arrian-anabasis-chinnock", "locator": "Book I, chapters XII-XVI" }, { "sourceId": "iranica-granicus" }] }
+      ],
+      "geometryFeatureId": "alexander-crossing-into-asia-feature", "directionKnown": true, "routeCertainty": "schematic",
+      "uncertainty": { "confidence": "low", "note": "Straight segments encode ordered narrative stages only; no exact roads, landing path, or marching track is claimed." },
+      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "arrian-anabasis-chinnock", "locator": "Book I, chapters XI-XVI" }, { "sourceId": "iranica-alexander", "locator": "334 BCE invasion of Asia" }]
     }
   ]
 }

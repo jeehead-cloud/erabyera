@@ -1,59 +1,258 @@
 {
   "schemaVersion": 1,
-  "datasetVersion": "foundation-fixture-0.1.0",
+  "datasetVersion": "granicus-core-0.1.0",
   "records": [
     {
       "id": "synthetic-alpha-place",
       "defaultName": "Synthetic Alpha Place",
       "summary": "A deliberately synthetic city used only to verify selected-year place presentation.",
       "placeType": "city",
-      "coordinates": [28, 37],
-      "existence": { "yearFrom": -500, "yearTo": 10, "datePrecision": "range" },
-      "names": [
-        { "name": "Synthetic Alpha Old Name", "period": { "yearFrom": -500, "yearTo": -400 }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic early name" }] },
-        { "name": "Synthetic Alpha Place", "period": { "yearFrom": -399, "yearTo": 10 }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic later name" }] }
+      "coordinates": [
+        28,
+        37
       ],
-      "ownership": [{ "polityId": "synthetic-alpha-polity", "period": { "yearFrom": -500, "yearTo": 10 }, "controlType": "direct", "uncertainty": { "confidence": "high", "note": "Synthetic ownership only." }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic ownership" }] }],
-      "importance": [{ "period": { "yearFrom": -500, "yearTo": 10 }, "importance": 5, "reason": "High visibility fixture", "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic importance" }] }],
-      "uncertainty": { "confidence": "high", "locationAccuracy": "exact", "note": "Coordinates are synthetic and make no historical claim." },
+      "existence": {
+        "yearFrom": -500,
+        "yearTo": 10,
+        "datePrecision": "range"
+      },
+      "names": [
+        {
+          "name": "Synthetic Alpha Old Name",
+          "period": {
+            "yearFrom": -500,
+            "yearTo": -400
+          },
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic early name"
+            }
+          ]
+        },
+        {
+          "name": "Synthetic Alpha Place",
+          "period": {
+            "yearFrom": -399,
+            "yearTo": 10
+          },
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic later name"
+            }
+          ]
+        }
+      ],
+      "ownership": [
+        {
+          "polityId": "synthetic-alpha-polity",
+          "period": {
+            "yearFrom": -500,
+            "yearTo": 10
+          },
+          "controlType": "direct",
+          "uncertainty": {
+            "confidence": "high",
+            "note": "Synthetic ownership only."
+          },
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic ownership"
+            }
+          ]
+        }
+      ],
+      "importance": [
+        {
+          "period": {
+            "yearFrom": -500,
+            "yearTo": 10
+          },
+          "importance": 5,
+          "reason": "High visibility fixture",
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic importance"
+            }
+          ]
+        }
+      ],
+      "uncertainty": {
+        "confidence": "high",
+        "locationAccuracy": "exact",
+        "note": "Coordinates are synthetic and make no historical claim."
+      },
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic place" }]
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source",
+          "locator": "Synthetic place"
+        }
+      ],
+      "aliases": [],
+      "contentClassification": "synthetic-fixture"
     },
     {
       "id": "synthetic-beta-place",
       "defaultName": "Synthetic Beta Outpost",
       "summary": "A low-importance synthetic settlement used to verify zoom-dependent visibility.",
       "placeType": "settlement",
-      "coordinates": [30, 35],
-      "existence": { "yearFrom": -400, "yearTo": -250 },
-      "names": [{ "name": "Synthetic Beta Outpost", "period": { "yearFrom": -400, "yearTo": -250 }, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic beta name" }] }],
+      "coordinates": [
+        30,
+        35
+      ],
+      "existence": {
+        "yearFrom": -400,
+        "yearTo": -250
+      },
+      "names": [
+        {
+          "name": "Synthetic Beta Outpost",
+          "period": {
+            "yearFrom": -400,
+            "yearTo": -250
+          },
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic beta name"
+            }
+          ]
+        }
+      ],
       "ownership": [],
-      "importance": [{ "period": { "yearFrom": -400, "yearTo": -250 }, "importance": 1, "reason": "Low visibility fixture", "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic beta importance" }] }],
-      "uncertainty": { "confidence": "medium", "locationAccuracy": "approximate", "note": "Approximation is part of the synthetic test case." },
+      "importance": [
+        {
+          "period": {
+            "yearFrom": -400,
+            "yearTo": -250
+          },
+          "importance": 1,
+          "reason": "Low visibility fixture",
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic beta importance"
+            }
+          ]
+        }
+      ],
+      "uncertainty": {
+        "confidence": "medium",
+        "locationAccuracy": "approximate",
+        "note": "Approximation is part of the synthetic test case."
+      },
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic beta place" }]
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source",
+          "locator": "Synthetic beta place"
+        }
+      ],
+      "aliases": [],
+      "contentClassification": "synthetic-fixture"
     },
     {
       "id": "synthetic-gamma-place",
       "defaultName": "Synthetic Gamma Haven",
       "summary": "A synthetic port used to verify selection outside its active period.",
       "placeType": "port",
-      "coordinates": [26, 39],
-      "existence": { "yearFrom": -100, "yearTo": 100 },
+      "coordinates": [
+        26,
+        39
+      ],
+      "existence": {
+        "yearFrom": -100,
+        "yearTo": 100
+      },
       "names": [],
       "ownership": [],
-      "importance": [{ "period": { "yearFrom": -100, "yearTo": 100 }, "importance": 2, "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic gamma importance" }] }],
-      "uncertainty": { "confidence": "low", "locationAccuracy": "regional", "note": "The regional location is deliberately synthetic." },
+      "importance": [
+        {
+          "period": {
+            "yearFrom": -100,
+            "yearTo": 100
+          },
+          "importance": 2,
+          "sourceRefs": [
+            {
+              "sourceId": "synthetic-fixture-source",
+              "locator": "Synthetic gamma importance"
+            }
+          ]
+        }
+      ],
+      "uncertainty": {
+        "confidence": "low",
+        "locationAccuracy": "regional",
+        "note": "The regional location is deliberately synthetic."
+      },
       "editorialStatus": "published",
-      "sourceRefs": [{ "sourceId": "synthetic-fixture-source", "locator": "Synthetic gamma place" }]
+      "sourceRefs": [
+        {
+          "sourceId": "synthetic-fixture-source",
+          "locator": "Synthetic gamma place"
+        }
+      ],
+      "aliases": [],
+      "contentClassification": "synthetic-fixture"
     },
     {
       "id": "synthetic-draft-place",
       "defaultName": "Synthetic Draft Place",
       "placeType": "settlement",
-      "existence": { "yearFrom": -5, "yearTo": 5 },
-      "names": [], "ownership": [], "importance": [],
-      "editorialStatus": "draft", "sourceRefs": []
+      "existence": {
+        "yearFrom": -5,
+        "yearTo": 5
+      },
+      "names": [],
+      "ownership": [],
+      "importance": [],
+      "editorialStatus": "draft",
+      "sourceRefs": [],
+      "aliases": [],
+      "contentClassification": "synthetic-fixture"
+    },
+    {
+      "id": "pella", "defaultName": "Pella", "aliases": [], "contentClassification": "reviewed-historical",
+      "summary": "The Macedonian royal capital and Alexander III's recorded birthplace.", "placeType": "capital", "coordinates": [22.518485, 40.754555],
+      "existence": { "yearFrom": -500, "yearTo": 500, "datePrecision": "approximate" },
+      "names": [{ "name": "Pella", "period": { "yearFrom": -500, "yearTo": 500, "datePrecision": "approximate" }, "sourceRefs": [{ "sourceId": "pleiades-gazetteer", "locator": "Pleiades place 491687" }] }],
+      "ownership": [{ "polityId": "kingdom-of-macedon", "period": { "yearFrom": -399, "yearTo": -168, "datePrecision": "approximate" }, "controlType": "direct", "sourceRefs": [{ "sourceId": "met-rise-of-macedonia", "locator": "Macedonian royal center and kingdom" }] }],
+      "importance": [{ "period": { "yearFrom": -399, "yearTo": -168, "datePrecision": "approximate" }, "importance": 5, "reason": "Royal capital", "sourceRefs": [{ "sourceId": "met-rise-of-macedonia" }] }],
+      "uncertainty": { "confidence": "high", "locationAccuracy": "approximate", "note": "The point is the gazetteer's representative location for the ancient place." },
+      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "pleiades-gazetteer", "locator": "https://pleiades.stoa.org/places/491687", "reviewedOn": "2026-07-20", "confidence": "high" }, { "sourceId": "iranica-alexander", "locator": "Opening biographical chronology" }]
+    },
+    {
+      "id": "sestos", "defaultName": "Sestos", "aliases": ["Sestus"], "contentClassification": "reviewed-historical",
+      "summary": "A settlement on the European shore of the Hellespont used as the departure context in Alexander's crossing narrative.", "placeType": "settlement", "coordinates": [26.417225, 40.228356],
+      "existence": { "yearFrom": -700, "yearTo": 600, "datePrecision": "approximate" },
+      "names": [{ "name": "Sestos", "period": { "yearFrom": -700, "yearTo": 600, "datePrecision": "approximate" }, "sourceRefs": [{ "sourceId": "pleiades-gazetteer", "locator": "Pleiades place 501609" }] }], "ownership": [],
+      "importance": [{ "period": { "yearFrom": -334, "yearTo": -334, "datePrecision": "year" }, "importance": 3, "reason": "Hellespont crossing stage", "sourceRefs": [{ "sourceId": "arrian-anabasis-chinnock", "locator": "Book I, chapter XI" }] }],
+      "uncertainty": { "confidence": "medium", "locationAccuracy": "approximate", "note": "Representative gazetteer point; the route drawn from it is schematic." },
+      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "pleiades-gazetteer", "locator": "https://pleiades.stoa.org/places/501609", "confidence": "medium" }, { "sourceId": "arrian-anabasis-chinnock", "locator": "Book I, chapter XI" }]
+    },
+    {
+      "id": "abydos", "defaultName": "Abydos", "aliases": [], "contentClassification": "reviewed-historical",
+      "summary": "A settlement on the Asian shore of the Hellespont associated with Alexander's entry into Asia.", "placeType": "settlement", "coordinates": [26.41122, 40.19406],
+      "existence": { "yearFrom": -700, "yearTo": 600, "datePrecision": "approximate" },
+      "names": [{ "name": "Abydos", "period": { "yearFrom": -700, "yearTo": 600, "datePrecision": "approximate" }, "sourceRefs": [{ "sourceId": "pleiades-gazetteer", "locator": "Pleiades place 501325" }] }], "ownership": [],
+      "importance": [{ "period": { "yearFrom": -334, "yearTo": -334, "datePrecision": "year" }, "importance": 3, "reason": "Hellespont crossing stage", "sourceRefs": [{ "sourceId": "arrian-anabasis-chinnock", "locator": "Book I, chapter XI" }] }],
+      "uncertainty": { "confidence": "medium", "locationAccuracy": "approximate", "note": "Representative gazetteer point; it does not encode an exact landing point." },
+      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "pleiades-gazetteer", "locator": "https://pleiades.stoa.org/places/501325", "confidence": "medium" }, { "sourceId": "arrian-anabasis-chinnock", "locator": "Book I, chapter XI" }]
+    },
+    {
+      "id": "granicus-battlefield", "defaultName": "Granicus battlefield region", "aliases": ["Granicus River", "Biga Çayı"], "contentClassification": "reviewed-historical",
+      "summary": "A representative point for the Granicus river and battlefield region; the exact battle location remains disputed.", "placeType": "battlefield", "coordinates": [27.3077, 40.3804],
+      "existence": { "yearFrom": -334, "yearTo": -334, "datePrecision": "year" },
+      "names": [{ "name": "Granicus", "period": { "yearFrom": -334, "yearTo": -334, "datePrecision": "year" }, "sourceRefs": [{ "sourceId": "iranica-granicus", "locator": "Geographic identification" }] }],
+      "ownership": [{ "polityId": "achaemenid-empire", "period": { "yearFrom": -334, "yearTo": -334, "datePrecision": "year" }, "controlType": "approximate", "uncertainty": { "confidence": "medium", "note": "This models the Achaemenid-controlled campaign region, not a surveyed boundary." }, "sourceRefs": [{ "sourceId": "iranica-granicus", "locator": "Persian army assembled in northwestern Asia Minor" }] }],
+      "importance": [{ "period": { "yearFrom": -334, "yearTo": -334, "datePrecision": "year" }, "importance": 5, "reason": "Site region of Alexander's first battle against Achaemenid forces in Asia", "sourceRefs": [{ "sourceId": "iranica-granicus" }] }],
+      "uncertainty": { "confidence": "disputed", "locationAccuracy": "disputed", "note": "The Getty coordinate is a representative river/battlefield point. Ancient river course and exact battle site are not treated as settled." },
+      "editorialStatus": "published", "sourceRefs": [{ "sourceId": "getty-tgn-granicus", "locator": "TGN 6002329", "note": "Representative point only", "confidence": "disputed" }, { "sourceId": "iranica-granicus", "locator": "Topography and source criticism", "confidence": "disputed" }]
     }
   ]
 }

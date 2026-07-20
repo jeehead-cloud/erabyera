@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import { loadBundledRuntimeData } from '../../data'
+import { syntheticRuntime } from '../../test/syntheticRuntime'
 import type { RuntimeDataset } from '../../data'
 import { buildEntityPageModel } from './entityPageModels'
 import { entityPagePath } from './entityRoutes'
 import type { SelectedEntityType } from '../../url'
 
-const dataset = loadBundledRuntimeData()
+const dataset = syntheticRuntime(loadBundledRuntimeData())
 const records: Record<SelectedEntityType, readonly string[]> = {
   place: dataset.places.map((item) => item.id),
   polity: dataset.polities.map((item) => item.id),
@@ -142,4 +143,3 @@ describe('F15 entity-page models', () => {
     expect(Object.isFrozen(dataset)).toBe(true)
   })
 })
-

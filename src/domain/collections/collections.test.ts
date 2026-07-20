@@ -25,18 +25,18 @@ describe('F16 collection runtime contract', () => {
     expect(collection).toMatchObject({
       id: 'alexanders-world', defaultName: 'Alexander’s World',
       timeRange: { yearFrom: -360, yearTo: -300 }, recommendedStartYear: -334,
-      visibility: 'public', completeness: 'foundation-preview', membershipKind: 'synthetic-demonstration',
+      visibility: 'public', completeness: 'partial', membershipKind: 'reviewed',
     })
   })
 
   it('uses the reviewed product viewport and canonical layers', () => {
-    expect(collection.recommendedViewport).toEqual({ longitude: 28, latitude: 37, zoom: 3.5 })
+    expect(collection.recommendedViewport).toEqual({ longitude: 25.5, latitude: 40, zoom: 5 })
     expect(collection.recommendedLayers).toEqual(['territories', 'places', 'people', 'events', 'journeys'])
   })
 
   it('keeps detailed and partial geography explicit', () => {
     expect(collection.coverage.detailedRegions).toContain('Macedonia')
-    expect(collection.coverage.partialRegions).toContain('the Indus Valley')
+    expect(collection.coverage.partialRegions).toContain('The wider Alexander campaign')
   })
 
   it('rejects duplicate or noncanonical recommended layers', () => {
@@ -72,25 +72,26 @@ describe('F16 collection selectors and counts', () => {
   it('resolves missing collections safely', () => expect(getCollectionById(dataset, 'missing')).toBeNull())
 
   it('uses explicit membership with deterministic grouping', () => {
-    expect(members).toHaveLength(11)
-    expect(groupCollectionMembers(members).place.map((item) => item.id)).toEqual(['synthetic-alpha-place', 'synthetic-beta-place'])
-    expect(members.every((item) => item.syntheticDemonstration)).toBe(true)
+    expect(members).toHaveLength(10)
+    expect(groupCollectionMembers(members).place.map((item) => item.id)).toEqual(['abydos', 'granicus-battlefield', 'pella', 'sestos'])
+    expect(members.every((item) => !item.syntheticDemonstration)).toBe(true)
   })
 
   it('derives published, active, mapped, and type counts from linked members only', () => {
     expect(getCollectionCounts(members)).toEqual({
-      total: 11,
-      byType: { place: 2, polity: 2, person: 3, event: 3, journey: 1 },
+      total: 10,
+      byType: { place: 4, polity: 2, person: 2, event: 1, journey: 1 },
       active: 10,
       activeMapped: 9,
       activeUnmapped: 1,
-      mapped: 10,
+      mapped: 9,
       unmapped: 1,
     })
   })
 
   it('derives inverse membership without inference', () => {
-    expect(getCollectionsForEntity(dataset, 'place', 'synthetic-alpha-place').map((item) => item.id)).toEqual(['alexanders-world', 'synthetic-alpha-collection'])
+    expect(getCollectionsForEntity(dataset, 'place', 'pella').map((item) => item.id)).toEqual(['alexanders-world'])
+    expect(getCollectionsForEntity(dataset, 'place', 'synthetic-alpha-place').map((item) => item.id)).toEqual(['synthetic-alpha-collection'])
     expect(getCollectionsForEntity(dataset, 'place', 'synthetic-gamma-place')).toEqual([])
   })
 })
@@ -113,7 +114,7 @@ describe('F16 period and viewport coverage', () => {
     expect(presentation.messages.join(' ')).toContain("outside the collection's authored product focus")
     expect(presentation.messages.join(' ')).toContain('not historical borders')
     expect(presentation.messages.join(' ')).toContain('should not be interpreted as historically inactive')
-    expect(presentation.messages.join(' ')).toContain('next content milestone')
+    expect(presentation.messages.join(' ')).toContain('minimal reviewed vertical slice')
     expect(presentation.messages.join(' ')).toContain('does not filter the other global Map data')
   })
 
@@ -132,7 +133,7 @@ describe('F16 period and viewport coverage', () => {
 describe('F16 collection navigation', () => {
   it('creates one explicit recommended Map URL state', () => {
     const href = createCollectionRecommendedMapHref(collection)
-    expect(href).toBe('/map?year=-334&lat=37&lng=28&zoom=3.5&layers=territories%2Cplaces%2Cpeople%2Cevents%2Cjourneys&collection=alexanders-world')
+    expect(href).toBe('/map?year=-334&lat=40&lng=25.5&zoom=5&layers=territories%2Cplaces%2Cpeople%2Cevents%2Cjourneys&collection=alexanders-world')
     expect(parseMapUrlState(href.split('?')[1])).toEqual(collectionRecommendedMapState(collection))
   })
 

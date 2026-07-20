@@ -34,6 +34,7 @@ export function EntityPageShell({
           <h1>{model.name}</h1>
           <div className="entity-page__badges">
             <span>{model.subtype.replaceAll('-', ' ')}</span>
+            <span>{model.contentClassification === 'reviewed-historical' ? 'Reviewed historical record' : 'Synthetic fixture'}</span>
             <span>{formatHistoricalYearRange(model.period)}</span>
             <span>{model.mapped ? 'Map context available' : 'No reviewed map geometry'}</span>
             {model.uncertainty === undefined ? null : <span>{model.uncertainty.confidence} confidence</span>}

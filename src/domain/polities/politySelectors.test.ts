@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { loadBundledRuntimeData } from '../../data'
+import { syntheticRuntime } from '../../test/syntheticRuntime'
 import type { Polity, SourceReference } from '../entities'
 import { parseMapUrlState, serializeMapUrlState } from '../../url'
 import {
@@ -21,7 +22,7 @@ import {
   withoutOwnedMapSelection,
 } from './selection'
 
-const dataset = loadBundledRuntimeData()
+const dataset = syntheticRuntime(loadBundledRuntimeData())
 const alpha = dataset.polities.find((polity) => polity.id === 'synthetic-alpha-polity') as Polity
 const beta = dataset.polities.find((polity) => polity.id === 'synthetic-beta-polity') as Polity
 const at = (polity: Polity, year = -334) => buildPolityPresentation(polity, dataset, year)

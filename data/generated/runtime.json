@@ -1,22 +1,19 @@
 {
   "collections": [
     {
-      "completeness": "foundation-preview",
+      "aliases": [],
+      "completeness": "partial",
+      "contentClassification": "reviewed-historical",
       "coverage": {
         "detailedRegions": [
           "Macedonia",
-          "Greece and the Aegean",
-          "western and central Anatolia",
-          "the Levant",
-          "Egypt",
-          "Mesopotamia",
-          "Persia"
+          "Hellespont crossing corridor",
+          "Granicus campaign region"
         ],
-        "note": "Coverage is incomplete. Areas without records should not be interpreted as historically inactive.",
+        "note": "This is a minimal reviewed vertical slice, not comprehensive coverage. Areas without records should not be interpreted as historically inactive.",
         "partialRegions": [
-          "Central Asia",
-          "the Indus Valley",
-          "other route-connected geography"
+          "Other regions of the Achaemenid Empire",
+          "The wider Alexander campaign"
         ],
         "timeRange": {
           "yearFrom": -360,
@@ -24,50 +21,45 @@
         }
       },
       "coverageStatus": "partial",
-      "datasetVersion": "foundation-fixture-0.1.0",
+      "datasetVersion": "granicus-core-0.1.0",
       "defaultName": "Alexander’s World",
-      "description": "A structured entry point for the future reviewed historical slice covering Alexander’s world from 360 to 300 BCE.",
-      "editorialNotes": "The collection structure is active. Its linked records are synthetic foundation demonstrations, not historical members of Alexander’s world. Reviewed historical entity content is reserved for F17.",
+      "description": "A reviewed Granicus-centered entry point into Alexander's 334 BCE crossing from Europe into Asia.",
+      "editorialNotes": "Public membership contains reviewed historical records only. Synthetic compatibility fixtures remain available outside this collection.",
       "editorialStatus": "published",
       "focusBounds": {
-        "east": 75,
-        "north": 50,
-        "south": 20,
-        "west": 10
+        "east": 33,
+        "north": 43,
+        "south": 34,
+        "west": 19
       },
       "id": "alexanders-world",
       "linkedEntities": {
         "eventIds": [
-          "synthetic-alpha-battle",
-          "synthetic-alpha-event",
-          "synthetic-unknown-event"
+          "battle-of-the-granicus"
         ],
         "journeyIds": [
-          "synthetic-alpha-journey"
+          "alexander-crossing-into-asia"
         ],
         "personIds": [
-          "synthetic-alpha-person",
-          "synthetic-beta-person",
-          "synthetic-gamma-person"
+          "alexander-iii",
+          "darius-iii"
         ],
         "placeIds": [
-          "synthetic-alpha-place",
-          "synthetic-beta-place"
+          "abydos",
+          "granicus-battlefield",
+          "pella",
+          "sestos"
         ],
         "polityIds": [
-          "synthetic-alpha-polity",
-          "synthetic-beta-polity"
+          "achaemenid-empire",
+          "kingdom-of-macedon"
         ]
       },
-      "membershipKind": "synthetic-demonstration",
+      "membershipKind": "reviewed",
       "missingContent": [
-        "reviewed-entities",
-        "territories",
         "places",
         "people",
-        "events",
-        "journeys",
-        "source-review"
+        "journeys"
       ],
       "recommendedLayers": [
         "territories",
@@ -78,14 +70,14 @@
       ],
       "recommendedStartYear": -334,
       "recommendedViewport": {
-        "latitude": 37,
-        "longitude": 28,
-        "zoom": 3.5
+        "latitude": 40,
+        "longitude": 25.5,
+        "zoom": 5
       },
       "sourceRefs": [
         {
-          "note": "Supports the linked synthetic demonstration records only; it is not a historical source for the collection framing.",
-          "sourceId": "synthetic-fixture-source"
+          "note": "Supports the collection's Granicus-centered editorial scope.",
+          "sourceId": "iranica-granicus"
         }
       ],
       "timeRange": {
@@ -95,7 +87,9 @@
       "visibility": "public"
     },
     {
+      "aliases": [],
       "completeness": "foundation-preview",
+      "contentClassification": "synthetic-fixture",
       "coverage": {
         "detailedRegions": [
           "Synthetic Alpha Region"
@@ -108,7 +102,7 @@
         }
       },
       "coverageStatus": "partial",
-      "datasetVersion": "foundation-fixture-0.1.0",
+      "datasetVersion": "granicus-core-0.1.0",
       "defaultName": "Synthetic Alpha Collection",
       "description": "Internal synthetic collection retained to verify pipeline links and compatibility.",
       "editorialNotes": "Internal compatibility fixture; not shown on the public Collections landing page.",
@@ -172,11 +166,111 @@
       "visibility": "internal"
     }
   ],
-  "datasetName": "Synthetic Foundation Fixture Dataset",
-  "datasetVersion": "foundation-fixture-0.1.0",
+  "datasetName": "EraByEra Granicus Core Dataset",
+  "datasetVersion": "granicus-core-0.1.0",
   "editorialPolicy": "published-only",
   "events": [
     {
+      "aliases": [
+        "Granicus"
+      ],
+      "battle": {
+        "disputedNotes": [
+          "Arrian presents a late-day contested crossing; Diodorus presents a dawn crossing with a materially different tactical sequence.",
+          "Modern critical synthesis considers detailed reconstruction and numerical totals unreliable; forces and losses are therefore omitted.",
+          "Darius III was not present and is not listed as a participant."
+        ],
+        "relatedJourneyId": "alexander-crossing-into-asia",
+        "result": "Macedonian victory",
+        "sides": [
+          {
+            "commanderIds": [
+              "alexander-iii"
+            ],
+            "id": "macedonian-led-army",
+            "label": "Macedonian-led army",
+            "outcome": "Victory",
+            "personIds": [
+              "alexander-iii"
+            ],
+            "polityIds": [
+              "kingdom-of-macedon"
+            ]
+          },
+          {
+            "commanderIds": [],
+            "id": "achaemenid-regional-forces",
+            "label": "Achaemenid regional forces",
+            "outcome": "Defeat",
+            "personIds": [],
+            "polityIds": [
+              "achaemenid-empire"
+            ]
+          }
+        ]
+      },
+      "contentClassification": "reviewed-historical",
+      "coordinates": [
+        27.3077,
+        40.3804
+      ],
+      "defaultName": "Battle of the Granicus",
+      "editorialStatus": "published",
+      "id": "battle-of-the-granicus",
+      "locationAccuracy": "disputed",
+      "participantPersonIds": [
+        "alexander-iii"
+      ],
+      "participantPolityIds": [
+        "achaemenid-empire",
+        "kingdom-of-macedon"
+      ],
+      "period": {
+        "datePrecision": "year",
+        "yearFrom": -334,
+        "yearTo": -334
+      },
+      "relatedPlaceIds": [
+        "granicus-battlefield"
+      ],
+      "sourceRefs": [
+        {
+          "confidence": "disputed",
+          "locator": "Book XVII, sections 17-21",
+          "note": "Conflicting ancient account",
+          "sourceId": "diodorus-library-book-seventeen"
+        },
+        {
+          "confidence": "disputed",
+          "locator": "TGN 6002329",
+          "note": "Representative point only",
+          "sourceId": "getty-tgn-granicus"
+        },
+        {
+          "confidence": "high",
+          "locator": "Full article, especially topography and source criticism",
+          "sourceId": "iranica-granicus"
+        },
+        {
+          "confidence": "medium",
+          "locator": "Alexander 16",
+          "sourceId": "plutarch-alexander-perseus"
+        },
+        {
+          "confidence": "medium",
+          "locator": "Book I, chapters XIII-XVI",
+          "sourceId": "arrian-anabasis-chinnock"
+        }
+      ],
+      "summary": "In 334 BCE Alexander's invading Macedonian-led army defeated Achaemenid regional forces at the Granicus. The exact site, tactical sequence, force totals, and losses are not asserted as settled.",
+      "type": "battle",
+      "uncertainty": {
+        "confidence": "disputed",
+        "note": "The representative point follows Getty TGN 6002329; it is not an exact battlefield coordinate."
+      }
+    },
+    {
+      "aliases": [],
       "battle": {
         "disputedNotes": [
           "A deliberately synthetic disputed interpretation."
@@ -214,6 +308,7 @@
           }
         ]
       },
+      "contentClassification": "synthetic-fixture",
       "coordinates": [
         30.5,
         36.5
@@ -251,6 +346,8 @@
       }
     },
     {
+      "aliases": [],
+      "contentClassification": "synthetic-fixture",
       "coordinates": [
         28,
         37
@@ -286,6 +383,8 @@
       }
     },
     {
+      "aliases": [],
+      "contentClassification": "synthetic-fixture",
       "defaultName": "Synthetic Unknown-Location Event",
       "editorialStatus": "published",
       "id": "synthetic-unknown-event",
@@ -319,8 +418,32 @@
   ],
   "geometry": {
     "journeys": {
-      "datasetVersion": "foundation-fixture-0.1.0",
+      "datasetVersion": "granicus-core-0.1.0",
       "features": [
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                26.417225,
+                40.228356
+              ],
+              [
+                26.41122,
+                40.19406
+              ],
+              [
+                27.3077,
+                40.3804
+              ]
+            ],
+            "type": "LineString"
+          },
+          "id": "alexander-crossing-into-asia-feature",
+          "properties": {
+            "journeyId": "alexander-crossing-into-asia"
+          },
+          "type": "Feature"
+        },
         {
           "geometry": {
             "coordinates": [
@@ -378,8 +501,88 @@
       "type": "FeatureCollection"
     },
     "territories": {
-      "datasetVersion": "foundation-fixture-0.1.0",
+      "datasetVersion": "granicus-core-0.1.0",
       "features": [
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  26,
+                  35.6
+                ],
+                [
+                  29,
+                  35.4
+                ],
+                [
+                  32.2,
+                  37
+                ],
+                [
+                  32,
+                  41.8
+                ],
+                [
+                  28.2,
+                  42.1
+                ],
+                [
+                  26,
+                  40
+                ],
+                [
+                  26,
+                  35.6
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "achaemenid-western-anatolia-territory-334-feature",
+          "properties": {
+            "territoryPeriodId": "achaemenid-western-anatolia-territory-334"
+          },
+          "type": "Feature"
+        },
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  20.5,
+                  39.5
+                ],
+                [
+                  23.8,
+                  39.5
+                ],
+                [
+                  24.3,
+                  41.2
+                ],
+                [
+                  22.7,
+                  42
+                ],
+                [
+                  20.8,
+                  41.4
+                ],
+                [
+                  20.5,
+                  39.5
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "id": "kingdom-of-macedon-territory-334-feature",
+          "properties": {
+            "territoryPeriodId": "kingdom-of-macedon-territory-334"
+          },
+          "type": "Feature"
+        },
         {
           "geometry": {
             "coordinates": [
@@ -515,6 +718,100 @@
   },
   "journeys": [
     {
+      "aliases": [
+        "Hellespont crossing and Granicus campaign"
+      ],
+      "contentClassification": "reviewed-historical",
+      "defaultName": "Alexander's crossing into Asia",
+      "directionKnown": true,
+      "editorialStatus": "published",
+      "geometryFeatureId": "alexander-crossing-into-asia-feature",
+      "id": "alexander-crossing-into-asia",
+      "journeyType": "campaign",
+      "participantPersonIds": [
+        "alexander-iii"
+      ],
+      "participantPolityIds": [
+        "kingdom-of-macedon"
+      ],
+      "period": {
+        "datePrecision": "year",
+        "yearFrom": -334,
+        "yearTo": -334
+      },
+      "routeCertainty": "schematic",
+      "sourceRefs": [
+        {
+          "locator": "334 BCE invasion of Asia",
+          "sourceId": "iranica-alexander"
+        },
+        {
+          "locator": "Book I, chapters XI-XVI",
+          "sourceId": "arrian-anabasis-chinnock"
+        }
+      ],
+      "stages": [
+        {
+          "order": 1,
+          "placeId": "sestos",
+          "sourceRefs": [
+            {
+              "confidence": "medium",
+              "locator": "Book I, chapter XI",
+              "sourceId": "arrian-anabasis-chinnock"
+            }
+          ],
+          "uncertainty": {
+            "confidence": "medium",
+            "note": "Representative settlement point, not an exact embarkation coordinate."
+          },
+          "year": -334
+        },
+        {
+          "order": 2,
+          "placeId": "abydos",
+          "sourceRefs": [
+            {
+              "confidence": "medium",
+              "locator": "Book I, chapter XI",
+              "sourceId": "arrian-anabasis-chinnock"
+            }
+          ],
+          "uncertainty": {
+            "confidence": "medium",
+            "note": "Representative settlement point, not an exact landing coordinate."
+          },
+          "year": -334
+        },
+        {
+          "eventId": "battle-of-the-granicus",
+          "order": 3,
+          "placeId": "granicus-battlefield",
+          "sourceRefs": [
+            {
+              "locator": "Book I, chapters XII-XVI",
+              "sourceId": "arrian-anabasis-chinnock"
+            },
+            {
+              "sourceId": "iranica-granicus"
+            }
+          ],
+          "uncertainty": {
+            "confidence": "disputed",
+            "note": "The endpoint is the representative Granicus region point, not an exact battlefield."
+          },
+          "year": -334
+        }
+      ],
+      "summary": "A schematic 334 BCE sequence from Sestos across the Hellespont to Abydos and onward to the Granicus battlefield region.",
+      "uncertainty": {
+        "confidence": "low",
+        "note": "Straight segments encode ordered narrative stages only; no exact roads, landing path, or marching track is claimed."
+      }
+    },
+    {
+      "aliases": [],
+      "contentClassification": "synthetic-fixture",
       "defaultName": "Synthetic Alpha Journey",
       "directionKnown": true,
       "editorialStatus": "published",
@@ -577,6 +874,8 @@
       }
     },
     {
+      "aliases": [],
+      "contentClassification": "synthetic-fixture",
       "defaultName": "Synthetic Beta Expedition",
       "directionKnown": false,
       "editorialStatus": "published",
@@ -652,6 +951,8 @@
       }
     },
     {
+      "aliases": [],
+      "contentClassification": "synthetic-fixture",
       "defaultName": "Synthetic Gamma Journey",
       "directionKnown": false,
       "editorialStatus": "published",
@@ -698,9 +999,122 @@
   ],
   "people": [
     {
+      "aliases": [
+        "Alexander the Great",
+        "Alexander of Macedon"
+      ],
+      "associatedPolityIds": [
+        "kingdom-of-macedon"
+      ],
+      "contentClassification": "reviewed-historical",
+      "defaultName": "Alexander III",
+      "editorialStatus": "published",
+      "id": "alexander-iii",
+      "importance": 5,
+      "life": {
+        "datePrecision": "year",
+        "yearFrom": -356,
+        "yearTo": -323
+      },
+      "places": [
+        {
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -356,
+            "yearTo": -356
+          },
+          "placeId": "pella",
+          "relationType": "birth",
+          "sourceRefs": [
+            {
+              "locator": "Birth and chronology",
+              "sourceId": "iranica-alexander"
+            }
+          ]
+        },
+        {
+          "eventId": "battle-of-the-granicus",
+          "journeyId": "alexander-crossing-into-asia",
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -334,
+            "yearTo": -334
+          },
+          "placeId": "granicus-battlefield",
+          "relationType": "campaign",
+          "sourceRefs": [
+            {
+              "locator": "Book I, chapters XIII-XVI",
+              "sourceId": "arrian-anabasis-chinnock"
+            },
+            {
+              "sourceId": "iranica-granicus"
+            }
+          ],
+          "uncertainty": {
+            "confidence": "disputed",
+            "note": "Presence at the battle is secure; the mapped point is only a disputed regional representation."
+          }
+        }
+      ],
+      "roles": [
+        "king of Macedon",
+        "military commander"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "iranica-alexander"
+        },
+        {
+          "sourceId": "met-rise-of-macedonia"
+        }
+      ],
+      "summary": "King of Macedon from 336 to 323 BCE; he led the 334 BCE crossing into Asia and fought at the Granicus."
+    },
+    {
+      "aliases": [
+        "Darius Codomannus",
+        "Dareios III"
+      ],
+      "associatedPolityIds": [
+        "achaemenid-empire"
+      ],
+      "contentClassification": "reviewed-historical",
+      "defaultName": "Darius III",
+      "editorialStatus": "published",
+      "id": "darius-iii",
+      "importance": 5,
+      "life": {
+        "datePrecision": "approximate",
+        "yearFrom": -380,
+        "yearTo": -330
+      },
+      "places": [],
+      "roles": [
+        "king of the Achaemenid Empire"
+      ],
+      "sourceRefs": [
+        {
+          "locator": "Biography and reign",
+          "sourceId": "iranica-darius-three"
+        },
+        {
+          "locator": "Darius III reign",
+          "sourceId": "met-achaemenid-empire"
+        }
+      ],
+      "summary": "Last Achaemenid king, ruling from 336 to 330 BCE. He was not present at the Granicus battle in this dataset.",
+      "uncertainty": {
+        "confidence": "medium",
+        "note": "The birth year is approximate and the surviving narrative evidence is predominantly Greek."
+      }
+    },
+    {
+      "aliases": [],
       "associatedPolityIds": [
         "synthetic-alpha-polity"
       ],
+      "contentClassification": "synthetic-fixture",
       "defaultName": "Synthetic Alpha Person",
       "editorialStatus": "published",
       "id": "synthetic-alpha-person",
@@ -776,9 +1190,11 @@
       "summary": "A deliberately synthetic person used to verify active-place changes."
     },
     {
+      "aliases": [],
       "associatedPolityIds": [
         "synthetic-beta-polity"
       ],
+      "contentClassification": "synthetic-fixture",
       "defaultName": "Synthetic Beta Person",
       "editorialStatus": "published",
       "id": "synthetic-beta-person",
@@ -821,9 +1237,11 @@
       "summary": "A deliberately synthetic person used to verify aggregation at an active place."
     },
     {
+      "aliases": [],
       "associatedPolityIds": [
         "synthetic-beta-polity"
       ],
+      "contentClassification": "synthetic-fixture",
       "defaultName": "Synthetic Gamma Person",
       "editorialStatus": "published",
       "id": "synthetic-gamma-person",
@@ -870,6 +1288,322 @@
   ],
   "places": [
     {
+      "aliases": [],
+      "contentClassification": "reviewed-historical",
+      "coordinates": [
+        26.41122,
+        40.19406
+      ],
+      "defaultName": "Abydos",
+      "editorialStatus": "published",
+      "existence": {
+        "datePrecision": "approximate",
+        "yearFrom": -700,
+        "yearTo": 600
+      },
+      "id": "abydos",
+      "importance": [
+        {
+          "importance": 3,
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -334,
+            "yearTo": -334
+          },
+          "reason": "Hellespont crossing stage",
+          "sourceRefs": [
+            {
+              "locator": "Book I, chapter XI",
+              "sourceId": "arrian-anabasis-chinnock"
+            }
+          ]
+        }
+      ],
+      "names": [
+        {
+          "name": "Abydos",
+          "period": {
+            "datePrecision": "approximate",
+            "yearFrom": -700,
+            "yearTo": 600
+          },
+          "sourceRefs": [
+            {
+              "locator": "Pleiades place 501325",
+              "sourceId": "pleiades-gazetteer"
+            }
+          ]
+        }
+      ],
+      "ownership": [],
+      "placeType": "settlement",
+      "sourceRefs": [
+        {
+          "confidence": "medium",
+          "locator": "https://pleiades.stoa.org/places/501325",
+          "sourceId": "pleiades-gazetteer"
+        },
+        {
+          "locator": "Book I, chapter XI",
+          "sourceId": "arrian-anabasis-chinnock"
+        }
+      ],
+      "summary": "A settlement on the Asian shore of the Hellespont associated with Alexander's entry into Asia.",
+      "uncertainty": {
+        "confidence": "medium",
+        "locationAccuracy": "approximate",
+        "note": "Representative gazetteer point; it does not encode an exact landing point."
+      }
+    },
+    {
+      "aliases": [
+        "Granicus River",
+        "Biga Çayı"
+      ],
+      "contentClassification": "reviewed-historical",
+      "coordinates": [
+        27.3077,
+        40.3804
+      ],
+      "defaultName": "Granicus battlefield region",
+      "editorialStatus": "published",
+      "existence": {
+        "datePrecision": "year",
+        "yearFrom": -334,
+        "yearTo": -334
+      },
+      "id": "granicus-battlefield",
+      "importance": [
+        {
+          "importance": 5,
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -334,
+            "yearTo": -334
+          },
+          "reason": "Site region of Alexander's first battle against Achaemenid forces in Asia",
+          "sourceRefs": [
+            {
+              "sourceId": "iranica-granicus"
+            }
+          ]
+        }
+      ],
+      "names": [
+        {
+          "name": "Granicus",
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -334,
+            "yearTo": -334
+          },
+          "sourceRefs": [
+            {
+              "locator": "Geographic identification",
+              "sourceId": "iranica-granicus"
+            }
+          ]
+        }
+      ],
+      "ownership": [
+        {
+          "controlType": "approximate",
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -334,
+            "yearTo": -334
+          },
+          "polityId": "achaemenid-empire",
+          "sourceRefs": [
+            {
+              "locator": "Persian army assembled in northwestern Asia Minor",
+              "sourceId": "iranica-granicus"
+            }
+          ],
+          "uncertainty": {
+            "confidence": "medium",
+            "note": "This models the Achaemenid-controlled campaign region, not a surveyed boundary."
+          }
+        }
+      ],
+      "placeType": "battlefield",
+      "sourceRefs": [
+        {
+          "confidence": "disputed",
+          "locator": "TGN 6002329",
+          "note": "Representative point only",
+          "sourceId": "getty-tgn-granicus"
+        },
+        {
+          "confidence": "disputed",
+          "locator": "Topography and source criticism",
+          "sourceId": "iranica-granicus"
+        }
+      ],
+      "summary": "A representative point for the Granicus river and battlefield region; the exact battle location remains disputed.",
+      "uncertainty": {
+        "confidence": "disputed",
+        "locationAccuracy": "disputed",
+        "note": "The Getty coordinate is a representative river/battlefield point. Ancient river course and exact battle site are not treated as settled."
+      }
+    },
+    {
+      "aliases": [],
+      "contentClassification": "reviewed-historical",
+      "coordinates": [
+        22.518485,
+        40.754555
+      ],
+      "defaultName": "Pella",
+      "editorialStatus": "published",
+      "existence": {
+        "datePrecision": "approximate",
+        "yearFrom": -500,
+        "yearTo": 500
+      },
+      "id": "pella",
+      "importance": [
+        {
+          "importance": 5,
+          "period": {
+            "datePrecision": "approximate",
+            "yearFrom": -399,
+            "yearTo": -168
+          },
+          "reason": "Royal capital",
+          "sourceRefs": [
+            {
+              "sourceId": "met-rise-of-macedonia"
+            }
+          ]
+        }
+      ],
+      "names": [
+        {
+          "name": "Pella",
+          "period": {
+            "datePrecision": "approximate",
+            "yearFrom": -500,
+            "yearTo": 500
+          },
+          "sourceRefs": [
+            {
+              "locator": "Pleiades place 491687",
+              "sourceId": "pleiades-gazetteer"
+            }
+          ]
+        }
+      ],
+      "ownership": [
+        {
+          "controlType": "direct",
+          "period": {
+            "datePrecision": "approximate",
+            "yearFrom": -399,
+            "yearTo": -168
+          },
+          "polityId": "kingdom-of-macedon",
+          "sourceRefs": [
+            {
+              "locator": "Macedonian royal center and kingdom",
+              "sourceId": "met-rise-of-macedonia"
+            }
+          ]
+        }
+      ],
+      "placeType": "capital",
+      "sourceRefs": [
+        {
+          "confidence": "high",
+          "locator": "https://pleiades.stoa.org/places/491687",
+          "reviewedOn": "2026-07-20",
+          "sourceId": "pleiades-gazetteer"
+        },
+        {
+          "locator": "Opening biographical chronology",
+          "sourceId": "iranica-alexander"
+        }
+      ],
+      "summary": "The Macedonian royal capital and Alexander III's recorded birthplace.",
+      "uncertainty": {
+        "confidence": "high",
+        "locationAccuracy": "approximate",
+        "note": "The point is the gazetteer's representative location for the ancient place."
+      }
+    },
+    {
+      "aliases": [
+        "Sestus"
+      ],
+      "contentClassification": "reviewed-historical",
+      "coordinates": [
+        26.417225,
+        40.228356
+      ],
+      "defaultName": "Sestos",
+      "editorialStatus": "published",
+      "existence": {
+        "datePrecision": "approximate",
+        "yearFrom": -700,
+        "yearTo": 600
+      },
+      "id": "sestos",
+      "importance": [
+        {
+          "importance": 3,
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -334,
+            "yearTo": -334
+          },
+          "reason": "Hellespont crossing stage",
+          "sourceRefs": [
+            {
+              "locator": "Book I, chapter XI",
+              "sourceId": "arrian-anabasis-chinnock"
+            }
+          ]
+        }
+      ],
+      "names": [
+        {
+          "name": "Sestos",
+          "period": {
+            "datePrecision": "approximate",
+            "yearFrom": -700,
+            "yearTo": 600
+          },
+          "sourceRefs": [
+            {
+              "locator": "Pleiades place 501609",
+              "sourceId": "pleiades-gazetteer"
+            }
+          ]
+        }
+      ],
+      "ownership": [],
+      "placeType": "settlement",
+      "sourceRefs": [
+        {
+          "confidence": "medium",
+          "locator": "https://pleiades.stoa.org/places/501609",
+          "sourceId": "pleiades-gazetteer"
+        },
+        {
+          "locator": "Book I, chapter XI",
+          "sourceId": "arrian-anabasis-chinnock"
+        }
+      ],
+      "summary": "A settlement on the European shore of the Hellespont used as the departure context in Alexander's crossing narrative.",
+      "uncertainty": {
+        "confidence": "medium",
+        "locationAccuracy": "approximate",
+        "note": "Representative gazetteer point; the route drawn from it is schematic."
+      }
+    },
+    {
+      "aliases": [],
+      "contentClassification": "synthetic-fixture",
       "coordinates": [
         28,
         37
@@ -961,6 +1695,8 @@
       }
     },
     {
+      "aliases": [],
+      "contentClassification": "synthetic-fixture",
       "coordinates": [
         30,
         35
@@ -1019,6 +1755,8 @@
       }
     },
     {
+      "aliases": [],
+      "contentClassification": "synthetic-fixture",
       "coordinates": [
         26,
         39
@@ -1064,6 +1802,126 @@
   ],
   "polities": [
     {
+      "aliases": [
+        "Achaemenid Persian Empire",
+        "Persian Empire"
+      ],
+      "capitals": [],
+      "color": "#b87a2b",
+      "contentClassification": "reviewed-historical",
+      "defaultName": "Achaemenid Empire",
+      "editorialStatus": "published",
+      "existence": {
+        "datePrecision": "year",
+        "yearFrom": -550,
+        "yearTo": -330
+      },
+      "id": "achaemenid-empire",
+      "polityType": "empire",
+      "rulers": [
+        {
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -336,
+            "yearTo": -330
+          },
+          "personId": "darius-iii",
+          "sourceRefs": [
+            {
+              "locator": "Reign chronology",
+              "sourceId": "iranica-darius-three"
+            }
+          ],
+          "title": "king"
+        }
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "iranica-darius-three"
+        },
+        {
+          "sourceId": "met-achaemenid-empire"
+        }
+      ],
+      "summary": "The Persian empire ruled by Darius III from 336 to 330 BCE and opposed by Alexander's invasion.",
+      "uncertainty": {
+        "confidence": "high",
+        "note": "The dates model the conventional imperial span; the displayed 334 BCE territory is explicitly approximate."
+      }
+    },
+    {
+      "aliases": [
+        "Macedonia",
+        "Macedon"
+      ],
+      "capitals": [
+        {
+          "period": {
+            "datePrecision": "approximate",
+            "yearFrom": -399,
+            "yearTo": -168
+          },
+          "placeId": "pella",
+          "sourceRefs": [
+            {
+              "locator": "Pleiades place 491687",
+              "sourceId": "pleiades-gazetteer"
+            },
+            {
+              "sourceId": "met-rise-of-macedonia"
+            }
+          ],
+          "status": "royal capital",
+          "uncertainty": {
+            "confidence": "medium",
+            "note": "The start is deliberately approximate."
+          }
+        }
+      ],
+      "color": "#7a4e9d",
+      "contentClassification": "reviewed-historical",
+      "defaultName": "Kingdom of Macedon",
+      "editorialStatus": "published",
+      "existence": {
+        "datePrecision": "approximate",
+        "yearFrom": -650,
+        "yearTo": -168
+      },
+      "id": "kingdom-of-macedon",
+      "polityType": "kingdom",
+      "rulers": [
+        {
+          "period": {
+            "datePrecision": "year",
+            "yearFrom": -336,
+            "yearTo": -323
+          },
+          "personId": "alexander-iii",
+          "sourceRefs": [
+            {
+              "locator": "Accession and reign",
+              "sourceId": "iranica-alexander"
+            }
+          ],
+          "title": "king"
+        }
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "iranica-alexander"
+        },
+        {
+          "sourceId": "met-rise-of-macedonia"
+        }
+      ],
+      "summary": "The Macedonian kingdom ruled by Alexander III from 336 to 323 BCE.",
+      "uncertainty": {
+        "confidence": "medium",
+        "note": "The broad polity lifespan is contextual; this slice focuses on 336-323 BCE."
+      }
+    },
+    {
+      "aliases": [],
       "capitals": [
         {
           "period": {
@@ -1079,6 +1937,7 @@
         }
       ],
       "color": "#336699",
+      "contentClassification": "synthetic-fixture",
       "defaultName": "Synthetic Alpha Polity",
       "editorialStatus": "published",
       "existence": {
@@ -1109,8 +1968,10 @@
       "summary": "A deliberately synthetic polity used to verify changing territory periods."
     },
     {
+      "aliases": [],
       "capitals": [],
       "color": "#993366",
+      "contentClassification": "synthetic-fixture",
       "defaultName": "Synthetic Beta Polity",
       "editorialStatus": "published",
       "existence": {
@@ -1131,6 +1992,159 @@
   "schemaVersion": 1,
   "sources": [
     {
+      "author": "Arrian; translated by E. J. Chinnock",
+      "bibliographicNote": "Ancient narrative in a public-domain English translation; Book I is used with precise chapter locators and is not treated as neutral eyewitness reporting.",
+      "contentClassification": "reviewed-historical",
+      "editorialStatus": "published",
+      "id": "arrian-anabasis-chinnock",
+      "license": "Public domain in the United States",
+      "publicationYear": 1893,
+      "publisher": "Project Gutenberg",
+      "review": {
+        "reviewedBy": "EraByEra editorial review",
+        "reviewedOn": "2026-07-20"
+      },
+      "sourceType": "primary",
+      "title": "The Anabasis of Alexander",
+      "url": "https://www.gutenberg.org/ebooks/46976"
+    },
+    {
+      "author": "Diodorus Siculus; translated by C. Bradford Welles",
+      "bibliographicNote": "Ancient narrative used chiefly to preserve the conflict with Arrian over the river crossing; online transcription reproduces the Loeb edition.",
+      "contentClassification": "reviewed-historical",
+      "editorialStatus": "published",
+      "id": "diodorus-library-book-seventeen",
+      "publicationYear": 1963,
+      "publisher": "Harvard University Press; LacusCurtius transcription",
+      "review": {
+        "reviewedBy": "EraByEra editorial review",
+        "reviewedOn": "2026-07-20"
+      },
+      "sourceType": "primary",
+      "title": "Library of History, Book XVII",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Diodorus_Siculus/17B%2A.html"
+    },
+    {
+      "bibliographicNote": "TGN subject 6002329; supplies a representative river/battlefield point, not an exact ancient battle location.",
+      "contentClassification": "reviewed-historical",
+      "editorialStatus": "published",
+      "id": "getty-tgn-granicus",
+      "organization": "Getty Research Institute",
+      "review": {
+        "reviewedBy": "EraByEra editorial review",
+        "reviewedOn": "2026-07-20"
+      },
+      "sourceType": "dataset",
+      "title": "Getty Thesaurus of Geographic Names: Granicus",
+      "url": "https://www.getty.edu/vow/TGNFullDisplay?english=Y&find=7009485&nation=&place=&subjectid=6002329"
+    },
+    {
+      "author": "Pierre Briant",
+      "contentClassification": "reviewed-historical",
+      "editorialStatus": "published",
+      "id": "iranica-alexander",
+      "publicationYear": 1985,
+      "publisher": "Encyclopaedia Iranica",
+      "review": {
+        "reviewedBy": "EraByEra editorial review",
+        "reviewedOn": "2026-07-20"
+      },
+      "sourceType": "secondary",
+      "title": "Alexander the Great (356-323 B.C.)",
+      "url": "https://www.iranicaonline.org/articles/alexander-the-great-356-23-bc/"
+    },
+    {
+      "author": "Ernst Badian",
+      "contentClassification": "reviewed-historical",
+      "editorialStatus": "published",
+      "id": "iranica-darius-three",
+      "publicationYear": 1994,
+      "publisher": "Encyclopaedia Iranica",
+      "review": {
+        "reviewedBy": "EraByEra editorial review",
+        "reviewedOn": "2026-07-20"
+      },
+      "sourceType": "secondary",
+      "title": "Darius III",
+      "url": "https://www.iranicaonline.org/articles/darius-v/"
+    },
+    {
+      "author": "Ernst Badian",
+      "bibliographicNote": "Modern critical synthesis emphasizing that detailed reconstruction and numerical claims are unreliable.",
+      "contentClassification": "reviewed-historical",
+      "editorialStatus": "published",
+      "id": "iranica-granicus",
+      "publicationYear": 2002,
+      "publisher": "Encyclopaedia Iranica",
+      "review": {
+        "reviewedBy": "EraByEra editorial review",
+        "reviewedOn": "2026-07-20"
+      },
+      "sourceType": "secondary",
+      "title": "Granicus",
+      "url": "https://www.iranicaonline.org/articles/granicus/"
+    },
+    {
+      "contentClassification": "reviewed-historical",
+      "editorialStatus": "published",
+      "id": "met-achaemenid-empire",
+      "organization": "The Metropolitan Museum of Art, Department of Ancient Near Eastern Art",
+      "publicationYear": 2004,
+      "review": {
+        "reviewedBy": "EraByEra editorial review",
+        "reviewedOn": "2026-07-20"
+      },
+      "sourceType": "secondary",
+      "title": "The Achaemenid Persian Empire (550-330 B.C.)",
+      "url": "https://www.metmuseum.org/essays/the-achaemenid-persian-empire-550-330-b-c"
+    },
+    {
+      "contentClassification": "reviewed-historical",
+      "editorialStatus": "published",
+      "id": "met-rise-of-macedonia",
+      "organization": "The Metropolitan Museum of Art, Department of Greek and Roman Art",
+      "publicationYear": 2004,
+      "review": {
+        "reviewedBy": "EraByEra editorial review",
+        "reviewedOn": "2026-07-20"
+      },
+      "sourceType": "secondary",
+      "title": "The Rise of Macedonia and the Conquests of Alexander the Great",
+      "url": "https://www.metmuseum.org/essays/the-rise-of-macedonia-and-the-conquests-of-alexander-the-great"
+    },
+    {
+      "bibliographicNote": "Stable place identifiers and representative points; coordinates are not claims of survey-grade precision.",
+      "contentClassification": "reviewed-historical",
+      "editorialStatus": "published",
+      "id": "pleiades-gazetteer",
+      "license": "CC BY 3.0",
+      "organization": "Institute for the Study of the Ancient World, New York University",
+      "review": {
+        "reviewedBy": "EraByEra editorial review",
+        "reviewedOn": "2026-07-20"
+      },
+      "sourceType": "dataset",
+      "title": "Pleiades: A Gazetteer of Past Places",
+      "url": "https://pleiades.stoa.org/"
+    },
+    {
+      "author": "Plutarch; translated by Bernadotte Perrin",
+      "bibliographicNote": "Ancient biographical narrative; section 16 is used as a parallel Granicus account, not as independent modern verification.",
+      "contentClassification": "reviewed-historical",
+      "editorialStatus": "published",
+      "id": "plutarch-alexander-perseus",
+      "publicationYear": 1919,
+      "publisher": "Perseus Digital Library",
+      "review": {
+        "reviewedBy": "EraByEra editorial review",
+        "reviewedOn": "2026-07-20"
+      },
+      "sourceType": "primary",
+      "title": "Life of Alexander",
+      "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:2008.01.0129"
+    },
+    {
+      "contentClassification": "synthetic-fixture",
       "editorialStatus": "published",
       "id": "synthetic-fixture-source",
       "license": "Synthetic test data; no historical claim",
@@ -1142,6 +2156,57 @@
   ],
   "territories": [
     {
+      "contentClassification": "reviewed-historical",
+      "controlCategory": "approximate",
+      "editorialStatus": "published",
+      "geometryFeatureId": "achaemenid-western-anatolia-territory-334-feature",
+      "id": "achaemenid-western-anatolia-territory-334",
+      "period": {
+        "datePrecision": "year",
+        "yearFrom": -334,
+        "yearTo": -334
+      },
+      "polityId": "achaemenid-empire",
+      "sourceRefs": [
+        {
+          "note": "Evidence for Achaemenid regional forces in northwestern Asia Minor in 334 BCE.",
+          "sourceId": "iranica-granicus"
+        },
+        {
+          "note": "Evidence for imperial extent into Anatolia.",
+          "sourceId": "met-achaemenid-empire"
+        }
+      ],
+      "uncertainty": {
+        "confidence": "low",
+        "note": "Only a conservative western-Anatolian campaign-context footprint is shown; it is not the full empire and does not assert exact satrapal frontiers."
+      }
+    },
+    {
+      "contentClassification": "reviewed-historical",
+      "controlCategory": "approximate",
+      "editorialStatus": "published",
+      "geometryFeatureId": "kingdom-of-macedon-territory-334-feature",
+      "id": "kingdom-of-macedon-territory-334",
+      "period": {
+        "datePrecision": "year",
+        "yearFrom": -334,
+        "yearTo": -334
+      },
+      "polityId": "kingdom-of-macedon",
+      "sourceRefs": [
+        {
+          "note": "Evidence for Macedonian kingdom context; polygon is an editorial generalization with low confidence.",
+          "sourceId": "met-rise-of-macedonia"
+        }
+      ],
+      "uncertainty": {
+        "confidence": "low",
+        "note": "A deliberately conservative generalized core-region footprint for 334 BCE, not a surveyed or exhaustive frontier."
+      }
+    },
+    {
+      "contentClassification": "synthetic-fixture",
       "controlCategory": "direct",
       "editorialStatus": "published",
       "geometryFeatureId": "synthetic-alpha-territory-early-feature",
@@ -1162,6 +2227,7 @@
       }
     },
     {
+      "contentClassification": "synthetic-fixture",
       "controlCategory": "approximate",
       "editorialStatus": "published",
       "geometryFeatureId": "synthetic-alpha-territory-late-feature",
@@ -1182,6 +2248,7 @@
       }
     },
     {
+      "contentClassification": "synthetic-fixture",
       "controlCategory": "disputed",
       "editorialStatus": "published",
       "geometryFeatureId": "synthetic-beta-territory-claim-feature",

@@ -41,7 +41,7 @@ const descriptorSchema = z.object({
   datasetVersion: datasetVersionSchema,
   name: z.string().trim().min(1),
   description: z.string().trim().min(1),
-  fixturePolicy: z.literal('synthetic-only'),
+  fixturePolicy: z.enum(['synthetic-only', 'mixed-reviewed-and-synthetic']),
   files: z.object({
     sources: z.string().regex(/^[a-z0-9-]+\.json$/), places: z.string().regex(/^[a-z0-9-]+\.json$/), polities: z.string().regex(/^[a-z0-9-]+\.json$/), territories: z.string().regex(/^[a-z0-9-]+\.json$/),
     people: z.string().regex(/^[a-z0-9-]+\.json$/), events: z.string().regex(/^[a-z0-9-]+\.json$/), journeys: z.string().regex(/^[a-z0-9-]+\.json$/), collections: z.string().regex(/^[a-z0-9-]+\.json$/),

@@ -175,7 +175,7 @@ export function GlobalSearch({ index, error, selectedYear, onSelect }: GlobalSea
                     >
                       <strong>{result.matchedName}</strong>
                       {result.matchedName === result.primaryName ? null : <span>Historical name of {result.primaryName}</span>}
-                      <span>{historical ? `${result.matchKind} name · ` : ''}{result.subtype.replaceAll('-', ' ')} · {searchResultPeriodLabel(result)}</span>
+                      <span>{historical ? `${result.matchKind} name · ` : ''}{result.subtype.replaceAll('-', ' ')} · {result.contentClassification === 'synthetic-fixture' ? 'Synthetic fixture · ' : ''}{searchResultPeriodLabel(result)}</span>
                       <span>{result.activeAtSelectedYear ? 'Active in the selected year' : 'Outside the selected year; selection will move to a relevant year'}</span>
                       <span>{result.context} · {searchResultMapLabel(result)}</span>
                     </div>
