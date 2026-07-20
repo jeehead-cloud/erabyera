@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, type KeyboardEvent } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { loadBundledSearchIndex, useRuntimeData } from '../../data'
 import { createEntityMapHref, entityPagePath } from '../../domain/entityPages'
@@ -11,7 +11,7 @@ import {
   type CatalogSort,
   type ExploreCatalogType,
 } from '../../domain/explore'
-import { formatHistoricalYear, formatHistoricalYearRange, isHistoricalYear } from '../../domain/time'
+import { formatHistoricalYear, formatHistoricalYearRange, parseHistoricalYear } from '../../domain/time'
 import type { SearchIndex } from '../../domain/search'
 import './ExploreCatalogPage.css'
 
@@ -24,18 +24,53 @@ export function ExploreCatalogPage({ catalogType }: { catalogType: ExploreCatalo
     try { return loadBundledSearchIndex() } catch (error) { console.error('Catalog search index failed safely.', error); return null }
   })
   const state = parseCatalogQuery(params, catalogType)
+  const [yearDraft, setYearDraft] = useState(() => String(state.year))
+  const [yearError, setYearError] = useState(false)
   const definition = catalogDefinition(catalogType)
   const model = useMemo(() => runtime.status === 'ready' ? buildExploreCatalog(runtime.data, searchIndex, catalogType, state) : null, [catalogType, runtime, searchIndex, state.period, state.query, state.sort, state.year])
-  const update = (change: Partial<typeof state>) => setParams(serializeCatalogQuery({ ...state, ...change }, catalogType, params))
+  const update = (change: Partial<typeof state>, replace = false) => setParams(
+    serializeCatalogQuery({ ...state, ...change }, catalogType, params),
+    { replace },
+  )
+
+  useEffect(() => {
+    const canonical = serializeCatalogQuery(state, catalogType, params)
+    if (canonical.toString() !== params.toString()) setParams(canonical, { replace: true })
+  }, [catalogType, params, setParams, state.period, state.query, state.sort, state.year])
+
+  useEffect(() => {
+    setYearDraft(String(state.year))
+    setYearError(false)
+  }, [state.year])
+
+  const commitYear = () => {
+    try {
+      const normalizedDraft = yearDraft.trim()
+      if (!/^[+-]?\d+$/.test(normalizedDraft)) throw new Error('Invalid catalog year')
+      const year = parseHistoricalYear(Number(normalizedDraft))
+      update({ year })
+      setYearError(false)
+    } catch {
+      setYearError(true)
+    }
+  }
+
+  const handleYearKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') commitYear()
+    if (event.key === 'Escape') {
+      setYearDraft(String(state.year))
+      setYearError(false)
+    }
+  }
 
   return (
     <section className="catalog-page" aria-labelledby="catalog-heading">
       <nav className="entity-page__breadcrumbs" aria-label="Breadcrumb"><ol><li><Link to="/explore">Explore</Link></li><li aria-current="page">{definition.label}</li></ol></nav>
       <header className="catalog-page__header"><p className="eyebrow">Explore catalog</p><h1 id="catalog-heading">{definition.label}</h1><p>{definition.description}</p></header>
       <div className="catalog-filters" aria-label="Catalog filters">
-        <label>Search this catalog<input type="search" maxLength={200} value={state.query} onChange={(event) => update({ query: event.target.value })} disabled={searchIndex === null} /></label>
+        <label>Search this catalog<input type="search" maxLength={200} value={state.query} onChange={(event) => update({ query: event.target.value }, true)} disabled={searchIndex === null} /></label>
         <fieldset><legend>Period</legend>{(['current', 'all'] as CatalogPeriodFilter[]).map((period) => <label key={period}><input type="radio" name="catalog-period" checked={state.period === period} onChange={() => update({ period })} />{period === 'current' ? 'Current year' : 'All periods'}</label>)}</fieldset>
-        <label>Catalog year<input type="number" step="1" value={state.year} onChange={(event) => { const year = Number(event.target.value); if (isHistoricalYear(year)) update({ year }) }} /></label>
+        <label>Catalog year<input type="text" inputMode="numeric" value={yearDraft} aria-invalid={yearError} aria-describedby={yearError ? 'catalog-year-error' : undefined} onChange={(event) => setYearDraft(event.target.value)} onBlur={commitYear} onKeyDown={handleYearKeyDown} />{yearError ? <span id="catalog-year-error" className="catalog-filter-error" role="alert">Enter a non-zero whole year; use a minus sign for BCE.</span> : null}</label>
         <label>Sort<select value={state.sort} onChange={(event) => update({ sort: event.target.value as CatalogSort })}>{(model?.allowedSorts ?? ['name']).map((sort) => <option key={sort} value={sort}>{label(sort)}</option>)}</select></label>
       </div>
       {searchIndex === null ? <p className="catalog-page__notice" role="status">Search unavailable. Unfiltered catalog browsing remains available.</p> : null}

@@ -1,6 +1,6 @@
 ﻿# EraByEra вЂ” Architecture
 
-**Status:** F1–F16 application, domain, static-data, map, URL-state, historical entities, overview, search, pages, catalogs, collections, and coverage implemented; later architecture proposed
+**Status:** F1–F18 foundation implementation complete; owner browser and deployment verification pending
 **Last updated:** 2026-07-20
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -618,6 +618,16 @@ F17 keeps the same canonical-to-generated architecture and changes the dataset p
 The public `alexanders-world` collection now has `reviewed` membership and `partial` completeness. Its ten linked records are the Granicus core; the internal synthetic collection preserves regression fixtures. Search entries carry classification so synthetic results can remain visibly synthetic, while entity pages expose the same distinction as record metadata rather than ID-name heuristics.
 
 Geometry contracts remain GeoJSON Polygon/MultiPolygon and LineString/MultiLineString, but polygon validation now rejects self-intersecting rings. The reviewed journey is explicitly schematic and territory features are evidence-linked low-confidence contextual generalizations. No browser-side routing, interpolation, border generation, remote content fetch, or parallel content model was introduced.
+
+### F18 integration and release boundary
+
+The stable route contract remains unchanged, but route components now load through React Router lazy modules. The measured main production JavaScript chunk fell from 584.04 kB to 189.54 kB minified; MapLibre remains a separate 1,027.75 kB chunk and the known Vite advisory is retained honestly.
+
+Bundled runtime and search artifacts are validated and deeply frozen on first successful access, then reused by identity for the module lifetime. Route mounts keep independent loading/error presentation without repeating aggregate Zod parsing and deep freezing.
+
+Collection member page URLs carry the authored collection ID and recommended year. An Entity Page preserves that collection in `View on map` only when the entity is an explicit member of the requested public collection; arbitrary or inferred collection context is ignored. Explore catalogs normalize malformed URL filters with history replacement, replace history during query typing, and commit deliberate year/filter navigation separately.
+
+F18 adds no backend, global state, historical schema, canonical content, or browser-side authoring path. `docs/RELEASE_CHECKLIST.md` is the operational gate for external-browser and static-host verification.
 
 ---
 

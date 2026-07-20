@@ -4,6 +4,7 @@ import { formatHistoricalYear, formatHistoricalYearRange, type HistoricalYear } 
 import { BattleDetails } from './BattleDetails'
 import { Link } from 'react-router-dom'
 import { entityPagePath } from '../../domain/entityPages'
+import { ExternalSourceLink } from '../ExternalSourceLink'
 import './EventDetailsCard.css'
 
 interface EventDetailsCardProps {
@@ -79,7 +80,7 @@ export function EventDetailsCard({ event, unresolvedEventId, selectedYear, onClo
         {primarySources.length === 0 ? <p>No resolved source is available for this event presentation.</p> : (
           <ol>{primarySources.map(({ source, reference }) => (
             <li key={[source.id, reference.locator, reference.note, reference.excerptNote].join(':')}>
-              {source.url === undefined ? source.title : <a href={source.url} rel="noreferrer" target="_blank">{source.title}</a>}
+              {source.url === undefined ? source.title : <ExternalSourceLink href={source.url}>{source.title}</ExternalSourceLink>}
               {source.author === undefined && source.organization === undefined ? null : <span>{source.author ?? source.organization}</span>}
               {reference.locator === undefined ? null : <span>{reference.locator}</span>}
             </li>

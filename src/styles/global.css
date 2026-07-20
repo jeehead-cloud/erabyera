@@ -415,7 +415,7 @@ p {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.5rem;
+  min-height: 2.75rem;
   margin-top: var(--space-3);
   padding: 0.55rem 1rem;
   border: 1px solid transparent;
@@ -427,6 +427,24 @@ p {
   transition:
     background var(--duration-fast) var(--ease-out),
     border-color var(--duration-fast) var(--ease-out);
+}
+
+@media (pointer: coarse) {
+  button,
+  input,
+  select,
+  .maplibregl-ctrl-group button {
+    min-height: 2.75rem;
+  }
+
+  .place-details__close,
+  .polity-details__close,
+  .event-details__close,
+  .person-details__close,
+  .journey-details__close,
+  .global-search__close {
+    min-width: 2.75rem;
+  }
 }
 
 .button--primary {

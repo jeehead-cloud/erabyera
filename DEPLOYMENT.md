@@ -1,6 +1,6 @@
 # EraByEra — Deployment and Operations
 
-**Status:** Local application, data pipeline, and physical map foundation; not deployed
+**Status:** F18 static release candidate; owner deployment verification pending
 **Last updated:** 2026-07-20
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -51,13 +51,14 @@ Use the local URL printed by Vite. It is commonly `http://localhost:5173/`, but 
 
 ## 4. Current Validation Commands
 
-These scripts exist and were verified on 2026-07-17:
+These scripts exist and were verified during F18 on 2026-07-20:
 
 ```powershell
 npm run typecheck
 npm run lint
 npm run test
 npm run build
+npm run preview
 npm run data:validate
 npm run data:check
 ```
@@ -71,7 +72,7 @@ The scripts perform:
 - `data:validate`: read-only strict validation of canonical JSON, references, overlap policy, and GeoJSON;
 - `data:check`: read-only deterministic comparison of canonical inputs with committed runtime output.
 
-`npm run data:build` intentionally writes the four files in `data/generated/`, including the bundled local `search-index.json`; use it after canonical source, geometry, or search-generation changes, then rerun `data:check`. Generated files are committed and must never be hand-edited. An optional `npm run test:watch` script runs Vitest in watch mode. There is no `preview` script.
+`npm run data:build` intentionally writes the four files in `data/generated/`, including the bundled local `search-index.json`; use it after canonical source, geometry, or search-generation changes, then rerun `data:check`. Generated files are committed and must never be hand-edited. `npm run preview` serves the existing production build for local smoke testing; it is not proof that a deployed host has the required SPA fallback. An optional `npm run test:watch` script runs Vitest in watch mode.
 
 On Windows systems where PowerShell blocks `npm.ps1`, invoke the same scripts through `npm.cmd`, for example `npm.cmd run lint`.
 
@@ -102,6 +103,8 @@ Any selected static host must:
 - provide the client-route fallback described above;
 - preserve static asset caching without caching `index.html` indefinitely;
 - require no private runtime token for the current F1 application.
+
+The host should avoid long-lived caching for `index.html`, may cache content-hashed `/assets/*` immutably, and may cache the version-controlled `/map-data/*` files with a reviewed invalidation policy.
 
 Candidate providers remain Cloudflare Pages, Vercel, Netlify, and GitHub Pages. No provider has been selected, and provider-specific configuration must not be added without owner instruction.
 
@@ -153,9 +156,15 @@ Before the first public release:
 - no private tokens, local paths, `node_modules`, or build intermediates are published as source;
 - `CURRENT_STATUS.md` records the production URL and current limitations.
 
+Smoke-test `/map`, every Explore catalog, one route for each entity type, `/collections/alexanders-world`, and an unknown route by direct address and refresh. Roll back by atomically restoring the previous known-good static artifact/deployment and invalidating `index.html`; never mix assets from different builds. The complete operational gate is in `docs/RELEASE_CHECKLIST.md`.
+
+## 10. Production bundle observation
+
+F18 route-level lazy loading reduced the main application JavaScript chunk from 584.04 kB to 189.54 kB minified in the measured production build. MapLibre remains isolated at 1,027.75 kB minified (272.98 kB gzip) and is the sole chunk above Vite's 500 kB advisory. This warning is accepted foundation debt: suppressing it would not reduce payload, and more brittle manual splitting is not justified.
+
 ---
 
-## 10. When to Update This Document
+## 11. When to Update This Document
 
 Update this document when actual commands change, tests or data validation are introduced, a hosting provider or production URL is selected, environment variables or CI/CD are added, or the deployment architecture changes.
 

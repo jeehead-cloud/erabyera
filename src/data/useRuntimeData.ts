@@ -29,7 +29,7 @@ export function useRuntimeData(): RuntimeDataState {
         console.error('The bundled historical runtime dataset failed validation.', error)
         setState({
           status: 'error',
-          message: 'Historical place data could not be loaded safely.',
+          message: 'Historical data could not be loaded safely.',
         })
       }
     })

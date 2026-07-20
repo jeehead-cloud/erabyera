@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import runtimeInput from '../../data/generated/runtime.json'
 import {
   BUNDLED_RUNTIME_DATASET_VERSION,
+  loadBundledSearchIndex,
   loadBundledRuntimeData,
   loadRuntimeDataset,
 } from '.'
@@ -32,6 +33,11 @@ describe('bundled runtime-data loading', () => {
     expect(Object.isFrozen(dataset)).toBe(true)
     expect(Object.isFrozen(dataset.places)).toBe(true)
     expect(Object.isFrozen(dataset.places[0])).toBe(true)
+  })
+
+  it('validates and freezes each bundled artifact once per module lifetime', () => {
+    expect(loadBundledRuntimeData()).toBe(loadBundledRuntimeData())
+    expect(loadBundledSearchIndex()).toBe(loadBundledSearchIndex())
   })
 
   it('classifies reviewed places separately from retained synthetic fixtures', () => {

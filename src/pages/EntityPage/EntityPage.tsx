@@ -7,7 +7,7 @@ import { eventLocationLabel } from '../../domain/events'
 import { journeyDirectionLabel, routeCertaintyLabel } from '../../domain/journeys'
 import { formatHistoricalYear, formatHistoricalYearRange, isHistoricalYear } from '../../domain/time'
 import type { SelectedEntityType } from '../../url'
-import { getCollectionsForEntity } from '../../domain/collections'
+import { collectionRecommendedMapState, getCollectionsForEntity } from '../../domain/collections'
 
 function humanize(value: string): string { return value.replaceAll('-', ' ') }
 
@@ -106,8 +106,18 @@ export function EntityPage({ entityType }: { entityType: SelectedEntityType }) {
   const preferredYear = yearText !== null && /^[+-]?\d+$/.test(yearText) && isHistoricalYear(Number(yearText)) ? Number(yearText) : undefined
   const model = buildEntityPageModel(runtime.data, entityType, entityId, preferredYear)
   if (model === null) return <PageState title="Entity not found" message={`The valid ${entityType} ID “${entityId}” is not present in this runtime dataset.`} />
-  let mapHref: string | null = null
-  try { mapHref = createEntityMapHref(loadBundledSearchIndex(), entityType, entityId, preferredYear) } catch (error) { console.error('Entity map navigation is unavailable.', error) }
   const collections = getCollectionsForEntity(runtime.data, entityType, entityId).filter((collection) => collection.visibility === 'public')
+  const requestedCollectionId = searchParams.get('collection')
+  const contextualCollection = collections.find((collection) => collection.id === requestedCollectionId)
+  let mapHref: string | null = null
+  try {
+    mapHref = createEntityMapHref(
+      loadBundledSearchIndex(),
+      entityType,
+      entityId,
+      preferredYear,
+      contextualCollection === undefined ? undefined : collectionRecommendedMapState(contextualCollection),
+    )
+  } catch (error) { console.error('Entity map navigation is unavailable.', error) }
   return <EntityPageShell model={model} mapHref={mapHref}><KeyFacts model={model} /><Specialized model={model} />{collections.length === 0 ? null : <section className="entity-section"><h2>Collections</h2><ul>{collections.map((collection) => <li key={collection.id}><Link to={`/collections/${collection.id}`}>Included in {collection.defaultName}</Link> — {collection.membershipKind === 'synthetic-demonstration' ? 'synthetic foundation demonstration, not reviewed historical membership' : 'reviewed membership'}</li>)}</ul></section>}<EntityRelations relations={model.relations} /><EntitySources sources={model.sources} /></EntityPageShell>
 }

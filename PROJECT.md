@@ -1,7 +1,7 @@
 ﻿# EraByEra вЂ” Project Overview
 
-**Status:** Planning / pre-development hobby project
-**Last updated:** 2026-07-10
+**Status:** Foundation implementation complete; owner browser and deployment verification pending
+**Last updated:** 2026-07-20
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
 **Expected main branch:** `main`
@@ -142,19 +142,19 @@ Every displayed record should support sources and optional confidence / date-pre
 
 ## 7. Roadmap
 
-The repository's implementation-plan sequence has reached F17: the first reviewed Granicus content slice is published in the local generated dataset. The product remains pre-deployment, partial in coverage, and pending owner browser verification; the next planned milestone is F18 stabilization rather than unsourced content expansion.
+The F1–F18 implementation-plan sequence is complete in the working tree. The first reviewed Granicus content slice is integrated across Map, search, Explore, Entity Pages, and Collections, and the automated release gate passes. The product remains pre-deployment, deliberately partial in coverage, and pending owner external-browser and static-host verification before any production-release claim or content expansion.
 
 | # | Milestone | Scope | Status |
 |---|---|---|---|
-| M0 | Project foundation | Repository, Vite app, documents, lint/build baseline | Planned |
-| M1 | Map shell | Physical basemap, pan/zoom, responsive layout | Planned |
-| M2 | Timeline and temporal filtering | Selected year, URL state, date utilities | Planned |
-| M3 | Places and detail cards | Cities, importance, zoom visibility, sources | Planned |
-| M4 | Polities and territories | Historical ownership and territory polygons | Planned |
-| M5 | Events, battles, and journeys | Markers, paths, filters, cards | Planned |
-| M6 | Search and navigation | Search entities, jump to time/location, permalinks | Planned |
-| M7 | Data-quality tooling | Validation scripts, schema checks, source coverage | Planned |
-| M8 | Content expansion and polish | More eras/regions, playback, localization, mobile polish | Planned |
+| M0 | Project foundation | Repository, Vite app, documents, lint/build baseline | Complete |
+| M1 | Map shell | Physical basemap, pan/zoom, responsive layout | Implemented; owner browser verification pending |
+| M2 | Timeline and temporal filtering | Selected year, URL state, date utilities | Implemented; owner browser verification pending |
+| M3 | Places and detail cards | Cities, importance, zoom visibility, sources | Implemented; owner browser verification pending |
+| M4 | Polities and territories | Historical ownership and territory polygons | Implemented; owner browser verification pending |
+| M5 | Events, battles, and journeys | Markers, paths, filters, cards | Implemented; owner browser verification pending |
+| M6 | Search and navigation | Search entities, jump to time/location, permalinks | Implemented; owner browser verification pending |
+| M7 | Data-quality tooling | Validation scripts, schema checks, source coverage | Complete |
+| M8 | Content expansion and polish | More eras/regions, playback, localization, mobile polish | Deferred until release verification |
 
 ---
 

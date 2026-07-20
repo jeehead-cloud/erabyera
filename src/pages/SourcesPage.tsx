@@ -15,11 +15,11 @@ export function SourcesPage() {
           I
         </span>
         <div>
-          <h2>The source catalog is not populated yet</h2>
+          <h2>Evidence is available on each entity page</h2>
           <p>
-            Reviewed bibliographic records and their links to historical
-            content will be introduced with the data foundation. No sample
-            citations are shown here as real evidence.
+            The standalone Sources catalog is deferred beyond the foundation.
+            Every reviewed record keeps its full bibliographic references,
+            locators, and interpretation notes on its stable entity page.
           </p>
         </div>
       </div>

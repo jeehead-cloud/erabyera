@@ -14,6 +14,8 @@ import {
   SEARCH_POINT_FOCUS_MIN_ZOOM,
 } from '../search'
 import { parseHistoricalYear } from '../time'
+import type { ContentCollection } from '../entities'
+import { entityPagePath } from './entityRoutes'
 
 function addLayer(layers: readonly MapLayerId[], layer: MapLayerId): readonly MapLayerId[] {
   const requested = new Set([...layers, layer])
@@ -48,3 +50,14 @@ export function createEntityMapHref(
   return search === '' ? '/map' : `/map?${search}`
 }
 
+export function createCollectionMemberEntityPageHref(
+  collection: ContentCollection,
+  type: SelectedEntityType,
+  id: string,
+): string {
+  const params = new URLSearchParams({
+    year: String(collection.recommendedStartYear),
+    collection: collection.id,
+  })
+  return `${entityPagePath(type, id)}?${params.toString()}`
+}

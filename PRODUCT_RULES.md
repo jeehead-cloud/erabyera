@@ -268,6 +268,7 @@ The exact thresholds must be centralized and testable, not scattered across comp
 - Outside-period and outside-focus warnings never imply historical inactivity. Sparse or absent records describe dataset coverage only; the physical map remains operable everywhere.
 - Year Overview remains global. Collection name, period status, completeness, and linked counts provide context without filtering map layers or overview eligibility.
 - Entity-to-collection relations are deterministic inverses of explicit membership. Member `View on map` retains collection context only when invoked from that collection.
+- A collection member's Entity Page retains collection context in its URL, and its `View on map` action may preserve that context only after explicit public membership is resolved. A missing, internal, or unrelated collection parameter must not manufacture membership.
 
 ---
 

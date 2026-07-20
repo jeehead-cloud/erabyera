@@ -6,10 +6,15 @@ import { loadSearchIndex, type SearchIndex } from '../domain/search/searchSchema
 
 export const BUNDLED_RUNTIME_DATASET_VERSION = runtimeManifest.datasetVersion
 
+let bundledRuntimeData: Readonly<RuntimeDataset> | undefined
+let bundledSearchIndex: Readonly<SearchIndex> | undefined
+
 export function loadBundledRuntimeData(): Readonly<RuntimeDataset> {
-  return loadRuntimeDataset(runtimeInput, BUNDLED_RUNTIME_DATASET_VERSION)
+  bundledRuntimeData ??= loadRuntimeDataset(runtimeInput, BUNDLED_RUNTIME_DATASET_VERSION)
+  return bundledRuntimeData
 }
 
 export function loadBundledSearchIndex(): Readonly<SearchIndex> {
-  return loadSearchIndex(searchIndexInput, BUNDLED_RUNTIME_DATASET_VERSION)
+  bundledSearchIndex ??= loadSearchIndex(searchIndexInput, BUNDLED_RUNTIME_DATASET_VERSION)
+  return bundledSearchIndex
 }

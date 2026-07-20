@@ -59,6 +59,7 @@ export function GlobalSearch({ index, error, selectedYear, onSelect }: GlobalSea
     setQuery('')
     setActiveIndex(0)
     onSelect(result)
+    requestAnimationFrame(() => openerRef.current?.focus())
   }
 
   const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {

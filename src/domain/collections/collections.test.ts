@@ -16,6 +16,8 @@ import {
   groupCollectionMembers,
   leaveCollectionUpdate,
 } from '.'
+import { createCollectionMemberEntityPageHref, createEntityMapHref } from '../entityPages'
+import { loadBundledSearchIndex } from '../../data'
 
 const dataset = loadBundledRuntimeData()
 const collection = getCollectionById(dataset, 'alexanders-world')!
@@ -139,6 +141,24 @@ describe('F16 collection navigation', () => {
 
   it('clears an unrelated selection in recommended state', () => {
     expect(collectionRecommendedMapState(collection).selectedEntity).toBeNull()
+  })
+
+  it('retains collection context through member page and View on Map navigation', () => {
+    const pageHref = createCollectionMemberEntityPageHref(collection, 'place', 'pella')
+    expect(pageHref).toBe('/place/pella?year=-334&collection=alexanders-world')
+
+    const mapHref = createEntityMapHref(
+      loadBundledSearchIndex(),
+      'place',
+      'pella',
+      -334,
+      collectionRecommendedMapState(collection),
+    )
+    expect(parseMapUrlState(mapHref?.split('?')[1] ?? '')).toMatchObject({
+      year: -334,
+      collectionId: 'alexanders-world',
+      selectedEntity: { type: 'place', id: 'pella' },
+    })
   })
 
   it('leave removes only collection while preserving all other and unknown state', () => {

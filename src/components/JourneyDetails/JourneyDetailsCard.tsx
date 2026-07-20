@@ -8,6 +8,7 @@ import { formatHistoricalYear, formatHistoricalYearRange, type HistoricalYear } 
 import { RouteStages } from './RouteStages'
 import { Link } from 'react-router-dom'
 import { entityPagePath } from '../../domain/entityPages'
+import { ExternalSourceLink } from '../ExternalSourceLink'
 import './JourneyDetailsCard.css'
 
 function names(relations: readonly ResolvedJourneyRelation[]): string {
@@ -79,7 +80,7 @@ export function JourneyDetailsCard({
         {primarySources.length === 0 ? <p>No resolved journey evidence is available.</p> : (
           <ol>{primarySources.map(({ source, reference }) => (
             <li key={[source.id, reference.locator, reference.note].join(':')}>
-              {source.url === undefined ? source.title : <a href={source.url} rel="noreferrer" target="_blank">{source.title}</a>}
+              {source.url === undefined ? source.title : <ExternalSourceLink href={source.url}>{source.title}</ExternalSourceLink>}
               {reference.locator === undefined ? null : <span>{reference.locator}</span>}
             </li>
           ))}</ol>

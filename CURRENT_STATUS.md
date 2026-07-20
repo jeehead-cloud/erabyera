@@ -1,6 +1,6 @@
 # EraByEra — Current Status
 
-**Status:** Foundation implementation — F17 implemented; owner browser verification pending
+**Status:** Foundation implementation complete; owner browser and deployment verification pending
 **Last updated:** 2026-07-20
 **Repository:** `https://github.com/jeehead-cloud/erabyera.git`
 **Local repository path:** `C:\Projects\erabyera`
@@ -12,11 +12,13 @@
 
 ## 1. Current Development Phase
 
-EraByEra is a Git repository on `main`. F1–F12 are committed through `2afcfb8`. F13–F17 are implemented in the current working tree; owner external-browser verification remains pending.
+EraByEra is a Git repository on `main`. F1–F17 are committed through `cac5cf9`. F18 stabilization is implemented in the current working tree; owner external-browser and static-host deployment verification remain pending.
 
 F15 adds stable full-page routes for all five implemented entity types and compact Explore catalogs. Pages retain entity-specific chronology and evidence while sharing layout, sources, relations, recovery, and map navigation. Catalog filters are URL-owned, reuse F14 search and relevant-year logic, include unmapped records honestly, and never import editable data.
 
 F17 replaces the public collection's demonstration membership with a reviewed Granicus vertical slice: two polities, four places, Alexander III and Darius III, one disputed-location battle, one schematic Hellespont-to-Granicus journey, and two low-confidence contextual territories. Retained fixtures are explicitly classified and remain outside the public collection. Search indexes authored aliases and shows fixture classification; source conflict and geometry decisions are documented in `docs/research/GRANICUS_F17.md`.
+
+F18 closes the confirmed integration gaps: collection context survives member Entity Pages and View on Map, bundled runtime/search artifacts are validated once, stable routes are lazy-loaded, malformed Explore catalog filters canonicalize safely, signed catalog-year editing works, search focus returns to its opener, compact source links disclose new tabs, coarse-pointer targets are enlarged, and release/deployment gates are operationally documented.
 
 ---
 
@@ -403,9 +405,35 @@ Validation on 2026-07-20:
 - `git diff --check`: PASS;
 - browser checks: NOT RUN — owner external-browser verification required.
 
-### F17–F18 — Planned
+### F17 — Granicus Vertical Content Slice — Complete and committed
 
-F17 — Granicus Vertical Content Slice is next after owner verification and review of F16. Reviewed historical entities, evidence, territory geometry, route geometry, and genuine collection membership remain out of F16.
+The first reviewed Granicus slice is published through the canonical/generated pipeline, public collection, Map, search, overview, catalogs, cards, and stable Entity Pages. Its source conflicts, schematic route, representative battle location, conservative territories, and omitted unsupported quantities remain explicit.
+
+### F18 — Integration, Accessibility, Performance, and Release Readiness — Implementation complete; owner verification pending
+
+Implemented:
+
+- stable centralized route contracts with route-level lazy modules;
+- explicit public collection-context preservation through member Entity Pages and View on Map;
+- singleton bundled runtime and search validation/deep-freeze behavior;
+- canonical Explore catalog queries, signed draft-year entry, replace-on-typing, and deliberate filter commits;
+- shared safe external-source links with new-tab disclosure and search-opener focus restoration;
+- coarse-pointer touch-target corrections and accurate Sources/degraded-runtime copy;
+- release-ready static-host instructions, preview command, rollback guidance, and `docs/RELEASE_CHECKLIST.md`;
+- five focused F18 integration/accessibility/history tests plus three adjacent route/loader/collection assertions.
+
+Validation on 2026-07-20:
+
+- `npm run typecheck`: PASS;
+- `npm run lint`: PASS;
+- `npm run test`: PASS — 26 files, 878 tests;
+- `npm run data:validate`: PASS — 44 canonical records;
+- `npm run data:build` twice: PASS — all four generated SHA-256 hashes byte-identical;
+- `npm run data:check` after each build: PASS;
+- `npm run build`: PASS — main JS 189.54 kB minified; isolated MapLibre JS 1,027.75 kB minified / 272.98 kB gzip; known advisory retained;
+- `git diff --check`: PASS;
+- browser checks: NOT RUN — owner external-browser verification required;
+- deployment checks: NOT RUN — owner static-host/deployment verification required.
 
 ---
 
@@ -425,6 +453,7 @@ F17 — Granicus Vertical Content Slice is next after owner verification and rev
 - Public/internal visibility, coverage status, completeness, and membership kind are independent collection fields. Membership and inverse membership use only authored linked IDs.
 - The F16 focus bounds are conservative product-navigation metadata, not historical geometry; only inside/outside focus is classified.
 - Collection activation and Reset use push history and explicit year/viewport/layer parameters. Leave removes only the collection ID and preserves all other Map state.
+- Collection member Entity Page links carry the authored collection and recommended year; View on Map retains collection context only for resolved explicit public membership.
 - Top-level entity IDs are globally unique across types so reference-index and future untyped-selection keys are unambiguous.
 - Canonical source and geometry are editable; committed generated files are derived and never hand-edited.
 - Validation covers every editorial state, while public runtime output includes only `published` records and referenced geometry.
@@ -440,6 +469,7 @@ F17 — Granicus Vertical Content Slice is next after owner verification and rev
 - All timeline transitions reuse F2 zero-free movement, and every F7 year update uses F6 history replacement.
 - The foundation slider spans 1000 BCE–1000 CE; valid F2 years outside it remain selected and visible.
 - Browser UI consumes only validated, immutable generated runtime data; editable source files remain pipeline-only.
+- Bundled runtime and search artifacts are validated and deeply frozen once per module lifetime, then reused by identity across route mounts.
 - Place activity/name/ownership/importance presentation is F2-derived, and normal visibility requires active existence plus active importance.
 - Place importance 5–1 maps to minimum zoom 1.5, 2.5, 3.5, 4.5, and 5.5; explicit selection overrides zoom, inactivity, and layer-disabled state.
 - Place selection uses typed F6 references and push history; map and timeline movement retain their replace policies.
@@ -464,6 +494,7 @@ F17 — Granicus Vertical Content Slice is next after owner verification and rev
 - Search data is a separate compact generated artifact, validated and deep-frozen against the runtime dataset version. Only authored default, historical, alias, or transliteration fields may become variants.
 - Search uses explicit exact/prefix/token-prefix/substring categories and stable comparator ties. Selection adds exactly the required layer, keeps canonical ordering, writes one push-history URL update, and focuses only deterministic Place/Event/Person points.
 - Stable entity routes resolve only against the immutable generated runtime. Full pages may reuse compact presentations for shared meaning but retain explicit entity-specific chronology, relations, and complete relevant evidence.
+- Stable route components load lazily without changing route paths; MapLibre remains an isolated large dependency chunk.
 - Explore catalog identity is path-owned; period, selected year, search query, and sorting are query-owned. Current-year eligibility reuses F8–F12 semantics, including alive-unmapped People, while all-period mode includes every published record.
 - Entity relation links open stable pages. `View on map` alone changes to `/map`, reusing F14 target-year and point-focus policy plus F6 serialization; polygon, route, and unknown geometry never receive fabricated focus.
 - All entity temporal fields reuse `src/domain/time`; no second time model exists.
@@ -473,26 +504,27 @@ F17 — Granicus Vertical Content Slice is next after owner verification and rev
 
 ## 4. Known Limitations and Risks
 
-- F4 has only synthetic fixtures; real historical content still requires reviewed sources, licensing, and attribution.
+- The public historical corpus remains a narrow reviewed Granicus slice; retained synthetic fixtures are explicitly classified and excluded from the public collection.
 - Runtime loading is currently bundled and aggregate; a validation failure disables all historical runtime presentation rather than partially loading records.
 - Competing temporal interpretations cannot yet coexist in canonical fixture files because the current schema has no explicit variant/claim grouping.
 - Published-source enforcement checks coverage presence, not whether the referenced source exists or is editorially adequate.
-- Fixtures are synthetic structure examples, not publishable historical data.
+- Synthetic fixtures remain architecture/regression examples, not reviewed historical content.
 - Places, territories, journeys, events, active-place people, the selected-year overview, Map-local search, Explore catalogs, full entity pages, and collection coverage UI are implemented; no playback or route animation exists yet.
 - F10 uses representative point markers only. It does not add regional polygons, clustering, overlap cycling, or automatic map fitting.
 - Overlapping claims render separately, but F9 offers no click cycling when multiple polygons occupy the same point.
 - Natural Earth 1:110m vectors are intentionally generalized and become coarse at close zoom; F5 caps zoom at 7.
 - Actual WebGL load, pan/zoom, responsive rendering, visual forbidden-layer review, and browser console checks remain pending owner verification.
 - Direct application URLs still require a static-host fallback; no hosting provider is configured.
+- The isolated MapLibre production chunk remains above Vite's 500 kB advisory; route lazy loading reduced the main chunk, while the legitimate MapLibre warning remains accepted debt.
 
 ---
 
 ## 5. Nearest Next Steps
 
-1. Complete the F5–F16 owner external-browser checks for map/timeline rendering, overview/search/collection behavior, all Explore, Collection, and entity routes, URL restoration, links, and responsive/keyboard layout.
-2. Review and commit the current discovery work when ready.
-3. Begin F17 — Granicus Vertical Content Slice only after F16 review and owner browser verification.
-4. Keep all current historical-layer fixtures unmistakably synthetic.
+1. Complete the owner external-browser gate in `docs/RELEASE_CHECKLIST.md`, including Map/WebGL, direct routes, history, keyboard, and responsive checks.
+2. Deploy the built `dist/` artifact only after selecting/configuring a static host with SPA fallback, then run the deployment gate and record the URL.
+3. Review and commit the F18 stabilization work when ready.
+4. Expand content only after owner browser/deployment verification; keep retained fixtures unmistakably synthetic.
 
 ---
 
@@ -505,6 +537,12 @@ Only report validation that actually ran.
 ---
 
 ## Recent Changes — Rolling Three-Month History
+
+### 2026-07-20 — F18 foundation stabilization implemented
+
+- Fixed collection-member context loss, repeated bundled-data parsing/freezing, eager route loading, catalog signed-year editing/canonicalization, search focus restoration, external-link disclosure, touch targets, and stale release-state copy.
+- Added route-level lazy chunks, a production preview command, static-host/rollback guidance, the operational release checklist, and focused F18 release contracts.
+- Validation passes with 26 files / 878 tests and byte-identical generated artifacts; browser and deployment verification remain owner tasks.
 
 ### 2026-07-20 — First reviewed Granicus vertical slice implemented
 
@@ -602,6 +640,11 @@ Only report validation that actually ran.
 ---
 
 ## Significant Changes — Permanent History
+
+### 2026-07-20 — Foundation implementation completed
+
+- F1–F18 now form one automated, release-ready foundation with stable routes, centralized URL/history policy, integrated collections and Entity Pages, reviewed Granicus content, deterministic generated data, targeted accessibility fixes, route-level chunking, and an operational release gate.
+- Why it matters: subsequent work may expand content from a coherent tested baseline, but production release must not be claimed until the owner completes external-browser and static-host verification.
 
 ### 2026-07-20 — First reviewed historical content slice established
 

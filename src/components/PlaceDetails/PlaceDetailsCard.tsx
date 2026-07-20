@@ -2,6 +2,7 @@ import { formatHistoricalYear, formatHistoricalYearRange, type HistoricalYear } 
 import type { PlacePresentation } from '../../domain/places'
 import { Link } from 'react-router-dom'
 import { entityPagePath } from '../../domain/entityPages'
+import { ExternalSourceLink } from '../ExternalSourceLink'
 import './PlaceDetailsCard.css'
 
 interface PlaceDetailsCardProps {
@@ -98,7 +99,7 @@ export function PlaceDetailsCard({
             {primarySources.map(({ source, reference }) => (
               <li key={[source.id, reference.locator, reference.note, reference.excerptNote].join(':')}>
                 {source.url === undefined ? source.title : (
-                  <a href={source.url} rel="noreferrer" target="_blank">{source.title}</a>
+                  <ExternalSourceLink href={source.url}>{source.title}</ExternalSourceLink>
                 )}
                 {source.author === undefined && source.organization === undefined ? null : <span>{source.author ?? source.organization}</span>}
                 {reference.locator === undefined ? null : <span>{reference.locator}</span>}

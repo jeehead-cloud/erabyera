@@ -3,6 +3,7 @@ import { entityPagePath } from '../../domain/entityPages'
 import type { PersonPresentation, ResolvedPersonRelation } from '../../domain/people'
 import { formatHistoricalYear, formatHistoricalYearRange, type HistoricalYear } from '../../domain/time'
 import './PersonDetailsCard.css'
+import { ExternalSourceLink } from '../ExternalSourceLink'
 
 const names = (items: readonly ResolvedPersonRelation[]) => items.map((item) => item.name ?? 'Referenced entity unavailable').join(', ')
 const humanize = (value: string) => value.replaceAll('-', ' ')
@@ -43,7 +44,7 @@ export function PersonDetailsCard({
       </dl>
       {person.alive && !person.mapped ? <div className="person-details__notice"><p>This person is alive in the selected year but has no active reviewed map relationship. No former or invented location is shown.</p>{person.nearestMappedYear === null ? null : <button onClick={() => onGoToYear(person.nearestMappedYear!)} type="button">Go to nearest mapped year</button>}</div> : null}
       {!person.alive ? <div className="person-details__notice"><p>This selected year is outside the personвЂ™s life range. The card remains inspectable without a current marker.</p><button onClick={() => onGoToYear(person.firstLifeYear)} type="button">Go to first life year</button>{person.nearestLifeYear === null || person.nearestLifeYear === person.firstLifeYear ? null : <button onClick={() => onGoToYear(person.nearestLifeYear!)} type="button">Go to nearest life year</button>}{person.nearestMappedYear === null ? null : <button onClick={() => onGoToYear(person.nearestMappedYear!)} type="button">Go to nearest mapped year</button>}</div> : null}
-      <section className="person-details__sources"><h3>Sources ({person.sources.resolved.length})</h3>{sources.length === 0 ? <p>No resolved source is available.</p> : <ol>{sources.map(({ source, reference }) => <li key={[source.id, reference.locator].join(':')}>{source.url === undefined ? source.title : <a href={source.url} rel="noreferrer" target="_blank">{source.title}</a>}{reference.locator === undefined ? null : <span>{reference.locator}</span>}</li>)}</ol>}{person.sources.unresolvedSourceIds.length === 0 ? null : <p>Some referenced sources could not be resolved.</p>}</section>
+      <section className="person-details__sources"><h3>Sources ({person.sources.resolved.length})</h3>{sources.length === 0 ? <p>No resolved source is available.</p> : <ol>{sources.map(({ source, reference }) => <li key={[source.id, reference.locator].join(':')}>{source.url === undefined ? source.title : <ExternalSourceLink href={source.url}>{source.title}</ExternalSourceLink>}{reference.locator === undefined ? null : <span>{reference.locator}</span>}</li>)}</ol>}{person.sources.unresolvedSourceIds.length === 0 ? null : <p>Some referenced sources could not be resolved.</p>}</section>
     </aside>
   )
 }

@@ -1,5 +1,6 @@
 import type { EntitySourceCollection } from '../../domain/entityPages'
 import { formatHistoricalYear } from '../../domain/time'
+import { ExternalSourceLink } from '../ExternalSourceLink'
 
 export function EntitySources({ sources }: { sources: EntitySourceCollection }) {
   return (
@@ -9,7 +10,7 @@ export function EntitySources({ sources }: { sources: EntitySourceCollection }) 
         <ol className="entity-sources">
           {sources.resolved.map(({ source, reference }) => (
             <li key={[source.id, reference.locator, reference.note, reference.excerptNote, reference.reviewedOn].join(':')}>
-              <strong>{source.url === undefined ? source.title : <a href={source.url} target="_blank" rel="noreferrer">{source.title} <span className="visually-hidden">(opens in a new tab)</span></a>}</strong>
+              <strong>{source.url === undefined ? source.title : <ExternalSourceLink href={source.url}>{source.title}</ExternalSourceLink>}</strong>
               {source.author === undefined && source.organization === undefined ? null : <span>{source.author ?? source.organization}</span>}
               {source.publisher === undefined && source.publicationYear === undefined ? null : <span>{[source.publisher, source.publicationYear === undefined ? undefined : formatHistoricalYear(source.publicationYear)].filter(Boolean).join(' В· ')}</span>}
               {reference.locator === undefined ? null : <span>Locator: {reference.locator}</span>}
